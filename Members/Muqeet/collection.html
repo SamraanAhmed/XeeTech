@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collection - LUXE TIMEPIECES</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #d4af37;
+            letter-spacing: 2px;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-item {
+            cursor: pointer;
+            padding: 10px 0;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-item a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-item:hover a, .nav-item.active a {
+            color: #d4af37;
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #d4af37;
+            transition: width 0.3s ease;
+        }
+
+        .nav-item:hover::after, .nav-item.active::after {
+            width: 100%;
+        }
+
+        .page-header {
+            padding: 150px 50px 100px;
+            text-align: center;
+            background: radial-gradient(ellipse at center, #1a1a1a 0%, #000000 100%);
+        }
+
+        .page-title {
+            font-size: 4rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+            color: #d4af37;
+        }
+
+        .page-subtitle {
+            font-size: 1.5rem;
+            color: #aaa;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .filter-section {
+            padding: 50px;
+            text-align: center;
+            background: #111;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 12px 25px;
+            background: transparent;
+            color: #aaa;
+            border: 2px solid #333;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #d4af37;
+            color: #000;
+            border-color: #d4af37;
+        }
+
+        .collection-grid {
+            padding: 50px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .watch-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+
+        .watch-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .watch-card:hover::before {
+            left: 100%;
+        }
+
+        .watch-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(212, 175, 55, 0.2);
+            border-color: #d4af37;
+        }
+
+        .watch-image {
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, #333 30%, #111 70%);
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid #d4af37;
+        }
+
+        .watch-face {
+            width: 220px;
+            height: 220px;
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #555;
+        }
+
+        .watch-hands {
+            position: relative;
+        }
+
+        .hour-hand, .minute-hand {
+            position: absolute;
+            background: #d4af37;
+            border-radius: 2px;
+            transform-origin: bottom center;
+        }
+
+        .hour-hand {
+            width: 4px;
+            height: 60px;
+            left: 50%;
+            top: 20%;
+            margin-left: -2px;
+        }
+
+        .minute-hand {
+            width: 2px;
+            height: 80px;
+            left: 50%;
+            top: 10%;
+            margin-left: -1px;
+        }
+
+        .watch-category {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.2);
+            color: #d4af37;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .watch-name {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #d4af37;
+            font-weight: 300;
+        }
+
+        .watch-model {
+            font-size: 1rem;
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        .watch-price {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        .watch-features {
+            margin-bottom: 25px;
+        }
+
+        .feature-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            color: #d4af37;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .watch-description {
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-primary {
+            flex: 1;
+            padding: 15px;
+            background: linear-gradient(45deg, #d4af37, #f4e676);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-secondary {
+            flex: 1;
+            padding: 15px;
+            background: transparent;
+            color: #d4af37;
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .stats-section {
+            background: #111;
+            padding: 80px 50px;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            padding: 30px;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            color: #d4af37;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #aaa;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+            }
+
+            .nav-menu {
+                gap: 15px;
+                font-size: 14px;
+            }
+
+            .page-header {
+                padding: 120px 20px 60px;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+            }
+
+            .filter-section {
+                padding: 30px 20px;
+            }
+
+            .collection-grid {
+                padding: 30px 20px;
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .watch-card {
+                padding: 30px 20px;
+            }
+
+            .watch-image {
+                width: 240px;
+                height: 240px;
+            }
+
+            .watch-face {
+                width: 180px;
+                height: 180px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="Index.htm" class="logo">LUXE TIMEPIECES</a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="Index.htm">Home</a></li>
+                <li class="nav-item active"><a href="collection.html">Collection</a></li>
+                <li class="nav-item"><a href="heritage.html">Heritage</a></li>
+                <li class="nav-item"><a href="service.html">Service</a></li>
+                <li class="nav-item"><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-header">
+        <h1 class="page-title">OUR COLLECTION</h1>
+        <p class="page-subtitle">Discover timepieces that define excellence. Each watch represents decades of craftsmanship and innovation, designed for those who demand nothing but perfection.</p>
+    </section>
+
+    <section class="filter-section">
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All Watches</button>
+            <button class="filter-btn" data-filter="professional">Professional</button>
+            <button class="filter-btn" data-filter="classic">Classic</button>
+            <button class="filter-btn" data-filter="sport">Sport</button>
+            <button class="filter-btn" data-filter="diving">Diving</button>
+        </div>
+    </section>
+
+    <section class="collection-grid" id="collectionGrid">
+        <div class="watch-card" data-category="diving">
+            <div class="watch-image">
+                <div class="watch-face">
+                    <div class="watch-hands">
+                        <div class="hour-hand"></div>
+                        <div class="minute-hand"></div>
+                    </div>
+                </div>
+            </div>
+            <span class="watch-category">Professional Diving</span>
+            <h3 class="watch-name">Submariner</h3>
+            <p class="watch-model">Model: 126610LN</p>
+            <div class="watch-price">$8,950</div>
+            <div class="watch-features">
+                <ul class="feature-list">
+                    <li>Waterproof to 300m</li>
+                    <li>Unidirectional bezel</li>
+                    <li>Chromalight display</li>
+                    <li>Perpetual movement</li>
+                    <li>Oyster bracelet</li>
+                    <li>Black Cerachrom</li>
+                </ul>
+            </div>
+            <p class="watch-description">The ultimate diving companion. Built to withstand the depths while maintaining impeccable precision on land.</p>
+            <div class="action-buttons">
+                <button class="btn-primary" onclick="viewDetails('Submariner')">View Details</button>
+                <button class="btn-secondary" onclick="addToWishlist('Submariner')">Add to Wishlist</button>
+            </div>
+        </div>
+
+        <div class="watch-card" data-category="sport">
+            <div class="watch-image">
+                <div class="watch-face">
+                    <div class="watch-hands">
+                        <div class="hour-hand"></div>
+                        <div class="minute-hand"></div>
+                    </div>
+                </div>
+            </div>
+            <span class="watch-category">Racing Chronograph</span>
+            <h3 class="watch-name">Daytona</h3>
+            <p class="watch-model">Model: 116500LN</p>
+            <div class="watch-price">$13,150</div>
+            <div class="watch-features">
+                <ul class="feature-list">
+                    <li>Chronograph function</li>
+                    <li>Tachymetric scale</li>
+                    <li>Racing heritage</li>
+                    <li>Cerachrom bezel</li>
+                    <li>Automatic movement</li>
+                    <li>Oyster bracelet</li>
+                </ul>
+            </div>
+            <p class="watch-description">Born on the racetrack, perfected for victory. The ultimate racing chronograph for professionals.</p>
+            <div class="action-buttons">
+                <button class="btn-primary" onclick="viewDetails('Daytona')">View Details</button>
+                <button class="btn-secondary" onclick="addToWishlist('Daytona')">Add to Wishlist</button>
+            </div>
+        </div>
+
+        <div class="watch-card" data-category="professional">
+            <div class="watch-image">
+                <div class="watch-face">
+                    <div class="watch-hands">
+                        <div class="hour-hand"></div>
+                        <div class="minute-hand"></div>
+                    </div>
+                </div>
+            </div>
+            <span class="watch-category">Dual Time Zone</span>
+            <h3 class="watch-name">GMT-Master II</h3>
+            <p class="watch-model">Model: 126710BLRO</p>
+            <div class="watch-price">$9,700</div>
+            <div class="watch-features">
+                <ul class="feature-list">
+                    <li>Dual time zones</li>
+                    <li>24-hour bezel</li>
+                    <li>Pepsi colors</li>
+                    <li>Jubilee bracelet</li>
+                    <li>GMT function</li>
+                    <li>Cerachrom bezel</li>
+                </ul>
+            </div>
+            <p class="watch-description">For those who traverse time zones. Professional functionality meets iconic design.</p>
+            <div class="action-buttons">
+                <button class="btn-primary" onclick="viewDetails('GMT-Master II')">View Details</button>
+                <button class="btn-secondary" onclick="addToWishlist('GMT-Master II')">Add to Wishlist</button>
+            </div>
+        </div>
+
+        <div class="watch-card" data-category="classic">
+            <div class="watch-image">
+                <div class="watch-face">
+                    <div class="watch-hands">
+                        <div class="hour-hand"></div>
+                        <div class="minute-hand"></div>
+                    </div>
+                </div>
+            </div>
+            <span class="watch-category">Classic Elegance</span>
+            <h3 class="watch-name">Datejust</h3>
+            <p class="watch-model">Model: 126334</p>
+            <div class="watch-price">$12,400</div>
+            <div class="watch-features">
+                <ul class="feature-list">
+                    <li>Date display</li>
+                    <li>Cyclops lens</li>
+                    <li>Fluted bezel</li>
+                    <li>Oyster bracelet</li>
+                    <li>Perpetual calendar</li>
+                    <li>Superlative movement</li>
+                </ul>
+            </div>
+            <p class="watch-description">Timeless elegance redefined. The perfect balance of classic design and modern innovation.</p>
+            <div class="action-buttons">
+                <button class="btn-primary" onclick="viewDetails('Datejust')">View Details</button>
+                <button class="btn-secondary" onclick="addToWishlist('Datejust')">Add to Wishlist</button>
+            </div>
+        </div>
+
+        <div class="watch-card" data-category="diving">
+            <div class="watch-image">
+                <div class="watch-face">
+                    <div class="watch-hands">
+                        <div class="hour-hand"></div>
+                        <div class="minute-hand"></div>
+                    </div>
+                </div>
+            </div>
+            <span class="watch-category">Deep Sea Professional</span>
+            <h3 class="watch-name">Sea-Dweller</h3>
+            <p class="watch-model">Model: 126600</p>
+            <div class="watch-price">$11,350</div>
+            <div class="watch-features">
+                <ul class="feature-list">
+                    <li>Waterproof to 1220m</li>
+                    <li>Helium escape valve</li>
+                    <li>Ceramic bezel</li>
+                    <li>Glidelock bracelet</li>
+                    <li>Red Sea-Dweller text</li>
+                    <li>Maxi dial</li>
+                </ul>
+            </div>
+            <p class="watch-description">Engineered for the deepest explorations. Professional diving tool with uncompromising reliability.</p>
+            <div class="action-buttons">
+                <button class="btn-primary" onclick="viewDetails('Sea-Dweller')">View Details</button>
+                <button class="btn-secondary" onclick="addToWishlist('Sea-Dweller')">Add to Wishlist</button>
+            </div>
+        </div>
+
+        <div class="watch-card" data-category="classic">
+            <div class="watch-image">
+                <div class="watch-face">
+                    <div class="watch-hands">
+                        <div class="hour-hand"></div>
+                        <div class="minute-hand"></div>
+                    </div>
+                </div>
+            </div>
+            <span class="watch-category">Dress Watch</span>
+            <h3 class="watch-name">Cellini</h3>
+            <p class="watch-model">Model: 50509</p>
+            <div class="watch-price">$15,850</div>
+            <div class="watch-features">
+                <ul class="feature-list">
+                    <li>18ct white gold</li>
+                    <li>Leather strap</li>
+                    <li>Moonphase display</li>
+                    <li>Manual winding</li>
+                    <li>Classic elegance</li>
+                    <li>Dress watch perfection</li>
+                </ul>
+            </div>
+            <p class="watch-description">The pinnacle of horological artistry. Where traditional craftsmanship meets contemporary refinement.</p>
+            <div class="action-buttons">
+                <button class="btn-primary" onclick="viewDetails('Cellini')">View Details</button>
+                <button class="btn-secondary" onclick="addToWishlist('Cellini')">Add to Wishlist</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Watch Models</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100+</div>
+                <div class="stat-label">Years Heritage</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">1000+</div>
+                <div class="stat-label">Satisfied Clients</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Expert Service</div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Filter functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const watchCards = document.querySelectorAll('.watch-card');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+
+                    const filterValue = this.dataset.filter;
+
+                    watchCards.forEach(card => {
+                        if (filterValue === 'all' || card.dataset.category === filterValue) {
+                            card.style.display = 'block';
+                            card.style.animation = 'fadeInUp 0.5s ease forwards';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Real-time clock for watch hands
+            function updateWatchHands() {
+                const now = new Date();
+                const hours = now.getHours() % 12;
+                const minutes = now.getMinutes();
+
+                const hourAngle = (hours * 30) + (minutes * 0.5);
+                const minuteAngle = minutes * 6;
+
+                const hourHands = document.querySelectorAll('.hour-hand');
+                const minuteHands = document.querySelectorAll('.minute-hand');
+
+                hourHands.forEach(hand => {
+                    hand.style.transform = `rotate(${hourAngle}deg)`;
+                });
+
+                minuteHands.forEach(hand => {
+                    hand.style.transform = `rotate(${minuteAngle}deg)`;
+                });
+            }
+
+            setInterval(updateWatchHands, 1000);
+            updateWatchHands();
+
+            // Header scroll effect
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('.header');
+                if (window.scrollY > 100) {
+                    header.style.background = 'rgba(0, 0, 0, 0.95)';
+                } else {
+                    header.style.background = 'rgba(0, 0, 0, 0.9)';
+                }
+            });
+        });
+
+        // Button functionality
+        function viewDetails(watchName) {
+            showModal(`${watchName} Details`, `Detailed specifications and features for the ${watchName} will be displayed here. Contact our specialists for more information.`);
+        }
+
+        function addToWishlist(watchName) {
+            showModal('Added to Wishlist', `${watchName} has been added to your wishlist. You can view your complete wishlist in your account.`);
+        }
+
+        function showModal(title, message) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.9);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                animation: fadeIn 0.3s ease;
+            `;
+
+            modal.innerHTML = `
+                <div style="
+                    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+                    padding: 40px;
+                    border-radius: 15px;
+                    text-align: center;
+                    max-width: 500px;
+                    border: 2px solid #d4af37;
+                ">
+                    <h2 style="color: #d4af37; margin-bottom: 20px;">${title}</h2>
+                    <p style="color: #fff; margin-bottom: 30px; line-height: 1.6;">${message}</p>
+                    <button onclick="this.parentElement.parentElement.remove()" style="
+                        padding: 12px 30px;
+                        background: #d4af37;
+                        color: #000;
+                        border: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        font-weight: bold;
+                    ">Close</button>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+
+        // Add CSS animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes fadeInUp {
+                from { opacity: 0; transform: translateY(30px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
