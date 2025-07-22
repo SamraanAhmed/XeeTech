@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XeeList - The Ultimate Anime Database</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1>XeeList</h1>
+                <span class="tagline">Anime Database</span>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#top-anime" class="nav-link">Top Anime</a>
+                <a href="#airing" class="nav-link">Airing</a>
+                <a href="#trending" class="nav-link">Trending</a>
+            </nav>
+            
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search anime..." class="search-input">
+                <button id="searchBtn" class="search-btn">🔍</button>
+            </div>
+            
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="hero-title">Discover Amazing Anime</h1>
+            <p class="hero-subtitle">Explore the world's largest anime database with ratings, reviews, and recommendations</p>
+            <div class="hero-search">
+                <input type="text" id="heroSearchInput" placeholder="Search for your favorite anime..." class="hero-search-input">
+                <button id="heroSearchBtn" class="hero-search-btn">Search</button>
+            </div>
+        </div>
+        <div class="hero-background"></div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Search Results Section (Hidden by default) -->
+        <section class="search-results" id="searchResults" style="display: none;">
+            <div class="container">
+                <h2 class="section-title">Search Results</h2>
+                <div class="anime-grid" id="searchGrid">
+                    <!-- Search results will be populated here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Top Anime Section -->
+        <section class="anime-section" id="top-anime">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Top Anime of All Time</h2>
+                    <p class="section-subtitle">The highest rated anime according to our community</p>
+                </div>
+                <div class="loading" id="topAnimeLoading">
+                    <div class="spinner"></div>
+                    <p>Loading top anime...</p>
+                </div>
+                <div class="anime-grid" id="topAnimeGrid">
+                    <!-- Top anime will be populated here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Currently Airing Section -->
+        <section class="anime-section" id="airing">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Currently Airing</h2>
+                    <p class="section-subtitle">Anime that are currently broadcasting</p>
+                </div>
+                <div class="loading" id="airingLoading">
+                    <div class="spinner"></div>
+                    <p>Loading airing anime...</p>
+                </div>
+                <div class="anime-grid" id="airingGrid">
+                    <!-- Airing anime will be populated here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Trending Section -->
+        <section class="anime-section" id="trending">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Trending Now</h2>
+                    <p class="section-subtitle">Most popular anime this season</p>
+                </div>
+                <div class="loading" id="trendingLoading">
+                    <div class="spinner"></div>
+                    <p>Loading trending anime...</p>
+                </div>
+                <div class="anime-grid" id="trendingGrid">
+                    <!-- Trending anime will be populated here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>XeeList</h3>
+                    <p>The ultimate anime database platform for discovering and tracking your favorite anime series.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#top-anime">Top Anime</a></li>
+                        <li><a href="#airing">Currently Airing</a></li>
+                        <li><a href="#trending">Trending</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Data Source</h4>
+                    <p>Powered by <a href="https://jikan.moe/" target="_blank">Jikan API</a></p>
+                    <p>Data from <a href="https://myanimelist.net/" target="_blank">MyAnimeList</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 XeeList. Built for anime enthusiasts.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Anime Detail Modal -->
+    <div class="modal" id="animeModal">
+        <div class="modal-content">
+            <span class="modal-close" id="modalClose">&times;</span>
+            <div class="modal-body" id="modalBody">
+                <!-- Anime details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
