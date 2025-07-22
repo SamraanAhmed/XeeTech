@@ -853,65 +853,187 @@
     </section>
 
     <script>
-        // Filter functionality
+        // Enhanced 3D filter functionality and interactions
         document.addEventListener('DOMContentLoaded', function() {
             const filterButtons = document.querySelectorAll('.filter-btn');
             const watchCards = document.querySelectorAll('.watch-card');
 
+            init3DEffects();
+            initParallaxScroll();
+            initFilterAnimations();
+            initWatchCardInteractions();
+
+            // Enhanced filter functionality with 3D animations
             filterButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     // Remove active class from all buttons
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    // Add active class to clicked button
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.style.transform = 'translateY(0) rotateY(0deg) scale(1)';
+                    });
+
+                    // Add active class to clicked button with 3D effect
                     this.classList.add('active');
+                    this.style.transform = 'translateY(-3px) rotateY(5deg) scale(1.05)';
 
                     const filterValue = this.dataset.filter;
 
-                    watchCards.forEach(card => {
+                    watchCards.forEach((card, index) => {
                         if (filterValue === 'all' || card.dataset.category === filterValue) {
                             card.style.display = 'block';
-                            card.style.animation = 'fadeInUp 0.5s ease forwards';
+                            setTimeout(() => {
+                                card.style.animation = 'fadeInUp3D 0.6s ease forwards';
+                                card.style.transform = `translateY(0) rotateX(0deg) scale(1)`;
+                            }, index * 100);
                         } else {
-                            card.style.display = 'none';
+                            card.style.animation = 'fadeOut3D 0.4s ease forwards';
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 400);
                         }
                     });
                 });
             });
 
-            // Real-time clock for watch hands
+            // Real-time clock for watch hands with enhanced 3D effect
             function updateWatchHands() {
                 const now = new Date();
                 const hours = now.getHours() % 12;
                 const minutes = now.getMinutes();
+                const seconds = now.getSeconds();
 
                 const hourAngle = (hours * 30) + (minutes * 0.5);
                 const minuteAngle = minutes * 6;
+                const secondAngle = seconds * 6;
 
                 const hourHands = document.querySelectorAll('.hour-hand');
                 const minuteHands = document.querySelectorAll('.minute-hand');
 
                 hourHands.forEach(hand => {
-                    hand.style.transform = `rotate(${hourAngle}deg)`;
+                    hand.style.transform = `rotate(${hourAngle}deg) translateZ(5px)`;
+                    hand.style.filter = `drop-shadow(0 0 ${5 + Math.sin(seconds * 0.1) * 3}px rgba(212, 175, 55, 0.8))`;
                 });
 
                 minuteHands.forEach(hand => {
-                    hand.style.transform = `rotate(${minuteAngle}deg)`;
+                    hand.style.transform = `rotate(${minuteAngle}deg) translateZ(3px)`;
+                    hand.style.filter = `drop-shadow(0 0 ${3 + Math.sin(seconds * 0.1) * 2}px rgba(212, 175, 55, 0.6))`;
                 });
             }
 
             setInterval(updateWatchHands, 1000);
             updateWatchHands();
 
-            // Header scroll effect
+            // Enhanced header scroll effect with 3D
             window.addEventListener('scroll', function() {
                 const header = document.querySelector('.header');
-                if (window.scrollY > 100) {
+                const scrolled = window.scrollY;
+
+                if (scrolled > 100) {
                     header.style.background = 'rgba(0, 0, 0, 0.95)';
+                    header.style.transform = `translateY(${scrolled * 0.02}px) rotateX(${scrolled * 0.005}deg)`;
                 } else {
                     header.style.background = 'rgba(0, 0, 0, 0.9)';
+                    header.style.transform = 'translateY(0px) rotateX(0deg)';
                 }
             });
         });
+
+        // Initialize 3D effects
+        function init3DEffects() {
+            // Add 3D tilt effect to cards based on mouse position
+            const cards = document.querySelectorAll('.watch-card');
+
+            cards.forEach(card => {
+                card.addEventListener('mousemove', handleCardTilt);
+                card.addEventListener('mouseleave', resetCardTilt);
+            });
+        }
+
+        // Handle card 3D tilt effect
+        function handleCardTilt(e) {
+            const card = e.currentTarget;
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = (y - centerY) / 8;
+            const rotateY = (centerX - x) / 8;
+
+            card.style.transform = `
+                translateY(-25px)
+                rotateX(${rotateX}deg)
+                rotateY(${rotateY}deg)
+                scale(1.03)
+                translateZ(20px)
+            `;
+        }
+
+        // Reset card tilt
+        function resetCardTilt(e) {
+            const card = e.currentTarget;
+            card.style.transform = 'translateY(0) rotateX(0deg) rotateY(0deg) scale(1) translateZ(0px)';
+        }
+
+        // Initialize parallax scroll effects
+        function initParallaxScroll() {
+            window.addEventListener('scroll', () => {
+                const scrolled = window.scrollY;
+                const cards = document.querySelectorAll('.watch-card');
+
+                cards.forEach((card, index) => {
+                    const rate = scrolled * -0.05 * (index % 3 + 1);
+                    card.style.transform = `translateZ(${rate}px)`;
+                });
+            });
+        }
+
+        // Initialize filter animations
+        function initFilterAnimations() {
+            const filterSection = document.querySelector('.filter-section');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const buttons = entry.target.querySelectorAll('.filter-btn');
+                        buttons.forEach((btn, index) => {
+                            setTimeout(() => {
+                                btn.style.animation = 'slideInFromBottom 0.6s ease forwards';
+                            }, index * 100);
+                        });
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            if (filterSection) observer.observe(filterSection);
+        }
+
+        // Initialize watch card interactions
+        function initWatchCardInteractions() {
+            const cards = document.querySelectorAll('.watch-card');
+
+            cards.forEach((card, index) => {
+                // Staggered entrance animation
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px) rotateX(20deg)';
+
+                setTimeout(() => {
+                    card.style.transition = 'all 0.8s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0) rotateX(0deg)';
+                }, index * 200);
+
+                // Enhanced click animation
+                card.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            });
+        }
 
         // Button functionality
         function viewDetails(watchName) {
