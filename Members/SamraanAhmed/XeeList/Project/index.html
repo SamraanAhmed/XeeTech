@@ -9,7 +9,13 @@
 <body>
     <header class="main-header">
         <div class="header-container">
-            <h1 class="site-title">XeeList</h1>
+            <div class="header-top">
+                <h1 class="site-title">XeeList</h1>
+                <nav class="main-nav">
+                    <a href="index.html" class="nav-link active">Home</a>
+                    <a href="search.html" class="nav-link">Search</a>
+                </nav>
+            </div>
             <p class="site-subtitle">Your Ultimate Anime Database</p>
         </div>
     </header>
@@ -19,6 +25,22 @@
             <div class="hero-content">
                 <h2 class="hero-title">Discover Amazing Anime</h2>
                 <p class="hero-description">Explore top-rated anime, currently airing series, and all-time favorites</p>
+
+                <div class="search-container">
+                    <form class="search-form" id="home-search-form">
+                        <div class="search-input-container">
+                            <input type="text"
+                                   class="search-input"
+                                   id="home-search-input"
+                                   placeholder="Search for anime..."
+                                   autocomplete="off">
+                            <button type="submit" class="search-button">
+                                <span class="search-icon">🔍</span>
+                                Search
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </section>
 
