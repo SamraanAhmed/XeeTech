@@ -936,33 +936,160 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Header scroll effect
+            init3DServiceEffects();
+            initServiceCardInteractions();
+            initProcessStepAnimations();
+            initScrollParallax();
+
+            // Enhanced header scroll effect with 3D
             window.addEventListener('scroll', function() {
                 const header = document.querySelector('.header');
-                if (window.scrollY > 100) {
+                const scrolled = window.scrollY;
+
+                if (scrolled > 100) {
                     header.style.background = 'rgba(0, 0, 0, 0.95)';
+                    header.style.transform = `translateY(${scrolled * 0.02}px) rotateX(${scrolled * 0.01}deg)`;
                 } else {
                     header.style.background = 'rgba(0, 0, 0, 0.9)';
+                    header.style.transform = 'translateY(0px) rotateX(0deg)';
                 }
             });
 
-            // Animate service cards on scroll
+            // Enhanced 3D scroll animations
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
+                        entry.target.style.transform = 'translateY(0) rotateX(0deg) rotateY(0deg)';
                     }
                 });
             }, { threshold: 0.1 });
 
-            document.querySelectorAll('.service-card, .process-step').forEach(el => {
+            document.querySelectorAll('.service-card, .process-step').forEach((el, index) => {
                 el.style.opacity = '0';
-                el.style.transform = 'translateY(30px)';
-                el.style.transition = 'all 0.6s ease';
+                el.style.transform = 'translateY(50px) rotateX(20deg) rotateY(10deg)';
+                el.style.transition = `all 0.8s ease ${index * 0.1}s`;
                 observer.observe(el);
             });
         });
+
+        // Initialize 3D service effects
+        function init3DServiceEffects() {
+            const serviceCards = document.querySelectorAll('.service-card');
+
+            serviceCards.forEach(card => {
+                // Enhanced 3D hover with mouse tracking
+                card.addEventListener('mousemove', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+
+                    const rotateX = (y - centerY) / 10;
+                    const rotateY = (centerX - x) / 10;
+
+                    this.style.transform = `
+                        translateY(-25px)
+                        rotateX(${rotateX}deg)
+                        rotateY(${rotateY}deg)
+                        scale(1.05)
+                        translateZ(30px)
+                    `;
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) rotateX(0deg) rotateY(0deg) scale(1) translateZ(0)';
+                });
+
+                // Click animation
+                card.addEventListener('click', function() {
+                    this.style.animation = 'cardPulse 0.6s ease';
+                    setTimeout(() => {
+                        this.style.animation = '';
+                    }, 600);
+                });
+            });
+        }
+
+        // Initialize service card interactions
+        function initServiceCardInteractions() {
+            const serviceButtons = document.querySelectorAll('.service-btn');
+
+            serviceButtons.forEach(btn => {
+                btn.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) rotateX(10deg) scale(1.05)';
+                    this.style.boxShadow = '0 15px 30px rgba(212, 175, 55, 0.4)';
+                });
+
+                btn.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) rotateX(0deg) scale(1)';
+                    this.style.boxShadow = '';
+                });
+            });
+        }
+
+        // Initialize process step animations
+        function initProcessStepAnimations() {
+            const processSteps = document.querySelectorAll('.process-step');
+
+            processSteps.forEach((step, index) => {
+                step.addEventListener('mouseenter', function() {
+                    const stepNumber = this.querySelector('.step-number');
+                    const stepContent = this.querySelector('.step-content');
+
+                    stepNumber.style.transform = 'scale(1.2) rotateY(360deg) translateZ(20px)';
+                    stepContent.style.transform = 'translateY(-10px) rotateX(8deg) rotateY(5deg) scale(1.02)';
+                });
+
+                step.addEventListener('mouseleave', function() {
+                    const stepNumber = this.querySelector('.step-number');
+                    const stepContent = this.querySelector('.step-content');
+
+                    stepNumber.style.transform = 'scale(1) rotateY(0deg) translateZ(0)';
+                    stepContent.style.transform = 'translateY(0) rotateX(0deg) rotateY(0deg) scale(1)';
+                });
+            });
+        }
+
+        // Initialize scroll parallax effects
+        function initScrollParallax() {
+            window.addEventListener('scroll', () => {
+                const scrolled = window.scrollY;
+
+                // Service cards parallax
+                const serviceCards = document.querySelectorAll('.service-card');
+                serviceCards.forEach((card, index) => {
+                    const rate = scrolled * -0.05 * (index % 3 + 1);
+                    card.style.transform = `translateY(${rate}px) rotateY(${rate * 0.1}deg)`;
+                });
+
+                // Process steps parallax
+                const processSteps = document.querySelectorAll('.process-step');
+                processSteps.forEach((step, index) => {
+                    const rate = scrolled * 0.03 * (index % 2 + 1);
+                    step.style.transform = `translateY(${rate}px) rotateX(${rate * 0.05}deg)`;
+                });
+
+                // Warranty card parallax
+                const warrantyCard = document.querySelector('.warranty-card');
+                if (warrantyCard) {
+                    const rate = scrolled * 0.1;
+                    warrantyCard.style.transform = `translateY(${rate}px) rotateY(${rate * 0.02}deg)`;
+                }
+            });
+        }
+
+        // Add CSS for additional animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes cardPulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+            }
+        `;
+        document.head.appendChild(style);
 
         function toggleFaq(element) {
             const answer = element.nextElementSibling;
