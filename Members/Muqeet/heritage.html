@@ -16,6 +16,7 @@
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
             color: #ffffff;
             overflow-x: hidden;
+            perspective: 1000px;
         }
 
         .header {
@@ -47,6 +48,16 @@
             display: flex;
             list-style: none;
             gap: 40px;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #d4af37;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 10px;
         }
 
         .nav-item {
@@ -88,12 +99,41 @@
             justify-content: center;
             position: relative;
             background: radial-gradient(ellipse at center, #1a1a1a 0%, #000000 100%);
+            perspective: 1200px;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 25% 25%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(212, 175, 55, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.04) 0%, transparent 70%);
+            animation: heritageAura 10s ease-in-out infinite;
+        }
+
+        @keyframes heritageAura {
+            0%, 100% { opacity: 0.4; transform: scale(1) rotate(0deg); }
+            50% { opacity: 0.8; transform: scale(1.1) rotate(5deg); }
         }
 
         .hero-content {
             text-align: center;
             z-index: 2;
             max-width: 800px;
+            transform-style: preserve-3d;
+            animation: heroFloat3D 6s ease-in-out infinite;
+        }
+
+        @keyframes heroFloat3D {
+            0%, 100% { transform: translateY(0px) rotateX(0deg) rotateZ(0deg); }
+            33% { transform: translateY(-15px) rotateX(3deg) rotateZ(1deg); }
+            66% { transform: translateY(-8px) rotateX(-2deg) rotateZ(-1deg); }
         }
 
         .hero-title {
@@ -131,6 +171,7 @@
             position: relative;
             max-width: 1000px;
             margin: 0 auto;
+            transform-style: preserve-3d;
         }
 
         .timeline::before {
@@ -142,13 +183,38 @@
             width: 3px;
             background: linear-gradient(to bottom, #d4af37, #f4e676, #d4af37);
             transform: translateX(-50%);
+            animation: timelinePulse 4s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+        }
+
+        @keyframes timelinePulse {
+            0%, 100% {
+                box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+                transform: translateX(-50%) scaleY(1);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
+                transform: translateX(-50%) scaleY(1.02);
+            }
         }
 
         .timeline-item {
             position: relative;
             margin-bottom: 80px;
             opacity: 0;
-            animation: fadeInUp 1s ease forwards;
+            animation: fadeInUp3D 1.2s ease forwards;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes fadeInUp3D {
+            from {
+                opacity: 0;
+                transform: translateY(80px) translateZ(-100px) rotateX(30deg) rotateY(10deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) translateZ(0) rotateX(0deg) rotateY(0deg);
+            }
         }
 
         .timeline-item:nth-child(even) {
@@ -166,12 +232,32 @@
             position: relative;
             width: 45%;
             border: 1px solid #333;
-            transition: all 0.3s ease;
+            transition: all 0.6s ease;
+            transform-style: preserve-3d;
+            overflow: hidden;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transition: left 0.8s ease;
         }
 
         .timeline-content:hover {
             border-color: #d4af37;
-            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.2);
+            box-shadow:
+                0 25px 50px rgba(212, 175, 55, 0.3),
+                0 0 30px rgba(212, 175, 55, 0.2);
+            transform: translateY(-10px) rotateX(8deg) rotateY(5deg) scale(1.02);
+        }
+
+        .timeline-content:hover::before {
+            left: 100%;
         }
 
         .timeline-item:nth-child(even) .timeline-content {
@@ -212,6 +298,19 @@
             transform: translateX(-50%);
             border: 4px solid #1a1a1a;
             z-index: 2;
+            animation: dotPulse 3s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+        }
+
+        @keyframes dotPulse {
+            0%, 100% {
+                transform: translateX(-50%) scale(1);
+                box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+            }
+            50% {
+                transform: translateX(-50%) scale(1.2);
+                box-shadow: 0 0 30px rgba(212, 175, 55, 1);
+            }
         }
 
         .craftsmanship-section {
@@ -233,19 +332,69 @@
             border-radius: 15px;
             text-align: center;
             border: 1px solid #333;
-            transition: all 0.3s ease;
+            transition: all 0.6s ease;
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+            animation: craftFloat 8s ease-in-out infinite;
+        }
+
+        @keyframes craftFloat {
+            0%, 100% { transform: translateY(0px) rotateY(0deg); }
+            25% { transform: translateY(-8px) rotateY(2deg); }
+            75% { transform: translateY(-4px) rotateY(-1deg); }
+        }
+
+        .craft-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(212, 175, 55, 0.05), transparent);
+            animation: craftRotate 20s linear infinite;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        @keyframes craftRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .craft-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-20px) rotateX(15deg) rotateY(8deg) scale(1.05);
             border-color: #d4af37;
-            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
+            box-shadow:
+                0 30px 60px rgba(212, 175, 55, 0.3),
+                0 0 40px rgba(212, 175, 55, 0.2);
+            animation: none;
+        }
+
+        .craft-card:hover::before {
+            opacity: 1;
         }
 
         .craft-icon {
             font-size: 4rem;
             color: #d4af37;
             margin-bottom: 20px;
+            transform-style: preserve-3d;
+            transition: all 0.6s ease;
+            animation: iconBounce 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.6));
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0px) rotateY(0deg); }
+            50% { transform: translateY(-10px) rotateY(10deg); }
+        }
+
+        .craft-card:hover .craft-icon {
+            transform: translateY(-15px) rotateY(360deg) scale(1.2);
+            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 1));
+            animation: none;
         }
 
         .craft-title {
@@ -278,12 +427,19 @@
             border-radius: 15px;
             background: rgba(212, 175, 55, 0.05);
             border: 2px solid rgba(212, 175, 55, 0.2);
-            transition: all 0.3s ease;
+            transition: all 0.6s ease;
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
         }
 
         .value-card:hover {
-            background: rgba(212, 175, 55, 0.1);
+            background: rgba(212, 175, 55, 0.15);
             border-color: #d4af37;
+            transform: translateY(-15px) rotateX(10deg) rotateY(5deg) scale(1.05);
+            box-shadow:
+                0 25px 50px rgba(212, 175, 55, 0.2),
+                0 0 30px rgba(212, 175, 55, 0.1);
         }
 
         .value-number {
@@ -291,6 +447,19 @@
             color: #d4af37;
             font-weight: bold;
             margin-bottom: 15px;
+            animation: numberGlow 3s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+        }
+
+        @keyframes numberGlow {
+            0%, 100% {
+                text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+                transform: scale(1);
+            }
+            50% {
+                text-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
+                transform: scale(1.05);
+            }
         }
 
         .value-title {
@@ -333,9 +502,41 @@
                 padding: 15px 20px;
             }
 
+            .mobile-menu-toggle {
+                display: block;
+            }
+
             .nav-menu {
-                gap: 15px;
-                font-size: 14px;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.95);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 20px;
+                gap: 20px;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                z-index: 999;
+            }
+
+            .nav-menu.mobile-menu-open {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .nav-item {
+                text-align: center;
+                border-bottom: 1px solid #333;
+                padding: 15px 0;
+            }
+
+            .nav-item:last-child {
+                border-bottom: none;
             }
 
             .hero-title {
@@ -363,22 +564,49 @@
                 width: calc(100% - 60px);
                 margin-left: 60px !important;
                 margin-right: 0 !important;
+                padding: 30px 20px;
             }
 
             .timeline-dot {
                 left: 20px;
             }
 
+            .timeline-year {
+                font-size: 2rem;
+            }
+
+            .timeline-title {
+                font-size: 1.3rem;
+            }
+
             .craftsmanship-section {
                 padding: 60px 20px;
+            }
+
+            .craftsmanship-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
             }
 
             .craft-card {
                 padding: 30px 20px;
             }
 
+            .craft-icon {
+                font-size: 3rem;
+            }
+
             .values-section {
                 padding: 60px 20px;
+            }
+
+            .values-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .value-number {
+                font-size: 2.5rem;
             }
 
             .quote-section {
@@ -406,7 +634,8 @@
     <header class="header">
         <nav class="nav-container">
             <a href="Index.htm" class="logo">LUXE TIMEPIECES</a>
-            <ul class="nav-menu">
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
                 <li class="nav-item"><a href="Index.htm">Home</a></li>
                 <li class="nav-item"><a href="collection.html">Collection</a></li>
                 <li class="nav-item active"><a href="heritage.html">Heritage</a></li>
@@ -632,17 +861,141 @@
                 observer.observe(card);
             });
 
-            // Add hover effects to timeline items
+            // Enhanced 3D hover effects to timeline items
             timelineItems.forEach(item => {
                 const content = item.querySelector('.timeline-content');
+
                 item.addEventListener('mouseenter', function() {
-                    content.style.transform = 'scale(1.05)';
+                    content.style.transform = 'translateY(-15px) rotateX(12deg) rotateY(8deg) scale(1.05)';
+                    content.style.zIndex = '10';
                 });
+
                 item.addEventListener('mouseleave', function() {
-                    content.style.transform = 'scale(1)';
+                    content.style.transform = 'translateY(0) rotateX(0deg) rotateY(0deg) scale(1)';
+                    content.style.zIndex = '1';
+                });
+
+                // Mouse movement tilt effect
+                item.addEventListener('mousemove', function(e) {
+                    const rect = content.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+
+                    const rotateX = (y - centerY) / 8;
+                    const rotateY = (centerX - x) / 8;
+
+                    content.style.transform = `
+                        translateY(-15px)
+                        rotateX(${rotateX}deg)
+                        rotateY(${rotateY}deg)
+                        scale(1.05)
+                        translateZ(20px)
+                    `;
                 });
             });
+
+            // Initialize 3D parallax effects
+            window.addEventListener('scroll', () => {
+                const scrolled = window.scrollY;
+
+                // Timeline parallax
+                const timeline = document.querySelector('.timeline');
+                if (timeline) {
+                    timeline.style.transform = `translateY(${scrolled * 0.1}px) rotateX(${scrolled * 0.01}deg)`;
+                }
+
+                // Craft cards parallax
+                const craftCards = document.querySelectorAll('.craft-card');
+                craftCards.forEach((card, index) => {
+                    const rate = scrolled * -0.05 * (index % 3 + 1);
+                    card.style.transform = `translateY(${rate}px) rotateY(${rate * 0.1}deg)`;
+                });
+            });
+
+            // Add 3D mouse movement parallax to hero content
+            const heroContent = document.querySelector('.hero-content');
+            document.addEventListener('mousemove', (e) => {
+                const x = (e.clientX / window.innerWidth) - 0.5;
+                const y = (e.clientY / window.innerHeight) - 0.5;
+
+                if (heroContent) {
+                    heroContent.style.transform = `
+                        translateY(0px)
+                        rotateX(${y * 8}deg)
+                        rotateY(${x * 8}deg)
+                        translateZ(${x * 15}px)
+                    `;
+                }
+            });
+
+            // Create floating heritage elements
+            createFloatingElements();
         });
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('mobile-menu-open');
+        }
+
+        // Close mobile menu when clicking on nav items
+        document.querySelectorAll('.nav-item a').forEach(link => {
+            link.addEventListener('click', () => {
+                const navMenu = document.getElementById('navMenu');
+                navMenu.classList.remove('mobile-menu-open');
+            });
+        });
+
+        // Create floating heritage elements
+        function createFloatingElements() {
+            const heritageSection = document.querySelector('.hero-section');
+            if (!heritageSection) return;
+
+            for (let i = 0; i < 15; i++) {
+                const element = document.createElement('div');
+                element.style.cssText = `
+                    position: absolute;
+                    width: ${Math.random() * 6 + 2}px;
+                    height: ${Math.random() * 6 + 2}px;
+                    background: #d4af37;
+                    border-radius: 50%;
+                    left: ${Math.random() * 100}%;
+                    top: ${Math.random() * 100}%;
+                    animation: heritageFloat ${Math.random() * 8 + 12}s linear infinite;
+                    opacity: 0.6;
+                    box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+                `;
+
+                heritageSection.appendChild(element);
+            }
+
+            // Add floating animation CSS
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes heritageFloat {
+                    0% {
+                        transform: translateY(100vh) translateX(0px) rotateZ(0deg) scale(0);
+                        opacity: 0;
+                    }
+                    10% {
+                        opacity: 0.6;
+                        transform: scale(1);
+                    }
+                    90% {
+                        opacity: 0.6;
+                        transform: scale(1);
+                    }
+                    100% {
+                        transform: translateY(-100px) translateX(${Math.random() * 200 - 100}px) rotateZ(360deg) scale(0);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
     </script>
 </body>
 </html>

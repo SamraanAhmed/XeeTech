@@ -16,6 +16,7 @@
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
             color: #ffffff;
             overflow-x: hidden;
+            perspective: 1000px;
         }
 
         .header {
@@ -27,6 +28,13 @@
             backdrop-filter: blur(10px);
             z-index: 1000;
             transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            animation: headerFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes headerFloat {
+            0%, 100% { transform: translateY(0px) rotateX(0deg); }
+            50% { transform: translateY(-2px) rotateX(1deg); }
         }
 
         .nav-container {
@@ -46,6 +54,16 @@
             display: flex;
             list-style: none;
             gap: 40px;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #d4af37;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 10px;
         }
 
         .nav-item {
@@ -87,11 +105,41 @@
             justify-content: center;
             position: relative;
             background: radial-gradient(ellipse at center, #1a1a1a 0%, #000000 100%);
+            perspective: 1200px;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(212, 175, 55, 0.08) 0%, transparent 50%);
+            animation: backgroundPulse 8s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes backgroundPulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.05); }
         }
 
         .hero-content {
             text-align: center;
             z-index: 2;
+            transform-style: preserve-3d;
+            animation: heroFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes heroFloat {
+            0%, 100% { transform: translateY(0px) rotateX(0deg) rotateY(0deg); }
+            25% { transform: translateY(-10px) rotateX(2deg) rotateY(1deg); }
+            75% { transform: translateY(-5px) rotateX(-1deg) rotateY(-1deg); }
         }
 
         .hero-title {
@@ -99,7 +147,20 @@
             font-weight: 300;
             margin-bottom: 20px;
             opacity: 0;
-            animation: fadeInUp 1s ease 0.5s forwards;
+            animation: fadeInUp3D 1.5s ease 0.5s forwards;
+            transform-style: preserve-3d;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+        }
+
+        @keyframes fadeInUp3D {
+            from {
+                opacity: 0;
+                transform: translateY(100px) translateZ(-200px) rotateX(30deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) translateZ(0) rotateX(0deg);
+            }
         }
 
         .hero-subtitle {
@@ -107,7 +168,9 @@
             color: #d4af37;
             margin-bottom: 40px;
             opacity: 0;
-            animation: fadeInUp 1s ease 1s forwards;
+            animation: fadeInUp3D 1.5s ease 1s forwards;
+            transform-style: preserve-3d;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
         }
 
         .cta-button {
@@ -117,15 +180,33 @@
             text-decoration: none;
             border-radius: 5px;
             font-weight: bold;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             opacity: 0;
-            animation: fadeInUp 1s ease 1.5s forwards;
+            animation: fadeInUp3D 1.5s ease 1.5s forwards;
             display: inline-block;
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s ease;
         }
 
         .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+            transform: translateY(-8px) rotateX(10deg) rotateY(5deg) scale(1.05);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.5);
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
         }
 
         .watch-showcase {
@@ -151,9 +232,11 @@
             background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
             border-radius: 15px;
             padding: 40px;
-            transition: all 0.3s ease;
+            transition: all 0.6s ease;
             position: relative;
             overflow: hidden;
+            transform-style: preserve-3d;
+            border: 1px solid rgba(212, 175, 55, 0.2);
         }
 
         .watch-card::before {
@@ -163,8 +246,27 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
-            transition: left 0.5s ease;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+            transition: left 0.8s ease;
+            z-index: 1;
+        }
+
+        .watch-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            animation: cardRotate 10s linear infinite;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        @keyframes cardRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .watch-card:hover::before {
@@ -172,8 +274,15 @@
         }
 
         .watch-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
+            transform: translateY(-20px) rotateX(10deg) rotateY(5deg) scale(1.02);
+            box-shadow:
+                0 30px 60px rgba(212, 175, 55, 0.3),
+                0 0 0 1px rgba(212, 175, 55, 0.5),
+                inset 0 0 20px rgba(212, 175, 55, 0.1);
+        }
+
+        .watch-card:hover::after {
+            opacity: 1;
         }
 
         .watch-image {
@@ -187,6 +296,16 @@
             align-items: center;
             justify-content: center;
             border: 3px solid #d4af37;
+            transform-style: preserve-3d;
+            transition: all 0.6s ease;
+            z-index: 2;
+        }
+
+        .watch-card:hover .watch-image {
+            transform: rotateY(20deg) rotateX(10deg) translateZ(30px);
+            box-shadow:
+                0 20px 40px rgba(0,0,0,0.5),
+                0 0 20px rgba(212, 175, 55, 0.4);
         }
 
         .watch-face {
@@ -199,6 +318,14 @@
             align-items: center;
             justify-content: center;
             border: 2px solid #555;
+            transition: all 0.6s ease;
+            transform-style: preserve-3d;
+        }
+
+        .watch-card:hover .watch-face {
+            transform: translateZ(20px);
+            background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);
+            box-shadow: inset 0 0 30px rgba(212, 175, 55, 0.2);
         }
 
         .watch-hands {
@@ -219,6 +346,7 @@
             top: 25%;
             margin-left: -2px;
             animation: rotateHour 43200s linear infinite;
+            filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.8));
         }
 
         .minute-hand {
@@ -228,6 +356,7 @@
             top: 15%;
             margin-left: -1px;
             animation: rotateMinute 3600s linear infinite;
+            filter: drop-shadow(0 0 3px rgba(212, 175, 55, 0.6));
         }
 
         .watch-name {
@@ -280,7 +409,31 @@
             height: 4px;
             background: #d4af37;
             border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
+            animation: float3D 8s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+        }
+
+        @keyframes float3D {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px) translateZ(0px) rotate(0deg);
+                opacity: 0;
+                box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+            }
+            25% {
+                transform: translateY(-50px) translateX(20px) translateZ(50px) rotate(90deg);
+                opacity: 0.8;
+                box-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
+            }
+            50% {
+                transform: translateY(-100px) translateX(0px) translateZ(0px) rotate(180deg);
+                opacity: 1;
+                box-shadow: 0 0 30px rgba(212, 175, 55, 1);
+            }
+            75% {
+                transform: translateY(-50px) translateX(-20px) translateZ(-50px) rotate(270deg);
+                opacity: 0.8;
+                box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+            }
         }
 
         .footer {
@@ -288,6 +441,24 @@
             padding: 50px;
             text-align: center;
             border-top: 1px solid #333;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            animation: footerGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes footerGlow {
+            0%, 100% { opacity: 0.3; transform: scaleX(0.5); }
+            50% { opacity: 1; transform: scaleX(1); }
         }
 
         .footer-content {
@@ -304,16 +475,39 @@
             display: flex;
             justify-content: center;
             gap: 30px;
+            transform-style: preserve-3d;
         }
 
         .social-link {
             color: #d4af37;
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
+            display: inline-block;
+            position: relative;
+        }
+
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 50%;
+            transform: scale(0);
+            transition: all 0.4s ease;
         }
 
         .social-link:hover {
             color: #f4e676;
+            transform: translateY(-5px) rotateY(15deg) scale(1.1);
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
+        }
+
+        .social-link:hover::before {
+            transform: scale(2);
         }
 
         @keyframes fadeInUp {
@@ -337,19 +531,48 @@
             to { transform: rotate(360deg); }
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0; }
-            50% { transform: translateY(-100px) rotate(180deg); opacity: 1; }
-        }
+
 
         @media (max-width: 768px) {
             .header {
                 padding: 15px 20px;
             }
 
+            .mobile-menu-toggle {
+                display: block;
+            }
+
             .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.95);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 20px;
                 gap: 20px;
-                font-size: 14px;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                z-index: 999;
+            }
+
+            .nav-menu.mobile-menu-open {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .nav-item {
+                text-align: center;
+                border-bottom: 1px solid #333;
+                padding: 15px 0;
+            }
+
+            .nav-item:last-child {
+                border-bottom: none;
             }
 
             .hero-title {
@@ -376,6 +599,30 @@
             .watch-card {
                 padding: 30px 20px;
             }
+
+            .watch-image {
+                width: 200px;
+                height: 200px;
+            }
+
+            .watch-face {
+                width: 160px;
+                height: 160px;
+            }
+
+            .cta-button {
+                padding: 12px 30px;
+                font-size: 14px;
+            }
+
+            .footer {
+                padding: 30px 20px;
+            }
+
+            .social-links {
+                flex-direction: column;
+                gap: 15px;
+            }
         }
     </style>
 </head>
@@ -383,7 +630,8 @@
     <header class="header">
         <nav class="nav-container">
             <div class="logo">LUXE TIMEPIECES</div>
-            <ul class="nav-menu">
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
                 <li class="nav-item"><a href="Index.htm">Home</a></li>
                 <li class="nav-item"><a href="collection.html">Collection</a></li>
                 <li class="nav-item"><a href="heritage.html">Heritage</a></li>
@@ -486,9 +734,12 @@
             }
         }
 
-        // Smooth scrolling for navigation
+        // Enhanced 3D interactions and animations
         document.addEventListener('DOMContentLoaded', function() {
             createFloatingElements();
+            initParallaxEffects();
+            init3DCardEffects();
+            initCursorEffects();
 
             // Add click event to CTA button
             document.querySelector('.cta-button').addEventListener('click', function(e) {
@@ -498,28 +749,115 @@
                 });
             });
 
-            // Header scroll effect
+            // Enhanced header scroll effect with 3D
             window.addEventListener('scroll', function() {
                 const header = document.querySelector('.header');
-                if (window.scrollY > 100) {
+                const scrolled = window.scrollY;
+
+                if (scrolled > 100) {
                     header.style.background = 'rgba(0, 0, 0, 0.95)';
+                    header.style.transform = `translateY(${scrolled * 0.05}px) rotateX(${scrolled * 0.01}deg)`;
                 } else {
                     header.style.background = 'rgba(0, 0, 0, 0.9)';
+                    header.style.transform = `translateY(0px) rotateX(0deg)`;
+                }
+
+                // Parallax effect for hero section
+                const hero = document.querySelector('.hero-section');
+                const heroContent = document.querySelector('.hero-content');
+                if (hero && heroContent) {
+                    const parallaxValue = scrolled * 0.5;
+                    heroContent.style.transform = `translateY(${parallaxValue}px) scale(${1 - scrolled * 0.0005})`;
                 }
             });
+        });
 
-            // Watch card hover effects
+        // Initialize parallax effects
+        function initParallaxEffects() {
+            const elements = document.querySelectorAll('.watch-card');
+
+            window.addEventListener('scroll', () => {
+                const scrolled = window.scrollY;
+                elements.forEach((element, index) => {
+                    const rate = scrolled * -0.1 * (index + 1);
+                    element.style.transform = `translateZ(${rate}px) rotateX(${rate * 0.05}deg)`;
+                });
+            });
+        }
+
+        // Initialize 3D card effects
+        function init3DCardEffects() {
             const watchCards = document.querySelectorAll('.watch-card');
+
             watchCards.forEach(card => {
                 card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                    this.style.transform = 'translateY(-20px) rotateX(10deg) rotateY(5deg) scale(1.02)';
+                    this.style.zIndex = '10';
                 });
 
                 card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0) scale(1)';
+                    this.style.transform = 'translateY(0) rotateX(0deg) rotateY(0deg) scale(1)';
+                    this.style.zIndex = '1';
+                });
+
+                // 3D mouse movement effect
+                card.addEventListener('mousemove', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+
+                    const rotateX = (y - centerY) / 10;
+                    const rotateY = (centerX - x) / 10;
+
+                    this.style.transform = `
+                        translateY(-20px)
+                        rotateX(${rotateX}deg)
+                        rotateY(${rotateY}deg)
+                        scale(1.02)
+                    `;
                 });
             });
-        });
+        }
+
+        // Initialize cursor effects
+        function initCursorEffects() {
+            const cursor = document.createElement('div');
+            cursor.className = 'custom-cursor';
+            cursor.style.cssText = `
+                position: fixed;
+                width: 20px;
+                height: 20px;
+                background: radial-gradient(circle, rgba(212, 175, 55, 0.8), transparent);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                transition: all 0.3s ease;
+                transform: translate(-50%, -50%);
+            `;
+            document.body.appendChild(cursor);
+
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+
+            // Enhanced cursor on interactive elements
+            const interactiveElements = document.querySelectorAll('a, button, .watch-card');
+            interactiveElements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    cursor.style.transform = 'translate(-50%, -50%) scale(2)';
+                    cursor.style.background = 'radial-gradient(circle, rgba(212, 175, 55, 0.6), rgba(212, 175, 55, 0.2))';
+                });
+
+                element.addEventListener('mouseleave', () => {
+                    cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                    cursor.style.background = 'radial-gradient(circle, rgba(212, 175, 55, 0.8), transparent)';
+                });
+            });
+        }
 
         // Purchase modal functionality
         function showPurchaseModal(watchName) {
@@ -609,6 +947,20 @@
         // Update clock every second
         setInterval(updateWatchHands, 1000);
         updateWatchHands(); // Initial update
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('mobile-menu-open');
+        }
+
+        // Close mobile menu when clicking on nav items
+        document.querySelectorAll('.nav-item a').forEach(link => {
+            link.addEventListener('click', () => {
+                const navMenu = document.getElementById('navMenu');
+                navMenu.classList.remove('mobile-menu-open');
+            });
+        });
 
         // Add CSS animation for fade in
         const style = document.createElement('style');
