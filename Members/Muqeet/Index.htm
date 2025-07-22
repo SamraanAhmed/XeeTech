@@ -734,9 +734,12 @@
             }
         }
 
-        // Smooth scrolling for navigation
+        // Enhanced 3D interactions and animations
         document.addEventListener('DOMContentLoaded', function() {
             createFloatingElements();
+            initParallaxEffects();
+            init3DCardEffects();
+            initCursorEffects();
 
             // Add click event to CTA button
             document.querySelector('.cta-button').addEventListener('click', function(e) {
@@ -746,28 +749,115 @@
                 });
             });
 
-            // Header scroll effect
+            // Enhanced header scroll effect with 3D
             window.addEventListener('scroll', function() {
                 const header = document.querySelector('.header');
-                if (window.scrollY > 100) {
+                const scrolled = window.scrollY;
+
+                if (scrolled > 100) {
                     header.style.background = 'rgba(0, 0, 0, 0.95)';
+                    header.style.transform = `translateY(${scrolled * 0.05}px) rotateX(${scrolled * 0.01}deg)`;
                 } else {
                     header.style.background = 'rgba(0, 0, 0, 0.9)';
+                    header.style.transform = `translateY(0px) rotateX(0deg)`;
+                }
+
+                // Parallax effect for hero section
+                const hero = document.querySelector('.hero-section');
+                const heroContent = document.querySelector('.hero-content');
+                if (hero && heroContent) {
+                    const parallaxValue = scrolled * 0.5;
+                    heroContent.style.transform = `translateY(${parallaxValue}px) scale(${1 - scrolled * 0.0005})`;
                 }
             });
+        });
 
-            // Watch card hover effects
+        // Initialize parallax effects
+        function initParallaxEffects() {
+            const elements = document.querySelectorAll('.watch-card');
+
+            window.addEventListener('scroll', () => {
+                const scrolled = window.scrollY;
+                elements.forEach((element, index) => {
+                    const rate = scrolled * -0.1 * (index + 1);
+                    element.style.transform = `translateZ(${rate}px) rotateX(${rate * 0.05}deg)`;
+                });
+            });
+        }
+
+        // Initialize 3D card effects
+        function init3DCardEffects() {
             const watchCards = document.querySelectorAll('.watch-card');
+
             watchCards.forEach(card => {
                 card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                    this.style.transform = 'translateY(-20px) rotateX(10deg) rotateY(5deg) scale(1.02)';
+                    this.style.zIndex = '10';
                 });
 
                 card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0) scale(1)';
+                    this.style.transform = 'translateY(0) rotateX(0deg) rotateY(0deg) scale(1)';
+                    this.style.zIndex = '1';
+                });
+
+                // 3D mouse movement effect
+                card.addEventListener('mousemove', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+
+                    const rotateX = (y - centerY) / 10;
+                    const rotateY = (centerX - x) / 10;
+
+                    this.style.transform = `
+                        translateY(-20px)
+                        rotateX(${rotateX}deg)
+                        rotateY(${rotateY}deg)
+                        scale(1.02)
+                    `;
                 });
             });
-        });
+        }
+
+        // Initialize cursor effects
+        function initCursorEffects() {
+            const cursor = document.createElement('div');
+            cursor.className = 'custom-cursor';
+            cursor.style.cssText = `
+                position: fixed;
+                width: 20px;
+                height: 20px;
+                background: radial-gradient(circle, rgba(212, 175, 55, 0.8), transparent);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                transition: all 0.3s ease;
+                transform: translate(-50%, -50%);
+            `;
+            document.body.appendChild(cursor);
+
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+
+            // Enhanced cursor on interactive elements
+            const interactiveElements = document.querySelectorAll('a, button, .watch-card');
+            interactiveElements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    cursor.style.transform = 'translate(-50%, -50%) scale(2)';
+                    cursor.style.background = 'radial-gradient(circle, rgba(212, 175, 55, 0.6), rgba(212, 175, 55, 0.2))';
+                });
+
+                element.addEventListener('mouseleave', () => {
+                    cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                    cursor.style.background = 'radial-gradient(circle, rgba(212, 175, 55, 0.8), transparent)';
+                });
+            });
+        }
 
         // Purchase modal functionality
         function showPurchaseModal(watchName) {
