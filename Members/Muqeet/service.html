@@ -16,6 +16,7 @@
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
             color: #ffffff;
             overflow-x: hidden;
+            perspective: 1000px;
         }
 
         .header {
@@ -47,6 +48,16 @@
             display: flex;
             list-style: none;
             gap: 40px;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #d4af37;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 10px;
         }
 
         .nav-item {
@@ -109,6 +120,7 @@
             gap: 40px;
             max-width: 1200px;
             margin: 0 auto;
+            perspective: 1200px;
         }
 
         .service-card {
@@ -117,9 +129,17 @@
             padding: 40px;
             text-align: center;
             border: 1px solid #333;
-            transition: all 0.3s ease;
+            transition: all 0.6s ease;
             position: relative;
             overflow: hidden;
+            transform-style: preserve-3d;
+            animation: serviceFloat 10s ease-in-out infinite;
+        }
+
+        @keyframes serviceFloat {
+            0%, 100% { transform: translateY(0px) rotateY(0deg); }
+            33% { transform: translateY(-8px) rotateY(1deg); }
+            66% { transform: translateY(-4px) rotateY(-1deg); }
         }
 
         .service-card::before {
@@ -129,8 +149,27 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
-            transition: left 0.6s ease;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+            transition: left 0.8s ease;
+            z-index: 1;
+        }
+
+        .service-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(212, 175, 55, 0.08), transparent);
+            animation: serviceRotate 15s linear infinite;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        @keyframes serviceRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .service-card:hover::before {
@@ -138,15 +177,45 @@
         }
 
         .service-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-25px) rotateX(15deg) rotateY(8deg) scale(1.05);
             border-color: #d4af37;
-            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
+            box-shadow:
+                0 40px 80px rgba(212, 175, 55, 0.3),
+                0 0 40px rgba(212, 175, 55, 0.2);
+            animation: none;
+        }
+
+        .service-card:hover::after {
+            opacity: 1;
         }
 
         .service-icon {
             font-size: 4rem;
             color: #d4af37;
             margin-bottom: 25px;
+            transform-style: preserve-3d;
+            transition: all 0.6s ease;
+            animation: iconPulse 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.6));
+            z-index: 2;
+            position: relative;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% {
+                transform: scale(1) rotateY(0deg);
+                filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.4));
+            }
+            50% {
+                transform: scale(1.1) rotateY(10deg);
+                filter: drop-shadow(0 0 25px rgba(212, 175, 55, 0.8));
+            }
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.3) rotateY(360deg) translateZ(30px);
+            filter: drop-shadow(0 0 30px rgba(212, 175, 55, 1));
+            animation: none;
         }
 
         .service-title {
@@ -216,6 +285,7 @@
             max-width: 1000px;
             margin: 0 auto;
             position: relative;
+            transform-style: preserve-3d;
         }
 
         .process-step {
@@ -223,6 +293,8 @@
             align-items: center;
             margin-bottom: 60px;
             position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.6s ease;
         }
 
         .process-step:last-child {
@@ -242,6 +314,37 @@
             font-weight: bold;
             margin-right: 30px;
             flex-shrink: 0;
+            transform-style: preserve-3d;
+            transition: all 0.6s ease;
+            animation: numberGlow 5s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+
+        @keyframes numberGlow {
+            0%, 100% {
+                box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+                transform: scale(1) rotateZ(0deg);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
+                transform: scale(1.05) rotateZ(5deg);
+            }
+        }
+
+        .process-step:hover .step-number {
+            transform: scale(1.2) rotateY(360deg) translateZ(20px);
+            box-shadow: 0 0 40px rgba(212, 175, 55, 1);
+            animation: none;
+        }
+
+        .process-step:hover .step-content {
+            transform: translateY(-10px) rotateX(8deg) rotateY(5deg) scale(1.02);
+            border-color: #d4af37;
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.3);
+        }
+
+        .process-step:hover .step-content::before {
+            left: 100%;
         }
 
         .step-content {
@@ -250,6 +353,21 @@
             padding: 30px;
             border-radius: 15px;
             border: 1px solid #333;
+            transition: all 0.6s ease;
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transition: left 0.8s ease;
         }
 
         .step-title {
@@ -276,6 +394,38 @@
             padding: 60px;
             border-radius: 20px;
             border: 2px solid #d4af37;
+            transform-style: preserve-3d;
+            transition: all 0.6s ease;
+            position: relative;
+            overflow: hidden;
+            animation: warrantyPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes warrantyPulse {
+            0%, 100% {
+                transform: scale(1) rotateY(0deg);
+                box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            }
+            50% {
+                transform: scale(1.02) rotateY(1deg);
+                box-shadow: 0 0 50px rgba(212, 175, 55, 0.5);
+            }
+        }
+
+        .warranty-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.05), transparent);
+            animation: warrantyShimmer 6s linear infinite;
+        }
+
+        @keyframes warrantyShimmer {
+            0% { transform: translateX(-100%) rotate(0deg); }
+            100% { transform: translateX(100%) rotate(360deg); }
         }
 
         .warranty-icon {
@@ -359,6 +509,8 @@
             border-radius: 15px;
             border: 1px solid #333;
             overflow: hidden;
+            transform-style: preserve-3d;
+            transition: all 0.6s ease;
         }
 
         .faq-question {
@@ -367,11 +519,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
+            position: relative;
+            z-index: 2;
         }
 
         .faq-question:hover {
-            background: rgba(212, 175, 55, 0.1);
+            background: rgba(212, 175, 55, 0.15);
+            transform: translateY(-3px) rotateX(5deg) scale(1.02);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
         }
 
         .faq-question-text {
@@ -408,9 +565,41 @@
                 padding: 15px 20px;
             }
 
+            .mobile-menu-toggle {
+                display: block;
+            }
+
             .nav-menu {
-                gap: 15px;
-                font-size: 14px;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.95);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 20px;
+                gap: 20px;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                z-index: 999;
+            }
+
+            .nav-menu.mobile-menu-open {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .nav-item {
+                text-align: center;
+                border-bottom: 1px solid #333;
+                padding: 15px 0;
+            }
+
+            .nav-item:last-child {
+                border-bottom: none;
             }
 
             .page-header {
@@ -431,6 +620,10 @@
                 padding: 30px 20px;
             }
 
+            .service-icon {
+                font-size: 3rem;
+            }
+
             .process-section {
                 padding: 60px 20px;
             }
@@ -443,11 +636,16 @@
             .process-step {
                 flex-direction: column;
                 text-align: center;
+                margin-bottom: 40px;
             }
 
             .step-number {
                 margin-right: 0;
                 margin-bottom: 20px;
+            }
+
+            .step-content {
+                padding: 20px;
             }
 
             .warranty-section {
@@ -462,8 +660,37 @@
                 font-size: 2rem;
             }
 
+            .warranty-features {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .warranty-feature {
+                padding: 15px;
+            }
+
+            .warranty-feature-icon {
+                font-size: 1.5rem;
+            }
+
+            .warranty-feature-title {
+                font-size: 14px;
+            }
+
             .faq-section {
                 padding: 60px 20px;
+            }
+
+            .faq-question {
+                padding: 20px;
+            }
+
+            .faq-question-text {
+                font-size: 1rem;
+            }
+
+            .faq-answer.active {
+                padding: 0 20px 20px;
             }
         }
     </style>
@@ -472,7 +699,8 @@
     <header class="header">
         <nav class="nav-container">
             <a href="Index.htm" class="logo">LUXE TIMEPIECES</a>
-            <ul class="nav-menu">
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
                 <li class="nav-item"><a href="Index.htm">Home</a></li>
                 <li class="nav-item"><a href="collection.html">Collection</a></li>
                 <li class="nav-item"><a href="heritage.html">Heritage</a></li>
@@ -708,33 +936,160 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Header scroll effect
+            init3DServiceEffects();
+            initServiceCardInteractions();
+            initProcessStepAnimations();
+            initScrollParallax();
+
+            // Enhanced header scroll effect with 3D
             window.addEventListener('scroll', function() {
                 const header = document.querySelector('.header');
-                if (window.scrollY > 100) {
+                const scrolled = window.scrollY;
+
+                if (scrolled > 100) {
                     header.style.background = 'rgba(0, 0, 0, 0.95)';
+                    header.style.transform = `translateY(${scrolled * 0.02}px) rotateX(${scrolled * 0.01}deg)`;
                 } else {
                     header.style.background = 'rgba(0, 0, 0, 0.9)';
+                    header.style.transform = 'translateY(0px) rotateX(0deg)';
                 }
             });
 
-            // Animate service cards on scroll
+            // Enhanced 3D scroll animations
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
+                        entry.target.style.transform = 'translateY(0) rotateX(0deg) rotateY(0deg)';
                     }
                 });
             }, { threshold: 0.1 });
 
-            document.querySelectorAll('.service-card, .process-step').forEach(el => {
+            document.querySelectorAll('.service-card, .process-step').forEach((el, index) => {
                 el.style.opacity = '0';
-                el.style.transform = 'translateY(30px)';
-                el.style.transition = 'all 0.6s ease';
+                el.style.transform = 'translateY(50px) rotateX(20deg) rotateY(10deg)';
+                el.style.transition = `all 0.8s ease ${index * 0.1}s`;
                 observer.observe(el);
             });
         });
+
+        // Initialize 3D service effects
+        function init3DServiceEffects() {
+            const serviceCards = document.querySelectorAll('.service-card');
+
+            serviceCards.forEach(card => {
+                // Enhanced 3D hover with mouse tracking
+                card.addEventListener('mousemove', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+
+                    const rotateX = (y - centerY) / 10;
+                    const rotateY = (centerX - x) / 10;
+
+                    this.style.transform = `
+                        translateY(-25px)
+                        rotateX(${rotateX}deg)
+                        rotateY(${rotateY}deg)
+                        scale(1.05)
+                        translateZ(30px)
+                    `;
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) rotateX(0deg) rotateY(0deg) scale(1) translateZ(0)';
+                });
+
+                // Click animation
+                card.addEventListener('click', function() {
+                    this.style.animation = 'cardPulse 0.6s ease';
+                    setTimeout(() => {
+                        this.style.animation = '';
+                    }, 600);
+                });
+            });
+        }
+
+        // Initialize service card interactions
+        function initServiceCardInteractions() {
+            const serviceButtons = document.querySelectorAll('.service-btn');
+
+            serviceButtons.forEach(btn => {
+                btn.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) rotateX(10deg) scale(1.05)';
+                    this.style.boxShadow = '0 15px 30px rgba(212, 175, 55, 0.4)';
+                });
+
+                btn.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) rotateX(0deg) scale(1)';
+                    this.style.boxShadow = '';
+                });
+            });
+        }
+
+        // Initialize process step animations
+        function initProcessStepAnimations() {
+            const processSteps = document.querySelectorAll('.process-step');
+
+            processSteps.forEach((step, index) => {
+                step.addEventListener('mouseenter', function() {
+                    const stepNumber = this.querySelector('.step-number');
+                    const stepContent = this.querySelector('.step-content');
+
+                    stepNumber.style.transform = 'scale(1.2) rotateY(360deg) translateZ(20px)';
+                    stepContent.style.transform = 'translateY(-10px) rotateX(8deg) rotateY(5deg) scale(1.02)';
+                });
+
+                step.addEventListener('mouseleave', function() {
+                    const stepNumber = this.querySelector('.step-number');
+                    const stepContent = this.querySelector('.step-content');
+
+                    stepNumber.style.transform = 'scale(1) rotateY(0deg) translateZ(0)';
+                    stepContent.style.transform = 'translateY(0) rotateX(0deg) rotateY(0deg) scale(1)';
+                });
+            });
+        }
+
+        // Initialize scroll parallax effects
+        function initScrollParallax() {
+            window.addEventListener('scroll', () => {
+                const scrolled = window.scrollY;
+
+                // Service cards parallax
+                const serviceCards = document.querySelectorAll('.service-card');
+                serviceCards.forEach((card, index) => {
+                    const rate = scrolled * -0.05 * (index % 3 + 1);
+                    card.style.transform = `translateY(${rate}px) rotateY(${rate * 0.1}deg)`;
+                });
+
+                // Process steps parallax
+                const processSteps = document.querySelectorAll('.process-step');
+                processSteps.forEach((step, index) => {
+                    const rate = scrolled * 0.03 * (index % 2 + 1);
+                    step.style.transform = `translateY(${rate}px) rotateX(${rate * 0.05}deg)`;
+                });
+
+                // Warranty card parallax
+                const warrantyCard = document.querySelector('.warranty-card');
+                if (warrantyCard) {
+                    const rate = scrolled * 0.1;
+                    warrantyCard.style.transform = `translateY(${rate}px) rotateY(${rate * 0.02}deg)`;
+                }
+            });
+        }
+
+        // Add CSS for additional animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes cardPulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+            }
+        `;
+        document.head.appendChild(style);
 
         function toggleFaq(element) {
             const answer = element.nextElementSibling;
@@ -816,6 +1171,20 @@
                 }
             });
         }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('mobile-menu-open');
+        }
+
+        // Close mobile menu when clicking on nav items
+        document.querySelectorAll('.nav-item a').forEach(link => {
+            link.addEventListener('click', () => {
+                const navMenu = document.getElementById('navMenu');
+                navMenu.classList.remove('mobile-menu-open');
+            });
+        });
 
         // Add CSS animation
         const style = document.createElement('style');
