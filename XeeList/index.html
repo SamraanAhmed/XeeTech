@@ -1,0 +1,134 @@
+@@ .. @@
+     <!-- Main Content -->
+     <main class="main-content">
++        <!-- Advanced Search and Filter Section -->
++        <section class="search-filter-section" id="advanced-search">
++            <div class="container">
++                <div class="section-header">
++                    <h2 class="section-title">Advanced Search & Filters</h2>
++                    <p class="section-subtitle">Find your perfect anime with powerful search and filtering options</p>
++                </div>
++                
++                <div class="search-filter-container">
++                    <!-- Search Input -->
++                    <div class="search-section">
++                        <div class="search-input-group">
++                            <input type="text" id="advancedSearchInput" placeholder="Search anime by title..." class="advanced-search-input">
++                            <button id="advancedSearchBtn" class="advanced-search-btn">🔍 Search</button>
++                        </div>
++                    </div>
++                    
++                    <!-- Filter Controls -->
++                    <div class="filter-controls">
++                        <div class="filter-row">
++                            <!-- Genre Filter -->
++                            <div class="filter-group">
++                                <label class="filter-label">Genres</label>
++                                <div class="genre-filter" id="genreFilter">
++                                    <div class="genre-tags">
++                                        <span class="genre-tag" data-genre="1">Action</span>
++                                        <span class="genre-tag" data-genre="2">Adventure</span>
++                                        <span class="genre-tag" data-genre="4">Comedy</span>
++                                        <span class="genre-tag" data-genre="8">Drama</span>
++                                        <span class="genre-tag" data-genre="10">Fantasy</span>
++                                        <span class="genre-tag" data-genre="22">Romance</span>
++                                        <span class="genre-tag" data-genre="24">Sci-Fi</span>
++                                        <span class="genre-tag" data-genre="27">Shounen</span>
++                                        <span class="genre-tag" data-genre="25">Shoujo</span>
++                                        <span class="genre-tag" data-genre="37">Supernatural</span>
++                                    </div>
++                                </div>
++                            </div>
++                            
++                            <!-- Rating Filter -->
++                            <div class="filter-group">
++                                <label class="filter-label">Minimum Rating</label>
++                                <select id="ratingFilter" class="filter-select">
++                                    <option value="">Any Rating</option>
++                                    <option value="9">9.0+ (Masterpiece)</option>
++                                    <option value="8">8.0+ (Excellent)</option>
++                                    <option value="7">7.0+ (Good)</option>
++                                    <option value="6">6.0+ (Average)</option>
++                                    <option value="5">5.0+ (Below Average)</option>
++                                </select>
++                            </div>
++                        </div>
++                        
++                        <div class="filter-row">
++                            <!-- Status Filter -->
++                            <div class="filter-group">
++                                <label class="filter-label">Status</label>
++                                <select id="statusFilter" class="filter-select">
++                                    <option value="">Any Status</option>
++                                    <option value="airing">Currently Airing</option>
++                                    <option value="complete">Completed</option>
++                                    <option value="upcoming">Upcoming</option>
++                                </select>
++                            </div>
++                            
++                            <!-- Year Filter -->
++                            <div class="filter-group">
++                                <label class="filter-label">Year</label>
++                                <select id="yearFilter" class="filter-select">
++                                    <option value="">Any Year</option>
++                                    <option value="2024">2024</option>
++                                    <option value="2023">2023</option>
++                                    <option value="2022">2022</option>
++                                    <option value="2021">2021</option>
++                                    <option value="2020">2020</option>
++                                    <option value="2019">2019</option>
++                                    <option value="2018">2018</option>
++                                    <option value="2010-2017">2010-2017</option>
++                                    <option value="2000-2009">2000-2009</option>
++                                    <option value="1990-1999">1990-1999</option>
++                                </select>
++                            </div>
++                            
++                            <!-- Type Filter -->
++                            <div class="filter-group">
++                                <label class="filter-label">Type</label>
++                                <select id="typeFilter" class="filter-select">
++                                    <option value="">Any Type</option>
++                                    <option value="tv">TV Series</option>
++                                    <option value="movie">Movie</option>
++                                    <option value="ova">OVA</option>
++                                    <option value="special">Special</option>
++                                    <option value="ona">ONA</option>
++                                </select>
++                            </div>
++                        </div>
++                        
++                        <!-- Action Buttons -->
++                        <div class="filter-actions">
++                            <button id="applyFiltersBtn" class="apply-filters-btn">Apply Filters</button>
++                            <button id="clearFiltersBtn" class="clear-filters-btn">Clear All</button>
++                        </div>
++                    </div>
++                </div>
++                
++                <!-- Filter Results -->
++                <div class="filter-results" id="filterResults" style="display: none;">
++                    <div class="results-header">
++                        <h3 id="resultsTitle">Search Results</h3>
++                        <span id="resultsCount" class="results-count">0 results found</span>
++                    </div>
++                    <div class="loading" id="filterLoading" style="display: none;">
++                        <div class="spinner"></div>
++                        <p>Searching anime...</p>
++                    </div>
++                    <div class="anime-grid" id="filterGrid">
++                        <!-- Filtered results will be populated here -->
++                    </div>
++                </div>
++            </div>
++        </section>
++
+         <!-- Search Results Section (Hidden by default) -->
+         <section class="search-results" id="searchResults" style="display: none;">
+@@ .. @@
+                 <div class="footer-section">
+                     <h4>Quick Links</h4>
+                     <ul>
+                         <li><a href="#home">Home</a></li>
++                        <li><a href="#advanced-search">Advanced Search</a></li>
+                         <li><a href="#top-anime">Top Anime</a></li>
