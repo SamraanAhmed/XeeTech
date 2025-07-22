@@ -49,6 +49,16 @@
             gap: 40px;
         }
 
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #d4af37;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 10px;
+        }
+
         .nav-item {
             cursor: pointer;
             padding: 10px 0;
@@ -401,9 +411,41 @@
                 padding: 15px 20px;
             }
 
+            .mobile-menu-toggle {
+                display: block;
+            }
+
             .nav-menu {
-                gap: 15px;
-                font-size: 14px;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.95);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 20px;
+                gap: 20px;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                z-index: 999;
+            }
+
+            .nav-menu.mobile-menu-open {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .nav-item {
+                text-align: center;
+                border-bottom: 1px solid #333;
+                padding: 15px 0;
+            }
+
+            .nav-item:last-child {
+                border-bottom: none;
             }
 
             .page-header {
@@ -429,12 +471,27 @@
                 font-size: 2rem;
             }
 
+            .contact-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .contact-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+
             .form-row {
                 grid-template-columns: 1fr;
             }
 
             .locations-section {
                 padding: 60px 20px;
+            }
+
+            .locations-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
             }
 
             .location-card {
@@ -445,9 +502,26 @@
                 padding: 60px 20px;
             }
 
+            .hours-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .hours-card {
+                padding: 20px;
+            }
+
             .emergency-contact {
                 padding: 30px 20px;
                 margin-top: 40px;
+            }
+
+            .emergency-title {
+                font-size: 1.2rem;
+            }
+
+            .emergency-phone {
+                font-size: 1.1rem;
             }
         }
     </style>
@@ -456,7 +530,8 @@
     <header class="header">
         <nav class="nav-container">
             <a href="Index.htm" class="logo">LUXE TIMEPIECES</a>
-            <ul class="nav-menu">
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
                 <li class="nav-item"><a href="Index.htm">Home</a></li>
                 <li class="nav-item"><a href="collection.html">Collection</a></li>
                 <li class="nav-item"><a href="heritage.html">Heritage</a></li>
@@ -810,6 +885,20 @@
                 }
             });
         }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('mobile-menu-open');
+        }
+
+        // Close mobile menu when clicking on nav items
+        document.querySelectorAll('.nav-item a').forEach(link => {
+            link.addEventListener('click', () => {
+                const navMenu = document.getElementById('navMenu');
+                navMenu.classList.remove('mobile-menu-open');
+            });
+        });
 
         // Add CSS animation
         const style = document.createElement('style');
