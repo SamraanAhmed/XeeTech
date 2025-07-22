@@ -183,8 +183,39 @@ window.addEventListener('unhandledrejection', (event) => {
     event.preventDefault();
 });
 
+// Search functionality for home page
+function initializeHomeSearch() {
+    const homeSearchForm = document.getElementById('home-search-form');
+    const homeSearchInput = document.getElementById('home-search-input');
+
+    if (homeSearchForm && homeSearchInput) {
+        homeSearchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const query = homeSearchInput.value.trim();
+            if (query) {
+                // Navigate to search page with query parameter
+                window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+            }
+        });
+
+        // Also handle Enter key on input
+        homeSearchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const query = homeSearchInput.value.trim();
+                if (query) {
+                    window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+                }
+            }
+        });
+    }
+}
+
 // Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', initializeApp);
+document.addEventListener('DOMContentLoaded', () => {
+    initializeApp();
+    initializeHomeSearch();
+});
 
 // Add smooth scrolling for better UX
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
