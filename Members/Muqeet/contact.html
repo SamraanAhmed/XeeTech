@@ -16,6 +16,7 @@
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
             color: #ffffff;
             overflow-x: hidden;
+            perspective: 1000px;
         }
 
         .header {
@@ -119,6 +120,7 @@
             gap: 80px;
             max-width: 1400px;
             margin: 0 auto;
+            perspective: 1200px;
         }
 
         .contact-info {
@@ -126,6 +128,32 @@
             padding: 60px;
             border-radius: 20px;
             border: 1px solid #333;
+            transform-style: preserve-3d;
+            transition: all 0.6s ease;
+            position: relative;
+            overflow: hidden;
+            animation: infoFloat 8s ease-in-out infinite;
+        }
+
+        @keyframes infoFloat {
+            0%, 100% { transform: translateY(0px) rotateY(0deg); }
+            50% { transform: translateY(-10px) rotateY(2deg); }
+        }
+
+        .contact-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.05), transparent);
+            animation: infoShimmer 6s linear infinite;
+        }
+
+        @keyframes infoShimmer {
+            0% { transform: translateX(-100%) rotate(0deg); }
+            100% { transform: translateX(100%) rotate(360deg); }
         }
 
         .contact-form {
@@ -133,6 +161,32 @@
             padding: 60px;
             border-radius: 20px;
             border: 1px solid #333;
+            transform-style: preserve-3d;
+            transition: all 0.6s ease;
+            position: relative;
+            overflow: hidden;
+            animation: formFloat 8s ease-in-out infinite 0.5s;
+        }
+
+        @keyframes formFloat {
+            0%, 100% { transform: translateY(0px) rotateY(0deg); }
+            50% { transform: translateY(-8px) rotateY(-1deg); }
+        }
+
+        .contact-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(-45deg, transparent, rgba(212, 175, 55, 0.03), transparent);
+            animation: formShimmer 8s linear infinite;
+        }
+
+        @keyframes formShimmer {
+            0% { transform: translateX(-100%) rotate(0deg); }
+            100% { transform: translateX(100%) rotate(-360deg); }
         }
 
         .section-title {
@@ -150,12 +204,19 @@
             background: rgba(212, 175, 55, 0.05);
             border-radius: 15px;
             border: 1px solid rgba(212, 175, 55, 0.2);
-            transition: all 0.3s ease;
+            transition: all 0.6s ease;
+            transform-style: preserve-3d;
+            position: relative;
+            z-index: 2;
         }
 
         .contact-item:hover {
-            background: rgba(212, 175, 55, 0.1);
+            background: rgba(212, 175, 55, 0.15);
             border-color: #d4af37;
+            transform: translateY(-5px) rotateX(5deg) rotateY(3deg) scale(1.02);
+            box-shadow:
+                0 15px 30px rgba(212, 175, 55, 0.2),
+                0 0 20px rgba(212, 175, 55, 0.1);
         }
 
         .contact-icon {
@@ -208,13 +269,19 @@
             border-radius: 8px;
             color: #fff;
             font-size: 16px;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
+            position: relative;
         }
 
         .form-control:focus {
             outline: none;
             border-color: #d4af37;
             background: rgba(0, 0, 0, 0.5);
+            transform: translateY(-2px) rotateX(2deg) scale(1.02);
+            box-shadow:
+                0 10px 20px rgba(212, 175, 55, 0.2),
+                0 0 15px rgba(212, 175, 55, 0.3);
         }
 
         .form-control::placeholder {
@@ -242,12 +309,30 @@
             font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s ease;
         }
 
         .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+            transform: translateY(-8px) rotateX(10deg) scale(1.05);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.5);
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
         }
 
         .locations-section {
@@ -269,9 +354,17 @@
             border-radius: 20px;
             text-align: center;
             border: 1px solid #333;
-            transition: all 0.3s ease;
+            transition: all 0.6s ease;
             position: relative;
             overflow: hidden;
+            transform-style: preserve-3d;
+            animation: locationFloat 10s ease-in-out infinite;
+        }
+
+        @keyframes locationFloat {
+            0%, 100% { transform: translateY(0px) rotateY(0deg); }
+            33% { transform: translateY(-5px) rotateY(1deg); }
+            66% { transform: translateY(5px) rotateY(-1deg); }
         }
 
         .location-card::before {
@@ -290,9 +383,12 @@
         }
 
         .location-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-20px) rotateX(10deg) rotateY(5deg) scale(1.05);
             border-color: #d4af37;
-            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
+            box-shadow:
+                0 30px 60px rgba(212, 175, 55, 0.3),
+                0 0 30px rgba(212, 175, 55, 0.2);
+            animation: none;
         }
 
         .location-image {
@@ -305,6 +401,20 @@
             align-items: center;
             justify-content: center;
             font-size: 2.5rem;
+            transform-style: preserve-3d;
+            transition: all 0.6s ease;
+            animation: iconRotate 15s linear infinite;
+        }
+
+        @keyframes iconRotate {
+            0% { transform: rotateY(0deg) rotateZ(0deg); }
+            100% { transform: rotateY(360deg) rotateZ(5deg); }
+        }
+
+        .location-card:hover .location-image {
+            transform: rotateY(180deg) rotateX(20deg) scale(1.2);
+            animation: none;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
         }
 
         .location-name {
