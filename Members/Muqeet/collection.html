@@ -16,6 +16,7 @@
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
             color: #ffffff;
             overflow-x: hidden;
+            perspective: 1000px;
         }
 
         .header {
@@ -95,6 +96,27 @@
             padding: 150px 50px 100px;
             text-align: center;
             background: radial-gradient(ellipse at center, #1a1a1a 0%, #000000 100%);
+            position: relative;
+            transform-style: preserve-3d;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 30% 30%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+            animation: headerPulse 6s ease-in-out infinite;
+        }
+
+        @keyframes headerPulse {
+            0%, 100% { opacity: 0.5; transform: scale(1) rotate(0deg); }
+            50% { opacity: 0.8; transform: scale(1.1) rotate(2deg); }
         }
 
         .page-title {
@@ -102,6 +124,17 @@
             font-weight: 300;
             margin-bottom: 20px;
             color: #d4af37;
+            animation: titleFloat3D 4s ease-in-out infinite;
+            transform-style: preserve-3d;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes titleFloat3D {
+            0%, 100% { transform: translateY(0px) rotateX(0deg) rotateZ(0deg); }
+            25% { transform: translateY(-10px) rotateX(5deg) rotateZ(1deg); }
+            75% { transform: translateY(-5px) rotateX(-3deg) rotateZ(-1deg); }
         }
 
         .page-subtitle {
@@ -116,6 +149,24 @@
             padding: 50px;
             text-align: center;
             background: #111;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .filter-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.05), transparent);
+            animation: filterBg 8s linear infinite;
+        }
+
+        @keyframes filterBg {
+            0% { transform: translateX(-100%) rotate(0deg); }
+            100% { transform: translateX(100%) rotate(360deg); }
         }
 
         .filter-buttons {
@@ -132,15 +183,36 @@
             border: 2px solid #333;
             border-radius: 25px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             font-size: 14px;
             font-weight: 500;
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
+            transition: left 0.6s ease;
         }
 
         .filter-btn:hover, .filter-btn.active {
             background: #d4af37;
             color: #000;
             border-color: #d4af37;
+            transform: translateY(-3px) rotateY(5deg) scale(1.05);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .filter-btn:hover::before {
+            left: 100%;
         }
 
         .collection-grid {
@@ -156,10 +228,17 @@
             background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
             border-radius: 20px;
             padding: 40px;
-            transition: all 0.4s ease;
+            transition: all 0.6s ease;
             position: relative;
             overflow: hidden;
             border: 1px solid #333;
+            transform-style: preserve-3d;
+            animation: cardFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0px) rotateX(0deg); }
+            50% { transform: translateY(-5px) rotateX(2deg); }
         }
 
         .watch-card::before {
@@ -169,8 +248,27 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
-            transition: left 0.6s ease;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+            transition: left 0.8s ease;
+            z-index: 1;
+        }
+
+        .watch-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            animation: cardRotate 12s linear infinite;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        @keyframes cardRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .watch-card:hover::before {
@@ -178,9 +276,17 @@
         }
 
         .watch-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 25px 50px rgba(212, 175, 55, 0.2);
+            transform: translateY(-25px) rotateX(15deg) rotateY(8deg) scale(1.03);
+            box-shadow:
+                0 40px 80px rgba(212, 175, 55, 0.3),
+                0 0 0 1px rgba(212, 175, 55, 0.6),
+                inset 0 0 30px rgba(212, 175, 55, 0.1);
             border-color: #d4af37;
+            animation: none;
+        }
+
+        .watch-card:hover::after {
+            opacity: 1;
         }
 
         .watch-image {
@@ -194,6 +300,23 @@
             align-items: center;
             justify-content: center;
             border: 4px solid #d4af37;
+            transform-style: preserve-3d;
+            transition: all 0.6s ease;
+            z-index: 2;
+            animation: watchRotate 20s linear infinite;
+        }
+
+        @keyframes watchRotate {
+            0% { transform: rotateY(0deg) rotateZ(0deg); }
+            100% { transform: rotateY(360deg) rotateZ(5deg); }
+        }
+
+        .watch-card:hover .watch-image {
+            transform: rotateY(25deg) rotateX(15deg) translateZ(40px) scale(1.1);
+            box-shadow:
+                0 30px 60px rgba(0,0,0,0.6),
+                0 0 30px rgba(212, 175, 55, 0.5);
+            animation: none;
         }
 
         .watch-face {
@@ -312,12 +435,30 @@
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s ease;
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+            transform: translateY(-5px) rotateX(10deg) rotateY(5deg) scale(1.05);
+            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.5);
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
         }
 
         .btn-secondary {
@@ -329,11 +470,15 @@
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
+            position: relative;
         }
 
         .btn-secondary:hover {
-            background: rgba(212, 175, 55, 0.1);
+            background: rgba(212, 175, 55, 0.2);
+            transform: translateY(-3px) rotateX(5deg) scale(1.02);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
         }
 
         .stats-section {
