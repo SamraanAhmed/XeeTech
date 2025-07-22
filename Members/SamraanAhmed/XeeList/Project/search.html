@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Anime - XeeList</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <div class="header-top">
+                <h1 class="site-title">XeeList</h1>
+                <nav class="main-nav">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="search.html" class="nav-link active">Search</a>
+                </nav>
+            </div>
+            <p class="site-subtitle">Search & Discover Anime</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="search-page-section">
+            <div class="search-page-container">
+                <h2 class="page-title">Search Anime</h2>
+                
+                <!-- Search Form -->
+                <div class="search-form-container">
+                    <form class="advanced-search-form" id="search-form">
+                        <div class="search-input-group">
+                            <input type="text" 
+                                   class="search-input-large" 
+                                   id="search-input" 
+                                   placeholder="Enter anime name..."
+                                   autocomplete="off">
+                            <button type="submit" class="search-button-large">
+                                <span class="search-icon">🔍</span>
+                                Search
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Filter Section -->
+                <div class="filter-section">
+                    <button class="filter-toggle" id="filter-toggle">
+                        <span class="filter-icon">⚙️</span>
+                        Filters
+                        <span class="toggle-arrow">▼</span>
+                    </button>
+                    
+                    <div class="filter-container" id="filter-container">
+                        <div class="filter-grid">
+                            <div class="filter-group">
+                                <label class="filter-label">Genre</label>
+                                <select class="filter-select" id="genre-filter">
+                                    <option value="">All Genres</option>
+                                    <option value="1">Action</option>
+                                    <option value="2">Adventure</option>
+                                    <option value="4">Comedy</option>
+                                    <option value="8">Drama</option>
+                                    <option value="10">Fantasy</option>
+                                    <option value="14">Horror</option>
+                                    <option value="19">Music</option>
+                                    <option value="22">Romance</option>
+                                    <option value="24">Sci-Fi</option>
+                                    <option value="27">Shounen</option>
+                                    <option value="37">Supernatural</option>
+                                    <option value="41">Thriller</option>
+                                </select>
+                            </div>
+
+                            <div class="filter-group">
+                                <label class="filter-label">Type</label>
+                                <select class="filter-select" id="type-filter">
+                                    <option value="">All Types</option>
+                                    <option value="tv">TV</option>
+                                    <option value="movie">Movie</option>
+                                    <option value="ova">OVA</option>
+                                    <option value="special">Special</option>
+                                    <option value="ona">ONA</option>
+                                    <option value="music">Music</option>
+                                </select>
+                            </div>
+
+                            <div class="filter-group">
+                                <label class="filter-label">Status</label>
+                                <select class="filter-select" id="status-filter">
+                                    <option value="">All Status</option>
+                                    <option value="airing">Currently Airing</option>
+                                    <option value="complete">Completed</option>
+                                    <option value="upcoming">Upcoming</option>
+                                </select>
+                            </div>
+
+                            <div class="filter-group">
+                                <label class="filter-label">Minimum Rating</label>
+                                <select class="filter-select" id="rating-filter">
+                                    <option value="">Any Rating</option>
+                                    <option value="9">9.0+</option>
+                                    <option value="8">8.0+</option>
+                                    <option value="7">7.0+</option>
+                                    <option value="6">6.0+</option>
+                                    <option value="5">5.0+</option>
+                                </select>
+                            </div>
+
+                            <div class="filter-group">
+                                <label class="filter-label">Order By</label>
+                                <select class="filter-select" id="order-filter">
+                                    <option value="score">Score</option>
+                                    <option value="popularity">Popularity</option>
+                                    <option value="favorites">Favorites</option>
+                                    <option value="title">Title</option>
+                                    <option value="start_date">Start Date</option>
+                                </select>
+                            </div>
+
+                            <div class="filter-group">
+                                <label class="filter-label">Sort</label>
+                                <select class="filter-select" id="sort-filter">
+                                    <option value="desc">Descending</option>
+                                    <option value="asc">Ascending</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-actions">
+                            <button type="button" class="filter-apply-btn" id="apply-filters">Apply Filters</button>
+                            <button type="button" class="filter-clear-btn" id="clear-filters">Clear All</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div class="results-section">
+                    <div class="results-header">
+                        <h3 class="results-title" id="results-title">Search Results</h3>
+                        <div class="results-count" id="results-count"></div>
+                    </div>
+                    
+                    <div class="loading-indicator" id="search-loading" style="display: none;">
+                        Searching anime...
+                    </div>
+                    
+                    <div class="error-message" id="search-error" style="display: none;">
+                        No anime found. Try adjusting your search terms or filters.
+                    </div>
+                    
+                    <div class="search-results-grid" id="search-results"></div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination-container" id="pagination-container" style="display: none;">
+                        <button class="pagination-btn" id="prev-page" disabled>Previous</button>
+                        <div class="pagination-info" id="pagination-info">Page 1</div>
+                        <button class="pagination-btn" id="next-page">Next</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <p>&copy; 2024 XeeList. Powered by <a href="https://jikan.moe/" target="_blank">Jikan API</a></p>
+        </div>
+    </footer>
+
+    <script src="search.js"></script>
+</body>
+</html>

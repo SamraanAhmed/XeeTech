@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XeeList - Anime Database</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-container">
+            <div class="header-top">
+                <h1 class="site-title">XeeList</h1>
+                <nav class="main-nav">
+                    <a href="index.html" class="nav-link active">Home</a>
+                    <a href="search.html" class="nav-link">Search</a>
+                </nav>
+            </div>
+            <p class="site-subtitle">Your Ultimate Anime Database</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="hero-section">
+            <div class="hero-content">
+                <h2 class="hero-title">Discover Amazing Anime</h2>
+                <p class="hero-description">Explore top-rated anime, currently airing series, and all-time favorites</p>
+
+                <div class="search-container">
+                    <form class="search-form" id="home-search-form">
+                        <div class="search-input-container">
+                            <input type="text"
+                                   class="search-input"
+                                   id="home-search-input"
+                                   placeholder="Search for anime..."
+                                   autocomplete="off">
+                            <button type="submit" class="search-button">
+                                <span class="search-icon">🔍</span>
+                                Search
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section class="anime-section" id="top-anime-section">
+            <div class="section-container">
+                <h2 class="section-title">Top Anime of All Time</h2>
+                <div class="loading-indicator" id="top-anime-loading">Loading...</div>
+                <div class="error-message" id="top-anime-error" style="display: none;">
+                    Failed to load anime data. Please try again later.
+                </div>
+                <div class="anime-grid" id="top-anime-grid"></div>
+            </div>
+        </section>
+
+        <section class="anime-section" id="airing-anime-section">
+            <div class="section-container">
+                <h2 class="section-title">Top Airing Anime</h2>
+                <div class="loading-indicator" id="airing-anime-loading">Loading...</div>
+                <div class="error-message" id="airing-anime-error" style="display: none;">
+                    Failed to load anime data. Please try again later.
+                </div>
+                <div class="anime-grid" id="airing-anime-grid"></div>
+            </div>
+        </section>
+
+        <section class="anime-section" id="rated-anime-section">
+            <div class="section-container">
+                <h2 class="section-title">Best Rated Anime</h2>
+                <div class="loading-indicator" id="rated-anime-loading">Loading...</div>
+                <div class="error-message" id="rated-anime-error" style="display: none;">
+                    Failed to load anime data. Please try again later.
+                </div>
+                <div class="anime-grid" id="rated-anime-grid"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <p>&copy; 2024 XeeList. Powered by <a href="https://jikan.moe/" target="_blank">Jikan API</a></p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
