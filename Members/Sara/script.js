@@ -805,13 +805,179 @@ function initPerformanceMonitoring() {
 // Initialize performance monitoring
 initPerformanceMonitoring();
 
+// Shop page functions
+function loadShopProducts() {
+    const allProducts = [
+        ...sampleProducts,
+        // Add more products for each category
+        {
+            id: 7,
+            name: "Sleepy Kuromi Pillow",
+            price: 29.99,
+            originalPrice: 39.99,
+            image: "🛏️",
+            category: "plushies",
+            trending: false,
+            almostSoldOut: false
+        },
+        {
+            id: 8,
+            name: "Gothic Choker Necklace",
+            price: 15.99,
+            originalPrice: 22.99,
+            image: "📿",
+            category: "accessories",
+            trending: false,
+            almostSoldOut: true
+        },
+        {
+            id: 9,
+            name: "Nightmare Pajama Set",
+            price: 54.99,
+            originalPrice: 74.99,
+            image: "🩱",
+            category: "clothing",
+            trending: false,
+            almostSoldOut: false
+        },
+        {
+            id: 10,
+            name: "Cursed Coffee Mug",
+            price: 12.99,
+            originalPrice: 17.99,
+            image: "☕",
+            category: "home",
+            trending: false,
+            almostSoldOut: false
+        }
+    ];
+
+    // Load products by category
+    displayProductsByCategory('plushies', allProducts.filter(p => p.category === 'plushies'), 'plushiesGrid');
+    displayProductsByCategory('accessories', allProducts.filter(p => p.category === 'accessories'), 'accessoriesGrid');
+    displayProductsByCategory('clothing', allProducts.filter(p => p.category === 'clothing'), 'clothingGrid');
+    displayProductsByCategory('home', allProducts.filter(p => p.category === 'home'), 'homeGrid');
+}
+
+function displayProductsByCategory(category, products, gridId) {
+    const grid = document.getElementById(gridId);
+    if (!grid) return;
+
+    grid.innerHTML = products.map(product => createProductCard(product)).join('');
+
+    // Add event listeners
+    grid.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const productId = parseInt(e.target.dataset.productId);
+            addToCart(productId);
+        });
+    });
+}
+
+function setupCategoryFilters() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const sections = document.querySelectorAll('.category-section');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Update active button
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const category = btn.dataset.category;
+
+            // Show/hide sections
+            sections.forEach(section => {
+                if (category === 'all') {
+                    section.style.display = 'block';
+                } else {
+                    const sectionId = section.id;
+                    if (sectionId.includes(category)) {
+                        section.style.display = 'block';
+                    } else {
+                        section.style.display = 'none';
+                    }
+                }
+            });
+        });
+    });
+}
+
+function loadTrendingPageProducts() {
+    const hotNowProducts = sampleProducts.filter(p => p.trending).slice(0, 3);
+    const almostSoldOutProducts = sampleProducts.filter(p => p.almostSoldOut);
+    const risingStarsProducts = sampleProducts.slice(3, 6);
+
+    displayTrendingGrid('hotNowGrid', hotNowProducts);
+    displayTrendingGrid('almostSoldOutGrid', almostSoldOutProducts);
+    displayTrendingGrid('risingStarsGrid', risingStarsProducts);
+}
+
+function displayTrendingGrid(gridId, products) {
+    const grid = document.getElementById(gridId);
+    if (!grid) return;
+
+    grid.innerHTML = products.map(product => createProductCard(product)).join('');
+
+    // Add event listeners
+    grid.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const productId = parseInt(e.target.dataset.productId);
+            addToCart(productId);
+        });
+    });
+}
+
+// Update navigation highlighting based on current page
+function updateActiveNavigation() {
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        const href = link.getAttribute('href');
+        if (href === currentPage || (currentPage === 'index.html' && href === 'index.html')) {
+            link.classList.add('active');
+        }
+    });
+}
+
+// Initialize based on current page
+function initializePage() {
+    updateActiveNavigation();
+
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+    switch (currentPage) {
+        case 'shop.html':
+            loadShopProducts();
+            setupCategoryFilters();
+            break;
+        case 'trending.html':
+            loadTrendingPageProducts();
+            break;
+        case 'about.html':
+            // About page specific initialization if needed
+            break;
+        default:
+            // Homepage initialization
+            break;
+    }
+}
+
+// Call initialization on page load
+document.addEventListener('DOMContentLoaded', initializePage);
+
 // Export functions for potential external use
 window.KuromiShop = {
     addToCart,
     toggleCart,
     toggleChatbot,
     performSearch,
-    trackEvent
+    trackEvent,
+    loadShopProducts,
+    loadTrendingPageProducts,
+    setupCategoryFilters
 };
 
 console.log('🦇 Welcome to Kuromi\'s Nightmare Shop! 🖤');
