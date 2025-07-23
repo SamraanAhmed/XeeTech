@@ -117,12 +117,12 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeWebsite() {
     products = [...sampleProducts];
     trendingProducts = sampleProducts.filter(product => product.trending);
-    
+
     // Show chatbot notification after 3 seconds
     setTimeout(() => {
         showChatNotification();
     }, 3000);
-    
+
     // Auto-dismiss seasonal banner after 10 seconds
     setTimeout(() => {
         dismissSeasonalBanner();
@@ -135,7 +135,7 @@ function setupEventListeners() {
     if (bannerClose) {
         bannerClose.addEventListener('click', dismissSeasonalBanner);
     }
-    
+
     // Mobile menu toggle
     const mobileToggle = document.getElementById('mobileToggle');
     const navMenu = document.getElementById('navMenu');
@@ -145,17 +145,43 @@ function setupEventListeners() {
             mobileToggle.classList.toggle('active');
         });
     }
-    
+
     // Search functionality
+    const searchToggle = document.getElementById('searchToggle');
+    const searchDropdown = document.getElementById('searchDropdown');
     const searchInput = document.getElementById('searchInput');
+    const searchSubmit = document.getElementById('searchSubmit');
+
+    if (searchToggle && searchDropdown) {
+        searchToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleSearchDropdown();
+        });
+
+        // Close search when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!searchDropdown.contains(e.target) && !searchToggle.contains(e.target)) {
+                closeSearchDropdown();
+            }
+        });
+    }
+
     if (searchInput) {
         searchInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 performSearch(searchInput.value);
+                closeSearchDropdown();
             }
         });
     }
-    
+
+    if (searchSubmit) {
+        searchSubmit.addEventListener('click', () => {
+            performSearch(searchInput.value);
+            closeSearchDropdown();
+        });
+    }
+
     // Hero navigation
     const heroPrev = document.getElementById('heroPrev');
     const heroNext = document.getElementById('heroNext');
@@ -163,18 +189,18 @@ function setupEventListeners() {
         heroPrev.addEventListener('click', () => changeSlide(-1));
         heroNext.addEventListener('click', () => changeSlide(1));
     }
-    
+
     // Hero dots
     const heroDots = document.querySelectorAll('.hero-dot');
     heroDots.forEach((dot, index) => {
         dot.addEventListener('click', () => goToSlide(index));
     });
-    
+
     // Cart functionality
     const cartContainer = document.getElementById('cartContainer');
     const cartClose = document.getElementById('cartClose');
     const cartOverlay = document.getElementById('cartOverlay');
-    
+
     if (cartContainer) {
         cartContainer.addEventListener('click', toggleCart);
     }
@@ -184,13 +210,13 @@ function setupEventListeners() {
     if (cartOverlay) {
         cartOverlay.addEventListener('click', closeCart);
     }
-    
+
     // Chatbot functionality
     const chatbotToggle = document.getElementById('chatbotToggle');
     const chatbotClose = document.getElementById('chatbotClose');
     const chatbotSend = document.getElementById('chatbotSend');
     const chatbotInput = document.getElementById('chatbotInput');
-    
+
     if (chatbotToggle) {
         chatbotToggle.addEventListener('click', toggleChatbot);
     }
@@ -207,13 +233,13 @@ function setupEventListeners() {
             }
         });
     }
-    
+
     // Newsletter form
     const newsletterForm = document.getElementById('newsletterForm');
     if (newsletterForm) {
         newsletterForm.addEventListener('submit', handleNewsletterSignup);
     }
-    
+
     // Trending carousel
     const trendingPrev = document.getElementById('trendingPrev');
     const trendingNext = document.getElementById('trendingNext');
@@ -221,7 +247,7 @@ function setupEventListeners() {
         trendingPrev.addEventListener('click', () => moveTrendingCarousel(-1));
         trendingNext.addEventListener('click', () => moveTrendingCarousel(1));
     }
-    
+
     // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -247,18 +273,18 @@ function startHeroSlideshow() {
 function changeSlide(direction) {
     const slides = document.querySelectorAll('.hero-slide');
     const dots = document.querySelectorAll('.hero-dot');
-    
+
     if (slides.length === 0) return;
-    
+
     // Remove active class from current slide and dot
     slides[currentSlide].classList.remove('active');
     dots[currentSlide].classList.remove('active');
-    
+
     // Calculate new slide index
     currentSlide += direction;
     if (currentSlide >= slides.length) currentSlide = 0;
     if (currentSlide < 0) currentSlide = slides.length - 1;
-    
+
     // Add active class to new slide and dot
     slides[currentSlide].classList.add('active');
     dots[currentSlide].classList.add('active');
@@ -267,16 +293,16 @@ function changeSlide(direction) {
 function goToSlide(index) {
     const slides = document.querySelectorAll('.hero-slide');
     const dots = document.querySelectorAll('.hero-dot');
-    
+
     if (slides.length === 0) return;
-    
+
     // Remove active class from current slide and dot
     slides[currentSlide].classList.remove('active');
     dots[currentSlide].classList.remove('active');
-    
+
     // Set new slide index
     currentSlide = index;
-    
+
     // Add active class to new slide and dot
     slides[currentSlide].classList.add('active');
     dots[currentSlide].classList.add('active');
@@ -291,13 +317,13 @@ function loadProducts() {
 function displayBestsellers() {
     const bestsellersGrid = document.getElementById('bestsellersGrid');
     if (!bestsellersGrid) return;
-    
+
     const bestsellers = products.slice(0, 6); // Show first 6 products as bestsellers
-    
-    bestsellersGrid.innerHTML = bestsellers.map(product => 
+
+    bestsellersGrid.innerHTML = bestsellers.map(product =>
         createProductCard(product)
     ).join('');
-    
+
     // Add event listeners to "Add to Cart" buttons
     bestsellersGrid.querySelectorAll('.add-to-cart').forEach(button => {
         button.addEventListener('click', (e) => {
@@ -310,11 +336,11 @@ function displayBestsellers() {
 function displayTrending() {
     const trendingItems = document.getElementById('trendingItems');
     if (!trendingItems) return;
-    
-    trendingItems.innerHTML = trendingProducts.map(product => 
+
+    trendingItems.innerHTML = trendingProducts.map(product =>
         createTrendingCard(product)
     ).join('');
-    
+
     // Add event listeners to "Add to Cart" buttons
     trendingItems.querySelectorAll('.add-to-cart').forEach(button => {
         button.addEventListener('click', (e) => {
@@ -326,14 +352,14 @@ function displayTrending() {
 
 function createProductCard(product) {
     const discountPercent = Math.round((1 - product.price / product.originalPrice) * 100);
-    
+
     return `
         <div class="product-card">
             ${discountPercent > 0 ? `<div class="sale-badge">🔥 ${discountPercent}% OFF!</div>` : ''}
             <div class="product-image">${product.image}</div>
             <h3 class="product-title">${product.name}</h3>
             <div class="product-price">
-                ${product.originalPrice > product.price ? 
+                ${product.originalPrice > product.price ?
                     `<span class="original-price">$${product.originalPrice}</span>` : ''}
                 $${product.price}
             </div>
@@ -363,11 +389,11 @@ function moveTrendingCarousel(direction) {
     const trendingItems = document.getElementById('trendingItems');
     const itemWidth = 270; // 250px width + 20px gap
     const maxIndex = Math.max(0, trendingProducts.length - 3); // Show 3 items at once
-    
+
     currentTrendingIndex += direction;
     if (currentTrendingIndex > maxIndex) currentTrendingIndex = 0;
     if (currentTrendingIndex < 0) currentTrendingIndex = maxIndex;
-    
+
     const translateX = -currentTrendingIndex * itemWidth;
     trendingItems.style.transform = `translateX(${translateX}px)`;
 }
@@ -376,9 +402,9 @@ function moveTrendingCarousel(direction) {
 function addToCart(productId) {
     const product = products.find(p => p.id === productId);
     if (!product) return;
-    
+
     const existingItem = cart.find(item => item.id === productId);
-    
+
     if (existingItem) {
         existingItem.quantity += 1;
     } else {
@@ -387,7 +413,7 @@ function addToCart(productId) {
             quantity: 1
         });
     }
-    
+
     updateCartUI();
     saveCart();
     showCartAddedAnimation();
@@ -417,14 +443,14 @@ function updateCartUI() {
     const cartItems = document.getElementById('cartItems');
     const cartTotal = document.getElementById('cartTotal');
     const cartFooter = document.getElementById('cartFooter');
-    
+
     // Update cart count
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     if (cartCount) {
         cartCount.textContent = totalItems;
         cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
     }
-    
+
     // Update cart items
     if (cartItems) {
         if (cart.length === 0) {
@@ -438,12 +464,12 @@ function updateCartUI() {
         } else {
             cartItems.innerHTML = cart.map(item => createCartItem(item)).join('');
             if (cartFooter) cartFooter.style.display = 'block';
-            
+
             // Add event listeners to cart items
             cartItems.querySelectorAll('.quantity-btn').forEach(button => {
                 button.addEventListener('click', handleCartQuantityChange);
             });
-            
+
             cartItems.querySelectorAll('.remove-item').forEach(button => {
                 button.addEventListener('click', (e) => {
                     const productId = parseInt(e.target.dataset.productId);
@@ -452,7 +478,7 @@ function updateCartUI() {
             });
         }
     }
-    
+
     // Update cart total
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     if (cartTotal) {
@@ -482,7 +508,7 @@ function handleCartQuantityChange(e) {
     const productId = parseInt(e.target.dataset.productId);
     const action = e.target.dataset.action;
     const item = cart.find(item => item.id === productId);
-    
+
     if (item) {
         if (action === 'increase') {
             updateCartQuantity(productId, item.quantity + 1);
@@ -495,7 +521,7 @@ function handleCartQuantityChange(e) {
 function toggleCart() {
     const cartSidebar = document.getElementById('cartSidebar');
     const cartOverlay = document.getElementById('cartOverlay');
-    
+
     if (cartOpen) {
         closeCart();
     } else {
@@ -508,7 +534,7 @@ function toggleCart() {
 function closeCart() {
     const cartSidebar = document.getElementById('cartSidebar');
     const cartOverlay = document.getElementById('cartOverlay');
-    
+
     cartSidebar.classList.remove('active');
     cartOverlay.classList.remove('active');
     cartOpen = false;
@@ -532,7 +558,7 @@ function showCartAddedAnimation() {
 function toggleChatbot() {
     const chatbotWindow = document.getElementById('chatbotWindow');
     const chatNotification = document.getElementById('chatNotification');
-    
+
     if (chatbotOpen) {
         closeChatbot();
     } else {
@@ -553,15 +579,15 @@ function closeChatbot() {
 function sendChatMessage() {
     const chatbotInput = document.getElementById('chatbotInput');
     const message = chatbotInput.value.trim();
-    
+
     if (!message) return;
-    
+
     // Add user message
     addChatMessage(message, 'user');
-    
+
     // Clear input
     chatbotInput.value = '';
-    
+
     // Generate bot response
     setTimeout(() => {
         const response = generateBotResponse(message);
@@ -574,14 +600,14 @@ function addChatMessage(message, sender) {
     const messageDiv = document.createElement('div');
     messageDiv.className = `chat-message ${sender}-message`;
     messageDiv.innerHTML = `<div class="message-content">${message}</div>`;
-    
+
     chatbotMessages.appendChild(messageDiv);
     chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
 }
 
 function generateBotResponse(userMessage) {
     const message = userMessage.toLowerCase();
-    
+
     if (message.includes('nightmare')) {
         return getRandomResponse(chatbotResponses.nightmare);
     } else if (message.includes('help') || message.includes('?')) {
@@ -605,7 +631,7 @@ function showChatNotification() {
     const chatNotification = document.getElementById('chatNotification');
     if (chatNotification && !chatbotOpen) {
         chatNotification.style.display = 'flex';
-        
+
         // Auto-hide after 5 seconds
         setTimeout(() => {
             if (!chatbotOpen) {
@@ -616,14 +642,47 @@ function showChatNotification() {
 }
 
 // Search functionality
+let searchOpen = false;
+
+function toggleSearchDropdown() {
+    const searchDropdown = document.getElementById('searchDropdown');
+    if (searchOpen) {
+        closeSearchDropdown();
+    } else {
+        openSearchDropdown();
+    }
+}
+
+function openSearchDropdown() {
+    const searchDropdown = document.getElementById('searchDropdown');
+    const searchInput = document.getElementById('searchInput');
+
+    searchDropdown.classList.add('active');
+    searchOpen = true;
+
+    // Focus on input after animation
+    setTimeout(() => {
+        searchInput.focus();
+    }, 100);
+}
+
+function closeSearchDropdown() {
+    const searchDropdown = document.getElementById('searchDropdown');
+    const searchInput = document.getElementById('searchInput');
+
+    searchDropdown.classList.remove('active');
+    searchOpen = false;
+    searchInput.value = '';
+}
+
 function performSearch(query) {
     if (!query.trim()) return;
-    
-    const searchResults = products.filter(product => 
+
+    const searchResults = products.filter(product =>
         product.name.toLowerCase().includes(query.toLowerCase()) ||
         product.category.toLowerCase().includes(query.toLowerCase())
     );
-    
+
     // For demo purposes, just show an alert
     alert(`Found ${searchResults.length} spooky results for "${query}"! In a real implementation, this would show a search results page.`);
 }
@@ -632,7 +691,7 @@ function performSearch(query) {
 function handleNewsletterSignup(e) {
     e.preventDefault();
     const email = e.target.querySelector('.newsletter-input').value;
-    
+
     if (email) {
         // Simulate newsletter signup
         alert(`Welcome to Kuromi's cult... I mean club! 🦇 You'll receive spooky updates at ${email}`);
@@ -658,11 +717,11 @@ function checkKonamiCode() {
         'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight'
     ];
     let userInput = [];
-    
+
     document.addEventListener('keydown', (e) => {
         userInput.push(e.code);
         userInput = userInput.slice(-konamiCode.length);
-        
+
         if (userInput.join(',') === konamiCode.join(',')) {
             launchKuromiBatGame();
         }
@@ -692,15 +751,15 @@ addCSS(`
             opacity: 0;
         }
     }
-    
+
     .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
         transform: rotate(45deg) translate(5px, 5px);
     }
-    
+
     .mobile-menu-toggle.active .hamburger-line:nth-child(2) {
         opacity: 0;
     }
-    
+
     .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
         transform: rotate(-45deg) translate(7px, -6px);
     }
@@ -725,7 +784,7 @@ function initPerformanceMonitoring() {
         const loadTime = performance.now();
         trackEvent('page_load_time', { time: loadTime });
     });
-    
+
     // Monitor scroll behavior
     let scrollDepth = 0;
     window.addEventListener('scroll', () => {

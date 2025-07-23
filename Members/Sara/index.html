@@ -55,15 +55,15 @@
                     </div>
                     <a href="#trending" class="nav-link">Trending</a>
                     <a href="#about" class="nav-link">About</a>
-                    <a href="#contact" class="nav-link">Contact</a>
-                    <a href="#faq" class="nav-link">FAQ</a>
-                    <a href="#loyalty" class="nav-link">Loyalty Program</a>
                 </div>
 
-                <!-- Search Bar -->
-                <div class="search-container">
-                    <input type="text" class="search-input" placeholder="What's haunting you today?" id="searchInput">
-                    <button class="search-btn">🔍</button>
+                <!-- Search Icon -->
+                <div class="search-container" id="searchContainer">
+                    <button class="search-toggle" id="searchToggle">🔍</button>
+                    <div class="search-dropdown" id="searchDropdown">
+                        <input type="text" class="search-input" placeholder="What's haunting you today?" id="searchInput">
+                        <button class="search-submit" id="searchSubmit">Search</button>
+                    </div>
                 </div>
 
                 <!-- Cart Icon -->
@@ -107,7 +107,7 @@
                     <div class="hero-bg hero-bg-3"></div>
                 </div>
             </div>
-            
+
             <!-- Hero Navigation -->
             <div class="hero-nav">
                 <button class="hero-prev" id="heroPrev">‹</button>
@@ -188,7 +188,7 @@
                         <button type="submit" class="newsletter-btn">Subscribe</button>
                     </form>
                 </div>
-                
+
                 <div class="footer-section">
                     <h3 class="footer-title">Quick Links</h3>
                     <ul class="footer-links">
@@ -224,7 +224,7 @@
             <span class="kuromi-chat-face">😈</span>
             <div class="chat-notification" id="chatNotification">💬</div>
         </div>
-        
+
         <div class="chatbot-window" id="chatbotWindow">
             <div class="chatbot-header">
                 <div class="kuromi-avatar">😈</div>
@@ -234,7 +234,7 @@
                 </div>
                 <button class="chatbot-close" id="chatbotClose">×</button>
             </div>
-            
+
             <div class="chatbot-messages" id="chatbotMessages">
                 <div class="chat-message bot-message">
                     <div class="message-content">
@@ -242,7 +242,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="chatbot-input-container">
                 <input type="text" class="chatbot-input" id="chatbotInput" placeholder="Type your nightmare here...">
                 <button class="chatbot-send" id="chatbotSend">Send</button>
