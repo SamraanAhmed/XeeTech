@@ -1,11 +1,278 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sara hussain</title>
-  </head>
-  <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuromi's Nightmare Shop | Spookily Kawaii Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Quicksand:wght@300;400;500;600;700&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="Kuromi's Nightmare Shop - Your favorite gothic kawaii merchandise store">
+</head>
+<body>
+    <!-- Seasonal Banner -->
+    <div class="seasonal-banner" id="seasonalBanner">
+        <div class="banner-content">
+            <span class="bat-icon">🦇</span>
+            <span>Free Shipping Over $50! Limited Time Only</span>
+            <span class="bat-icon">🦇</span>
+        </div>
+        <button class="banner-close" id="bannerClose">
+            <span class="skull-x">💀</span>
+        </button>
+    </div>
 
-  </body>
+    <!-- Sticky Navbar -->
+    <nav class="navbar sticky-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo-text">
+                    <span class="kuromi-face">😈</span>
+                    <span class="shop-name">Kuromi's Nightmare Shop</span>
+                    <div class="logo-wink"></div>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" id="mobileToggle">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+
+            <!-- Navigation Menu -->
+            <div class="nav-menu" id="navMenu">
+                <div class="nav-links">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link">Shop <span class="dropdown-arrow">▼</span></a>
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-link">Plushies</a>
+                            <a href="#" class="dropdown-link">Accessories</a>
+                            <a href="#" class="dropdown-link">Clothing</a>
+                            <a href="#" class="dropdown-link">Home Decor</a>
+                        </div>
+                    </div>
+                    <a href="#trending" class="nav-link">Trending</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                    <a href="#faq" class="nav-link">FAQ</a>
+                    <a href="#loyalty" class="nav-link">Loyalty Program</a>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="What's haunting you today?" id="searchInput">
+                    <button class="search-btn">🔍</button>
+                </div>
+
+                <!-- Cart Icon -->
+                <div class="cart-container" id="cartContainer">
+                    <div class="cart-icon">
+                        <span class="kuromi-bag">👜</span>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Banner -->
+        <section class="hero-banner">
+            <div class="hero-slides" id="heroSlides">
+                <div class="hero-slide active">
+                    <div class="hero-content">
+                        <h1 class="hero-title">New Nightmare Arrivals</h1>
+                        <p class="hero-subtitle">Hauntingly cute collection just dropped</p>
+                        <button class="hero-cta">Shop the Nightmare</button>
+                    </div>
+                    <div class="hero-bg hero-bg-1"></div>
+                </div>
+                <div class="hero-slide">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Spooky Sale 30% Off</h1>
+                        <p class="hero-subtitle">Limited time hellish deals</p>
+                        <button class="hero-cta">Grab the Deals</button>
+                    </div>
+                    <div class="hero-bg hero-bg-2"></div>
+                </div>
+                <div class="hero-slide">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Kuromi's Favorites</h1>
+                        <p class="hero-subtitle">Hand-picked by the devil herself</p>
+                        <button class="hero-cta">See Collection</button>
+                    </div>
+                    <div class="hero-bg hero-bg-3"></div>
+                </div>
+            </div>
+            
+            <!-- Hero Navigation -->
+            <div class="hero-nav">
+                <button class="hero-prev" id="heroPrev">‹</button>
+                <div class="hero-dots" id="heroDots">
+                    <span class="hero-dot active" data-slide="0"></span>
+                    <span class="hero-dot" data-slide="1"></span>
+                    <span class="hero-dot" data-slide="2"></span>
+                </div>
+                <button class="hero-next" id="heroNext">›</button>
+            </div>
+        </section>
+
+        <!-- Bestsellers Section -->
+        <section class="bestsellers-section">
+            <div class="container">
+                <h2 class="section-title">
+                    <span class="bat-icon">🦇</span>
+                    Bestselling Nightmares
+                    <span class="bat-icon">🦇</span>
+                </h2>
+                <div class="products-grid" id="bestsellersGrid">
+                    <!-- Products will be dynamically loaded -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Trending Section -->
+        <section class="trending-section" id="trending">
+            <div class="container">
+                <h2 class="section-title">
+                    🔥 Other Hellspawns Love These!
+                </h2>
+                <div class="trending-carousel" id="trendingCarousel">
+                    <div class="trending-items" id="trendingItems">
+                        <!-- Trending items will be dynamically loaded -->
+                    </div>
+                    <button class="carousel-btn prev" id="trendingPrev">‹</button>
+                    <button class="carousel-btn next" id="trendingNext">›</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about-section" id="about">
+            <div class="container">
+                <div class="about-content">
+                    <h2 class="section-title">About Kuromi's Nightmare Shop</h2>
+                    <p class="about-text">
+                        Welcome to the most spookily kawaii corner of the internet! Our shop brings you the perfect blend of gothic charm and adorable chaos. Every item is carefully cursed... I mean, curated by Kuromi herself to bring a little nightmare magic to your everyday life.
+                    </p>
+                    <div class="trust-badges">
+                        <div class="trust-badge">
+                            <span class="badge-icon">👻</span>
+                            <span class="badge-text">100% Possession-Free</span>
+                        </div>
+                        <div class="trust-badge">
+                            <span class="badge-icon">🎀</span>
+                            <span class="badge-text">Kawaii Guaranteed</span>
+                        </div>
+                        <div class="trust-badge">
+                            <span class="badge-icon">🦇</span>
+                            <span class="badge-text">Hellhound Shipping</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 class="footer-title">Join Kuromi's Cult... I Mean Club!</h3>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="email" class="newsletter-input" placeholder="Your email for spooky updates" required>
+                        <button type="submit" class="newsletter-btn">Subscribe</button>
+                    </form>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#shop">Shop</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#loyalty">Loyalty Program</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3 class="footer-title">Follow the Nightmare</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon instagram">📷</a>
+                        <a href="#" class="social-icon twitter">🐦</a>
+                        <a href="#" class="social-icon tiktok">🎵</a>
+                        <a href="#" class="social-icon youtube">📺</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="copyright">© 2024 Kuromi's Nightmare Shop. All rights reserved.</p>
+                <p class="disclaimer">This is a fan-made website. Kuromi is a trademark of Sanrio Co., Ltd.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Kuromi Chatbot -->
+    <div class="chatbot-container" id="chatbotContainer">
+        <div class="chatbot-toggle" id="chatbotToggle">
+            <span class="kuromi-chat-face">😈</span>
+            <div class="chat-notification" id="chatNotification">💬</div>
+        </div>
+        
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <div class="kuromi-avatar">😈</div>
+                <div class="chatbot-title">
+                    <h4>Kuromi</h4>
+                    <p>Your nightmare assistant</p>
+                </div>
+                <button class="chatbot-close" id="chatbotClose">×</button>
+            </div>
+            
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="chat-message bot-message">
+                    <div class="message-content">
+                        Nyahaha~ Need help finding something spooky? 🦇
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chatbot-input-container">
+                <input type="text" class="chatbot-input" id="chatbotInput" placeholder="Type your nightmare here...">
+                <button class="chatbot-send" id="chatbotSend">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Your Nightmare Bag</h3>
+            <button class="cart-close" id="cartClose">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="empty-cart">
+                <span class="empty-icon">👜</span>
+                <p>Your nightmare bag is empty</p>
+            </div>
+        </div>
+        <div class="cart-footer" id="cartFooter" style="display: none;">
+            <div class="cart-total">
+                <span>Total: $<span id="cartTotal">0.00</span></span>
+            </div>
+            <button class="checkout-btn">Proceed to Summoning</button>
+        </div>
+    </div>
+
+    <!-- Cart Overlay -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+
+    <script src="script.js"></script>
+</body>
 </html>
