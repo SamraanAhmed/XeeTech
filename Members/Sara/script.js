@@ -357,15 +357,17 @@ function createProductCard(product) {
         <div class="product-card">
             ${discountPercent > 0 ? `<div class="sale-badge">🔥 ${discountPercent}% OFF!</div>` : ''}
             <div class="product-image">${product.image}</div>
-            <h3 class="product-title">${product.name}</h3>
-            <div class="product-price">
-                ${product.originalPrice > product.price ?
-                    `<span class="original-price">$${product.originalPrice}</span>` : ''}
-                $${product.price}
+            <div class="product-content">
+                <h3 class="product-title">${product.name}</h3>
+                <div class="product-price">
+                    ${product.originalPrice > product.price ?
+                        `<span class="original-price">$${product.originalPrice}</span>` : ''}
+                    $${product.price}
+                </div>
+                <button class="add-to-cart" data-product-id="${product.id}">
+                    Add to Nightmare Bag
+                </button>
             </div>
-            <button class="add-to-cart" data-product-id="${product.id}">
-                Add to Nightmare Bag
-            </button>
         </div>
     `;
 }
@@ -375,11 +377,13 @@ function createTrendingCard(product) {
         <div class="trending-item">
             ${product.almostSoldOut ? '<div class="almost-sold-out">Almost Sold Out!</div>' : ''}
             <div class="product-image">${product.image}</div>
-            <h3 class="product-title">${product.name}</h3>
-            <div class="product-price">$${product.price}</div>
-            <button class="add-to-cart" data-product-id="${product.id}">
-                Quick Add
-            </button>
+            <div class="product-content">
+                <h3 class="product-title">${product.name}</h3>
+                <div class="product-price">$${product.price}</div>
+                <button class="add-to-cart" data-product-id="${product.id}">
+                    Quick Add
+                </button>
+            </div>
         </div>
     `;
 }
@@ -387,7 +391,7 @@ function createTrendingCard(product) {
 // Trending carousel functionality
 function moveTrendingCarousel(direction) {
     const trendingItems = document.getElementById('trendingItems');
-    const itemWidth = 270; // 250px width + 20px gap
+    const itemWidth = 300; // 280px width + 20px gap
     const maxIndex = Math.max(0, trendingProducts.length - 3); // Show 3 items at once
 
     currentTrendingIndex += direction;
