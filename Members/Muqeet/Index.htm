@@ -56,16 +56,6 @@
             gap: 40px;
         }
 
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: #d4af37;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 10px;
-        }
-
         .nav-item {
             cursor: pointer;
             padding: 10px 0;
@@ -107,26 +97,6 @@
             background: radial-gradient(ellipse at center, #1a1a1a 0%, #000000 100%);
             perspective: 1200px;
             overflow: hidden;
-        }
-
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background:
-                radial-gradient(circle at 20% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 40% 60%, rgba(212, 175, 55, 0.08) 0%, transparent 50%);
-            animation: backgroundPulse 8s ease-in-out infinite;
-            z-index: 1;
-        }
-
-        @keyframes backgroundPulse {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(1.05); }
         }
 
         .hero-content {
@@ -189,24 +159,9 @@
             overflow: hidden;
         }
 
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.6s ease;
-        }
-
         .cta-button:hover {
             transform: translateY(-8px) rotateX(10deg) rotateY(5deg) scale(1.05);
             box-shadow: 0 20px 40px rgba(212, 175, 55, 0.5);
-        }
-
-        .cta-button:hover::before {
-            left: 100%;
         }
 
         .watch-showcase {
@@ -222,80 +177,92 @@
 
         .watch-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
             gap: 40px;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
         .watch-card {
             background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-            border-radius: 15px;
-            padding: 40px;
+            border-radius: 20px;
+            padding: 30px;
             transition: all 0.6s ease;
             position: relative;
             overflow: hidden;
             transform-style: preserve-3d;
             border: 1px solid rgba(212, 175, 55, 0.2);
-        }
-
-        .watch-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
-            transition: left 0.8s ease;
-            z-index: 1;
-        }
-
-        .watch-card::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(212, 175, 55, 0.1), transparent);
-            animation: cardRotate 10s linear infinite;
-            opacity: 0;
-            transition: opacity 0.6s ease;
-        }
-
-        @keyframes cardRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .watch-card:hover::before {
-            left: 100%;
+            min-height: 650px;
         }
 
         .watch-card:hover {
             transform: translateY(-20px) rotateX(10deg) rotateY(5deg) scale(1.02);
-            box-shadow:
-                0 30px 60px rgba(212, 175, 55, 0.3),
-                0 0 0 1px rgba(212, 175, 55, 0.5),
-                inset 0 0 20px rgba(212, 175, 55, 0.1);
+            box-shadow: 0 30px 60px rgba(212, 175, 55, 0.3);
         }
 
-        .watch-card:hover::after {
-            opacity: 1;
+        .watch-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .watch-brand {
+            font-size: 0.9rem;
+            color: #d4af37;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .like-button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: rgba(255, 255, 255, 0.5);
+            position: relative;
+        }
+
+        .like-button:hover,
+        .like-button.liked {
+            color: #ff4757;
+            transform: scale(1.2);
+        }
+
+        .like-button.liked::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, rgba(255, 71, 87, 0.3), transparent);
+            border-radius: 50%;
+            animation: heartPulse 0.6s ease;
+        }
+
+        @keyframes heartPulse {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+
+        .watch-image-container {
+            position: relative;
+            margin-bottom: 25px;
         }
 
         .watch-image {
-            width: 250px;
-            height: 250px;
+            width: 280px;
+            height: 280px;
             background: radial-gradient(circle, #333 30%, #111 70%);
             border-radius: 50%;
-            margin: 0 auto 30px;
+            margin: 0 auto;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 3px solid #d4af37;
+            border: 4px solid #d4af37;
             transform-style: preserve-3d;
             transition: all 0.6s ease;
             z-index: 2;
@@ -303,21 +270,19 @@
 
         .watch-card:hover .watch-image {
             transform: rotateY(20deg) rotateX(10deg) translateZ(30px);
-            box-shadow:
-                0 20px 40px rgba(0,0,0,0.5),
-                0 0 20px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 20px rgba(212, 175, 55, 0.4);
         }
 
         .watch-face {
-            width: 200px;
-            height: 200px;
+            width: 240px;
+            height: 240px;
             background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
             border-radius: 50%;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid #555;
+            border: 3px solid #555;
             transition: all 0.6s ease;
             transform-style: preserve-3d;
         }
@@ -328,112 +293,239 @@
             box-shadow: inset 0 0 30px rgba(212, 175, 55, 0.2);
         }
 
+        .watch-markers {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+        }
+
+        .watch-marker {
+            position: absolute;
+            background: #d4af37;
+            transform-origin: center;
+        }
+
+        .watch-marker.hour-marker {
+            width: 3px;
+            height: 15px;
+            top: 10px;
+            left: 50%;
+            margin-left: -1.5px;
+        }
+
+        .watch-marker.minute-marker {
+            width: 1px;
+            height: 8px;
+            top: 15px;
+            left: 50%;
+            margin-left: -0.5px;
+            background: rgba(212, 175, 55, 0.6);
+        }
+
+        .time-display {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: #d4af37;
+            font-family: 'Courier New', monospace;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 5px 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
         .watch-hands {
             position: relative;
         }
 
-        .hour-hand, .minute-hand {
+        .hour-hand, .minute-hand, .second-hand {
             position: absolute;
             background: #d4af37;
             border-radius: 2px;
             transform-origin: bottom center;
+            transition: transform 0.5s ease;
         }
 
         .hour-hand {
             width: 4px;
-            height: 50px;
+            height: 60px;
             left: 50%;
             top: 25%;
             margin-left: -2px;
-            animation: rotateHour 43200s linear infinite;
             filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.8));
+            z-index: 3;
         }
 
         .minute-hand {
-            width: 2px;
-            height: 70px;
+            width: 3px;
+            height: 80px;
             left: 50%;
-            top: 15%;
-            margin-left: -1px;
-            animation: rotateMinute 3600s linear infinite;
+            top: 17%;
+            margin-left: -1.5px;
             filter: drop-shadow(0 0 3px rgba(212, 175, 55, 0.6));
+            z-index: 2;
+        }
+
+        .second-hand {
+            width: 1px;
+            height: 90px;
+            left: 50%;
+            top: 12%;
+            margin-left: -0.5px;
+            background: #ff4757;
+            filter: drop-shadow(0 0 2px rgba(255, 71, 87, 0.8));
+            z-index: 4;
+        }
+
+        .watch-crown {
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 20px;
+            background: linear-gradient(135deg, #d4af37, #b8941f);
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(212, 175, 55, 0.5);
+        }
+
+        .watch-crown:hover {
+            background: linear-gradient(135deg, #f4e676, #d4af37);
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+        }
+
+        .watch-crown.active {
+            background: linear-gradient(135deg, #ff6b47, #ff4757);
+            animation: crownPulse 1s ease infinite;
+        }
+
+        @keyframes crownPulse {
+            0%, 100% { transform: translateY(-50%) scale(1.1); }
+            50% { transform: translateY(-50%) scale(1.2); }
+        }
+
+        .watch-details {
+            text-align: left;
+            margin-bottom: 25px;
         }
 
         .watch-name {
             font-size: 1.8rem;
-            margin-bottom: 15px;
+            margin-bottom: 8px;
             color: #d4af37;
+            font-weight: 600;
+        }
+
+        .watch-model {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 12px;
+            font-style: italic;
         }
 
         .watch-price {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: bold;
             color: #ffffff;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+        }
+
+        .watch-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .feature-tag {
+            background: rgba(212, 175, 55, 0.2);
+            color: #d4af37;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            border: 1px solid rgba(212, 175, 55, 0.3);
         }
 
         .watch-description {
             color: #aaa;
             line-height: 1.6;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
         }
 
-        .buy-button {
-            padding: 12px 30px;
+        .watch-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .action-button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .buy-now-button {
+            background: linear-gradient(45deg, #d4af37, #f4e676);
+            color: #000;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .buy-now-button:hover {
+            background: linear-gradient(45deg, #f4e676, #d4af37);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .add-to-cart-button {
             background: transparent;
             color: #d4af37;
             border: 2px solid #d4af37;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .add-to-cart-button:hover {
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.2);
+        }
+
+        .time-adjust-mode {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255, 71, 87, 0.9);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.75rem;
             font-weight: bold;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
         }
 
-        .buy-button:hover {
-            background: #d4af37;
-            color: #000;
-        }
-
-        .floating-elements {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .floating-element {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #d4af37;
-            border-radius: 50%;
-            animation: float3D 8s ease-in-out infinite;
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
-        }
-
-        @keyframes float3D {
-            0%, 100% {
-                transform: translateY(0px) translateX(0px) translateZ(0px) rotate(0deg);
-                opacity: 0;
-                box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
-            }
-            25% {
-                transform: translateY(-50px) translateX(20px) translateZ(50px) rotate(90deg);
-                opacity: 0.8;
-                box-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
-            }
-            50% {
-                transform: translateY(-100px) translateX(0px) translateZ(0px) rotate(180deg);
-                opacity: 1;
-                box-shadow: 0 0 30px rgba(212, 175, 55, 1);
-            }
-            75% {
-                transform: translateY(-50px) translateX(-20px) translateZ(-50px) rotate(270deg);
-                opacity: 0.8;
-                box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
-            }
+        .time-adjust-mode.active {
+            opacity: 1;
+            transform: scale(1);
         }
 
         .footer {
@@ -443,22 +535,6 @@
             border-top: 1px solid #333;
             position: relative;
             transform-style: preserve-3d;
-        }
-
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #d4af37, transparent);
-            animation: footerGlow 3s ease-in-out infinite;
-        }
-
-        @keyframes footerGlow {
-            0%, 100% { opacity: 0.3; transform: scaleX(0.5); }
-            50% { opacity: 1; transform: scaleX(1); }
         }
 
         .footer-content {
@@ -487,141 +563,59 @@
             position: relative;
         }
 
-        .social-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(212, 175, 55, 0.1);
-            border-radius: 50%;
-            transform: scale(0);
-            transition: all 0.4s ease;
-        }
-
         .social-link:hover {
             color: #f4e676;
             transform: translateY(-5px) rotateY(15deg) scale(1.1);
             text-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
         }
 
-        .social-link:hover::before {
-            transform: scale(2);
+        .cart-notification {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transform: translateX(100%);
+            transition: transform 0.4s ease;
+            z-index: 10000;
+            font-weight: bold;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .cart-notification.show {
+            transform: translateX(0);
         }
-
-        @keyframes rotateHour {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes rotateMinute {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-
 
         @media (max-width: 768px) {
-            .header {
-                padding: 15px 20px;
-            }
-
-            .mobile-menu-toggle {
-                display: block;
-            }
-
-            .nav-menu {
-                position: fixed;
-                top: 70px;
-                left: 0;
-                width: 100%;
-                background: rgba(0, 0, 0, 0.95);
-                backdrop-filter: blur(10px);
-                flex-direction: column;
-                padding: 20px;
-                gap: 20px;
-                transform: translateY(-100%);
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s ease;
-                z-index: 999;
-            }
-
-            .nav-menu.mobile-menu-open {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
-            }
-
-            .nav-item {
-                text-align: center;
-                border-bottom: 1px solid #333;
-                padding: 15px 0;
-            }
-
-            .nav-item:last-child {
-                border-bottom: none;
-            }
-
-            .hero-title {
-                font-size: 2.5rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1.2rem;
-            }
-
-            .watch-showcase {
-                padding: 50px 20px;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
             .watch-grid {
                 grid-template-columns: 1fr;
                 gap: 30px;
+                padding: 0 20px;
             }
-
+            
             .watch-card {
-                padding: 30px 20px;
+                padding: 25px 20px;
+                min-height: auto;
             }
-
+            
             .watch-image {
-                width: 200px;
-                height: 200px;
+                width: 220px;
+                height: 220px;
             }
-
+            
             .watch-face {
-                width: 160px;
-                height: 160px;
+                width: 180px;
+                height: 180px;
             }
-
-            .cta-button {
-                padding: 12px 30px;
-                font-size: 14px;
-            }
-
-            .footer {
-                padding: 30px 20px;
-            }
-
-            .social-links {
+            
+            .watch-actions {
                 flex-direction: column;
-                gap: 15px;
+            }
+            
+            .action-button {
+                width: 100%;
             }
         }
     </style>
@@ -630,8 +624,7 @@
     <header class="header">
         <nav class="nav-container">
             <div class="logo">LUXE TIMEPIECES</div>
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
-            <ul class="nav-menu" id="navMenu">
+            <ul class="nav-menu">
                 <li class="nav-item"><a href="Index.htm">Home</a></li>
                 <li class="nav-item"><a href="collection.html">Collection</a></li>
                 <li class="nav-item"><a href="heritage.html">Heritage</a></li>
@@ -642,7 +635,6 @@
     </header>
 
     <section class="hero-section">
-        <div class="floating-elements" id="floatingElements"></div>
         <div class="hero-content">
             <h1 class="hero-title">A CROWN FOR EVERY ACHIEVEMENT</h1>
             <p class="hero-subtitle">Precision. Prestige. Perfection.</p>
@@ -653,55 +645,181 @@
     <section class="watch-showcase" id="collection">
         <h2 class="section-title">ICONIC TIMEPIECES</h2>
         <div class="watch-grid">
-            <div class="watch-card">
-                <div class="watch-image">
-                    <div class="watch-face">
-                        <div class="watch-hands">
-                            <div class="hour-hand"></div>
-                            <div class="minute-hand"></div>
-                        </div>
-                    </div>
+            <div class="watch-card" data-watch-id="submariner">
+                <div class="watch-header">
+                    <div class="watch-brand">LUXE TIMEPIECES</div>
+                    <button class="like-button" onclick="toggleLike(this)">♡</button>
                 </div>
-                <h3 class="watch-name">Submariner Professional</h3>
-                <div class="watch-price">$8,950</div>
-                <p class="watch-description">
-                    A legendary dive watch crafted for the depths. Waterproof to 300 meters with unidirectional rotating bezel and Chromalight display.
-                </p>
-                <button class="buy-button" onclick="showPurchaseModal('Submariner Professional')">Inquire Now</button>
+                
+                <div class="watch-image-container">
+                    <div class="time-adjust-mode">TIME ADJUST</div>
+                    <div class="watch-image">
+                        <div class="watch-face">
+                            <div class="watch-markers">
+                                <!-- Hour markers -->
+                                <div class="watch-marker hour-marker" style="transform: rotate(0deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(30deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(60deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(90deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(120deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(150deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(180deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(210deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(240deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(270deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(300deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(330deg)"></div>
+                            </div>
+                            <div class="watch-hands">
+                                <div class="hour-hand"></div>
+                                <div class="minute-hand"></div>
+                                <div class="second-hand"></div>
+                            </div>
+                        </div>
+                        <div class="watch-crown" onclick="toggleTimeAdjust('submariner')"></div>
+                    </div>
+                    <div class="time-display">--:--:--</div>
+                </div>
+
+                <div class="watch-details">
+                    <h3 class="watch-name">Submariner Professional</h3>
+                    <div class="watch-model">Model: SUB-001-2024</div>
+                    <div class="watch-price">$8,950</div>
+                    
+                    <div class="watch-features">
+                        <span class="feature-tag">Waterproof 300m</span>
+                        <span class="feature-tag">Automatic</span>
+                        <span class="feature-tag">Sapphire Crystal</span>
+                        <span class="feature-tag">Swiss Made</span>
+                    </div>
+                    
+                    <p class="watch-description">
+                        A legendary dive watch crafted for the depths. Waterproof to 300 meters with unidirectional rotating bezel and Chromalight display. Perfect for underwater adventures and everyday luxury.
+                    </p>
+                </div>
+
+                <div class="watch-actions">
+                    <button class="action-button buy-now-button" onclick="buyNow('Submariner Professional', 8950)">Buy Now</button>
+                    <button class="action-button add-to-cart-button" onclick="addToCart('Submariner Professional', 8950)">Add to Cart</button>
+                </div>
             </div>
 
-            <div class="watch-card">
-                <div class="watch-image">
-                    <div class="watch-face">
-                        <div class="watch-hands">
-                            <div class="hour-hand"></div>
-                            <div class="minute-hand"></div>
-                        </div>
-                    </div>
+            <div class="watch-card" data-watch-id="daytona">
+                <div class="watch-header">
+                    <div class="watch-brand">LUXE TIMEPIECES</div>
+                    <button class="like-button" onclick="toggleLike(this)">♡</button>
                 </div>
-                <h3 class="watch-name">Daytona Racing</h3>
-                <div class="watch-price">$13,150</div>
-                <p class="watch-description">
-                    Born on the racetrack, designed for victory. Chronograph functionality with tachymetric scale for professional racing timing.
-                </p>
-                <button class="buy-button" onclick="showPurchaseModal('Daytona Racing')">Inquire Now</button>
+                
+                <div class="watch-image-container">
+                    <div class="time-adjust-mode">TIME ADJUST</div>
+                    <div class="watch-image">
+                        <div class="watch-face">
+                            <div class="watch-markers">
+                                <!-- Hour markers -->
+                                <div class="watch-marker hour-marker" style="transform: rotate(0deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(30deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(60deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(90deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(120deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(150deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(180deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(210deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(240deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(270deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(300deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(330deg)"></div>
+                            </div>
+                            <div class="watch-hands">
+                                <div class="hour-hand"></div>
+                                <div class="minute-hand"></div>
+                                <div class="second-hand"></div>
+                            </div>
+                        </div>
+                        <div class="watch-crown" onclick="toggleTimeAdjust('daytona')"></div>
+                    </div>
+                    <div class="time-display">--:--:--</div>
+                </div>
+
+                <div class="watch-details">
+                    <h3 class="watch-name">Daytona Racing</h3>
+                    <div class="watch-model">Model: DAY-002-2024</div>
+                    <div class="watch-price">$13,150</div>
+                    
+                    <div class="watch-features">
+                        <span class="feature-tag">Chronograph</span>
+                        <span class="feature-tag">Tachymeter</span>
+                        <span class="feature-tag">Ceramic Bezel</span>
+                        <span class="feature-tag">Racing Edition</span>
+                    </div>
+                    
+                    <p class="watch-description">
+                        Born on the racetrack, designed for victory. Chronograph functionality with tachymetric scale for professional racing timing. The ultimate timepiece for speed enthusiasts and collectors.
+                    </p>
+                </div>
+
+                <div class="watch-actions">
+                    <button class="action-button buy-now-button" onclick="buyNow('Daytona Racing', 13150)">Buy Now</button>
+                    <button class="action-button add-to-cart-button" onclick="addToCart('Daytona Racing', 13150)">Add to Cart</button>
+                </div>
             </div>
 
-            <div class="watch-card">
-                <div class="watch-image">
-                    <div class="watch-face">
-                        <div class="watch-hands">
-                            <div class="hour-hand"></div>
-                            <div class="minute-hand"></div>
-                        </div>
-                    </div>
+            <div class="watch-card" data-watch-id="gmt">
+                <div class="watch-header">
+                    <div class="watch-brand">LUXE TIMEPIECES</div>
+                    <button class="like-button" onclick="toggleLike(this)">♡</button>
                 </div>
-                <h3 class="watch-name">GMT Master II</h3>
-                <div class="watch-price">$9,700</div>
-                <p class="watch-description">
-                    For those who cross time zones. Dual time zone functionality with 24-hour graduated rotatable bezel in Cerachrom.
-                </p>
-                <button class="buy-button" onclick="showPurchaseModal('GMT Master II')">Inquire Now</button>
+                
+                <div class="watch-image-container">
+                    <div class="time-adjust-mode">TIME ADJUST</div>
+                    <div class="watch-image">
+                        <div class="watch-face">
+                            <div class="watch-markers">
+                                <!-- Hour markers -->
+                                <div class="watch-marker hour-marker" style="transform: rotate(0deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(30deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(60deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(90deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(120deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(150deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(180deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(210deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(240deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(270deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(300deg)"></div>
+                                <div class="watch-marker hour-marker" style="transform: rotate(330deg)"></div>
+                            </div>
+                            <div class="watch-hands">
+                                <div class="hour-hand"></div>
+                                <div class="minute-hand"></div>
+                                <div class="second-hand"></div>
+                            </div>
+                        </div>
+                        <div class="watch-crown" onclick="toggleTimeAdjust('gmt')"></div>
+                    </div>
+                    <div class="time-display">--:--:--</div>
+                </div>
+
+                <div class="watch-details">
+                    <h3 class="watch-name">GMT Master II</h3>
+                    <div class="watch-model">Model: GMT-003-2024</div>
+                    <div class="watch-price">$9,700</div>
+                    
+                    <div class="watch-features">
+                        <span class="feature-tag">Dual Time Zone</span>
+                        <span class="feature-tag">24h Bezel</span>
+                        <span class="feature-tag">Cerachrom</span>
+                        <span class="feature-tag">GMT Function</span>
+                    </div>
+                    
+                    <p class="watch-description">
+                        For those who cross time zones. Dual time zone functionality with 24-hour graduated rotatable bezel in Cerachrom. Essential for international travelers and aviation professionals.
+                    </p>
+                </div>
+
+                <div class="watch-actions">
+                    <button class="action-button buy-now-button" onclick="buyNow('GMT Master II', 9700)">Buy Now</button>
+                    <button class="action-button add-to-cart-button" onclick="addToCart('GMT Master II', 9700)">Add to Cart</button>
+                </div>
             </div>
         </div>
     </section>
@@ -718,90 +836,282 @@
         </div>
     </footer>
 
-    <script>
-        // Create floating elements animation
-        function createFloatingElements() {
-            const container = document.getElementById('floatingElements');
-            const elementCount = 15;
+    <div class="cart-notification" id="cartNotification">
+        Item added to cart successfully!
+    </div>
 
-            for (let i = 0; i < elementCount; i++) {
-                const element = document.createElement('div');
-                element.className = 'floating-element';
-                element.style.left = Math.random() * 100 + '%';
-                element.style.animationDelay = Math.random() * 6 + 's';
-                element.style.animationDuration = (Math.random() * 3 + 6) + 's';
-                container.appendChild(element);
+    <script>
+        // Watch time management
+        const watchTimes = {
+            submariner: { hours: 0, minutes: 0, seconds: 0, adjustMode: false },
+            daytona: { hours: 0, minutes: 0, seconds: 0, adjustMode: false },
+            gmt: { hours: 0, minutes: 0, seconds: 0, adjustMode: false }
+        };
+
+        let dragStart = { x: 0, y: 0 };
+        let isDragging = false;
+        let activeWatch = null;
+
+        // Initialize real time for all watches
+        function initializeWatches() {
+            const now = new Date();
+            Object.keys(watchTimes).forEach(watchId => {
+                watchTimes[watchId].hours = now.getHours() % 12;
+                watchTimes[watchId].minutes = now.getMinutes();
+                watchTimes[watchId].seconds = now.getSeconds();
+                updateWatchDisplay(watchId);
+            });
+        }
+
+        // Update watch display
+        function updateWatchDisplay(watchId) {
+            const watch = watchTimes[watchId];
+            const card = document.querySelector(`[data-watch-id="${watchId}"]`);
+            
+            if (!card) return;
+
+            const hourHand = card.querySelector('.hour-hand');
+            const minuteHand = card.querySelector('.minute-hand');
+            const secondHand = card.querySelector('.second-hand');
+            const timeDisplay = card.querySelector('.time-display');
+
+            // Calculate angles
+            const hourAngle = (watch.hours * 30) + (watch.minutes * 0.5);
+            const minuteAngle = watch.minutes * 6;
+            const secondAngle = watch.seconds * 6;
+
+            // Update hands
+            if (hourHand) hourHand.style.transform = `rotate(${hourAngle}deg)`;
+            if (minuteHand) minuteHand.style.transform = `rotate(${minuteAngle}deg)`;
+            if (secondHand) secondHand.style.transform = `rotate(${secondAngle}deg)`;
+
+            // Update digital display
+            if (timeDisplay) {
+                const displayHours = watch.hours === 0 ? 12 : watch.hours;
+                const formattedTime = `${displayHours.toString().padStart(2, '0')}:${watch.minutes.toString().padStart(2, '0')}:${watch.seconds.toString().padStart(2, '0')}`;
+                timeDisplay.textContent = formattedTime;
             }
         }
 
-        // Enhanced 3D interactions and animations
-        document.addEventListener('DOMContentLoaded', function() {
-            createFloatingElements();
-            initParallaxEffects();
-            init3DCardEffects();
-            initCursorEffects();
+        // Toggle time adjustment mode
+        function toggleTimeAdjust(watchId) {
+            const watch = watchTimes[watchId];
+            const card = document.querySelector(`[data-watch-id="${watchId}"]`);
+            const crown = card.querySelector('.watch-crown');
+            const adjustMode = card.querySelector('.time-adjust-mode');
 
-            // Add click event to CTA button
-            document.querySelector('.cta-button').addEventListener('click', function(e) {
-                e.preventDefault();
-                document.getElementById('collection').scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
+            watch.adjustMode = !watch.adjustMode;
+            
+            if (watch.adjustMode) {
+                crown.classList.add('active');
+                adjustMode.classList.add('active');
+                activeWatch = watchId;
+                
+                // Add mouse event listeners for time adjustment
+                card.addEventListener('mousedown', startTimeAdjust);
+                document.addEventListener('mousemove', adjustTime);
+                document.addEventListener('mouseup', stopTimeAdjust);
+                
+                // Auto-exit adjust mode after 10 seconds
+                setTimeout(() => {
+                    if (watch.adjustMode) {
+                        toggleTimeAdjust(watchId);
+                    }
+                }, 10000);
+            } else {
+                crown.classList.remove('active');
+                adjustMode.classList.remove('active');
+                activeWatch = null;
+                
+                // Remove event listeners
+                card.removeEventListener('mousedown', startTimeAdjust);
+                document.removeEventListener('mousemove', adjustTime);
+                document.removeEventListener('mouseup', stopTimeAdjust);
+            }
+        }
 
-            // Enhanced header scroll effect with 3D
-            window.addEventListener('scroll', function() {
-                const header = document.querySelector('.header');
-                const scrolled = window.scrollY;
+        // Start time adjustment
+        function startTimeAdjust(e) {
+            if (!activeWatch) return;
+            
+            isDragging = true;
+            dragStart.x = e.clientX;
+            dragStart.y = e.clientY;
+            e.preventDefault();
+        }
 
-                if (scrolled > 100) {
-                    header.style.background = 'rgba(0, 0, 0, 0.95)';
-                    header.style.transform = `translateY(${scrolled * 0.05}px) rotateX(${scrolled * 0.01}deg)`;
-                } else {
-                    header.style.background = 'rgba(0, 0, 0, 0.9)';
-                    header.style.transform = `translateY(0px) rotateX(0deg)`;
+        // Adjust time based on mouse movement
+        function adjustTime(e) {
+            if (!isDragging || !activeWatch) return;
+
+            const deltaX = e.clientX - dragStart.x;
+            const deltaY = e.clientY - dragStart.y;
+            const watch = watchTimes[activeWatch];
+
+            // Horizontal movement adjusts minutes
+            if (Math.abs(deltaX) > 5) {
+                const minuteChange = Math.floor(deltaX / 10);
+                watch.minutes = (watch.minutes + minuteChange + 60) % 60;
+                dragStart.x = e.clientX;
+            }
+
+            // Vertical movement adjusts hours
+            if (Math.abs(deltaY) > 5) {
+                const hourChange = Math.floor(-deltaY / 15);
+                watch.hours = (watch.hours + hourChange + 12) % 12;
+                dragStart.y = e.clientY;
+            }
+
+            updateWatchDisplay(activeWatch);
+        }
+
+        // Stop time adjustment
+        function stopTimeAdjust() {
+            isDragging = false;
+        }
+
+        // Update real time every second (only for non-adjusting watches)
+        function updateRealTime() {
+            const now = new Date();
+            
+            Object.keys(watchTimes).forEach(watchId => {
+                const watch = watchTimes[watchId];
+                
+                if (!watch.adjustMode) {
+                    watch.hours = now.getHours() % 12;
+                    watch.minutes = now.getMinutes();
+                    watch.seconds = now.getSeconds();
+                    updateWatchDisplay(watchId);
                 }
-
-                // Parallax effect for hero section
-                const hero = document.querySelector('.hero-section');
-                const heroContent = document.querySelector('.hero-content');
-                if (hero && heroContent) {
-                    const parallaxValue = scrolled * 0.5;
-                    heroContent.style.transform = `translateY(${parallaxValue}px) scale(${1 - scrolled * 0.0005})`;
-                }
-            });
-        });
-
-        // Initialize parallax effects
-        function initParallaxEffects() {
-            const elements = document.querySelectorAll('.watch-card');
-
-            window.addEventListener('scroll', () => {
-                const scrolled = window.scrollY;
-                elements.forEach((element, index) => {
-                    const rate = scrolled * -0.1 * (index + 1);
-                    element.style.transform = `translateZ(${rate}px) rotateX(${rate * 0.05}deg)`;
-                });
             });
         }
 
-        // Initialize 3D card effects
+        // Like functionality
+        function toggleLike(button) {
+            button.classList.toggle('liked');
+            if (button.classList.contains('liked')) {
+                button.textContent = '♥';
+                // Create heart animation
+                createHeartAnimation(button);
+            } else {
+                button.textContent = '♡';
+            }
+        }
+
+        // Create floating heart animation
+        function createHeartAnimation(button) {
+            const heart = document.createElement('div');
+            heart.textContent = '♥';
+            heart.style.cssText = `
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                color: #ff4757;
+                font-size: 1.2rem;
+                pointer-events: none;
+                animation: floatHeart 2s ease forwards;
+                z-index: 1000;
+            `;
+            
+            button.style.position = 'relative';
+            button.appendChild(heart);
+            
+            // Add floating animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes floatHeart {
+                    0% { transform: translateX(-50%) translateY(0) scale(1); opacity: 1; }
+                    100% { transform: translateX(-50%) translateY(-50px) scale(1.5); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            setTimeout(() => {
+                heart.remove();
+                style.remove();
+            }, 2000);
+        }
+
+        // Shopping cart functionality
+        let cart = [];
+
+        function addToCart(name, price) {
+            cart.push({ name, price, quantity: 1 });
+            showCartNotification(`${name} added to cart!`);
+            updateCartDisplay();
+        }
+
+        function buyNow(name, price) {
+            // Simulate immediate purchase
+            showCartNotification(`Redirecting to checkout for ${name}...`);
+            
+            // In a real application, this would redirect to a payment page
+            setTimeout(() => {
+                alert(`Thank you for your interest in the ${name}. You will be redirected to our secure checkout page.`);
+            }, 1500);
+        }
+
+        function showCartNotification(message) {
+            const notification = document.getElementById('cartNotification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function updateCartDisplay() {
+            // This would update a cart counter in the navigation
+            console.log('Cart updated:', cart);
+        }
+
+        // Hero section smooth scroll
+        document.querySelector('.cta-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('collection').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+
+        // Enhanced scroll effects
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            const scrolled = window.scrollY;
+
+            if (scrolled > 100) {
+                header.style.background = 'rgba(0, 0, 0, 0.95)';
+                header.style.transform = `translateY(${scrolled * 0.05}px) rotateX(${scrolled * 0.01}deg)`;
+            } else {
+                header.style.background = 'rgba(0, 0, 0, 0.9)';
+                header.style.transform = `translateY(0px) rotateX(0deg)`;
+            }
+        });
+
+        // Enhanced 3D card effects
         function init3DCardEffects() {
             const watchCards = document.querySelectorAll('.watch-card');
 
             watchCards.forEach(card => {
                 card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-20px) rotateX(10deg) rotateY(5deg) scale(1.02)';
-                    this.style.zIndex = '10';
+                    if (!this.dataset.watchId || !watchTimes[this.dataset.watchId].adjustMode) {
+                        this.style.transform = 'translateY(-20px) rotateX(10deg) rotateY(5deg) scale(1.02)';
+                        this.style.zIndex = '10';
+                    }
                 });
 
                 card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0) rotateX(0deg) rotateY(0deg) scale(1)';
-                    this.style.zIndex = '1';
+                    if (!this.dataset.watchId || !watchTimes[this.dataset.watchId].adjustMode) {
+                        this.style.transform = 'translateY(0) rotateX(0deg) rotateY(0deg) scale(1)';
+                        this.style.zIndex = '1';
+                    }
                 });
 
                 // 3D mouse movement effect
                 card.addEventListener('mousemove', function(e) {
+                    if (this.dataset.watchId && watchTimes[this.dataset.watchId].adjustMode) return;
+                    
                     const rect = this.getBoundingClientRect();
                     const x = e.clientX - rect.left;
                     const y = e.clientY - rect.top;
@@ -822,155 +1132,14 @@
             });
         }
 
-        // Initialize cursor effects
-        function initCursorEffects() {
-            const cursor = document.createElement('div');
-            cursor.className = 'custom-cursor';
-            cursor.style.cssText = `
-                position: fixed;
-                width: 20px;
-                height: 20px;
-                background: radial-gradient(circle, rgba(212, 175, 55, 0.8), transparent);
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 9999;
-                transition: all 0.3s ease;
-                transform: translate(-50%, -50%);
-            `;
-            document.body.appendChild(cursor);
-
-            document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-            });
-
-            // Enhanced cursor on interactive elements
-            const interactiveElements = document.querySelectorAll('a, button, .watch-card');
-            interactiveElements.forEach(element => {
-                element.addEventListener('mouseenter', () => {
-                    cursor.style.transform = 'translate(-50%, -50%) scale(2)';
-                    cursor.style.background = 'radial-gradient(circle, rgba(212, 175, 55, 0.6), rgba(212, 175, 55, 0.2))';
-                });
-
-                element.addEventListener('mouseleave', () => {
-                    cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-                    cursor.style.background = 'radial-gradient(circle, rgba(212, 175, 55, 0.8), transparent)';
-                });
-            });
-        }
-
-        // Purchase modal functionality
-        function showPurchaseModal(watchName) {
-            const modal = document.createElement('div');
-            modal.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.9);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 10000;
-                animation: fadeIn 0.3s ease;
-            `;
-
-            modal.innerHTML = `
-                <div style="
-                    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-                    padding: 40px;
-                    border-radius: 15px;
-                    text-align: center;
-                    max-width: 500px;
-                    border: 2px solid #d4af37;
-                ">
-                    <h2 style="color: #d4af37; margin-bottom: 20px;">Interest in ${watchName}</h2>
-                    <p style="color: #fff; margin-bottom: 30px; line-height: 1.6;">
-                        Thank you for your interest in the ${watchName}. Our specialists will contact you within 24 hours to discuss availability and arrange a private viewing.
-                    </p>
-                    <div style="display: flex; gap: 20px; justify-content: center;">
-                        <button onclick="this.parentElement.parentElement.parentElement.remove()" style="
-                            padding: 12px 30px;
-                            background: #d4af37;
-                            color: #000;
-                            border: none;
-                            border-radius: 5px;
-                            cursor: pointer;
-                            font-weight: bold;
-                        ">Contact Me</button>
-                        <button onclick="this.parentElement.parentElement.parentElement.remove()" style="
-                            padding: 12px 30px;
-                            background: transparent;
-                            color: #d4af37;
-                            border: 2px solid #d4af37;
-                            border-radius: 5px;
-                            cursor: pointer;
-                            font-weight: bold;
-                        ">Close</button>
-                    </div>
-                </div>
-            `;
-
-            document.body.appendChild(modal);
-
-            // Close modal on outside click
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    modal.remove();
-                }
-            });
-        }
-
-        // Real-time clock update for watch hands
-        function updateWatchHands() {
-            const now = new Date();
-            const hours = now.getHours() % 12;
-            const minutes = now.getMinutes();
-            const seconds = now.getSeconds();
-
-            const hourAngle = (hours * 30) + (minutes * 0.5);
-            const minuteAngle = minutes * 6;
-
-            const hourHands = document.querySelectorAll('.hour-hand');
-            const minuteHands = document.querySelectorAll('.minute-hand');
-
-            hourHands.forEach(hand => {
-                hand.style.transform = `rotate(${hourAngle}deg)`;
-            });
-
-            minuteHands.forEach(hand => {
-                hand.style.transform = `rotate(${minuteAngle}deg)`;
-            });
-        }
-
-        // Update clock every second
-        setInterval(updateWatchHands, 1000);
-        updateWatchHands(); // Initial update
-
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const navMenu = document.getElementById('navMenu');
-            navMenu.classList.toggle('mobile-menu-open');
-        }
-
-        // Close mobile menu when clicking on nav items
-        document.querySelectorAll('.nav-item a').forEach(link => {
-            link.addEventListener('click', () => {
-                const navMenu = document.getElementById('navMenu');
-                navMenu.classList.remove('mobile-menu-open');
-            });
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeWatches();
+            init3DCardEffects();
+            
+            // Update real time every second
+            setInterval(updateRealTime, 1000);
         });
-
-        // Add CSS animation for fade in
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fadeIn {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-        `;
-        document.head.appendChild(style);
     </script>
 </body>
 </html>
