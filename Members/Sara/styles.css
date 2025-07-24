@@ -958,17 +958,25 @@ body {
 
 .product-image {
     width: 100%;
-    height: 180px;
-    background: linear-gradient(135deg, var(--kuromi-purple), var(--accent-pink));
-    border-radius: var(--border-radius-small);
-    margin-bottom: 15px;
+    height: 200px;
+    background: linear-gradient(135deg,
+        rgba(157, 124, 255, 0.9),
+        rgba(255, 157, 210, 0.8),
+        rgba(160, 255, 179, 0.7));
+    border-radius: 18px;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3.5em;
+    font-size: 4em;
     position: relative;
     overflow: hidden;
     flex-shrink: 0;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    box-shadow:
+        inset 0 2px 4px rgba(255, 255, 255, 0.3),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
 .product-image::after {
