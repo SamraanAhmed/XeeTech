@@ -1857,6 +1857,11 @@
             const cartSidebar = document.getElementById('cartSidebar');
             const cartOverlay = document.getElementById('cartOverlay');
 
+            if (!cartSidebar || !cartOverlay) {
+                console.warn('Cart sidebar or overlay not found');
+                return;
+            }
+
             cartSidebar.classList.toggle('open');
             cartOverlay.classList.toggle('open');
 
@@ -1867,6 +1872,11 @@
         function closeCart() {
             const cartSidebar = document.getElementById('cartSidebar');
             const cartOverlay = document.getElementById('cartOverlay');
+
+            if (!cartSidebar || !cartOverlay) {
+                console.warn('Cart sidebar or overlay not found');
+                return;
+            }
 
             cartSidebar.classList.remove('open');
             cartOverlay.classList.remove('open');
