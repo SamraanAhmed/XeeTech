@@ -840,31 +840,25 @@
     <script>
         // Watch time management
         const watchTimes = {
-            submariner: { hours: 0, minutes: 0, seconds: 0, adjustMode: false },
-            daytona: { hours: 0, minutes: 0, seconds: 0, adjustMode: false },
-            gmt: { hours: 0, minutes: 0, seconds: 0, adjustMode: false }
+            submariner: { hours: 0, minutes: 0, seconds: 0, adjustMode: false, customTime: false },
+            daytona: { hours: 0, minutes: 0, seconds: 0, adjustMode: false, customTime: false },
+            gmt: { hours: 0, minutes: 0, seconds: 0, adjustMode: false, customTime: false }
         };
 
-        let dragStart = { x: 0, y: 0 };
         let isDragging = false;
         let activeWatch = null;
+        let lastMousePos = { x: 0, y: 0 };
 
         // Initialize real time for all watches
         function initializeWatches() {
-            const now = new Date();
-            Object.keys(watchTimes).forEach(watchId => {
-                watchTimes[watchId].hours = now.getHours() % 12;
-                watchTimes[watchId].minutes = now.getMinutes();
-                watchTimes[watchId].seconds = now.getSeconds();
-                updateWatchDisplay(watchId);
-            });
+            updateRealTime();
         }
 
         // Update watch display
         function updateWatchDisplay(watchId) {
             const watch = watchTimes[watchId];
             const card = document.querySelector(`[data-watch-id="${watchId}"]`);
-            
+
             if (!card) return;
 
             const hourHand = card.querySelector('.hour-hand');
@@ -877,7 +871,7 @@
             const minuteAngle = watch.minutes * 6;
             const secondAngle = watch.seconds * 6;
 
-            // Update hands
+            // Update hands with smooth transitions
             if (hourHand) hourHand.style.transform = `rotate(${hourAngle}deg)`;
             if (minuteHand) minuteHand.style.transform = `rotate(${minuteAngle}deg)`;
             if (secondHand) secondHand.style.transform = `rotate(${secondAngle}deg)`;
@@ -885,12 +879,13 @@
             // Update digital display
             if (timeDisplay) {
                 const displayHours = watch.hours === 0 ? 12 : watch.hours;
+                const period = watch.hours < 12 ? 'AM' : 'PM';
                 const formattedTime = `${displayHours.toString().padStart(2, '0')}:${watch.minutes.toString().padStart(2, '0')}:${watch.seconds.toString().padStart(2, '0')}`;
                 timeDisplay.textContent = formattedTime;
             }
         }
 
-        // Toggle time adjustment mode
+        // Toggle time adjustment mode with improved crown interaction
         function toggleTimeAdjust(watchId) {
             const watch = watchTimes[watchId];
             const card = document.querySelector(`[data-watch-id="${watchId}"]`);
@@ -898,86 +893,111 @@
             const adjustMode = card.querySelector('.time-adjust-mode');
 
             watch.adjustMode = !watch.adjustMode;
-            
+
             if (watch.adjustMode) {
                 crown.classList.add('active');
                 adjustMode.classList.add('active');
                 activeWatch = watchId;
-                
-                // Add mouse event listeners for time adjustment
-                card.addEventListener('mousedown', startTimeAdjust);
-                document.addEventListener('mousemove', adjustTime);
-                document.addEventListener('mouseup', stopTimeAdjust);
-                
-                // Auto-exit adjust mode after 10 seconds
+                watch.customTime = true;
+
+                // Add improved event listeners
+                const watchFace = card.querySelector('.watch-face');
+                watchFace.addEventListener('mousedown', startTimeAdjust);
+
+                // Auto-exit adjust mode after 15 seconds
                 setTimeout(() => {
                     if (watch.adjustMode) {
                         toggleTimeAdjust(watchId);
                     }
-                }, 10000);
+                }, 15000);
+
+                console.log(`Time adjustment mode activated for ${watchId}. Click and drag on the watch face to adjust time.`);
             } else {
                 crown.classList.remove('active');
                 adjustMode.classList.remove('active');
                 activeWatch = null;
-                
+
                 // Remove event listeners
-                card.removeEventListener('mousedown', startTimeAdjust);
+                const watchFace = card.querySelector('.watch-face');
+                watchFace.removeEventListener('mousedown', startTimeAdjust);
                 document.removeEventListener('mousemove', adjustTime);
                 document.removeEventListener('mouseup', stopTimeAdjust);
+
+                console.log(`Time adjustment mode deactivated for ${watchId}`);
             }
         }
 
-        // Start time adjustment
+        // Improved time adjustment
         function startTimeAdjust(e) {
             if (!activeWatch) return;
-            
+
             isDragging = true;
-            dragStart.x = e.clientX;
-            dragStart.y = e.clientY;
+            lastMousePos.x = e.clientX;
+            lastMousePos.y = e.clientY;
+
+            document.addEventListener('mousemove', adjustTime);
+            document.addEventListener('mouseup', stopTimeAdjust);
+
             e.preventDefault();
+            e.stopPropagation();
         }
 
-        // Adjust time based on mouse movement
+        // Adjust time with better sensitivity
         function adjustTime(e) {
             if (!isDragging || !activeWatch) return;
 
-            const deltaX = e.clientX - dragStart.x;
-            const deltaY = e.clientY - dragStart.y;
+            const deltaX = e.clientX - lastMousePos.x;
+            const deltaY = e.clientY - lastMousePos.y;
             const watch = watchTimes[activeWatch];
 
-            // Horizontal movement adjusts minutes
-            if (Math.abs(deltaX) > 5) {
-                const minuteChange = Math.floor(deltaX / 10);
+            // More sensitive time adjustment
+            // Horizontal movement adjusts minutes (every 3 pixels = 1 minute)
+            if (Math.abs(deltaX) > 3) {
+                const minuteChange = Math.floor(deltaX / 3);
                 watch.minutes = (watch.minutes + minuteChange + 60) % 60;
-                dragStart.x = e.clientX;
+                lastMousePos.x = e.clientX;
+                updateWatchDisplay(activeWatch);
             }
 
-            // Vertical movement adjusts hours
-            if (Math.abs(deltaY) > 5) {
-                const hourChange = Math.floor(-deltaY / 15);
+            // Vertical movement adjusts hours (every 10 pixels = 1 hour)
+            if (Math.abs(deltaY) > 10) {
+                const hourChange = Math.floor(-deltaY / 10);
                 watch.hours = (watch.hours + hourChange + 12) % 12;
-                dragStart.y = e.clientY;
+                lastMousePos.y = e.clientY;
+                updateWatchDisplay(activeWatch);
             }
-
-            updateWatchDisplay(activeWatch);
         }
 
         // Stop time adjustment
         function stopTimeAdjust() {
             isDragging = false;
+            document.removeEventListener('mousemove', adjustTime);
+            document.removeEventListener('mouseup', stopTimeAdjust);
         }
 
-        // Update real time every second (only for non-adjusting watches)
+        // Update real time every second
         function updateRealTime() {
             const now = new Date();
-            
+
             Object.keys(watchTimes).forEach(watchId => {
                 const watch = watchTimes[watchId];
-                
-                if (!watch.adjustMode) {
+
+                // Only update if not in adjust mode and not custom time set
+                if (!watch.adjustMode && !watch.customTime) {
                     watch.hours = now.getHours() % 12;
                     watch.minutes = now.getMinutes();
                     watch.seconds = now.getSeconds();
+                    updateWatchDisplay(watchId);
+                }
+                // If custom time is set, increment seconds
+                else if (watch.customTime && !watch.adjustMode) {
+                    watch.seconds = (watch.seconds + 1) % 60;
+                    if (watch.seconds === 0) {
+                        watch.minutes = (watch.minutes + 1) % 60;
+                        if (watch.minutes === 0) {
+                            watch.hours = (watch.hours + 1) % 12;
+                        }
+                    }
                     updateWatchDisplay(watchId);
                 }
             });
