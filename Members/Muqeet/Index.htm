@@ -2193,12 +2193,20 @@
 
         // Initialize everything when page loads
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize core functionality
             initializeWatches();
             init3DCardEffects();
             updateCartDisplay(); // Initialize cart display
 
+            // Initialize Buy Now modal functionality
+            initPaymentMethods();
+            initBuyNowForm();
+            initCardFormatting();
+
             // Update real time every second
             setInterval(updateRealTime, 1000);
+
+            console.log('Luxe Timepieces website initialized successfully');
         });
     </script>
 </body>
