@@ -1,11 +1,23 @@
 /* Additional Navbar Fixes */
 
-/* Ensure navbar stays at top */
+/* Ensure navbar stays at top with highest z-index */
 .navbar {
     position: sticky !important;
     top: 0 !important;
     width: 100% !important;
-    z-index: 1000 !important;
+    z-index: 9999 !important;
+}
+
+/* Fix dropdown z-index to appear above everything */
+.dropdown-menu {
+    z-index: 10000 !important;
+    position: absolute !important;
+}
+
+/* Ensure search dropdown also appears above content */
+.search-dropdown {
+    z-index: 10000 !important;
+    position: absolute !important;
 }
 
 /* Logo container shouldn't shrink */
