@@ -2168,7 +2168,7 @@
         }
 
         // Card number formatting
-        document.addEventListener('DOMContentLoaded', function() {
+        function initCardFormatting() {
             const cardNumberInput = document.querySelector('input[placeholder="Card number"]');
             const expiryInput = document.querySelector('input[placeholder="MM/YY"]');
 
@@ -2189,7 +2189,7 @@
                     e.target.value = value;
                 });
             }
-        });
+        }
 
         // Initialize everything when page loads
         document.addEventListener('DOMContentLoaded', function() {
