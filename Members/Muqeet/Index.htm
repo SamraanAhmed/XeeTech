@@ -1352,37 +1352,175 @@
         }
 
         // Shopping cart functionality
-        let cart = [];
+        let cart = JSON.parse(localStorage.getItem('luxeCart')) || [];
 
         function addToCart(name, price) {
-            cart.push({ name, price, quantity: 1 });
-            showCartNotification(`${name} added to cart!`);
+            // Check if item already exists in cart
+            const existingItem = cart.find(item => item.name === name);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+                showCartNotification(`${name} quantity updated!`);
+            } else {
+                cart.push({
+                    id: Date.now(),
+                    name,
+                    price,
+                    quantity: 1
+                });
+                showCartNotification(`${name} added to cart!`);
+            }
+
             updateCartDisplay();
+            saveCart();
         }
 
         function buyNow(name, price) {
-            // Simulate immediate purchase
-            showCartNotification(`Redirecting to checkout for ${name}...`);
-            
-            // In a real application, this would redirect to a payment page
+            // Add to cart and redirect to checkout
+            addToCart(name, price);
+
             setTimeout(() => {
-                alert(`Thank you for your interest in the ${name}. You will be redirected to our secure checkout page.`);
-            }, 1500);
+                toggleCart();
+                showCartNotification(`Redirecting to checkout for ${name}...`);
+
+                // Simulate checkout process
+                setTimeout(() => {
+                    checkout();
+                }, 1000);
+            }, 500);
+        }
+
+        function removeFromCart(itemId) {
+            cart = cart.filter(item => item.id !== itemId);
+            updateCartDisplay();
+            saveCart();
+            showCartNotification('Item removed from cart');
+        }
+
+        function updateQuantity(itemId, change) {
+            const item = cart.find(item => item.id === itemId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(itemId);
+                } else {
+                    updateCartDisplay();
+                    saveCart();
+                }
+            }
+        }
+
+        function saveCart() {
+            localStorage.setItem('luxeCart', JSON.stringify(cart));
         }
 
         function showCartNotification(message) {
             const notification = document.getElementById('cartNotification');
             notification.textContent = message;
             notification.classList.add('show');
-            
+
             setTimeout(() => {
                 notification.classList.remove('show');
             }, 3000);
         }
 
         function updateCartDisplay() {
-            // This would update a cart counter in the navigation
-            console.log('Cart updated:', cart);
+            const cartCount = document.getElementById('cartCount');
+            const cartContent = document.getElementById('cartContent');
+            const cartEmpty = document.getElementById('cartEmpty');
+            const cartSummary = document.getElementById('cartSummary');
+            const cartTotalAmount = document.getElementById('cartTotalAmount');
+
+            // Update cart count
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            cartCount.classList.toggle('hidden', totalItems === 0);
+
+            // Update cart content
+            if (cart.length === 0) {
+                cartEmpty.style.display = 'block';
+                cartSummary.style.display = 'none';
+                cartContent.innerHTML = cartContent.querySelector('.cart-empty').outerHTML;
+            } else {
+                cartEmpty.style.display = 'none';
+                cartSummary.style.display = 'block';
+
+                // Generate cart items HTML
+                const cartItemsHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <div class="cart-item-image">⌚</div>
+                        <div class="cart-item-details">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">$${item.price.toLocaleString()}</div>
+                            <div class="cart-item-controls">
+                                <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                                <span class="quantity-display">${item.quantity}</span>
+                                <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                                <button class="remove-btn" onclick="removeFromCart(${item.id})">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                cartContent.innerHTML = cartItemsHTML;
+
+                // Update total
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                cartTotalAmount.textContent = `$${total.toLocaleString()}`;
+            }
+        }
+
+        function toggleCart() {
+            const cartSidebar = document.getElementById('cartSidebar');
+            const cartOverlay = document.getElementById('cartOverlay');
+
+            cartSidebar.classList.toggle('open');
+            cartOverlay.classList.toggle('open');
+
+            // Prevent body scroll when cart is open
+            document.body.style.overflow = cartSidebar.classList.contains('open') ? 'hidden' : '';
+        }
+
+        function closeCart() {
+            const cartSidebar = document.getElementById('cartSidebar');
+            const cartOverlay = document.getElementById('cartOverlay');
+
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                showCartNotification('Your cart is empty!');
+                return;
+            }
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+            // Simulate checkout process
+            const confirmPurchase = confirm(
+                `Proceed with checkout?\n\n` +
+                `Items: ${itemCount}\n` +
+                `Total: $${total.toLocaleString()}\n\n` +
+                `In a real store, this would redirect to secure payment processing.`
+            );
+
+            if (confirmPurchase) {
+                // Clear cart after successful checkout
+                cart = [];
+                updateCartDisplay();
+                saveCart();
+                closeCart();
+
+                showCartNotification('Thank you for your purchase! Order confirmation sent.');
+
+                // Show success message
+                setTimeout(() => {
+                    alert('🎉 Order Placed Successfully!\n\nYour luxury timepieces will be shipped within 3-5 business days.\nYou will receive tracking information via email.');
+                }, 1000);
+            }
         }
 
         // Hero section smooth scroll
