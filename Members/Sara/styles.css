@@ -162,10 +162,8 @@ body {
 }
 
 .nav-logo .logo-text:hover {
-    background: rgba(157, 124, 255, 0.2);
-    border-color: var(--accent-pink);
     transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(255, 157, 210, 0.5);
+    filter: drop-shadow(0 0 15px rgba(255, 157, 210, 0.7));
 }
 
 .kuromi-face {
