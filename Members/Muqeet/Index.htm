@@ -1969,38 +1969,48 @@
             const productSummary = document.getElementById('buyNowProductSummary');
             const orderSummary = document.getElementById('buyNowOrderSummary');
 
+            if (!modal) {
+                console.error('Buy Now modal not found');
+                alert(`Buy Now for ${name} - $${price.toLocaleString()}\n\nModal not available. Please try adding to cart instead.`);
+                return;
+            }
+
             // Populate product summary
-            productSummary.innerHTML = `
-                <div class="product-image-checkout">⌚</div>
-                <div class="product-details-checkout">
-                    <div class="product-name-checkout">${name}</div>
-                    <div class="product-price-checkout">$${price.toLocaleString()}</div>
-                </div>
-            `;
+            if (productSummary) {
+                productSummary.innerHTML = `
+                    <div class="product-image-checkout">⌚</div>
+                    <div class="product-details-checkout">
+                        <div class="product-name-checkout">${name}</div>
+                        <div class="product-price-checkout">$${price.toLocaleString()}</div>
+                    </div>
+                `;
+            }
 
             // Populate order summary
             const tax = Math.round(price * 0.08); // 8% tax
             const shipping = price > 10000 ? 0 : 99; // Free shipping over $10k
             const total = price + tax + shipping;
 
-            orderSummary.innerHTML = `
-                <div class="order-line">
-                    <span>Subtotal:</span>
-                    <span>$${price.toLocaleString()}</span>
-                </div>
-                <div class="order-line">
-                    <span>Tax:</span>
-                    <span>$${tax.toLocaleString()}</span>
-                </div>
-                <div class="order-line">
-                    <span>Shipping:</span>
-                    <span>${shipping === 0 ? 'FREE' : '$' + shipping}</span>
-                </div>
-                <div class="order-line total">
-                    <span>Total:</span>
-                    <span>$${total.toLocaleString()}</span>
-                </div>
-            `;
+            if (orderSummary) {
+                orderSummary.innerHTML = `
+                    <div class="order-line">
+                        <span>Subtotal:</span>
+                        <span>$${price.toLocaleString()}</span>
+                    </div>
+                    <div class="order-line">
+                        <span>Tax:</span>
+                        <span>$${tax.toLocaleString()}</span>
+                    </div>
+                    <div class="order-line">
+                        <span>Shipping:</span>
+                        <span>${shipping === 0 ? 'FREE' : '$' + shipping}</span>
+                    </div>
+                    <div class="order-line total">
+                        <span>Total:</span>
+                        <span>$${total.toLocaleString()}</span>
+                    </div>
+                `;
+            }
 
             modal.classList.add('open');
             document.body.style.overflow = 'hidden';
@@ -2010,7 +2020,9 @@
 
         function closeBuyNowModal() {
             const modal = document.getElementById('buyNowModal');
-            modal.classList.remove('open');
+            if (modal) {
+                modal.classList.remove('open');
+            }
             document.body.style.overflow = '';
             currentBuyNowProduct = null;
         }
