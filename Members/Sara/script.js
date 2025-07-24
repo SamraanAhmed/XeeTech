@@ -143,6 +143,39 @@ function setupEventListeners() {
         mobileToggle.addEventListener('click', () => {
             navMenu.classList.toggle('active');
             mobileToggle.classList.toggle('active');
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+        });
+
+        // Close mobile menu when clicking on nav links
+        navMenu.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    navMenu.classList.remove('active');
+                    mobileToggle.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768 &&
+                !navMenu.contains(e.target) &&
+                !mobileToggle.contains(e.target) &&
+                navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                mobileToggle.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navMenu.classList.remove('active');
+                mobileToggle.classList.remove('active');
+                document.body.style.overflow = '';
+            }
         });
     }
 
@@ -261,6 +294,9 @@ function setupEventListeners() {
             }
         });
     });
+
+    // Handle dropdown toggle on mobile
+    setupMobileDropdown();
 }
 
 // Hero slideshow functionality
@@ -805,6 +841,44 @@ function initPerformanceMonitoring() {
 // Initialize performance monitoring
 initPerformanceMonitoring();
 
+// Mobile dropdown functionality
+function setupMobileDropdown() {
+    const dropdown = document.querySelector('.dropdown');
+    const dropdownMenu = document.querySelector('.dropdown-menu');
+
+    if (dropdown && dropdownMenu) {
+        let isDropdownOpen = false;
+
+        // Toggle dropdown on mobile
+        dropdown.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                isDropdownOpen = !isDropdownOpen;
+
+                if (isDropdownOpen) {
+                    dropdownMenu.style.display = 'block';
+                    dropdownMenu.style.opacity = '1';
+                    dropdownMenu.style.visibility = 'visible';
+                } else {
+                    dropdownMenu.style.display = 'none';
+                    dropdownMenu.style.opacity = '0';
+                    dropdownMenu.style.visibility = 'hidden';
+                }
+            }
+        });
+
+        // Reset dropdown on window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                dropdownMenu.style.display = '';
+                dropdownMenu.style.opacity = '';
+                dropdownMenu.style.visibility = '';
+                isDropdownOpen = false;
+            }
+        });
+    }
+}
+
 // Shop page functions
 function loadShopProducts() {
     const allProducts = [
@@ -931,12 +1005,16 @@ function displayTrendingGrid(gridId, products) {
 // Update navigation highlighting based on current page
 function updateActiveNavigation() {
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    const navLinks = document.querySelectorAll('.nav-link');
+    const navLinks = document.querySelectorAll('.nav-link:not(.dropdown .nav-link)');
 
     navLinks.forEach(link => {
         link.classList.remove('active');
         const href = link.getAttribute('href');
-        if (href === currentPage || (currentPage === 'index.html' && href === 'index.html')) {
+        if (href === currentPage ||
+            (currentPage === 'index.html' && href === 'index.html') ||
+            (currentPage.includes('shop') && href.includes('shop')) ||
+            (currentPage.includes('trending') && href.includes('trending')) ||
+            (currentPage.includes('about') && href.includes('about'))) {
             link.classList.add('active');
         }
     });
@@ -982,3 +1060,4 @@ window.KuromiShop = {
 
 console.log('🦇 Welcome to Kuromi\'s Nightmare Shop! 🖤');
 console.log('Try typing "nightmare" in the chatbot for a secret surprise! 😈');
+console.log('🔧 Navbar and dropdown functionality optimized for all devices! 📱💻');
