@@ -2067,6 +2067,12 @@
             if (!currentBuyNowProduct) return;
 
             const completePurchaseBtn = document.getElementById('completePurchaseBtn');
+
+            if (!completePurchaseBtn) {
+                console.error('Complete purchase button not found');
+                return;
+            }
+
             const originalText = completePurchaseBtn.textContent;
 
             // Simulate processing
@@ -2074,19 +2080,25 @@
             completePurchaseBtn.textContent = 'Processing...';
 
             setTimeout(() => {
-                completePurchaseBtn.textContent = 'Securing Payment...';
+                if (completePurchaseBtn) {
+                    completePurchaseBtn.textContent = 'Securing Payment...';
+                }
             }, 1000);
 
             setTimeout(() => {
-                completePurchaseBtn.textContent = 'Confirming Order...';
+                if (completePurchaseBtn) {
+                    completePurchaseBtn.textContent = 'Confirming Order...';
+                }
             }, 2000);
 
             setTimeout(() => {
                 // Order complete
                 closeBuyNowModal();
                 showOrderConfirmation();
-                completePurchaseBtn.disabled = false;
-                completePurchaseBtn.textContent = originalText;
+                if (completePurchaseBtn) {
+                    completePurchaseBtn.disabled = false;
+                    completePurchaseBtn.textContent = originalText;
+                }
             }, 3500);
         }
 
