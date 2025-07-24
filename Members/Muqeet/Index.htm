@@ -1753,18 +1753,8 @@
         }
 
         function buyNow(name, price) {
-            // Add to cart and redirect to checkout
-            addToCart(name, price);
-
-            setTimeout(() => {
-                toggleCart();
-                showCartNotification(`Redirecting to checkout for ${name}...`);
-
-                // Simulate checkout process
-                setTimeout(() => {
-                    checkout();
-                }, 1000);
-            }, 500);
+            // Open direct checkout modal for immediate purchase
+            openBuyNowModal(name, price);
         }
 
         function removeFromCart(itemId) {
