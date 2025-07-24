@@ -1,0 +1,13 @@
+{
+  "name": "xee-tech-static-site",
+  "version": "1.0.0",
+  "description": "Xee Tech - Static HTML project with multiple team member portfolios",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python3 -m http.server 3000",
+    "start": "python3 -m http.server 3000"
+  },
+  "keywords": ["static", "html", "portfolio"],
+  "author": "Xee Tech Team",
+  "license": "MIT"
+}
