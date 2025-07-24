@@ -1570,7 +1570,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             initializeWatches();
             init3DCardEffects();
-            
+            updateCartDisplay(); // Initialize cart display
+
             // Update real time every second
             setInterval(updateRealTime, 1000);
         });
