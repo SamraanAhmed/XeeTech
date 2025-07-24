@@ -979,13 +979,42 @@ body {
     transition: all 0.3s ease;
 }
 
+.product-image::before {
+    content: '💝';
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-size: 0.4em;
+    opacity: 0.7;
+    animation: heartbeat 2s ease-in-out infinite;
+}
+
 .product-image::after {
     content: '✨';
     position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 0.3em;
+    top: 8px;
+    right: 8px;
+    font-size: 0.4em;
     animation: sparkle 2s ease-in-out infinite;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
+    box-shadow:
+        inset 0 2px 4px rgba(255, 255, 255, 0.4),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.15),
+        0 0 20px rgba(255, 157, 210, 0.4);
+}
+
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
 }
 
 @keyframes sparkle {
