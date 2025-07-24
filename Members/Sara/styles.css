@@ -157,10 +157,7 @@ body {
     color: var(--kuromi-purple);
     text-decoration: none;
     position: relative;
-    padding: 8px 15px;
-    border-radius: 25px;
-    background: rgba(157, 124, 255, 0.1);
-    border: 2px solid transparent;
+    padding: 5px 0;
     transition: var(--transition);
 }
 
