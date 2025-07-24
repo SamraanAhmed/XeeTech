@@ -1798,6 +1798,12 @@
             const cartSummary = document.getElementById('cartSummary');
             const cartTotalAmount = document.getElementById('cartTotalAmount');
 
+            // Check if elements exist before updating
+            if (!cartCount || !cartContent) {
+                console.warn('Cart elements not found, skipping cart update');
+                return;
+            }
+
             // Update cart count
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
             cartCount.textContent = totalItems;
@@ -1805,12 +1811,20 @@
 
             // Update cart content
             if (cart.length === 0) {
-                cartEmpty.style.display = 'block';
-                cartSummary.style.display = 'none';
-                cartContent.innerHTML = cartContent.querySelector('.cart-empty').outerHTML;
+                if (cartEmpty) cartEmpty.style.display = 'block';
+                if (cartSummary) cartSummary.style.display = 'none';
+
+                // Set empty cart content
+                cartContent.innerHTML = `
+                    <div class="cart-empty" id="cartEmpty">
+                        <div class="cart-empty-icon">🛒</div>
+                        <p>Your cart is empty</p>
+                        <p style="font-size: 0.9rem; margin-top: 10px; opacity: 0.7;">Add some luxury timepieces to get started</p>
+                    </div>
+                `;
             } else {
-                cartEmpty.style.display = 'none';
-                cartSummary.style.display = 'block';
+                if (cartEmpty) cartEmpty.style.display = 'none';
+                if (cartSummary) cartSummary.style.display = 'block';
 
                 // Generate cart items HTML
                 const cartItemsHTML = cart.map(item => `
@@ -1833,7 +1847,9 @@
 
                 // Update total
                 const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-                cartTotalAmount.textContent = `$${total.toLocaleString()}`;
+                if (cartTotalAmount) {
+                    cartTotalAmount.textContent = `$${total.toLocaleString()}`;
+                }
             }
         }
 
