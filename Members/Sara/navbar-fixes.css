@@ -76,22 +76,29 @@
 
 /* Mobile menu improvements */
 @media (max-width: 768px) {
+    .nav-menu {
+        z-index: 9998 !important;
+    }
+
     .nav-menu.active {
         overflow-y: auto;
+        z-index: 9998 !important;
     }
-    
+
     /* Fix dropdown in mobile */
     .dropdown:hover .dropdown-menu {
         opacity: 1;
         visibility: visible;
         transform: none;
+        z-index: 10000 !important;
     }
-    
+
     /* Ensure mobile search works properly */
     .search-dropdown.active {
         opacity: 1 !important;
         visibility: visible !important;
         transform: none !important;
+        z-index: 10000 !important;
     }
 }
 
