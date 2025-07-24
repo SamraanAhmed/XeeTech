@@ -1419,6 +1419,102 @@
         </div>
     </div>
 
+    <!-- Buy Now Modal -->
+    <div class="buy-now-modal" id="buyNowModal">
+        <div class="buy-now-content">
+            <button class="buy-now-close" onclick="closeBuyNowModal()">✕</button>
+
+            <div class="buy-now-header">
+                <h2 class="buy-now-title">Express Checkout</h2>
+                <p class="buy-now-subtitle">Complete your purchase in seconds</p>
+            </div>
+
+            <div class="buy-now-body">
+                <div class="product-summary" id="buyNowProductSummary">
+                    <!-- Product details will be inserted here -->
+                </div>
+
+                <form class="checkout-form" id="buyNowForm">
+                    <div class="form-group">
+                        <label class="form-label">Contact Information</label>
+                        <input type="email" class="form-input" placeholder="Email address" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Shipping Address</label>
+                        <div class="form-row">
+                            <input type="text" class="form-input" placeholder="First name" required>
+                            <input type="text" class="form-input" placeholder="Last name" required>
+                        </div>
+                        <input type="text" class="form-input" placeholder="Address line 1" required>
+                        <input type="text" class="form-input" placeholder="Address line 2 (optional)">
+                        <div class="form-row">
+                            <input type="text" class="form-input" placeholder="City" required>
+                            <input type="text" class="form-input" placeholder="State/Province" required>
+                        </div>
+                        <div class="form-row">
+                            <input type="text" class="form-input" placeholder="ZIP/Postal code" required>
+                            <select class="form-input" required>
+                                <option value="">Select Country</option>
+                                <option value="US">United States</option>
+                                <option value="CA">Canada</option>
+                                <option value="UK">United Kingdom</option>
+                                <option value="AU">Australia</option>
+                                <option value="DE">Germany</option>
+                                <option value="FR">France</option>
+                                <option value="JP">Japan</option>
+                                <option value="CH">Switzerland</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Payment Method</label>
+                        <div class="payment-methods">
+                            <label class="payment-method selected">
+                                <input type="radio" name="payment" value="card" checked>
+                                <span class="payment-method-icon">💳</span>
+                                <span class="payment-method-text">Card</span>
+                            </label>
+                            <label class="payment-method">
+                                <input type="radio" name="payment" value="paypal">
+                                <span class="payment-method-icon">🏦</span>
+                                <span class="payment-method-text">PayPal</span>
+                            </label>
+                            <label class="payment-method">
+                                <input type="radio" name="payment" value="apple">
+                                <span class="payment-method-icon">📱</span>
+                                <span class="payment-method-text">Apple Pay</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="cardDetails">
+                        <label class="form-label">Card Details</label>
+                        <input type="text" class="form-input" placeholder="Card number" maxlength="19">
+                        <div class="form-row">
+                            <input type="text" class="form-input" placeholder="MM/YY" maxlength="5">
+                            <input type="text" class="form-input" placeholder="CVC" maxlength="4">
+                        </div>
+                        <input type="text" class="form-input" placeholder="Cardholder name" required>
+                    </div>
+
+                    <div class="order-summary" id="buyNowOrderSummary">
+                        <!-- Order summary will be inserted here -->
+                    </div>
+
+                    <button type="submit" class="complete-purchase-btn" id="completePurchaseBtn">
+                        Complete Purchase
+                    </button>
+
+                    <div class="security-info">
+                        SSL Encrypted • Secure Payment • 30-Day Money Back Guarantee
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Watch time management
         const watchTimes = {
