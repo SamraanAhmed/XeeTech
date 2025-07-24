@@ -1073,15 +1073,36 @@ body {
 
 .sale-badge {
     position: absolute;
-    top: 15px;
-    left: 15px;
-    background: var(--accent-pink);
+    top: 12px;
+    left: 12px;
+    background: linear-gradient(45deg, var(--accent-pink), #ff6b9d);
     color: var(--white);
-    padding: 5px 10px;
-    border-radius: 15px;
-    font-size: 0.8em;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 0.75em;
     font-weight: bold;
-    animation: pulse 2s infinite;
+    animation: bounceGlow 2s infinite;
+    box-shadow:
+        0 4px 15px rgba(255, 157, 210, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    z-index: 3;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+@keyframes bounceGlow {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow:
+            0 4px 15px rgba(255, 157, 210, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow:
+            0 6px 20px rgba(255, 157, 210, 0.6),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
 }
 
 @keyframes pulse {
