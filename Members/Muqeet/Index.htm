@@ -2028,26 +2028,31 @@
         }
 
         // Payment method selection
-        document.addEventListener('DOMContentLoaded', function() {
+        function initPaymentMethods() {
             const paymentMethods = document.querySelectorAll('.payment-method');
             const cardDetails = document.getElementById('cardDetails');
 
-            paymentMethods.forEach(method => {
-                method.addEventListener('click', function() {
-                    // Remove selected class from all methods
-                    paymentMethods.forEach(m => m.classList.remove('selected'));
-                    // Add selected class to clicked method
-                    this.classList.add('selected');
+            if (paymentMethods.length > 0) {
+                paymentMethods.forEach(method => {
+                    method.addEventListener('click', function() {
+                        // Remove selected class from all methods
+                        paymentMethods.forEach(m => m.classList.remove('selected'));
+                        // Add selected class to clicked method
+                        this.classList.add('selected');
 
-                    // Show/hide card details based on selection
-                    const paymentValue = this.querySelector('input[type="radio"]').value;
-                    cardDetails.style.display = paymentValue === 'card' ? 'block' : 'none';
+                        // Show/hide card details based on selection
+                        const radioInput = this.querySelector('input[type="radio"]');
+                        if (radioInput && cardDetails) {
+                            const paymentValue = radioInput.value;
+                            cardDetails.style.display = paymentValue === 'card' ? 'block' : 'none';
+                        }
+                    });
                 });
-            });
-        });
+            }
+        }
 
         // Form validation and submission
-        document.addEventListener('DOMContentLoaded', function() {
+        function initBuyNowForm() {
             const buyNowForm = document.getElementById('buyNowForm');
 
             if (buyNowForm) {
@@ -2056,7 +2061,7 @@
                     processBuyNowOrder();
                 });
             }
-        });
+        }
 
         function processBuyNowOrder() {
             if (!currentBuyNowProduct) return;
