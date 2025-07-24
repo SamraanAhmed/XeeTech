@@ -1045,14 +1045,23 @@ body {
 }
 
 .product-price {
-    font-size: 1.1em;
+    font-size: 1.2em;
     color: var(--accent-pink);
-    font-weight: 700;
-    margin-bottom: 15px;
-    min-height: 1.5em;
+    font-weight: 800;
+    margin-bottom: 20px;
+    min-height: 1.8em;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-shadow: 0 2px 4px rgba(255, 157, 210, 0.3);
+    position: relative;
+}
+
+.product-price::before {
+    content: '💰';
+    margin-right: 6px;
+    font-size: 0.8em;
+    opacity: 0.8;
 }
 
 .product-price .original-price {
