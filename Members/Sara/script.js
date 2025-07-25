@@ -1116,6 +1116,145 @@ function initializePage() {
 // Call initialization on page load
 document.addEventListener('DOMContentLoaded', initializePage);
 
+// Enhanced Card Interactions
+function addEnhancedCardInteractions() {
+    const cards = document.querySelectorAll('.enhanced-product-card');
+
+    cards.forEach(card => {
+        // Mouse follow effect for glow
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+
+            card.style.transform = `
+                translateY(-25px)
+                rotateX(${rotateX}deg)
+                rotateY(${rotateY}deg)
+                scale(1.08)
+            `;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+        });
+
+        // Ripple effect on click
+        card.addEventListener('click', (e) => {
+            const ripple = document.createElement('div');
+            ripple.className = 'click-ripple';
+
+            const rect = card.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+
+            ripple.style.cssText = `
+                position: absolute;
+                width: ${size}px;
+                height: ${size}px;
+                left: ${x}px;
+                top: ${y}px;
+                background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+                border-radius: 50%;
+                transform: scale(0);
+                animation: rippleEffect 0.6s ease-out;
+                pointer-events: none;
+                z-index: 10;
+            `;
+
+            card.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+
+        // Particle burst on hover
+        let particleTimeout;
+        card.addEventListener('mouseenter', () => {
+            clearTimeout(particleTimeout);
+            createParticleBurst(card);
+        });
+
+        card.addEventListener('mouseleave', () => {
+            particleTimeout = setTimeout(() => {
+                const particles = card.querySelectorAll('.hover-particle');
+                particles.forEach(p => p.remove());
+            }, 1000);
+        });
+    });
+}
+
+function createParticleBurst(card) {
+    const colors = ['#9d7cff', '#ff9dd2', '#a0ffb3'];
+    const particleCount = 8;
+
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'hover-particle';
+
+        const angle = (360 / particleCount) * i;
+        const distance = 150 + Math.random() * 50;
+        const x = Math.cos(angle * Math.PI / 180) * distance;
+        const y = Math.sin(angle * Math.PI / 180) * distance;
+
+        particle.style.cssText = `
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: ${colors[Math.floor(Math.random() * colors.length)]};
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: particleBurst 2s ease-out forwards;
+            animation-delay: ${i * 0.1}s;
+            box-shadow: 0 0 10px currentColor;
+            z-index: 5;
+            pointer-events: none;
+        `;
+
+        particle.style.setProperty('--end-x', x + 'px');
+        particle.style.setProperty('--end-y', y + 'px');
+
+        card.appendChild(particle);
+    }
+}
+
+// Add CSS animations for particles and ripples
+const enhancedStyles = document.createElement('style');
+enhancedStyles.textContent = `
+    @keyframes rippleEffect {
+        to {
+            transform: scale(2);
+            opacity: 0;
+        }
+    }
+
+    @keyframes particleBurst {
+        0% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(calc(-50% + var(--end-x)), calc(-50% + var(--end-y))) scale(0);
+            opacity: 0;
+        }
+    }
+
+    .enhanced-product-card:hover {
+        animation-play-state: paused;
+    }
+`;
+document.head.appendChild(enhancedStyles);
+
 // Export functions for potential external use
 window.KuromiShop = {
     addToCart,
@@ -1125,7 +1264,8 @@ window.KuromiShop = {
     trackEvent,
     loadShopProducts,
     loadTrendingPageProducts,
-    setupCategoryFilters
+    setupCategoryFilters,
+    addEnhancedCardInteractions
 };
 
 console.log('🦇 Welcome to Kuromi\'s Nightmare Shop! 🖤');
