@@ -2757,6 +2757,42 @@ body {
     box-shadow: 0 0 20px rgba(160, 255, 179, 0.4);
 }
 
+.trending-image-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px;
+}
+
+.trending-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: var(--shadow-primary);
+    transition: var(--transition);
+}
+
+.trending-image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--kuromi-purple), var(--accent-pink));
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5em;
+    box-shadow: var(--shadow-primary);
+    transition: var(--transition);
+    color: var(--white);
+}
+
+.trending-item:hover .trending-image,
+.trending-item:hover .trending-image-placeholder {
+    transform: rotateY(20deg) scale(1.1);
+    box-shadow: var(--shadow-glow);
+}
+
 .almost-sold-out {
     position: absolute;
     top: 10px;
