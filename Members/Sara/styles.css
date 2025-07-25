@@ -1096,11 +1096,73 @@ body {
 }
 
 .enhanced-product-card:hover {
-    transform: translateY(-20px) rotateX(5deg) rotateY(5deg) scale(1.05);
+    transform: translateY(-25px) rotateX(8deg) rotateY(8deg) scale(1.08);
     box-shadow:
-        0 40px 80px rgba(0, 0, 0, 0.4),
-        0 0 50px rgba(157, 124, 255, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        0 50px 100px rgba(0, 0, 0, 0.5),
+        0 0 60px rgba(157, 124, 255, 0.6),
+        0 0 100px rgba(255, 157, 210, 0.3),
+        inset 0 2px 0 rgba(255, 255, 255, 0.3),
+        inset 0 0 20px rgba(160, 255, 179, 0.1);
+}
+
+/* Ultra-Enhanced Card Interactions */
+.enhanced-product-card:hover::before {
+    opacity: 1;
+    animation: shimmerWave 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmerWave {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.enhanced-product-card:active {
+    transform: translateY(-15px) rotateX(3deg) rotateY(3deg) scale(1.03);
+    transition: all 0.1s ease;
+}
+
+/* Magical cursor trail effect */
+.enhanced-product-card::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(
+        circle,
+        rgba(157, 124, 255, 0.3) 0%,
+        rgba(255, 157, 210, 0.2) 50%,
+        transparent 100%
+    );
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    pointer-events: none;
+}
+
+.enhanced-product-card:hover::after {
+    width: 200%;
+    height: 200%;
+    opacity: 0.7;
+}
+
+/* Floating animation when page loads */
+@keyframes cardFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.enhanced-product-card {
+    animation: cardFloat 6s ease-in-out infinite;
+}
+
+.enhanced-product-card:nth-child(2) {
+    animation-delay: 2s;
+}
+
+.enhanced-product-card:nth-child(3) {
+    animation-delay: 4s;
 }
 
 .trending-badge {
