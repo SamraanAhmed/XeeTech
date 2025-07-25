@@ -998,20 +998,51 @@ function loadTrendingPageProducts() {
 }
 
 function createEnhancedProductCard(product, rank) {
-    return `
-        <div class="enhanced-product-card">
-            <div class="trending-rank">#${rank}</div>
-            <div class="trending-badge">🔥 HOT</div>
+    const discountPercent = product.originalPrice ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
 
-            <div class="enhanced-product-image">
-                ${product.emoji}
+    return `
+        <div class="enhanced-product-card" data-product-id="${product.id}">
+            <div class="card-particles"></div>
+            <div class="card-glow-effect"></div>
+
+            <div class="trending-rank">#${rank}</div>
+            <div class="trending-badge ${product.almostSoldOut ? 'almost-gone' : ''}">
+                ${product.almostSoldOut ? '⚡ ALMOST GONE' : '🔥 HOT'}
             </div>
 
-            <h3 class="enhanced-product-title">${product.name}</h3>
-            <div class="enhanced-product-price">$${product.price}</div>
+            ${discountPercent > 0 ? `<div class="discount-badge">-${discountPercent}%</div>` : ''}
+
+            <div class="enhanced-product-image">
+                <div class="image-sparkles"></div>
+                <div class="image-glow"></div>
+                <span class="product-emoji">${product.image}</span>
+                <div class="image-reflection"></div>
+            </div>
+
+            <div class="product-details">
+                <h3 class="enhanced-product-title">${product.name}</h3>
+
+                <div class="price-container">
+                    ${product.originalPrice ? `<span class="original-price">$${product.originalPrice}</span>` : ''}
+                    <span class="enhanced-product-price">$${product.price}</span>
+                </div>
+
+                <div class="product-rating">
+                    <div class="stars">★★★★★</div>
+                    <span class="review-count">(${Math.floor(Math.random() * 500) + 100} reviews)</span>
+                </div>
+
+                <div class="product-features">
+                    <span class="feature">✨ Premium Quality</span>
+                    <span class="feature">🦇 Limited Edition</span>
+                    <span class="feature">💜 Kuromi Certified</span>
+                </div>
+            </div>
 
             <button class="enhanced-add-to-cart add-to-cart" data-product-id="${product.id}">
-                Add to Nightmare Bag
+                <span class="btn-text">Add to Nightmare Bag</span>
+                <span class="btn-icon">🛒</span>
+                <div class="btn-ripple"></div>
             </button>
         </div>
     `;
