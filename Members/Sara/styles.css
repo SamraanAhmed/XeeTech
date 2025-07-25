@@ -2393,7 +2393,10 @@ body {
 }
 
 .kuromi-chat-face {
-    font-size: 24px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
     animation: kuromiBlink 4s infinite;
 }
 
@@ -2457,7 +2460,10 @@ body {
 }
 
 .kuromi-avatar {
-    font-size: 24px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .chatbot-title h4 {
