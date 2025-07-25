@@ -2435,7 +2435,8 @@ body {
     left: 100%;
 }
 
-.enhanced-home-add-to-cart:hover {
+.enhanced-home-add-to-cart:hover,
+.add-to-cart-btn:hover {
     transform: translateY(-3px) scale(1.03);
     box-shadow:
         0 15px 30px rgba(157, 124, 255, 0.4),
@@ -2443,20 +2444,24 @@ body {
     background: linear-gradient(45deg, var(--accent-pink), var(--spooky-green));
 }
 
-.enhanced-home-add-to-cart:hover .btn-text {
+.enhanced-home-add-to-cart:hover .btn-text,
+.add-to-cart-btn:hover .btn-text {
     transform: translateX(-2px);
 }
 
-.enhanced-home-add-to-cart:hover .btn-magic {
+.enhanced-home-add-to-cart:hover .btn-magic,
+.add-to-cart-btn:hover .btn-magic {
     transform: translateX(2px) scale(1.2) rotate(20deg);
 }
 
-.enhanced-home-add-to-cart:hover .btn-ripple-effect {
+.enhanced-home-add-to-cart:hover .btn-ripple-effect,
+.add-to-cart-btn:hover .btn-ripple-effect {
     width: 200px;
     height: 200px;
 }
 
-.enhanced-home-add-to-cart:active {
+.enhanced-home-add-to-cart:active,
+.add-to-cart-btn:active {
     transform: translateY(-1px) scale(1.01);
     transition: all 0.1s ease;
 }
