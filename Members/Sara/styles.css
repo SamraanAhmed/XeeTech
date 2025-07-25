@@ -1885,7 +1885,8 @@ body {
     padding: 20px 0;
 }
 
-/* Enhanced Home Product Cards */
+/* Universal Product Cards */
+.universal-product-card,
 .enhanced-home-product-card {
     background: linear-gradient(145deg, rgba(26, 26, 26, 0.95) 0%, rgba(157, 124, 255, 0.08) 100%);
     border: 2px solid transparent;
