@@ -1117,11 +1117,51 @@ body {
     letter-spacing: 1px;
     animation: pulseBadge 2s ease-in-out infinite;
     box-shadow: 0 4px 15px rgba(255, 157, 210, 0.4);
+    z-index: 5;
+}
+
+.trending-badge.almost-gone {
+    background: linear-gradient(45deg, #ff4757, #ff3742);
+    animation: urgentPulse 1s ease-in-out infinite;
+    box-shadow: 0 4px 20px rgba(255, 71, 87, 0.6);
 }
 
 @keyframes pulseBadge {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.1); }
+}
+
+@keyframes urgentPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 4px 20px rgba(255, 71, 87, 0.6);
+    }
+    50% {
+        transform: scale(1.15);
+        box-shadow: 0 6px 30px rgba(255, 71, 87, 0.8);
+    }
+}
+
+.discount-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: linear-gradient(45deg, var(--spooky-green), #2ed573);
+    color: var(--white);
+    padding: 8px 12px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    font-weight: bold;
+    z-index: 5;
+    animation: discountSpin 3s linear infinite;
+    box-shadow: 0 4px 15px rgba(46, 213, 115, 0.4);
+}
+
+@keyframes discountSpin {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+    100% { transform: rotate(0deg); }
 }
 
 .trending-rank {
