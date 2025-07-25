@@ -2242,7 +2242,15 @@ body {
     opacity: 1;
 }
 
-.enhanced-home-product-card:hover .enhanced-product-image {
+.enhanced-home-product-card:hover .enhanced-product-image,
+.universal-product-card:hover .product-image {
+    transform: scale(1.1) rotateY(10deg);
+    box-shadow:
+        0 20px 40px rgba(157, 124, 255, 0.3),
+        inset 0 -12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.universal-product-card:hover .product-image-placeholder {
     transform: scale(1.1) rotateY(10deg);
     box-shadow:
         0 20px 40px rgba(157, 124, 255, 0.3),
