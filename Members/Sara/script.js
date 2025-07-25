@@ -390,7 +390,7 @@ function createProductCard(product) {
     const discountPercent = Math.round((1 - product.price / product.originalPrice) * 100);
 
     return `
-        <div class="enhanced-home-product-card" data-product-id="${product.id}">
+        <div class="universal-product-card" data-product-id="${product.id}">
             <div class="card-magical-bg"></div>
             <div class="card-shimmer"></div>
 
@@ -398,33 +398,37 @@ function createProductCard(product) {
             ${product.trending ? '<div class="trending-indicator">⭐ TRENDING</div>' : ''}
             ${product.almostSoldOut ? '<div class="stock-warning">⚡ LIMITED STOCK</div>' : ''}
 
-            <div class="enhanced-product-image-container">
+            <div class="product-image-container">
                 <div class="image-magical-glow"></div>
                 <div class="image-sparkle-effect"></div>
-                <div class="enhanced-product-image">${product.image}</div>
+                <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="product-image-placeholder" style="display: none;">
+                    <span class="placeholder-icon">🖼��</span>
+                    <span class="placeholder-text">Image Coming Soon</span>
+                </div>
                 <div class="image-hover-overlay"></div>
             </div>
 
-            <div class="enhanced-product-content">
-                <h3 class="enhanced-product-title">${product.name}</h3>
+            <div class="product-content">
+                <h3 class="product-title">${product.name}</h3>
 
-                <div class="product-rating-home">
+                <div class="product-rating">
                     <div class="stars">★★★★★</div>
                     <span class="review-count">(${Math.floor(Math.random() * 200) + 50} reviews)</span>
                 </div>
 
-                <div class="enhanced-price-container">
+                <div class="price-container">
                     ${product.originalPrice > product.price ?
-                        `<span class="original-price-home">$${product.originalPrice}</span>` : ''}
-                    <span class="enhanced-price-home">$${product.price}</span>
+                        `<span class="original-price">$${product.originalPrice}</span>` : ''}
+                    <span class="current-price">$${product.price}</span>
                 </div>
 
-                <div class="product-features-home">
+                <div class="product-features">
                     <span class="feature-tag">💜 Premium</span>
                     <span class="feature-tag">🦇 Limited</span>
                 </div>
 
-                <button class="enhanced-home-add-to-cart add-to-cart" data-product-id="${product.id}">
+                <button class="add-to-cart-btn add-to-cart" data-product-id="${product.id}">
                     <span class="btn-text">Add to Nightmare Bag</span>
                     <span class="btn-magic">✨</span>
                     <div class="btn-ripple-effect"></div>
@@ -1395,4 +1399,4 @@ window.KuromiShop = {
 
 console.log('🦇 Welcome to Kuromi\'s Nightmare Shop! 🖤');
 console.log('Try typing "nightmare" in the chatbot for a secret surprise! 😈');
-console.log('🔧 Navbar and dropdown functionality optimized for all devices! 📱💻');
+console.log('🔧 Navbar and dropdown functionality optimized for all devices! 📱��');
