@@ -14,7 +14,7 @@ const sampleProducts = [
         name: "Giant Kuromi Plush — Not Cursed (Probably)",
         price: 45.99,
         originalPrice: 65.99,
-        image: "🖤",
+        image: "images/products/kuromi-plush-giant.jpg",
         category: "plushies",
         trending: true,
         almostSoldOut: true
@@ -24,7 +24,7 @@ const sampleProducts = [
         name: "Kuromi's Nightmare Hoodie",
         price: 39.99,
         originalPrice: 55.99,
-        image: "👕",
+        image: "images/products/kuromi-hoodie-nightmare.jpg",
         category: "clothing",
         trending: false,
         almostSoldOut: false
@@ -34,7 +34,7 @@ const sampleProducts = [
         name: "Spooky Kawaii Phone Case",
         price: 19.99,
         originalPrice: 29.99,
-        image: "📱",
+        image: "images/products/phone-case-spooky.jpg",
         category: "accessories",
         trending: true,
         almostSoldOut: true
@@ -44,7 +44,7 @@ const sampleProducts = [
         name: "Kuromi's Devil Horns Headband",
         price: 24.99,
         originalPrice: 34.99,
-        image: "👹",
+        image: "images/products/headband-devil-horns.jpg",
         category: "accessories",
         trending: false,
         almostSoldOut: false
@@ -54,7 +54,7 @@ const sampleProducts = [
         name: "Gothic Lolita Mini Skirt",
         price: 42.99,
         originalPrice: 59.99,
-        image: "👗",
+        image: "images/products/skirt-gothic-lolita.jpg",
         category: "clothing",
         trending: true,
         almostSoldOut: false
@@ -64,7 +64,7 @@ const sampleProducts = [
         name: "Nightmare Tea Set",
         price: 89.99,
         originalPrice: 120.99,
-        image: "🫖",
+        image: "images/products/tea-set-nightmare.jpg",
         category: "home",
         trending: false,
         almostSoldOut: true
