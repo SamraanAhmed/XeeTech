@@ -978,13 +978,43 @@ function setupCategoryFilters() {
 }
 
 function loadTrendingPageProducts() {
-    const hotNowProducts = sampleProducts.filter(p => p.trending).slice(0, 3);
-    const almostSoldOutProducts = sampleProducts.filter(p => p.almostSoldOut);
-    const risingStarsProducts = sampleProducts.slice(3, 6);
+    // Get top 3 trending products
+    const trendingProducts = sampleProducts.filter(p => p.trending).slice(0, 3);
 
-    displayTrendingGrid('hotNowGrid', hotNowProducts);
-    displayTrendingGrid('almostSoldOutGrid', almostSoldOutProducts);
-    displayTrendingGrid('risingStarsGrid', risingStarsProducts);
+    const showcase = document.getElementById('trendingShowcase');
+    if (!showcase) return;
+
+    showcase.innerHTML = trendingProducts.map((product, index) =>
+        createEnhancedProductCard(product, index + 1)
+    ).join('');
+
+    // Add event listeners for enhanced cards
+    showcase.querySelectorAll('.enhanced-add-to-cart').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const productId = parseInt(e.target.dataset.productId);
+            addToCart(productId);
+        });
+    });
+}
+
+function createEnhancedProductCard(product, rank) {
+    return `
+        <div class="enhanced-product-card">
+            <div class="trending-rank">#${rank}</div>
+            <div class="trending-badge">🔥 HOT</div>
+
+            <div class="enhanced-product-image">
+                ${product.emoji}
+            </div>
+
+            <h3 class="enhanced-product-title">${product.name}</h3>
+            <div class="enhanced-product-price">$${product.price}</div>
+
+            <button class="enhanced-add-to-cart add-to-cart" data-product-id="${product.id}">
+                Add to Nightmare Bag
+            </button>
+        </div>
+    `;
 }
 
 function displayTrendingGrid(gridId, products) {
