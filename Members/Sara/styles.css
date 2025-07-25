@@ -1471,12 +1471,19 @@ body {
     font-size: 1.1em;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     text-transform: uppercase;
     letter-spacing: 1px;
     position: relative;
     overflow: hidden;
     box-shadow: 0 10px 25px rgba(157, 124, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
 }
 
 .enhanced-add-to-cart::before {
@@ -1494,16 +1501,62 @@ body {
     left: 100%;
 }
 
+.btn-text {
+    transition: transform 0.3s ease;
+    z-index: 2;
+    position: relative;
+}
+
+.btn-icon {
+    font-size: 1.2em;
+    transition: all 0.3s ease;
+    z-index: 2;
+    position: relative;
+}
+
+.btn-ripple {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.6s ease;
+}
+
 .enhanced-add-to-cart:hover {
-    transform: translateY(-3px) scale(1.05);
+    transform: translateY(-5px) scale(1.05);
     box-shadow:
-        0 15px 35px rgba(157, 124, 255, 0.4),
-        0 0 30px rgba(255, 157, 210, 0.3);
+        0 20px 40px rgba(157, 124, 255, 0.5),
+        0 0 40px rgba(255, 157, 210, 0.4),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.2);
     background: linear-gradient(45deg, var(--accent-pink), var(--spooky-green));
 }
 
+.enhanced-add-to-cart:hover .btn-text {
+    transform: translateX(-3px);
+}
+
+.enhanced-add-to-cart:hover .btn-icon {
+    transform: translateX(3px) scale(1.2) rotate(10deg);
+}
+
+.enhanced-add-to-cart:hover .btn-ripple {
+    width: 300px;
+    height: 300px;
+}
+
 .enhanced-add-to-cart:active {
-    transform: translateY(-1px) scale(1.02);
+    transform: translateY(-2px) scale(1.02);
+    transition: all 0.1s ease;
+}
+
+.enhanced-add-to-cart:active .btn-ripple {
+    width: 400px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.5);
 }
 
 /* Products Grid */
