@@ -84,7 +84,7 @@ const chatbotResponses = {
         "I'm here to make your shopping nightmare... I mean dream come true!"
     ],
     bestsellers: [
-        "Our hellspawns are obsessed with the Giant Kuromi Plush and the Nightmare Hoodie! ���",
+        "Our hellspawns are obsessed with the Giant Kuromi Plush and the Nightmare Hoodie! 🔥",
         "The Spooky Phone Case is flying off the shelves like a bat! 🦇",
         "Everyone's going crazy for our Gothic Lolita collection!"
     ],
@@ -1281,35 +1281,34 @@ enhancedStyles.textContent = `
 `;
 document.head.appendChild(enhancedStyles);
 
-// Parallax Effects
+// Subtle Parallax Effects
 function initParallaxEffects() {
     let ticking = false;
 
     function updateParallax() {
         const scrolled = window.pageYOffset;
-        const rate = scrolled * -0.5;
 
-        // Move 3D background elements
+        // Very subtle movement for 3D background elements
         const shapes = document.querySelectorAll('.shape');
         shapes.forEach((shape, index) => {
-            const speed = (index % 3 + 1) * 0.3;
-            shape.style.transform = `translate3d(0, ${scrolled * speed}px, 0) rotateX(${scrolled * 0.1}deg) rotateY(${scrolled * 0.05}deg)`;
+            const speed = (index % 3 + 1) * 0.02; // Much slower
+            shape.style.transform = `translate3d(0, ${scrolled * speed}px, 0) rotateX(${scrolled * 0.005}deg) rotateY(${scrolled * 0.002}deg)`;
         });
 
-        // Parallax sections
+        // Very minimal section movement - just a tiny depth effect
         const sections = document.querySelectorAll('.bestsellers-section, .trending-section, .about-section');
         sections.forEach((section, index) => {
-            const speed = (index + 1) * 0.1;
+            const speed = (index + 1) * 0.01; // Much more subtle
             const yPos = -(scrolled * speed);
-            section.style.transform = `translateZ(${20 + index * 10}px) translateY(${yPos}px)`;
+            section.style.transform = `translateZ(${5 + index * 2}px) translateY(${yPos}px)`; // Reduced Z depth
         });
 
-        // Product cards parallax
+        // Very subtle product card movement
         const productCards = document.querySelectorAll('.enhanced-home-product-card');
         productCards.forEach((card, index) => {
-            const speed = 0.05 + (index % 3) * 0.02;
+            const speed = 0.008 + (index % 3) * 0.003; // Much more subtle
             const yPos = -(scrolled * speed);
-            card.style.transform = `translateY(${yPos}px) rotateX(${scrolled * 0.01}deg)`;
+            card.style.transform = `translateY(${yPos}px)`;
         });
 
         ticking = false;
@@ -1322,7 +1321,7 @@ function initParallaxEffects() {
         }
     }
 
-    // Only add parallax on non-mobile devices
+    // Only add parallax on non-mobile devices and if user doesn't prefer reduced motion
     if (window.innerWidth > 768 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         window.addEventListener('scroll', requestTick);
     }
