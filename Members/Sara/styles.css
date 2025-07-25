@@ -27,6 +27,252 @@
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* 3D Background Elements */
+.background-3d {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.floating-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.shape {
+    position: absolute;
+    font-size: 2rem;
+    opacity: 0.6;
+    animation: float3D 15s ease-in-out infinite;
+    transform-style: preserve-3d;
+    filter: drop-shadow(0 0 20px rgba(157, 124, 255, 0.3));
+}
+
+.shape-1 {
+    top: 10%;
+    left: 15%;
+    animation-delay: 0s;
+    animation-duration: 12s;
+}
+
+.shape-2 {
+    top: 20%;
+    right: 20%;
+    animation-delay: 2s;
+    animation-duration: 14s;
+}
+
+.shape-3 {
+    top: 35%;
+    left: 10%;
+    animation-delay: 4s;
+    animation-duration: 16s;
+}
+
+.shape-4 {
+    bottom: 30%;
+    right: 15%;
+    animation-delay: 6s;
+    animation-duration: 13s;
+}
+
+.shape-5 {
+    bottom: 20%;
+    left: 25%;
+    animation-delay: 8s;
+    animation-duration: 15s;
+}
+
+.shape-6 {
+    top: 60%;
+    right: 30%;
+    animation-delay: 10s;
+    animation-duration: 11s;
+}
+
+.shape-7 {
+    top: 80%;
+    left: 40%;
+    animation-delay: 1s;
+    animation-duration: 17s;
+}
+
+.shape-8 {
+    top: 45%;
+    right: 45%;
+    animation-delay: 3s;
+    animation-duration: 14s;
+}
+
+.shape-9 {
+    bottom: 50%;
+    left: 60%;
+    animation-delay: 5s;
+    animation-duration: 12s;
+}
+
+.shape-10 {
+    top: 25%;
+    left: 70%;
+    animation-delay: 7s;
+    animation-duration: 16s;
+}
+
+@keyframes float3D {
+    0%, 100% {
+        transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) scale(1);
+    }
+    25% {
+        transform: translate3d(-30px, -50px, 100px) rotateX(180deg) rotateY(90deg) scale(1.2);
+    }
+    50% {
+        transform: translate3d(50px, -30px, -50px) rotateX(360deg) rotateY(180deg) scale(0.8);
+    }
+    75% {
+        transform: translate3d(-20px, 40px, 150px) rotateX(540deg) rotateY(270deg) scale(1.1);
+    }
+}
+
+.particle-system {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.particle-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(2px 2px at 20px 30px, rgba(157, 124, 255, 0.4), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255, 157, 210, 0.3), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(160, 255, 179, 0.3), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(157, 124, 255, 0.2), transparent),
+        radial-gradient(2px 2px at 160px 30px, rgba(255, 157, 210, 0.4), transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: moveParticles 20s linear infinite;
+}
+
+.layer-1 {
+    animation-duration: 25s;
+    opacity: 0.6;
+}
+
+.layer-2 {
+    animation-duration: 35s;
+    animation-direction: reverse;
+    opacity: 0.4;
+}
+
+.layer-3 {
+    animation-duration: 45s;
+    opacity: 0.3;
+}
+
+@keyframes moveParticles {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(-200px, -100px, 0);
+    }
+}
+
+.geometric-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.geo-shape {
+    position: absolute;
+    opacity: 0.1;
+    animation: geoFloat 20s ease-in-out infinite;
+}
+
+.geo-triangle-1 {
+    top: 15%;
+    left: 80%;
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 87px solid var(--kuromi-purple);
+    animation-delay: 0s;
+    transform-origin: center bottom;
+}
+
+.geo-triangle-2 {
+    bottom: 20%;
+    left: 5%;
+    width: 0;
+    height: 0;
+    border-left: 75px solid transparent;
+    border-right: 75px solid transparent;
+    border-bottom: 130px solid var(--accent-pink);
+    animation-delay: 10s;
+    transform-origin: center bottom;
+}
+
+.geo-circle-1 {
+    top: 50%;
+    right: 10%;
+    width: 120px;
+    height: 120px;
+    border: 3px solid var(--spooky-green);
+    border-radius: 50%;
+    animation-delay: 5s;
+}
+
+.geo-circle-2 {
+    bottom: 40%;
+    left: 20%;
+    width: 80px;
+    height: 80px;
+    border: 2px solid var(--kuromi-purple);
+    border-radius: 50%;
+    animation-delay: 15s;
+}
+
+.geo-hexagon-1 {
+    top: 70%;
+    right: 25%;
+    width: 60px;
+    height: 60px;
+    background: var(--accent-pink);
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    animation-delay: 8s;
+}
+
+.geo-hexagon-2 {
+    top: 30%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    background: var(--spooky-green);
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    animation-delay: 12s;
+}
+
+@keyframes geoFloat {
+    0%, 100% {
+        transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    }
+    33% {
+        transform: translate3d(-20px, -30px, 50px) rotate(120deg) scale(1.1);
+    }
+    66% {
+        transform: translate3d(30px, 20px, -30px) rotate(240deg) scale(0.9);
+    }
+}
+
 body {
     font-family: var(--font-body);
     background: linear-gradient(135deg, var(--primary-black) 0%, #2a2a2a 100%);
