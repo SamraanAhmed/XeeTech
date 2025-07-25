@@ -279,7 +279,7 @@ body {
     color: var(--white);
     line-height: 1.6;
     overflow-x: hidden;
-    perspective: 1000px;
+    perspective: 2000px;
     transform-style: preserve-3d;
 }
 
