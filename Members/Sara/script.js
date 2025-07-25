@@ -993,8 +993,17 @@ function loadTrendingPageProducts() {
         button.addEventListener('click', (e) => {
             const productId = parseInt(e.target.dataset.productId);
             addToCart(productId);
+
+            // Add success animation
+            button.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                button.style.transform = '';
+            }, 150);
         });
     });
+
+    // Add advanced interactions for enhanced cards
+    addEnhancedCardInteractions();
 }
 
 function createEnhancedProductCard(product, rank) {
