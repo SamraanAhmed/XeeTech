@@ -445,40 +445,23 @@ body {
 }
 
 .search-toggle {
-    background: linear-gradient(45deg, var(--kuromi-purple), var(--accent-pink));
+    background: transparent;
     border: none;
     color: var(--white);
     cursor: pointer;
-    font-size: 18px;
-    padding: 12px;
-    border-radius: 50%;
+    font-size: 20px;
+    padding: 8px;
     transition: var(--transition);
-    box-shadow: 0 4px 15px rgba(157, 124, 255, 0.3);
     position: relative;
-    width: 45px;
-    height: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.search-toggle::before {
-    content: '✨';
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    font-size: 0.6em;
-    opacity: 0;
-    animation: searchSparkle 2s ease-in-out infinite;
-}
-
 .search-toggle:hover {
     transform: scale(1.15) rotate(10deg);
-    box-shadow: 0 0 25px rgba(255, 157, 210, 0.7);
-}
-
-.search-toggle:hover::before {
-    opacity: 1;
+    color: var(--accent-pink);
+    filter: drop-shadow(0 0 10px rgba(255, 157, 210, 0.7));
 }
 
 .search-dropdown {
@@ -593,35 +576,15 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 12px 18px;
-    background: linear-gradient(135deg,
-        rgba(157, 124, 255, 0.2) 0%,
-        rgba(255, 157, 210, 0.15) 100%);
-    border: 2px solid var(--kuromi-purple);
-    border-radius: 25px;
+    padding: 8px;
+    background: transparent;
+    border: none;
     transition: var(--transition);
     position: relative;
-    overflow: hidden;
+    cursor: pointer;
 }
 
-.cart-icon::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg,
-        transparent,
-        rgba(255, 157, 210, 0.3),
-        transparent);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
 
-.cart-icon:hover::before {
-    opacity: 1;
-}
 
 .cart-icon::after {
     content: '💫';
@@ -634,12 +597,7 @@ body {
 }
 
 .cart-icon:hover {
-    background: linear-gradient(135deg, var(--kuromi-purple), var(--accent-pink));
-    border-color: var(--spooky-green);
     transform: scale(1.1) rotate(2deg);
-    box-shadow:
-        0 8px 25px rgba(157, 124, 255, 0.4),
-        0 0 0 3px rgba(255, 157, 210, 0.3);
 }
 
 .cart-icon:hover::after {
