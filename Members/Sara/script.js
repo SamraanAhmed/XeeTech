@@ -1327,9 +1327,38 @@ function initParallaxEffects() {
     }
 }
 
-// Initialize parallax effects
+// Reset any problematic transforms
+function resetTransforms() {
+    // Reset section transforms to base values
+    const sections = document.querySelectorAll('.bestsellers-section, .trending-section, .about-section');
+    sections.forEach((section, index) => {
+        section.style.transform = `translateZ(${1 + index}px)`;
+    });
+
+    // Reset product card transforms
+    const productCards = document.querySelectorAll('.enhanced-home-product-card');
+    productCards.forEach(card => {
+        card.style.transform = '';
+    });
+
+    // Reset shape transforms
+    const shapes = document.querySelectorAll('.shape');
+    shapes.forEach(shape => {
+        shape.style.transform = '';
+    });
+}
+
+// Initialize page safely
 document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(initParallaxEffects, 1000);
+    // Reset any problematic transforms first
+    resetTransforms();
+
+    // Initialize parallax effects after a brief delay
+    setTimeout(() => {
+        if (window.innerWidth > 768) {
+            initParallaxEffects();
+        }
+    }, 500);
 });
 
 // Export functions for potential external use
