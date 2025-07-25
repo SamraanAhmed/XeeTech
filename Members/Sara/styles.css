@@ -2257,7 +2257,8 @@ body {
         inset 0 -12px 24px rgba(0, 0, 0, 0.2);
 }
 
-.enhanced-product-content {
+.enhanced-product-content,
+.product-content {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -2265,7 +2266,8 @@ body {
     padding-top: 10px;
 }
 
-.enhanced-product-title {
+.enhanced-product-title,
+.product-title {
     font-family: var(--font-gothic);
     font-size: 1.3em;
     color: var(--white);
@@ -2279,7 +2281,8 @@ body {
     justify-content: center;
 }
 
-.enhanced-home-product-card:hover .enhanced-product-title {
+.enhanced-home-product-card:hover .enhanced-product-title,
+.universal-product-card:hover .product-title {
     color: var(--accent-pink);
     transform: scale(1.02);
     text-shadow: 0 3px 12px rgba(255, 157, 210, 0.5);
