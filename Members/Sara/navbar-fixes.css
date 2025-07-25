@@ -40,6 +40,21 @@
     filter: drop-shadow(0 0 15px rgba(255, 157, 210, 0.8));
 }
 
+/* Story section logo styling */
+.story-logo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    filter: drop-shadow(0 0 20px rgba(157, 124, 255, 0.7));
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.story-logo:hover {
+    transform: scale(1.05) rotate(5deg);
+    filter: drop-shadow(0 0 30px rgba(255, 157, 210, 0.9));
+}
+
 /* Dropdown proper positioning */
 .dropdown {
     position: relative;
