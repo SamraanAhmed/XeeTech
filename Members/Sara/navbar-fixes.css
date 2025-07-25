@@ -25,6 +25,57 @@
     flex-shrink: 0;
 }
 
+/* Logo image styling */
+.nav-logo img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 0 8px rgba(157, 124, 255, 0.5));
+}
+
+.nav-logo img:hover {
+    transform: scale(1.1) rotate(5deg);
+    filter: drop-shadow(0 0 15px rgba(255, 157, 210, 0.8));
+}
+
+/* Story section logo styling */
+.story-logo {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    object-fit: cover;
+    filter: drop-shadow(0 0 20px rgba(157, 124, 255, 0.7));
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.story-logo:hover {
+    transform: scale(1.05) rotate(5deg);
+    filter: drop-shadow(0 0 30px rgba(255, 157, 210, 0.9));
+}
+
+/* Fix trending page product cards */
+.trending-grid .product-card {
+    display: flex;
+    flex-direction: column;
+    height: 420px;
+}
+
+.trending-grid .product-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.trending-grid .add-to-cart {
+    margin-top: auto;
+    width: 100%;
+    flex-shrink: 0;
+}
+
 /* Dropdown proper positioning */
 .dropdown {
     position: relative;

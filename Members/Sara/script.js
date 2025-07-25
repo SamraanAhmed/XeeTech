@@ -401,7 +401,7 @@ function createProductCard(product) {
                     $${product.price}
                 </div>
                 <button class="add-to-cart" data-product-id="${product.id}">
-                    Add to Nightmare Bag
+                    Add to Cart
                 </button>
             </div>
         </div>
@@ -417,7 +417,7 @@ function createTrendingCard(product) {
                 <h3 class="product-title">${product.name}</h3>
                 <div class="product-price">$${product.price}</div>
                 <button class="add-to-cart" data-product-id="${product.id}">
-                    Quick Add
+                    Add to Cart
                 </button>
             </div>
         </div>
