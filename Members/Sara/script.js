@@ -84,7 +84,7 @@ const chatbotResponses = {
         "I'm here to make your shopping nightmare... I mean dream come true!"
     ],
     bestsellers: [
-        "Our hellspawns are obsessed with the Giant Kuromi Plush and the Nightmare Hoodie! 🔥",
+        "Our hellspawns are obsessed with the Giant Kuromi Plush and the Nightmare Hoodie! ���",
         "The Spooky Phone Case is flying off the shelves like a bat! 🦇",
         "Everyone's going crazy for our Gothic Lolita collection!"
     ],
@@ -1280,6 +1280,58 @@ enhancedStyles.textContent = `
     }
 `;
 document.head.appendChild(enhancedStyles);
+
+// Parallax Effects
+function initParallaxEffects() {
+    let ticking = false;
+
+    function updateParallax() {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * -0.5;
+
+        // Move 3D background elements
+        const shapes = document.querySelectorAll('.shape');
+        shapes.forEach((shape, index) => {
+            const speed = (index % 3 + 1) * 0.3;
+            shape.style.transform = `translate3d(0, ${scrolled * speed}px, 0) rotateX(${scrolled * 0.1}deg) rotateY(${scrolled * 0.05}deg)`;
+        });
+
+        // Parallax sections
+        const sections = document.querySelectorAll('.bestsellers-section, .trending-section, .about-section');
+        sections.forEach((section, index) => {
+            const speed = (index + 1) * 0.1;
+            const yPos = -(scrolled * speed);
+            section.style.transform = `translateZ(${20 + index * 10}px) translateY(${yPos}px)`;
+        });
+
+        // Product cards parallax
+        const productCards = document.querySelectorAll('.enhanced-home-product-card');
+        productCards.forEach((card, index) => {
+            const speed = 0.05 + (index % 3) * 0.02;
+            const yPos = -(scrolled * speed);
+            card.style.transform = `translateY(${yPos}px) rotateX(${scrolled * 0.01}deg)`;
+        });
+
+        ticking = false;
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(updateParallax);
+            ticking = true;
+        }
+    }
+
+    // Only add parallax on non-mobile devices
+    if (window.innerWidth > 768 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        window.addEventListener('scroll', requestTick);
+    }
+}
+
+// Initialize parallax effects
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(initParallaxEffects, 1000);
+});
 
 // Export functions for potential external use
 window.KuromiShop = {
