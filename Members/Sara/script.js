@@ -493,7 +493,7 @@ function createTrendingCard(product) {
 // Trending carousel functionality
 function moveTrendingCarousel(direction) {
     const trendingItems = document.getElementById('trendingItems');
-    const itemWidth = 300; // 280px width + 20px gap
+    const itemWidth = 350; // 320px width + 30px gap for enhanced cards
     const maxIndex = Math.max(0, trendingProducts.length - 3); // Show 3 items at once
 
     currentTrendingIndex += direction;
