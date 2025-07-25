@@ -2371,7 +2371,8 @@ body {
     transform: translateY(-2px);
 }
 
-.enhanced-home-add-to-cart {
+.enhanced-home-add-to-cart,
+.add-to-cart-btn {
     background: linear-gradient(45deg, var(--kuromi-purple), var(--accent-pink));
     color: var(--white);
     border: none;
