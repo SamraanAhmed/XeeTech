@@ -1281,35 +1281,50 @@ enhancedStyles.textContent = `
 `;
 document.head.appendChild(enhancedStyles);
 
-// Subtle Parallax Effects
+// Subtle Parallax Effects with Error Handling
 function initParallaxEffects() {
     let ticking = false;
 
     function updateParallax() {
-        const scrolled = window.pageYOffset;
+        try {
+            const scrolled = window.pageYOffset;
+            const maxScroll = 2000; // Limit extreme scroll values
 
-        // Very subtle movement for 3D background elements
-        const shapes = document.querySelectorAll('.shape');
-        shapes.forEach((shape, index) => {
-            const speed = (index % 3 + 1) * 0.02; // Much slower
-            shape.style.transform = `translate3d(0, ${scrolled * speed}px, 0) rotateX(${scrolled * 0.005}deg) rotateY(${scrolled * 0.002}deg)`;
-        });
+            if (scrolled > maxScroll) return;
 
-        // Very minimal section movement - just a tiny depth effect
-        const sections = document.querySelectorAll('.bestsellers-section, .trending-section, .about-section');
-        sections.forEach((section, index) => {
-            const speed = (index + 1) * 0.01; // Much more subtle
-            const yPos = -(scrolled * speed);
-            section.style.transform = `translateZ(${5 + index * 2}px) translateY(${yPos}px)`; // Reduced Z depth
-        });
+            // Very subtle movement for 3D background elements
+            const shapes = document.querySelectorAll('.shape');
+            shapes.forEach((shape, index) => {
+                if (shape && shape.style) {
+                    const speed = (index % 3 + 1) * 0.01; // Even more subtle
+                    shape.style.transform = `translate3d(0, ${scrolled * speed}px, 0)`;
+                }
+            });
 
-        // Very subtle product card movement
-        const productCards = document.querySelectorAll('.enhanced-home-product-card');
-        productCards.forEach((card, index) => {
-            const speed = 0.008 + (index % 3) * 0.003; // Much more subtle
-            const yPos = -(scrolled * speed);
-            card.style.transform = `translateY(${yPos}px)`;
-        });
+            // Minimal section movement
+            const sections = document.querySelectorAll('.bestsellers-section, .trending-section, .about-section');
+            sections.forEach((section, index) => {
+                if (section && section.style) {
+                    const speed = (index + 1) * 0.005; // Very subtle
+                    const yPos = -(scrolled * speed);
+                    section.style.transform = `translateZ(${1 + index}px) translateY(${yPos}px)`;
+                }
+            });
+
+            // Minimal product card movement
+            const productCards = document.querySelectorAll('.enhanced-home-product-card');
+            productCards.forEach((card, index) => {
+                if (card && card.style) {
+                    const speed = 0.003 + (index % 3) * 0.001; // Very subtle
+                    const yPos = -(scrolled * speed);
+                    card.style.transform = `translateY(${yPos}px)`;
+                }
+            });
+        } catch (error) {
+            console.warn('Parallax effect error:', error);
+            // Disable parallax if there are errors
+            window.removeEventListener('scroll', requestTick);
+        }
 
         ticking = false;
     }
@@ -1323,7 +1338,11 @@ function initParallaxEffects() {
 
     // Only add parallax on non-mobile devices and if user doesn't prefer reduced motion
     if (window.innerWidth > 768 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        window.addEventListener('scroll', requestTick);
+        try {
+            window.addEventListener('scroll', requestTick);
+        } catch (error) {
+            console.warn('Failed to initialize parallax effects:', error);
+        }
     }
 }
 
