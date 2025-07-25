@@ -4177,8 +4177,12 @@ body {
         margin: 10px auto 15px;
     }
 
-    .enhanced-product-image {
+    .enhanced-product-image-placeholder .placeholder-icon {
         font-size: 2.8em;
+    }
+
+    .enhanced-product-image-placeholder .placeholder-text {
+        font-size: 0.75em;
     }
 
     .enhanced-product-title {
