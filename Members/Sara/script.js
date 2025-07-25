@@ -14,7 +14,7 @@ const sampleProducts = [
         name: "Giant Kuromi Plush — Not Cursed (Probably)",
         price: 45.99,
         originalPrice: 65.99,
-        image: "🖤",
+        image: "images/products/kuromi-plush-giant.jpg",
         category: "plushies",
         trending: true,
         almostSoldOut: true
@@ -24,7 +24,7 @@ const sampleProducts = [
         name: "Kuromi's Nightmare Hoodie",
         price: 39.99,
         originalPrice: 55.99,
-        image: "👕",
+        image: "images/products/kuromi-hoodie-nightmare.jpg",
         category: "clothing",
         trending: false,
         almostSoldOut: false
@@ -34,7 +34,7 @@ const sampleProducts = [
         name: "Spooky Kawaii Phone Case",
         price: 19.99,
         originalPrice: 29.99,
-        image: "📱",
+        image: "images/products/phone-case-spooky.jpg",
         category: "accessories",
         trending: true,
         almostSoldOut: true
@@ -44,7 +44,7 @@ const sampleProducts = [
         name: "Kuromi's Devil Horns Headband",
         price: 24.99,
         originalPrice: 34.99,
-        image: "👹",
+        image: "images/products/headband-devil-horns.jpg",
         category: "accessories",
         trending: false,
         almostSoldOut: false
@@ -54,7 +54,7 @@ const sampleProducts = [
         name: "Gothic Lolita Mini Skirt",
         price: 42.99,
         originalPrice: 59.99,
-        image: "👗",
+        image: "images/products/skirt-gothic-lolita.jpg",
         category: "clothing",
         trending: true,
         almostSoldOut: false
@@ -64,7 +64,7 @@ const sampleProducts = [
         name: "Nightmare Tea Set",
         price: 89.99,
         originalPrice: 120.99,
-        image: "🫖",
+        image: "images/products/tea-set-nightmare.jpg",
         category: "home",
         trending: false,
         almostSoldOut: true
@@ -143,6 +143,39 @@ function setupEventListeners() {
         mobileToggle.addEventListener('click', () => {
             navMenu.classList.toggle('active');
             mobileToggle.classList.toggle('active');
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+        });
+
+        // Close mobile menu when clicking on nav links
+        navMenu.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    navMenu.classList.remove('active');
+                    mobileToggle.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768 &&
+                !navMenu.contains(e.target) &&
+                !mobileToggle.contains(e.target) &&
+                navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                mobileToggle.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navMenu.classList.remove('active');
+                mobileToggle.classList.remove('active');
+                document.body.style.overflow = '';
+            }
         });
     }
 
@@ -261,6 +294,9 @@ function setupEventListeners() {
             }
         });
     });
+
+    // Handle dropdown toggle on mobile
+    setupMobileDropdown();
 }
 
 // Hero slideshow functionality
@@ -354,18 +390,48 @@ function createProductCard(product) {
     const discountPercent = Math.round((1 - product.price / product.originalPrice) * 100);
 
     return `
-        <div class="product-card">
-            ${discountPercent > 0 ? `<div class="sale-badge">🔥 ${discountPercent}% OFF!</div>` : ''}
-            <div class="product-image">${product.image}</div>
+        <div class="universal-product-card" data-product-id="${product.id}">
+            <div class="card-magical-bg"></div>
+            <div class="card-shimmer"></div>
+
+            ${discountPercent > 0 ? `<div class="enhanced-sale-badge">🔥 ${discountPercent}% OFF!</div>` : ''}
+            ${product.trending ? '<div class="trending-indicator">⭐ TRENDING</div>' : ''}
+            ${product.almostSoldOut ? '<div class="stock-warning">⚡ LIMITED STOCK</div>' : ''}
+
+            <div class="product-image-container">
+                <div class="image-magical-glow"></div>
+                <div class="image-sparkle-effect"></div>
+                <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="product-image-placeholder" style="display: none;">
+                    <span class="placeholder-icon">🖼️</span>
+                    <span class="placeholder-text">Image Coming Soon</span>
+                </div>
+                <div class="image-hover-overlay"></div>
+            </div>
+
             <div class="product-content">
                 <h3 class="product-title">${product.name}</h3>
-                <div class="product-price">
+
+                <div class="product-rating">
+                    <div class="stars">★★★★★</div>
+                    <span class="review-count">(${Math.floor(Math.random() * 200) + 50} reviews)</span>
+                </div>
+
+                <div class="price-container">
                     ${product.originalPrice > product.price ?
                         `<span class="original-price">$${product.originalPrice}</span>` : ''}
-                    $${product.price}
+                    <span class="current-price">$${product.price}</span>
                 </div>
-                <button class="add-to-cart" data-product-id="${product.id}">
-                    Add to Nightmare Bag
+
+                <div class="product-features">
+                    <span class="feature-tag">��� Premium</span>
+                    <span class="feature-tag">🦇 Limited</span>
+                </div>
+
+                <button class="add-to-cart-btn add-to-cart" data-product-id="${product.id}">
+                    <span class="btn-text">Add to Nightmare Bag</span>
+                    <span class="btn-magic">✨</span>
+                    <div class="btn-ripple-effect"></div>
                 </button>
             </div>
         </div>
@@ -373,15 +439,51 @@ function createProductCard(product) {
 }
 
 function createTrendingCard(product) {
+    const discountPercent = Math.round((1 - product.price / product.originalPrice) * 100);
+
     return `
-        <div class="trending-item">
-            ${product.almostSoldOut ? '<div class="almost-sold-out">Almost Sold Out!</div>' : ''}
-            <div class="product-image">${product.image}</div>
+        <div class="universal-product-card trending-enhanced-card" data-product-id="${product.id}">
+            <div class="card-magical-bg"></div>
+            <div class="card-shimmer"></div>
+
+            ${discountPercent > 0 ? `<div class="enhanced-sale-badge">🔥 ${discountPercent}% OFF!</div>` : ''}
+            ${product.trending ? '<div class="trending-indicator">⭐ TRENDING</div>' : ''}
+            ${product.almostSoldOut ? '<div class="stock-warning">⚡ LIMITED STOCK</div>' : ''}
+
+            <div class="product-image-container">
+                <div class="image-magical-glow"></div>
+                <div class="image-sparkle-effect"></div>
+                <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="product-image-placeholder" style="display: none;">
+                    <span class="placeholder-icon">🖼️</span>
+                    <span class="placeholder-text">Image Coming Soon</span>
+                </div>
+                <div class="image-hover-overlay"></div>
+            </div>
+
             <div class="product-content">
                 <h3 class="product-title">${product.name}</h3>
-                <div class="product-price">$${product.price}</div>
-                <button class="add-to-cart" data-product-id="${product.id}">
-                    Quick Add
+
+                <div class="product-rating">
+                    <div class="stars">★★★★★</div>
+                    <span class="review-count">(${Math.floor(Math.random() * 200) + 50} reviews)</span>
+                </div>
+
+                <div class="price-container">
+                    ${product.originalPrice > product.price ?
+                        `<span class="original-price">$${product.originalPrice}</span>` : ''}
+                    <span class="current-price">$${product.price}</span>
+                </div>
+
+                <div class="product-features">
+                    <span class="feature-tag">💜 Premium</span>
+                    <span class="feature-tag">🦇 Limited</span>
+                </div>
+
+                <button class="add-to-cart-btn add-to-cart" data-product-id="${product.id}">
+                    <span class="btn-text">Add to Nightmare Bag</span>
+                    <span class="btn-magic">✨</span>
+                    <div class="btn-ripple-effect"></div>
                 </button>
             </div>
         </div>
@@ -391,7 +493,7 @@ function createTrendingCard(product) {
 // Trending carousel functionality
 function moveTrendingCarousel(direction) {
     const trendingItems = document.getElementById('trendingItems');
-    const itemWidth = 300; // 280px width + 20px gap
+    const itemWidth = 350; // 320px width + 30px gap for enhanced cards
     const maxIndex = Math.max(0, trendingProducts.length - 3); // Show 3 items at once
 
     currentTrendingIndex += direction;
@@ -805,6 +907,44 @@ function initPerformanceMonitoring() {
 // Initialize performance monitoring
 initPerformanceMonitoring();
 
+// Mobile dropdown functionality
+function setupMobileDropdown() {
+    const dropdown = document.querySelector('.dropdown');
+    const dropdownMenu = document.querySelector('.dropdown-menu');
+
+    if (dropdown && dropdownMenu) {
+        let isDropdownOpen = false;
+
+        // Toggle dropdown on mobile
+        dropdown.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                isDropdownOpen = !isDropdownOpen;
+
+                if (isDropdownOpen) {
+                    dropdownMenu.style.display = 'block';
+                    dropdownMenu.style.opacity = '1';
+                    dropdownMenu.style.visibility = 'visible';
+                } else {
+                    dropdownMenu.style.display = 'none';
+                    dropdownMenu.style.opacity = '0';
+                    dropdownMenu.style.visibility = 'hidden';
+                }
+            }
+        });
+
+        // Reset dropdown on window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                dropdownMenu.style.display = '';
+                dropdownMenu.style.opacity = '';
+                dropdownMenu.style.visibility = '';
+                isDropdownOpen = false;
+            }
+        });
+    }
+}
+
 // Shop page functions
 function loadShopProducts() {
     const allProducts = [
@@ -904,13 +1044,87 @@ function setupCategoryFilters() {
 }
 
 function loadTrendingPageProducts() {
-    const hotNowProducts = sampleProducts.filter(p => p.trending).slice(0, 3);
-    const almostSoldOutProducts = sampleProducts.filter(p => p.almostSoldOut);
-    const risingStarsProducts = sampleProducts.slice(3, 6);
+    // Get top 3 trending products
+    const trendingProducts = sampleProducts.filter(p => p.trending).slice(0, 3);
 
-    displayTrendingGrid('hotNowGrid', hotNowProducts);
-    displayTrendingGrid('almostSoldOutGrid', almostSoldOutProducts);
-    displayTrendingGrid('risingStarsGrid', risingStarsProducts);
+    const showcase = document.getElementById('trendingShowcase');
+    if (!showcase) return;
+
+    showcase.innerHTML = trendingProducts.map((product, index) =>
+        createEnhancedProductCard(product, index + 1)
+    ).join('');
+
+    // Add event listeners for enhanced cards
+    showcase.querySelectorAll('.enhanced-add-to-cart').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const productId = parseInt(e.target.dataset.productId);
+            addToCart(productId);
+
+            // Add success animation
+            button.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                button.style.transform = '';
+            }, 150);
+        });
+    });
+
+    // Add advanced interactions for enhanced cards
+    addEnhancedCardInteractions();
+}
+
+function createEnhancedProductCard(product, rank) {
+    const discountPercent = product.originalPrice ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
+
+    return `
+        <div class="enhanced-product-card" data-product-id="${product.id}">
+            <div class="card-particles"></div>
+            <div class="card-glow-effect"></div>
+
+            <div class="trending-rank">#${rank}</div>
+            <div class="trending-badge ${product.almostSoldOut ? 'almost-gone' : ''}">
+                ${product.almostSoldOut ? '⚡ ALMOST GONE' : '🔥 HOT'}
+            </div>
+
+            ${discountPercent > 0 ? `<div class="discount-badge">-${discountPercent}%</div>` : ''}
+
+            <div class="enhanced-product-image-container">
+                <div class="image-sparkles"></div>
+                <div class="image-glow"></div>
+                <img src="${product.image}" alt="${product.name}" class="enhanced-product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="enhanced-product-image-placeholder" style="display: none;">
+                    <span class="placeholder-icon">🖼️</span>
+                    <span class="placeholder-text">Image Coming Soon</span>
+                </div>
+                <div class="image-reflection"></div>
+            </div>
+
+            <div class="product-details">
+                <h3 class="enhanced-product-title">${product.name}</h3>
+
+                <div class="price-container">
+                    ${product.originalPrice ? `<span class="original-price">$${product.originalPrice}</span>` : ''}
+                    <span class="enhanced-product-price">$${product.price}</span>
+                </div>
+
+                <div class="product-rating">
+                    <div class="stars">★★★★★</div>
+                    <span class="review-count">(${Math.floor(Math.random() * 500) + 100} reviews)</span>
+                </div>
+
+                <div class="product-features">
+                    <span class="feature">✨ Premium Quality</span>
+                    <span class="feature">🦇 Limited Edition</span>
+                    <span class="feature">💜 Kuromi Certified</span>
+                </div>
+            </div>
+
+            <button class="enhanced-add-to-cart add-to-cart" data-product-id="${product.id}">
+                <span class="btn-text">Add to Nightmare Bag</span>
+                <span class="btn-icon">🛒</span>
+                <div class="btn-ripple"></div>
+            </button>
+        </div>
+    `;
 }
 
 function displayTrendingGrid(gridId, products) {
@@ -931,12 +1145,16 @@ function displayTrendingGrid(gridId, products) {
 // Update navigation highlighting based on current page
 function updateActiveNavigation() {
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    const navLinks = document.querySelectorAll('.nav-link');
+    const navLinks = document.querySelectorAll('.nav-link:not(.dropdown .nav-link)');
 
     navLinks.forEach(link => {
         link.classList.remove('active');
         const href = link.getAttribute('href');
-        if (href === currentPage || (currentPage === 'index.html' && href === 'index.html')) {
+        if (href === currentPage ||
+            (currentPage === 'index.html' && href === 'index.html') ||
+            (currentPage.includes('shop') && href.includes('shop')) ||
+            (currentPage.includes('trending') && href.includes('trending')) ||
+            (currentPage.includes('about') && href.includes('about'))) {
             link.classList.add('active');
         }
     });
@@ -968,6 +1186,244 @@ function initializePage() {
 // Call initialization on page load
 document.addEventListener('DOMContentLoaded', initializePage);
 
+// Enhanced Card Interactions
+function addEnhancedCardInteractions() {
+    const cards = document.querySelectorAll('.enhanced-product-card');
+
+    cards.forEach(card => {
+        // Mouse follow effect for glow
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+
+            card.style.transform = `
+                translateY(-25px)
+                rotateX(${rotateX}deg)
+                rotateY(${rotateY}deg)
+                scale(1.08)
+            `;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+        });
+
+        // Ripple effect on click
+        card.addEventListener('click', (e) => {
+            const ripple = document.createElement('div');
+            ripple.className = 'click-ripple';
+
+            const rect = card.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+
+            ripple.style.cssText = `
+                position: absolute;
+                width: ${size}px;
+                height: ${size}px;
+                left: ${x}px;
+                top: ${y}px;
+                background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+                border-radius: 50%;
+                transform: scale(0);
+                animation: rippleEffect 0.6s ease-out;
+                pointer-events: none;
+                z-index: 10;
+            `;
+
+            card.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+
+        // Particle burst on hover
+        let particleTimeout;
+        card.addEventListener('mouseenter', () => {
+            clearTimeout(particleTimeout);
+            createParticleBurst(card);
+        });
+
+        card.addEventListener('mouseleave', () => {
+            particleTimeout = setTimeout(() => {
+                const particles = card.querySelectorAll('.hover-particle');
+                particles.forEach(p => p.remove());
+            }, 1000);
+        });
+    });
+}
+
+function createParticleBurst(card) {
+    const colors = ['#9d7cff', '#ff9dd2', '#a0ffb3'];
+    const particleCount = 8;
+
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'hover-particle';
+
+        const angle = (360 / particleCount) * i;
+        const distance = 150 + Math.random() * 50;
+        const x = Math.cos(angle * Math.PI / 180) * distance;
+        const y = Math.sin(angle * Math.PI / 180) * distance;
+
+        particle.style.cssText = `
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: ${colors[Math.floor(Math.random() * colors.length)]};
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: particleBurst 2s ease-out forwards;
+            animation-delay: ${i * 0.1}s;
+            box-shadow: 0 0 10px currentColor;
+            z-index: 5;
+            pointer-events: none;
+        `;
+
+        particle.style.setProperty('--end-x', x + 'px');
+        particle.style.setProperty('--end-y', y + 'px');
+
+        card.appendChild(particle);
+    }
+}
+
+// Add CSS animations for particles and ripples
+const enhancedStyles = document.createElement('style');
+enhancedStyles.textContent = `
+    @keyframes rippleEffect {
+        to {
+            transform: scale(2);
+            opacity: 0;
+        }
+    }
+
+    @keyframes particleBurst {
+        0% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(calc(-50% + var(--end-x)), calc(-50% + var(--end-y))) scale(0);
+            opacity: 0;
+        }
+    }
+
+    .enhanced-product-card:hover {
+        animation-play-state: paused;
+    }
+`;
+document.head.appendChild(enhancedStyles);
+
+// Subtle Parallax Effects with Error Handling
+function initParallaxEffects() {
+    let ticking = false;
+
+    function updateParallax() {
+        try {
+            const scrolled = window.pageYOffset;
+            const maxScroll = 2000; // Limit extreme scroll values
+
+            if (scrolled > maxScroll) return;
+
+            // Very subtle movement for 3D background elements
+            const shapes = document.querySelectorAll('.shape');
+            shapes.forEach((shape, index) => {
+                if (shape && shape.style) {
+                    const speed = (index % 3 + 1) * 0.01; // Even more subtle
+                    shape.style.transform = `translate3d(0, ${scrolled * speed}px, 0)`;
+                }
+            });
+
+            // Minimal section movement
+            const sections = document.querySelectorAll('.bestsellers-section, .trending-section, .about-section');
+            sections.forEach((section, index) => {
+                if (section && section.style) {
+                    const speed = (index + 1) * 0.005; // Very subtle
+                    const yPos = -(scrolled * speed);
+                    section.style.transform = `translateZ(${1 + index}px) translateY(${yPos}px)`;
+                }
+            });
+
+            // Minimal product card movement
+            const productCards = document.querySelectorAll('.enhanced-home-product-card');
+            productCards.forEach((card, index) => {
+                if (card && card.style) {
+                    const speed = 0.003 + (index % 3) * 0.001; // Very subtle
+                    const yPos = -(scrolled * speed);
+                    card.style.transform = `translateY(${yPos}px)`;
+                }
+            });
+        } catch (error) {
+            console.warn('Parallax effect error:', error);
+            // Disable parallax if there are errors
+            window.removeEventListener('scroll', requestTick);
+        }
+
+        ticking = false;
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(updateParallax);
+            ticking = true;
+        }
+    }
+
+    // Only add parallax on non-mobile devices and if user doesn't prefer reduced motion
+    if (window.innerWidth > 768 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        try {
+            window.addEventListener('scroll', requestTick);
+        } catch (error) {
+            console.warn('Failed to initialize parallax effects:', error);
+        }
+    }
+}
+
+// Reset any problematic transforms
+function resetTransforms() {
+    // Reset section transforms to base values
+    const sections = document.querySelectorAll('.bestsellers-section, .trending-section, .about-section');
+    sections.forEach((section, index) => {
+        section.style.transform = `translateZ(${1 + index}px)`;
+    });
+
+    // Reset product card transforms
+    const productCards = document.querySelectorAll('.enhanced-home-product-card');
+    productCards.forEach(card => {
+        card.style.transform = '';
+    });
+
+    // Reset shape transforms
+    const shapes = document.querySelectorAll('.shape');
+    shapes.forEach(shape => {
+        shape.style.transform = '';
+    });
+}
+
+// Initialize page safely
+document.addEventListener('DOMContentLoaded', () => {
+    // Reset any problematic transforms first
+    resetTransforms();
+
+    // Initialize parallax effects after a brief delay
+    setTimeout(() => {
+        if (window.innerWidth > 768) {
+            initParallaxEffects();
+        }
+    }, 500);
+});
+
 // Export functions for potential external use
 window.KuromiShop = {
     addToCart,
@@ -977,8 +1433,10 @@ window.KuromiShop = {
     trackEvent,
     loadShopProducts,
     loadTrendingPageProducts,
-    setupCategoryFilters
+    setupCategoryFilters,
+    addEnhancedCardInteractions
 };
 
 console.log('🦇 Welcome to Kuromi\'s Nightmare Shop! 🖤');
 console.log('Try typing "nightmare" in the chatbot for a secret surprise! 😈');
+console.log('🔧 Navbar and dropdown functionality optimized for all devices! 📱💻');

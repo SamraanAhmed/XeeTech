@@ -1,0 +1,162 @@
+/* Additional Navbar Fixes */
+
+/* Ensure navbar stays at top with highest z-index */
+.navbar {
+    position: sticky !important;
+    top: 0 !important;
+    width: 100% !important;
+    z-index: 9999 !important;
+}
+
+/* Fix dropdown z-index to appear above everything */
+.dropdown-menu {
+    z-index: 10000 !important;
+    position: absolute !important;
+}
+
+/* Ensure search dropdown also appears above content */
+.search-dropdown {
+    z-index: 10000 !important;
+    position: absolute !important;
+}
+
+/* Logo container shouldn't shrink */
+.nav-logo {
+    flex-shrink: 0;
+}
+
+/* Logo image styling */
+.nav-logo img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 0 8px rgba(157, 124, 255, 0.5));
+}
+
+.nav-logo img:hover {
+    transform: scale(1.1) rotate(5deg);
+    filter: drop-shadow(0 0 15px rgba(255, 157, 210, 0.8));
+}
+
+/* Story section logo styling */
+.story-logo {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    object-fit: cover;
+    filter: drop-shadow(0 0 20px rgba(157, 124, 255, 0.7));
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.story-logo:hover {
+    transform: scale(1.05) rotate(5deg);
+    filter: drop-shadow(0 0 30px rgba(255, 157, 210, 0.9));
+}
+
+/* Fix trending page product cards */
+.trending-grid .product-card {
+    display: flex;
+    flex-direction: column;
+    height: 420px;
+}
+
+.trending-grid .product-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.trending-grid .add-to-cart {
+    margin-top: auto;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+/* Dropdown proper positioning */
+.dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown .nav-link {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+/* Cart and search shouldn't shrink */
+.cart-container,
+.search-container {
+    flex-shrink: 0;
+}
+
+/* Search dropdown arrow positioning */
+.search-dropdown::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: 25px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid var(--kuromi-purple);
+}
+
+/* Ensure proper spacing on desktop */
+@media (min-width: 769px) {
+    .nav-menu {
+        margin-left: auto;
+    }
+    
+    .nav-links {
+        margin-right: 20px;
+    }
+}
+
+/* Fix for active navigation state */
+.nav-link.active::before {
+    opacity: 1 !important;
+    transform: scale(1) rotate(15deg) !important;
+}
+
+/* Mobile menu improvements */
+@media (max-width: 768px) {
+    .nav-menu {
+        z-index: 9998 !important;
+    }
+
+    .nav-menu.active {
+        overflow-y: auto;
+        z-index: 9998 !important;
+    }
+
+    /* Fix dropdown in mobile */
+    .dropdown:hover .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        z-index: 10000 !important;
+    }
+
+    /* Ensure mobile search works properly */
+    .search-dropdown.active {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        z-index: 10000 !important;
+    }
+}
+
+/* Smooth transitions for all navbar elements */
+.nav-link,
+.dropdown-menu,
+.search-dropdown,
+.mobile-menu-toggle {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}

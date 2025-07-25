@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Quicksand:wght@300;400;500;600;700&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="navbar-fixes.css">
     <meta name="description" content="Trending nightmare items that other hellspawns are obsessing over">
 </head>
 <body>
@@ -28,8 +29,8 @@
         <div class="nav-container">
             <div class="nav-logo">
                 <a href="index.html" class="logo-text">
-                    <span class="kuromi-face">😈</span>
-                    <span class="shop-name">Kuromi's Nightmare Shop</span>
+                   <img class="nav-logo" src="1289-kuromiwink.png" alt="">
+                    <span class="shop-name">Kuro.co</span>
                     <div class="logo-wink"></div>
                 </a>
             </div>
@@ -44,15 +45,7 @@
             <!-- Navigation Menu -->
             <div class="nav-menu" id="navMenu">
                 <div class="nav-links">
-                    <div class="nav-item dropdown">
-                        <a href="shop.html" class="nav-link">Shop <span class="dropdown-arrow">▼</span></a>
-                        <div class="dropdown-menu">
-                            <a href="plushies.html" class="dropdown-link">Plushies</a>
-                            <a href="accessories.html" class="dropdown-link">Accessories</a>
-                            <a href="clothing.html" class="dropdown-link">Clothing</a>
-                            <a href="home-decor.html" class="dropdown-link">Home Decor</a>
-                        </div>
-                    </div>
+                    <a href="shop.html" class="nav-link">Shop</a>
                     <a href="trending.html" class="nav-link active">Trending</a>
                     <a href="about.html" class="nav-link">About</a>
                 </div>
@@ -86,98 +79,14 @@
                     🔥 What's Trending in Hell 🔥
                 </h1>
                 <p class="page-subtitle">The hottest items that other hellspawns can't stop obsessing over!</p>
-                
-                <!-- Trending Stats -->
-                <div class="trending-stats">
-                    <div class="stat-item">
-                        <span class="stat-number">666</span>
-                        <span class="stat-label">Items Sold Today</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">13</span>
-                        <span class="stat-label">Almost Sold Out</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">24h</span>
-                        <span class="stat-label">Updated Every</span>
-                    </div>
-                </div>
             </div>
         </section>
 
-        <!-- Hot Right Now Section -->
-        <section class="hot-now-section">
+        <!-- Trending Products Section -->
+        <section class="trending-products-section">
             <div class="container">
-                <h2 class="section-title">
-                    <span class="fire-icon">🔥</span>
-                    Hot Right Now
-                    <span class="fire-icon">🔥</span>
-                </h2>
-                <div class="trending-grid" id="hotNowGrid">
-                    <!-- Hot trending items will be loaded here -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Almost Sold Out Section -->
-        <section class="almost-sold-out-section">
-            <div class="container">
-                <h2 class="section-title">
-                    <span class="warning-icon">⚠️</span>
-                    Almost Sold Out!
-                    <span class="warning-icon">⚠️</span>
-                </h2>
-                <p class="section-subtitle">Grab these before they disappear into the void!</p>
-                <div class="trending-grid" id="almostSoldOutGrid">
-                    <!-- Almost sold out items will be loaded here -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Rising Stars Section -->
-        <section class="rising-stars-section">
-            <div class="container">
-                <h2 class="section-title">
-                    <span class="star-icon">⭐</span>
-                    Rising Nightmare Stars
-                    <span class="star-icon">⭐</span>
-                </h2>
-                <p class="section-subtitle">New items that are quickly climbing the charts</p>
-                <div class="trending-grid" id="risingStarsGrid">
-                    <!-- Rising star items will be loaded here -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Trending Categories -->
-        <section class="trending-categories-section">
-            <div class="container">
-                <h2 class="section-title">Trending by Category</h2>
-                <div class="category-trends">
-                    <div class="trend-category">
-                        <div class="category-icon">🖤</div>
-                        <h3>Plushies</h3>
-                        <p>+25% this week</p>
-                        <a href="plushies.html" class="category-link">Shop Plushies</a>
-                    </div>
-                    <div class="trend-category">
-                        <div class="category-icon">👗</div>
-                        <h3>Clothing</h3>
-                        <p>+18% this week</p>
-                        <a href="clothing.html" class="category-link">Shop Clothing</a>
-                    </div>
-                    <div class="trend-category">
-                        <div class="category-icon">📱</div>
-                        <h3>Accessories</h3>
-                        <p>+12% this week</p>
-                        <a href="accessories.html" class="category-link">Shop Accessories</a>
-                    </div>
-                    <div class="trend-category">
-                        <div class="category-icon">🫖</div>
-                        <h3>Home Decor</h3>
-                        <p>+8% this week</p>
-                        <a href="home-decor.html" class="category-link">Shop Home Decor</a>
-                    </div>
+                <div class="trending-showcase" id="trendingShowcase">
+                    <!-- Top 3 trending items will be loaded here -->
                 </div>
             </div>
         </section>
@@ -185,40 +94,44 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3 class="footer-title">Join Kuromi's Cult... I Mean Club!</h3>
-                    <form class="newsletter-form" id="newsletterForm">
-                        <input type="email" class="newsletter-input" placeholder="Your email for spooky updates" required>
-                        <button type="submit" class="newsletter-btn">Subscribe</button>
-                    </form>
-                </div>
-                
-                <div class="footer-section">
-                    <h3 class="footer-title">Quick Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="shop.html">Shop</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="trending.html">Trending</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h3 class="footer-title">Follow the Nightmare</h3>
-                    <div class="social-icons">
-                        <a href="#" class="social-icon instagram">📷</a>
-                        <a href="#" class="social-icon twitter">🐦</a>
-                        <a href="#" class="social-icon tiktok">🎵</a>
-                        <a href="#" class="social-icon youtube">📺</a>
-                    </div>
-                </div>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3 class="footer-title">Join Kuromi's Nightmare Collective! 🖤</h3>
+                <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 20px; line-height: 1.6;">Get exclusive access to hellish deals, new arrivals, and spooky surprises delivered straight to your mortal inbox!</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" class="newsletter-input" placeholder="Enter your soul... I mean email address" required>
+                    <button type="submit" class="newsletter-btn">🦇 Join the Darkness</button>
+                </form>
             </div>
 
-            <div class="footer-bottom">
+            <div class="footer-section">
+                <h3 class="footer-title">Quick Escapes</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home Portal</a></li>
+                    <li><a href="shop.html">Shop Nightmares</a></li>
+                    <li><a href="trending.html">What's Hot in Hell</a></li>
+                    <li><a href="about.html">Our Dark Story</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Follow the Chaos</h3>
+                <div class="social-icons">
+                    <a href="#" class="social-icon" data-platform="Instagram">📷</a>
+                    <a href="#" class="social-icon" data-platform="Twitter">🐦</a>
+                    <a href="#" class="social-icon" data-platform="TikTok">🎵</a>
+                    <a href="#" class="social-icon" data-platform="YouTube">📺</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
                 <p class="copyright">© 2024 Kuromi's Nightmare Shop. All rights reserved.</p>
-                <p class="disclaimer">This is a fan-made website. Kuromi is a trademark of Sanrio Co., Ltd.</p>
+                <div class="kuromi-love">
+                    Made with 🖤 & nightmares
+                </div>
+                <p class="disclaimer">Fan-made tribute • Kuromi © Sanrio Co., Ltd.</p>
             </div>
         </div>
     </footer>
@@ -226,18 +139,18 @@
     <!-- Kuromi Chatbot -->
     <div class="chatbot-container" id="chatbotContainer">
         <div class="chatbot-toggle" id="chatbotToggle">
-            <span class="kuromi-chat-face">😈</span>
+            <img src="1289-kuromiwink.png" alt="Kuromi" class="kuromi-chat-face">
             <div class="chat-notification" id="chatNotification">💬</div>
         </div>
         
         <div class="chatbot-window" id="chatbotWindow">
             <div class="chatbot-header">
-                <div class="kuromi-avatar">😈</div>
+                <img src="1289-kuromiwink.png" alt="Kuromi" class="kuromi-avatar">
                 <div class="chatbot-title">
                     <h4>Kuromi</h4>
                     <p>Your nightmare assistant</p>
                 </div>
-                <button class="chatbot-close" id="chatbotClose">×</button>
+                <button class="chatbot-close" id="chatbotClose">��</button>
             </div>
             
             <div class="chatbot-messages" id="chatbotMessages">
@@ -282,7 +195,36 @@
     <script>
         // Initialize trending page
         document.addEventListener('DOMContentLoaded', function() {
-            loadTrendingPageProducts();
+            console.log('Trending page loading...');
+
+            // Ensure all necessary functions are available
+            if (typeof loadTrendingPageProducts === 'function') {
+                loadTrendingPageProducts();
+                console.log('Trending products loaded');
+            } else {
+                console.error('loadTrendingPageProducts function not found');
+            }
+
+            // Ensure global event listeners are set up
+            if (typeof initializeWebsite === 'function') {
+                initializeWebsite();
+            }
+
+            // Force event listener setup for any existing buttons
+            setTimeout(() => {
+                document.querySelectorAll('.add-to-cart').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const productId = parseInt(e.target.dataset.productId);
+                        console.log('Button clicked, product ID:', productId);
+                        if (typeof addToCart === 'function') {
+                            addToCart(productId);
+                        } else {
+                            console.error('addToCart function not found');
+                        }
+                    });
+                });
+            }, 100);
         });
     </script>
 </body>
