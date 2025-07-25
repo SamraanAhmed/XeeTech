@@ -1704,7 +1704,8 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-.enhanced-product-card:hover .enhanced-product-image {
+.enhanced-product-card:hover .enhanced-product-image,
+.enhanced-product-card:hover .enhanced-product-image-placeholder {
     transform: scale(1.1) rotateY(10deg);
     box-shadow:
         0 30px 60px rgba(157, 124, 255, 0.4),
