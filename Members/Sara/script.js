@@ -1087,10 +1087,14 @@ function createEnhancedProductCard(product, rank) {
 
             ${discountPercent > 0 ? `<div class="discount-badge">-${discountPercent}%</div>` : ''}
 
-            <div class="enhanced-product-image">
+            <div class="enhanced-product-image-container">
                 <div class="image-sparkles"></div>
                 <div class="image-glow"></div>
-                <span class="product-emoji">${product.image}</span>
+                <img src="${product.image}" alt="${product.name}" class="enhanced-product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="enhanced-product-image-placeholder" style="display: none;">
+                    <span class="placeholder-icon">🖼️</span>
+                    <span class="placeholder-text">Image Coming Soon</span>
+                </div>
                 <div class="image-reflection"></div>
             </div>
 
