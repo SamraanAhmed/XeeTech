@@ -1092,19 +1092,19 @@ body {
     transform-style: preserve-3d;
 }
 
-/* Parallax and Depth Effects */
+/* Subtle Depth Effects */
 .bestsellers-section {
-    transform: translateZ(20px);
+    transform: translateZ(2px);
     background: radial-gradient(ellipse at center, rgba(157, 124, 255, 0.05) 0%, transparent 70%);
 }
 
 .trending-section {
-    transform: translateZ(10px);
+    transform: translateZ(1px);
     background: radial-gradient(ellipse at center, rgba(255, 157, 210, 0.05) 0%, transparent 70%);
 }
 
 .about-section {
-    transform: translateZ(30px);
+    transform: translateZ(3px);
     background: radial-gradient(ellipse at center, rgba(160, 255, 179, 0.05) 0%, transparent 70%);
 }
 
