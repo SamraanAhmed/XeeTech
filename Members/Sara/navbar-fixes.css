@@ -55,6 +55,27 @@
     filter: drop-shadow(0 0 30px rgba(255, 157, 210, 0.9));
 }
 
+/* Fix trending page product cards */
+.trending-grid .product-card {
+    display: flex;
+    flex-direction: column;
+    height: 420px;
+}
+
+.trending-grid .product-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.trending-grid .add-to-cart {
+    margin-top: auto;
+    width: 100%;
+    flex-shrink: 0;
+}
+
 /* Dropdown proper positioning */
 .dropdown {
     position: relative;
