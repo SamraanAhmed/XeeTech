@@ -275,7 +275,36 @@
     <script>
         // Initialize trending page
         document.addEventListener('DOMContentLoaded', function() {
-            loadTrendingPageProducts();
+            console.log('Trending page loading...');
+
+            // Ensure all necessary functions are available
+            if (typeof loadTrendingPageProducts === 'function') {
+                loadTrendingPageProducts();
+                console.log('Trending products loaded');
+            } else {
+                console.error('loadTrendingPageProducts function not found');
+            }
+
+            // Ensure global event listeners are set up
+            if (typeof initializeWebsite === 'function') {
+                initializeWebsite();
+            }
+
+            // Force event listener setup for any existing buttons
+            setTimeout(() => {
+                document.querySelectorAll('.add-to-cart').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const productId = parseInt(e.target.dataset.productId);
+                        console.log('Button clicked, product ID:', productId);
+                        if (typeof addToCart === 'function') {
+                            addToCart(productId);
+                        } else {
+                            console.error('addToCart function not found');
+                        }
+                    });
+                });
+            }, 100);
         });
     </script>
 </body>
