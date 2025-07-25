@@ -403,7 +403,7 @@ function createProductCard(product) {
                 <div class="image-sparkle-effect"></div>
                 <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="product-image-placeholder" style="display: none;">
-                    <span class="placeholder-icon">🖼��</span>
+                    <span class="placeholder-icon">🖼️</span>
                     <span class="placeholder-text">Image Coming Soon</span>
                 </div>
                 <div class="image-hover-overlay"></div>
@@ -442,7 +442,12 @@ function createTrendingCard(product) {
     return `
         <div class="trending-item">
             ${product.almostSoldOut ? '<div class="almost-sold-out">Almost Sold Out!</div>' : ''}
-            <div class="product-image">${product.image}</div>
+            <div class="trending-image-container">
+                <img src="${product.image}" alt="${product.name}" class="trending-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="trending-image-placeholder" style="display: none;">
+                    <span class="placeholder-icon">🖼️</span>
+                </div>
+            </div>
             <div class="product-content">
                 <h3 class="product-title">${product.name}</h3>
                 <div class="product-price">$${product.price}</div>
@@ -949,7 +954,7 @@ function loadShopProducts() {
             name: "Cursed Coffee Mug",
             price: 12.99,
             originalPrice: 17.99,
-            image: "☕",
+            image: "��",
             category: "home",
             trending: false,
             almostSoldOut: false
@@ -1399,4 +1404,4 @@ window.KuromiShop = {
 
 console.log('🦇 Welcome to Kuromi\'s Nightmare Shop! 🖤');
 console.log('Try typing "nightmare" in the chatbot for a secret surprise! 😈');
-console.log('🔧 Navbar and dropdown functionality optimized for all devices! 📱��');
+console.log('🔧 Navbar and dropdown functionality optimized for all devices! 📱💻');
