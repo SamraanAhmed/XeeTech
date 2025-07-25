@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xee Tech - Team Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 50px;
+        }
+
+        .title {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 40px;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .member-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .member-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .member-name {
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .member-description {
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .member-links {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .project-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .project-link:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+
+        .footer {
+            margin-top: 50px;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .member-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Xee Tech</h1>
+            <p class="subtitle">Team Portfolio & Projects</p>
+        </div>
+
+        <div class="team-grid">
+            <div class="member-card">
+                <h2 class="member-name">Hijab</h2>
+                <p class="member-description">Frontend Developer specializing in modern web technologies and user experience design.</p>
+                <div class="member-links">
+                    <a href="Members/Hijab/index.html" class="project-link">View Portfolio</a>
+                </div>
+            </div>
+
+            <div class="member-card">
+                <h2 class="member-name">Muqeet</h2>
+                <p class="member-description">Full-stack developer with expertise in luxury timepiece websites and e-commerce solutions.</p>
+                <div class="member-links">
+                    <a href="Members/Muqeet/Index.htm" class="project-link">Luxe Timepieces</a>
+                    <a href="Members/Muqeet/collection.html" class="project-link">Collection</a>
+                    <a href="Members/Muqeet/heritage.html" class="project-link">Heritage</a>
+                    <a href="Members/Muqeet/service.html" class="project-link">Service</a>
+                    <a href="Members/Muqeet/contact.html" class="project-link">Contact</a>
+                </div>
+            </div>
+
+            <div class="member-card">
+                <h2 class="member-name">Samraan Ahmed</h2>
+                <p class="member-description">Anime enthusiast and developer behind XeeList - the ultimate anime database application.</p>
+                <div class="member-links">
+                    <a href="Members/SamraanAhmed/XeeList/Project/index.html" class="project-link">XeeList Home</a>
+                    <a href="Members/SamraanAhmed/XeeList/Project/search.html" class="project-link">Search Anime</a>
+                </div>
+            </div>
+
+            <div class="member-card">
+                <h2 class="member-name">Sara</h2>
+                <p class="member-description">Creative developer focused on innovative web solutions and interactive experiences.</p>
+                <div class="member-links">
+                    <a href="Members/Sara/index.html" class="project-link">View Portfolio</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2024 Xee Tech Team. Showcasing individual talents and collaborative projects.</p>
+        </div>
+    </div>
+</body>
+</html>
