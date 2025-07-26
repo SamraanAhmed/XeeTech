@@ -2721,13 +2721,14 @@ html {
 
 .throne-sparkle {
     position: absolute;
-    font-size: 1.5em;
-    animation: throneSparkle 3s ease-in-out infinite;
+    font-size: 1.8em;
+    animation: throneSparkle 5s ease-in-out infinite;
+    opacity: 0.6;
 }
 
 .throne-sparkle:nth-child(1) {
-    top: 20%;
-    left: 20%;
+    top: 15%;
+    right: 20%;
     animation-delay: 0s;
 }
 
