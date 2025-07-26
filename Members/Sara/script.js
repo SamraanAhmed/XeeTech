@@ -302,10 +302,356 @@ function closeSearch() {
 
 function performSearch(query) {
     if (!query.trim()) return;
-    
-    // In a real implementation, this would perform actual search
-    alert(`Searching for "${query}"... In a real implementation, this would show search results!`);
+
+    const searchResults = searchProducts(query);
+    showSearchResults(query, searchResults);
     closeSearch();
+}
+
+function searchProducts(query) {
+    const searchTerm = query.toLowerCase();
+    const allProducts = Object.values(enhancedProducts);
+
+    return allProducts.filter(product => {
+        return (
+            product.name.toLowerCase().includes(searchTerm) ||
+            product.category.toLowerCase().includes(searchTerm) ||
+            product.description.toLowerCase().includes(searchTerm) ||
+            (product.features && product.features.some(feature =>
+                feature.toLowerCase().includes(searchTerm)
+            )) ||
+            (product.colors && product.colors.some(color =>
+                color.toLowerCase().includes(searchTerm)
+            ))
+        );
+    });
+}
+
+function showSearchResults(query, results) {
+    const modal = createSearchResultsModal(query, results);
+    document.body.appendChild(modal);
+
+    setupSearchResultsEventListeners(modal);
+
+    setTimeout(() => {
+        modal.classList.add('active');
+    }, 10);
+}
+
+function createSearchResultsModal(query, results) {
+    const modal = document.createElement('div');
+    modal.className = 'search-results-modal';
+
+    modal.innerHTML = `
+        <div class="search-overlay"></div>
+        <div class="search-results-content">
+            <div class="search-header">
+                <h2>Search Results for "${query}"</h2>
+                <button class="search-results-close">&times;</button>
+            </div>
+
+            <div class="search-results-body">
+                ${results.length === 0 ? `
+                    <div class="no-results">
+                        <div class="no-results-icon">🔍</div>
+                        <h3>No products found</h3>
+                        <p>Try searching for different keywords like "gothic", "kawaii", or "accessories"</p>
+                    </div>
+                ` : `
+                    <div class="search-results-count">
+                        Found ${results.length} product${results.length !== 1 ? 's' : ''}
+                    </div>
+                    <div class="search-results-grid">
+                        ${results.map(product => createSearchResultCard(product)).join('')}
+                    </div>
+                `}
+            </div>
+        </div>
+    `;
+
+    // Add styles
+    const style = document.createElement('style');
+    style.textContent = `
+        .search-results-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .search-results-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .search-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .search-results-content {
+            position: relative;
+            background: white;
+            border-radius: 16px;
+            max-width: 800px;
+            width: 95%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .search-header h2 {
+            margin: 0;
+            color: var(--midnight-black);
+        }
+
+        .search-results-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.2s ease;
+        }
+
+        .search-results-close:hover {
+            background-color: #f5f5f5;
+        }
+
+        .search-results-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+        }
+
+        .search-results-count {
+            margin-bottom: 20px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .search-results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .search-result-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .search-result-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .search-result-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .search-result-info {
+            padding: 16px;
+        }
+
+        .search-result-name {
+            font-weight: 600;
+            color: var(--midnight-black);
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .search-result-price {
+            color: var(--deep-orchid);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .search-result-category {
+            background: var(--lavender-blush);
+            color: var(--deep-orchid);
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .search-result-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .search-result-btn {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .add-to-cart-search {
+            background: var(--deep-orchid);
+            color: white;
+        }
+
+        .add-to-cart-search:hover {
+            background: var(--midnight-black);
+        }
+
+        .quick-view-search {
+            background: transparent;
+            border: 1px solid var(--deep-orchid);
+            color: var(--deep-orchid);
+        }
+
+        .quick-view-search:hover {
+            background: var(--deep-orchid);
+            color: white;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .no-results-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .no-results h3 {
+            color: var(--midnight-black);
+            margin-bottom: 12px;
+        }
+
+        .no-results p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .search-results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    `;
+
+    modal.appendChild(style);
+    return modal;
+}
+
+function createSearchResultCard(product) {
+    return `
+        <div class="search-result-card" data-product-id="${product.id}">
+            <img src="${product.image}" alt="${product.name}" class="search-result-image">
+            <div class="search-result-info">
+                <div class="search-result-category">${product.category}</div>
+                <div class="search-result-name">${product.name}</div>
+                <div class="search-result-price">$${product.price.toFixed(2)}</div>
+                <div class="search-result-actions">
+                    <button class="search-result-btn add-to-cart-search" data-product-id="${product.id}">
+                        Add to Cart
+                    </button>
+                    <button class="search-result-btn quick-view-search" data-product-id="${product.id}">
+                        Quick View
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function setupSearchResultsEventListeners(modal) {
+    // Close modal
+    const closeBtn = modal.querySelector('.search-results-close');
+    const overlay = modal.querySelector('.search-overlay');
+
+    [closeBtn, overlay].forEach(element => {
+        element.addEventListener('click', () => closeSearchResultsModal(modal));
+    });
+
+    // Add to cart buttons
+    modal.querySelectorAll('.add-to-cart-search').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const productId = parseInt(btn.dataset.productId);
+            const product = enhancedProducts[productId];
+            if (product) {
+                addToCartFromShop({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1
+                });
+                showNotification(`${product.name} added to cart!`);
+            }
+        });
+    });
+
+    // Quick view buttons
+    modal.querySelectorAll('.quick-view-search').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const productId = parseInt(btn.dataset.productId);
+            closeSearchResultsModal(modal);
+            openQuickViewModal(productId);
+        });
+    });
+
+    // Card clicks for quick view
+    modal.querySelectorAll('.search-result-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const productId = parseInt(card.dataset.productId);
+            closeSearchResultsModal(modal);
+            openQuickViewModal(productId);
+        });
+    });
+}
+
+function closeSearchResultsModal(modal) {
+    modal.classList.remove('active');
+    setTimeout(() => {
+        document.body.removeChild(modal);
+    }, 300);
 }
 
 // Language selection
@@ -2230,6 +2576,20 @@ window.KuromiShop = {
     initializeShopPage,
     cart
 };
+
+// Enhanced search with keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+    // Ctrl/Cmd + K to open search
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        openSearch();
+    }
+
+    // Escape to close search
+    if (e.key === 'Escape') {
+        closeSearch();
+    }
+});
 
 // Wishlist functionality (placeholder for now)
 let wishlist = JSON.parse(localStorage.getItem('kuromiWishlist')) || [];
