@@ -3066,5 +3066,312 @@ function closeWishlistModal(modal) {
     }, 300);
 }
 
+// Social Proof Elements
+function initializeSocialProof() {
+    showRecentlyPurchasedNotifications();
+    updateVisitorCounter();
+    addStockIndicators();
+}
+
+function showRecentlyPurchasedNotifications() {
+    const recentPurchases = [
+        { name: 'Gothic Lolita Dress', location: 'Tokyo, Japan', time: '2 minutes ago' },
+        { name: 'Devil Horn Headband', location: 'Los Angeles, CA', time: '5 minutes ago' },
+        { name: 'Kuromi Gothic Hoodie', location: 'London, UK', time: '8 minutes ago' },
+        { name: 'Mischief Crop Top', location: 'Seoul, Korea', time: '12 minutes ago' },
+        { name: 'Gothic Choker Set', location: 'Paris, France', time: '15 minutes ago' }
+    ];
+
+    let currentIndex = 0;
+
+    function showNextNotification() {
+        if (currentIndex < recentPurchases.length) {
+            const purchase = recentPurchases[currentIndex];
+            showRecentPurchaseNotification(purchase);
+            currentIndex++;
+        } else {
+            currentIndex = 0; // Reset to loop
+        }
+    }
+
+    // Show first notification after 3 seconds
+    setTimeout(showNextNotification, 3000);
+
+    // Show subsequent notifications every 25 seconds
+    setInterval(showNextNotification, 25000);
+}
+
+function showRecentPurchaseNotification(purchase) {
+    const notification = document.createElement('div');
+    notification.className = 'recent-purchase-notification';
+    notification.innerHTML = `
+        <div class="recent-purchase-content">
+            <div class="recent-purchase-icon">🛍️</div>
+            <div class="recent-purchase-text">
+                <div class="purchase-item">${purchase.name}</div>
+                <div class="purchase-details">Recently purchased in ${purchase.location}</div>
+                <div class="purchase-time">${purchase.time}</div>
+            </div>
+        </div>
+        <button class="recent-purchase-close">&times;</button>
+    `;
+
+    // Add styles
+    const style = document.createElement('style');
+    style.textContent = `
+        .recent-purchase-notification {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            z-index: 9999;
+            max-width: 300px;
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+            border-left: 4px solid var(--deep-orchid);
+        }
+
+        .recent-purchase-notification.show {
+            transform: translateX(0);
+        }
+
+        .recent-purchase-content {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            gap: 12px;
+        }
+
+        .recent-purchase-icon {
+            font-size: 24px;
+        }
+
+        .recent-purchase-text {
+            flex: 1;
+        }
+
+        .purchase-item {
+            font-weight: 600;
+            color: var(--midnight-black);
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .purchase-details {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 2px;
+        }
+
+        .purchase-time {
+            font-size: 11px;
+            color: var(--deep-orchid);
+            font-weight: 500;
+        }
+
+        .recent-purchase-close {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            color: #999;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .recent-purchase-close:hover {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .recent-purchase-notification {
+                left: 10px;
+                right: 10px;
+                max-width: none;
+                transform: translateY(100%);
+            }
+
+            .recent-purchase-notification.show {
+                transform: translateY(0);
+            }
+        }
+    `;
+
+    notification.appendChild(style);
+    document.body.appendChild(notification);
+
+    // Show notification
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 100);
+
+    // Close button
+    notification.querySelector('.recent-purchase-close').addEventListener('click', () => {
+        closeRecentPurchaseNotification(notification);
+    });
+
+    // Auto close after 8 seconds
+    setTimeout(() => {
+        closeRecentPurchaseNotification(notification);
+    }, 8000);
+}
+
+function closeRecentPurchaseNotification(notification) {
+    notification.classList.remove('show');
+    setTimeout(() => {
+        if (document.body.contains(notification)) {
+            document.body.removeChild(notification);
+        }
+    }, 400);
+}
+
+function updateVisitorCounter() {
+    // Simulate visitor count
+    let visitorCount = localStorage.getItem('kuromiVisitorCount');
+    if (!visitorCount) {
+        visitorCount = Math.floor(Math.random() * 500) + 1200; // Random number between 1200-1700
+    } else {
+        visitorCount = parseInt(visitorCount) + Math.floor(Math.random() * 3) + 1; // Increment by 1-3
+    }
+
+    localStorage.setItem('kuromiVisitorCount', visitorCount);
+
+    // Create visitor counter element
+    const counter = document.createElement('div');
+    counter.className = 'visitor-counter';
+    counter.innerHTML = `
+        <div class="visitor-counter-content">
+            <span class="visitor-icon">👁️</span>
+            <span class="visitor-text">${visitorCount} people viewing</span>
+            <span class="visitor-pulse"></span>
+        </div>
+    `;
+
+    // Add styles
+    const style = document.createElement('style');
+    style.textContent = `
+        .visitor-counter {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            animation: slideInRight 0.5s ease;
+        }
+
+        .visitor-counter-content {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .visitor-pulse {
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateY(-50%) translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(-50%) translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.2);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .visitor-counter {
+                position: fixed;
+                top: auto;
+                bottom: 100px;
+                right: 10px;
+                transform: none;
+            }
+        }
+    `;
+
+    counter.appendChild(style);
+    document.body.appendChild(counter);
+
+    // Update counter every 30-60 seconds
+    setInterval(() => {
+        const currentCount = parseInt(localStorage.getItem('kuromiVisitorCount'));
+        const newCount = currentCount + Math.floor(Math.random() * 2); // Increment by 0-1
+        localStorage.setItem('kuromiVisitorCount', newCount);
+        counter.querySelector('.visitor-text').textContent = `${newCount} people viewing`;
+    }, Math.random() * 30000 + 30000); // Random interval between 30-60 seconds
+}
+
+function addStockIndicators() {
+    // Add stock indicators to product cards
+    document.querySelectorAll('.product-card').forEach((card, index) => {
+        const productId = parseInt(card.querySelector('.add-to-cart-btn')?.dataset.productId);
+        const product = enhancedProducts[productId];
+
+        if (product && product.stock) {
+            let stockIndicator = '';
+            let stockClass = '';
+
+            if (product.stock <= 5) {
+                stockIndicator = `⚠️ Only ${product.stock} left!`;
+                stockClass = 'stock-urgent';
+            } else if (product.stock <= 15) {
+                stockIndicator = `🔥 ${product.stock} in stock`;
+                stockClass = 'stock-low';
+            } else if (Math.random() > 0.7) { // Show for 30% of products
+                stockIndicator = `✅ In Stock`;
+                stockClass = 'stock-good';
+            }
+
+            if (stockIndicator) {
+                const indicator = document.createElement('div');
+                indicator.className = `stock-indicator ${stockClass}`;
+                indicator.textContent = stockIndicator;
+
+                const productInfo = card.querySelector('.product-info');
+                if (productInfo) {
+                    productInfo.insertBefore(indicator, productInfo.querySelector('.add-to-cart-btn'));
+                }
+            }
+        }
+    });
+}
+
+// Initialize social proof on page load
+document.addEventListener('DOMContentLoaded', initializeSocialProof);
+
 console.log('🦇 Welcome to Kuromi\'s Fashion Empire! 💜');
 console.log('Try the Konami code for a special surprise! ✨');
