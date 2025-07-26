@@ -637,6 +637,183 @@ function initHoverEffects() {
 // Initialize hover effects
 document.addEventListener('DOMContentLoaded', initHoverEffects);
 
+// Shop page functions
+const sampleProducts = [
+    {
+        id: 1,
+        name: "Giant Kuromi Plush",
+        price: 45.99,
+        originalPrice: 65.99,
+        image: "🖤",
+        category: "plushies"
+    },
+    {
+        id: 2,
+        name: "Kuromi's Nightmare Hoodie",
+        price: 39.99,
+        originalPrice: 55.99,
+        image: "🦇",
+        category: "clothing"
+    },
+    {
+        id: 3,
+        name: "Spooky Phone Case",
+        price: 19.99,
+        originalPrice: 29.99,
+        image: "📱",
+        category: "accessories"
+    },
+    {
+        id: 4,
+        name: "Devil Horns Headband",
+        price: 24.99,
+        originalPrice: 34.99,
+        image: "😈",
+        category: "accessories"
+    },
+    {
+        id: 5,
+        name: "Gothic Lolita Skirt",
+        price: 42.99,
+        originalPrice: 59.99,
+        image: "👗",
+        category: "clothing"
+    },
+    {
+        id: 6,
+        name: "Nightmare Tea Set",
+        price: 89.99,
+        originalPrice: 120.99,
+        image: "🫖",
+        category: "home"
+    },
+    {
+        id: 7,
+        name: "Sleepy Kuromi Pillow",
+        price: 29.99,
+        originalPrice: 39.99,
+        image: "🛏️",
+        category: "plushies"
+    },
+    {
+        id: 8,
+        name: "Gothic Choker Necklace",
+        price: 15.99,
+        originalPrice: 22.99,
+        image: "📿",
+        category: "accessories"
+    },
+    {
+        id: 9,
+        name: "Nightmare Pajama Set",
+        price: 54.99,
+        originalPrice: 74.99,
+        image: "👘",
+        category: "clothing"
+    },
+    {
+        id: 10,
+        name: "Cursed Coffee Mug",
+        price: 12.99,
+        originalPrice: 17.99,
+        image: "☕",
+        category: "home"
+    }
+];
+
+function loadShopProducts() {
+    // Load products by category
+    displayProductsByCategory('plushies', sampleProducts.filter(p => p.category === 'plushies'), 'plushiesGrid');
+    displayProductsByCategory('accessories', sampleProducts.filter(p => p.category === 'accessories'), 'accessoriesGrid');
+    displayProductsByCategory('clothing', sampleProducts.filter(p => p.category === 'clothing'), 'clothingGrid');
+    displayProductsByCategory('home', sampleProducts.filter(p => p.category === 'home'), 'homeGrid');
+}
+
+function displayProductsByCategory(category, products, gridId) {
+    const grid = document.getElementById(gridId);
+    if (!grid) return;
+
+    grid.innerHTML = products.map(product => createShopProductCard(product)).join('');
+
+    // Add event listeners
+    grid.querySelectorAll('.product-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const productId = parseInt(e.target.dataset.productId);
+            addToCartFromShop(productId);
+        });
+    });
+}
+
+function createShopProductCard(product) {
+    const discountPercent = Math.round((1 - product.price / product.originalPrice) * 100);
+
+    return `
+        <div class="product-card">
+            ${discountPercent > 0 ? `<div class="product-badge">🔥 ${discountPercent}% OFF!</div>` : ''}
+            <div class="product-image">${product.image}</div>
+            <h3 class="product-name">${product.name}</h3>
+            <div class="product-price-container">
+                ${product.originalPrice > product.price ?
+                    `<span class="original-price">$${product.originalPrice}</span>` : ''}
+                <span class="product-price">$${product.price}</span>
+            </div>
+            <button class="product-btn" data-product-id="${product.id}">
+                Add to Bag
+            </button>
+        </div>
+    `;
+}
+
+function addToCartFromShop(productId) {
+    const product = sampleProducts.find(p => p.id === productId);
+    if (!product) return;
+
+    const existingItem = cart.find(item => item.id === productId);
+
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({
+            ...product,
+            quantity: 1
+        });
+    }
+
+    updateCartUI();
+    saveCart();
+    showCartAddedAnimation();
+    showNotification(`${product.name} added to your bag!`);
+}
+
+function setupCategoryFilters() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const sections = document.querySelectorAll('.category-section');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Update active button
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const category = btn.dataset.category;
+
+            // Show/hide sections
+            sections.forEach(section => {
+                if (category === 'all') {
+                    section.style.display = 'block';
+                } else {
+                    const sectionId = section.id;
+                    if (sectionId.includes(category)) {
+                        section.style.display = 'block';
+                    } else {
+                        section.style.display = 'none';
+                    }
+                }
+            });
+        });
+    });
+}
+
 // Export functions for potential external use
 window.KuromiShop = {
     addToCart,
@@ -644,6 +821,8 @@ window.KuromiShop = {
     performSearch,
     selectLanguage,
     showNotification,
+    loadShopProducts,
+    setupCategoryFilters,
     cart
 };
 
