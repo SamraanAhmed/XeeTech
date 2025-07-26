@@ -1574,8 +1574,12 @@ body {
 
     /* Cart Mobile */
     .cart-sidebar {
-        width: 100%;
-        right: -100%;
+        width: 100vw;
+        right: -100vw;
+    }
+
+    .cart-sidebar.active {
+        right: 0;
     }
 
     /* Search Dropdown Mobile */
