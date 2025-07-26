@@ -9,21 +9,21 @@ const limitedProducts = [
         id: 1,
         name: "Kuromi Devil Wings Jacket",
         price: 89.99,
-        image: "🦇",
+        image: "jacket.webp",
         badge: "Limited Edition"
     },
     {
         id: 2,
         name: "Mischievous Heart Necklace",
         price: 45.99,
-        image: "💜",
+        image: "choker.jpeg",
         badge: "Almost Gone"
     },
     {
         id: 3,
         name: "Gothic Lolita Dress Set",
         price: 129.99,
-        image: "👗",
+        image: "goth dress.jpeg",
         badge: "New Arrival"
     }
 ];
