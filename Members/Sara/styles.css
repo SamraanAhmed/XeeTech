@@ -937,7 +937,9 @@ body {
 }
 
 .kuromi-mascot {
-    font-size: 2em;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
     animation: wink 4s infinite;
 }
 
