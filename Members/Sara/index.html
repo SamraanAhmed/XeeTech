@@ -3,35 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kuromi's Nightmare Shop | Spookily Kawaii Store</title>
+    <title>Kuromi's Fashion Empire | Dress Up. Stand Out. Stay Mischievous.</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Quicksand:wght@300;400;500;600;700&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="navbar-fixes.css">
-    <meta name="description" content="Kuromi's Nightmare Shop - Your favorite gothic kawaii merchandise store">
+    <meta name="description" content="Kuromi's Fashion Empire - Where cute meets chaos. Premium kawaii fashion and accessories.">
 </head>
 <body>
-    <!-- Seasonal Banner -->
-    <div class="seasonal-banner" id="seasonalBanner">
-        <div class="banner-content">
-            <span class="bat-icon">🦇</span>
-            <span>Free Shipping Over $50! Limited Time Only</span>
-            <span class="bat-icon">🦇</span>
-        </div>
-        <button class="banner-close" id="bannerClose">
-            <span class="skull-x"></span>
-        </button>
-    </div>
-
     <!-- Sticky Navbar -->
-    <nav class="navbar sticky-nav">
+    <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <a href="index.html" class="logo-text">
-                   <img class="nav-logo" src="1289-kuromiwink.png" alt="">
-                    <span class="shop-name">Kuro.co</span>
-                    <div class="logo-wink"></div>
+                <a href="index.html" class="logo-link">
+                    <span class="kuromi-icon">😈</span>
+                    <span class="brand-name">Kuromi</span>
                 </a>
             </div>
 
@@ -45,255 +31,320 @@
             <!-- Navigation Menu -->
             <div class="nav-menu" id="navMenu">
                 <div class="nav-links">
+                    <a href="index.html" class="nav-link active">Home</a>
                     <a href="shop.html" class="nav-link">Shop</a>
-                    <a href="trending.html" class="nav-link">Trending</a>
                     <a href="about.html" class="nav-link">About</a>
+                    <a href="#contact" class="nav-link">Contact</a>
                 </div>
 
-                <!-- Search Icon -->
-                <div class="search-container" id="searchContainer">
-                    <button class="search-toggle" id="searchToggle">🔍</button>
-                    <div class="search-dropdown" id="searchDropdown">
-                        <input type="text" class="search-input" placeholder="What's haunting you today?" id="searchInput">
-                        <button class="search-submit" id="searchSubmit">Search</button>
+                <div class="nav-actions">
+                    <!-- Search Icon -->
+                    <button class="nav-icon search-btn" id="searchBtn" title="Search">
+                        🔍
+                    </button>
+
+                    <!-- Language Selector -->
+                    <div class="language-selector">
+                        <button class="nav-icon lang-btn" id="langBtn" title="Language">
+                            🌐
+                        </button>
+                        <div class="lang-dropdown" id="langDropdown">
+                            <a href="#" class="lang-option active" data-lang="en">English</a>
+                            <a href="#" class="lang-option" data-lang="ja">日本語</a>
+                            <a href="#" class="lang-option" data-lang="ko">한국어</a>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Cart Icon -->
-                <div class="cart-container" id="cartContainer">
-                    <div class="cart-icon">
-                        <span class="kuromi-bag">👜</span>
+                    <!-- Cart Icon -->
+                    <button class="nav-icon cart-btn" id="cartBtn" title="Cart">
+                        🛍️
                         <span class="cart-count" id="cartCount">0</span>
-                    </div>
+                    </button>
                 </div>
+            </div>
+        </div>
+
+        <!-- Search Dropdown -->
+        <div class="search-dropdown" id="searchDropdown">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search for mischievous fashion..." id="searchInput">
+                <button class="search-submit" id="searchSubmit">Search</button>
             </div>
         </div>
     </nav>
 
-    <!-- 3D Background Elements -->
-    <div class="background-3d">
-        <div class="floating-shapes">
-            <div class="shape shape-1">🖤</div>
-            <div class="shape shape-2">💜</div>
-            <div class="shape shape-3">🦇</div>
-            <div class="shape shape-4">🌙</div>
-            <div class="shape shape-5">⭐</div>
-            <div class="shape shape-6">✨</div>
-            <div class="shape shape-7">💫</div>
-            <div class="shape shape-8">🔮</div>
-            <div class="shape shape-9">🖤</div>
-            <div class="shape shape-10">🦇</div>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-bg">
+            <div class="sparkle sparkle-1">✨</div>
+            <div class="sparkle sparkle-2">⭐</div>
+            <div class="sparkle sparkle-3">💫</div>
+            <div class="sparkle sparkle-4">✨</div>
+            <div class="sparkle sparkle-5">⭐</div>
+            <div class="sparkle sparkle-6">💫</div>
         </div>
-
-        <div class="particle-system">
-            <div class="particle-layer layer-1"></div>
-            <div class="particle-layer layer-2"></div>
-            <div class="particle-layer layer-3"></div>
+        
+        <div class="hero-content">
+            <div class="hero-kuromi">
+                <div class="kuromi-character">
+                    <div class="kuromi-face">😈</div>
+                    <div class="kuromi-accessories">
+                        <div class="devil-horn left">👹</div>
+                        <div class="devil-horn right">👹</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="title-line">Dress Up.</span>
+                    <span class="title-line">Stand Out.</span>
+                    <span class="title-line featured">Stay Mischievous.</span>
+                </h1>
+                
+                <p class="hero-subtitle">
+                    Where kawaii meets chaos. Discover premium fashion that's as unique and rebellious as you are.
+                </p>
+                
+                <button class="hero-cta" id="heroCta">
+                    <span class="cta-text">Start Your Mischief</span>
+                    <span class="cta-glitter">✨</span>
+                </button>
+            </div>
         </div>
+    </section>
 
-        <div class="geometric-bg">
-            <div class="geo-shape geo-triangle-1"></div>
-            <div class="geo-shape geo-triangle-2"></div>
-            <div class="geo-shape geo-circle-1"></div>
-            <div class="geo-shape geo-circle-2"></div>
-            <div class="geo-shape geo-hexagon-1"></div>
-            <div class="geo-shape geo-hexagon-2"></div>
+    <!-- Product Category Preview -->
+    <section class="category-preview">
+        <div class="container">
+            <h2 class="section-title">Shop by Category</h2>
+            
+            <div class="category-grid">
+                <div class="category-card" data-category="clothing">
+                    <div class="category-icon">👗</div>
+                    <h3 class="category-name">Clothing</h3>
+                    <p class="category-desc">Kawaii fashion with a rebellious twist</p>
+                    <div class="category-overlay"></div>
+                </div>
+                
+                <div class="category-card" data-category="accessories">
+                    <div class="category-icon">💎</div>
+                    <h3 class="category-name">Accessories</h3>
+                    <p class="category-desc">Perfect finishing touches for your look</p>
+                    <div class="category-overlay"></div>
+                </div>
+                
+                <div class="category-card" data-category="stationery">
+                    <div class="category-icon">📝</div>
+                    <h3 class="category-name">Stationery</h3>
+                    <p class="category-desc">Cute supplies for your creative chaos</p>
+                    <div class="category-overlay"></div>
+                </div>
+                
+                <div class="category-card" data-category="home">
+                    <div class="category-icon">🏠</div>
+                    <h3 class="category-name">Home Decor</h3>
+                    <p class="category-desc">Transform your space with mischievous charm</p>
+                    <div class="category-overlay"></div>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Main Content -->
-    <main>
-        <!-- Hero Banner -->
-        <section class="hero-banner">
-            <div class="hero-slides" id="heroSlides">
-                <div class="hero-slide active">
-                    <div class="hero-content">
-                        <h1 class="hero-title">New Nightmare Arrivals</h1>
-                        <p class="hero-subtitle">Hauntingly cute collection just dropped</p>
-                        <button class="hero-cta">Shop the Nightmare</button>
+    <!-- Limited Edition Products -->
+    <section class="limited-edition">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Limited Edition Collection</h2>
+                <p class="section-subtitle">Exclusive pieces that won't last long</p>
+            </div>
+            
+            <div class="limited-products" id="limitedProducts">
+                <!-- Products will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Reviews -->
+    <section class="reviews-section">
+        <div class="container">
+            <h2 class="section-title">What Our Mischief Makers Say</h2>
+            
+            <div class="reviews-grid">
+                <div class="review-bubble">
+                    <div class="review-avatar">😊</div>
+                    <div class="review-content">
+                        <p class="review-text">"Absolutely obsessed with my Kuromi hoodie! The quality is amazing and I get compliments everywhere I go!"</p>
+                        <div class="review-author">- Sarah K.</div>
+                        <div class="review-rating">⭐⭐⭐⭐⭐</div>
                     </div>
-                    <div class="hero-bg hero-bg-1"></div>
                 </div>
-                <div class="hero-slide">
-                    <div class="hero-content">
-                        <h1 class="hero-title">Spooky Sale 30% Off</h1>
-                        <p class="hero-subtitle">Limited time hellish deals</p>
-                        <button class="hero-cta">Grab the Deals</button>
+                
+                <div class="review-bubble">
+                    <div class="review-avatar">🥰</div>
+                    <div class="review-content">
+                        <p class="review-text">"The accessories are so cute and well-made. Perfect for adding some mischievous charm to any outfit!"</p>
+                        <div class="review-author">- Emma L.</div>
+                        <div class="review-rating">⭐⭐⭐⭐⭐</div>
                     </div>
-                    <div class="hero-bg hero-bg-2"></div>
                 </div>
-                <div class="hero-slide">
-                    <div class="hero-content">
-                        <h1 class="hero-title">Kuromi's Favorites</h1>
-                        <p class="hero-subtitle">Hand-picked by the devil herself</p>
-                        <button class="hero-cta">See Collection</button>
+                
+                <div class="review-bubble">
+                    <div class="review-avatar">😍</div>
+                    <div class="review-content">
+                        <p class="review-text">"Fast shipping and everything arrived in perfect condition. Will definitely be ordering again!"</p>
+                        <div class="review-author">- Mia R.</div>
+                        <div class="review-rating">⭐⭐⭐⭐⭐</div>
                     </div>
-                    <div class="hero-bg hero-bg-3"></div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- Hero Navigation -->
-            <div class="hero-nav">
-                <button class="hero-prev" id="heroPrev">‹</button>
-                <div class="hero-dots" id="heroDots">
-                    <span class="hero-dot active" data-slide="0"></span>
-                    <span class="hero-dot" data-slide="1"></span>
-                    <span class="hero-dot" data-slide="2"></span>
-                </div>
-                <button class="hero-next" id="heroNext">›</button>
-            </div>
-        </section>
-
-        <!-- Bestsellers Section -->
-        <section class="bestsellers-section">
-            <div class="container">
-                <h2 class="section-title">
-                    <span class="bat-icon">🦇</span>
-                    Bestselling Nightmares
-                    <span class="bat-icon">🦇</span>
-                </h2>
-                <div class="products-grid" id="bestsellersGrid">
-                    <!-- Products will be dynamically loaded -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Trending Section -->
-        <section class="trending-section" id="trending">
-            <div class="container">
-                <h2 class="section-title">
-                    🔥 Other Hellspawns Love These!
-                </h2>
-                <div class="trending-carousel" id="trendingCarousel">
-                    <div class="trending-items" id="trendingItems">
-                        <!-- Trending items will be dynamically loaded -->
+    <!-- Social Media Preview -->
+    <section class="social-preview">
+        <div class="container">
+            <h2 class="section-title">Follow the Mischief</h2>
+            
+            <div class="social-grid">
+                <div class="social-frame instagram-frame">
+                    <div class="frame-header">
+                        <span class="platform-icon">📷</span>
+                        <span class="platform-name">Instagram</span>
                     </div>
-                    <button class="carousel-btn prev" id="trendingPrev">‹</button>
-                    <button class="carousel-btn next" id="trendingNext">›</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section class="about-section" id="about">
-            <div class="container">
-                <div class="about-content">
-                    <h2 class="section-title">About Kuromi's Nightmare Shop</h2>
-                    <p class="about-text">
-                        Welcome to the most spookily kawaii corner of the internet! Our shop brings you the perfect blend of gothic charm and adorable chaos. Every item is carefully cursed... I mean, curated by Kuromi herself to bring a little nightmare magic to your everyday life.
-                    </p>
-                    <div class="trust-badges">
-                        <div class="trust-badge">
-                            <span class="badge-icon">👻</span>
-                            <span class="badge-text">100% Possession-Free</span>
+                    <div class="frame-content">
+                        <div class="social-post">
+                            <div class="post-image">🌸</div>
+                            <p class="post-caption">New spring collection dropping soon! 💜</p>
+                            <div class="post-engagement">
+                                <span>❤️ 1.2k</span>
+                                <span>💬 89</span>
+                            </div>
                         </div>
-                        <div class="trust-badge">
-                            <span class="badge-icon">🎀</span>
-                            <span class="badge-text">Kawaii Guaranteed</span>
-                        </div>
-                        <div class="trust-badge">
-                            <span class="badge-icon">🦇</span>
-                            <span class="badge-text">Hellhound Shipping</span>
+                    </div>
+                </div>
+                
+                <div class="social-frame tiktok-frame">
+                    <div class="frame-header">
+                        <span class="platform-icon">🎵</span>
+                        <span class="platform-name">TikTok</span>
+                    </div>
+                    <div class="frame-content">
+                        <div class="social-post">
+                            <div class="post-image">💃</div>
+                            <p class="post-caption">Styling tips with Kuromi fashion! ✨</p>
+                            <div class="post-engagement">
+                                <span>❤️ 3.5k</span>
+                                <span>↗️ 234</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
+
+    <!-- Newsletter Signup -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-content">
+                <div class="newsletter-icon">💌</div>
+                <h2 class="newsletter-title">Join the Mischief Club!</h2>
+                <p class="newsletter-desc">Get exclusive access to new collections, special discounts, and mischievous surprises. Plus, enjoy 10% off your first order!</p>
+                
+                <form class="newsletter-form" id="newsletterForm">
+                    <div class="form-group">
+                        <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                        <button type="submit" class="newsletter-btn">
+                            <span>Join Now</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                    <p class="newsletter-note">10% discount code will be sent to your email!</p>
+                </form>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3 class="footer-title">Join Kuromi's Nightmare Collective! 🖤</h3>
-                <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 20px; line-height: 1.6;">Get exclusive access to hellish deals, new arrivals, and spooky surprises delivered straight to your mortal inbox!</p>
-                <form class="newsletter-form" id="newsletterForm">
-                    <input type="email" class="newsletter-input" placeholder="Enter your soul... I mean email address" required>
-                    <button type="submit" class="newsletter-btn">🦇 Join the Darkness</button>
-                </form>
-            </div>
-
-            <div class="footer-section">
-                <h3 class="footer-title">Quick Escapes</h3>
-                <ul class="footer-links">
-                    <li><a href="index.html">Home Portal</a></li>
-                    <li><a href="shop.html">Shop Nightmares</a></li>
-                    <li><a href="trending.html">What's Hot in Hell</a></li>
-                    <li><a href="about.html">Our Dark Story</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h3 class="footer-title">Follow the Chaos</h3>
-                <div class="social-icons">
-                    <a href="#" class="social-icon" data-platform="Instagram">📷</a>
-                    <a href="#" class="social-icon" data-platform="Twitter">🐦</a>
-                    <a href="#" class="social-icon" data-platform="TikTok">🎵</a>
-                    <a href="#" class="social-icon" data-platform="YouTube">📺</a>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <span class="kuromi-mascot">😉</span>
+                        <span class="footer-brand">Kuromi</span>
+                    </div>
+                    <p class="footer-desc">Where mischief meets fashion. Creating unique, rebellious style for the kawaii at heart.</p>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link" data-platform="instagram">📷</a>
+                        <a href="#" class="social-link" data-platform="tiktok">🎵</a>
+                        <a href="#" class="social-link" data-platform="twitter">🐦</a>
+                        <a href="#" class="social-link" data-platform="youtube">📺</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#shop">Shop All</a></li>
+                        <li><a href="#clothing">Clothing</a></li>
+                        <li><a href="#accessories">Accessories</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Customer Care</h3>
+                    <ul class="footer-links">
+                        <li><a href="#size-guide">Size Guide</a></li>
+                        <li><a href="#shipping">Shipping Info</a></li>
+                        <li><a href="#returns">Returns</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#support">Support</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Contact Info</h3>
+                    <div class="contact-info">
+                        <p>📧 hello@kuromi-fashion.com</p>
+                        <p>📞 1-800-MISCHIEF</p>
+                        <p>📍 Kawaii District, Fashion City</p>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="footer-bottom">
-            <div class="footer-bottom-content">
-                <p class="copyright">© 2024 Kuromi's Nightmare Shop. All rights reserved.</p>
-                <div class="kuromi-love">
-                    Made with 🖤 & nightmares
+            
+            <div class="footer-bottom">
+                <p class="copyright">© 2024 Kuromi Fashion Empire. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="#privacy">Privacy Policy</a>
+                    <a href="#terms">Terms of Service</a>
                 </div>
-                <p class="disclaimer">Fan-made tribute • Kuromi © Sanrio Co., Ltd.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Kuromi Chatbot -->
-    <div class="chatbot-container" id="chatbotContainer">
-        <div class="chatbot-toggle" id="chatbotToggle">
-            <img src="1289-kuromiwink.png" alt="Kuromi" class="kuromi-chat-face">
-            <div class="chat-notification" id="chatNotification">💬</div>
-        </div>
-
-        <div class="chatbot-window" id="chatbotWindow">
-            <div class="chatbot-header">
-                <img src="1289-kuromiwink.png" alt="Kuromi" class="kuromi-avatar">
-                <div class="chatbot-title">
-                    <h4>Kuromi</h4>
-                    <p>Your nightmare assistant</p>
-                </div>
-                <button class="chatbot-close" id="chatbotClose">×</button>
-            </div>
-
-            <div class="chatbot-messages" id="chatbotMessages">
-                <div class="chat-message bot-message">
-                    <div class="message-content">
-                        Nyahaha~ Need help finding something spooky? 🦇
-                    </div>
-                </div>
-            </div>
-
-            <div class="chatbot-input-container">
-                <input type="text" class="chatbot-input" id="chatbotInput" placeholder="Type your nightmare here...">
-                <button class="chatbot-send" id="chatbotSend">Send</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Cart Sidebar -->
     <div class="cart-sidebar" id="cartSidebar">
         <div class="cart-header">
-            <h3>Your Nightmare Bag</h3>
+            <h3>Your Mischief Bag</h3>
             <button class="cart-close" id="cartClose">×</button>
         </div>
         <div class="cart-items" id="cartItems">
             <div class="empty-cart">
-                <span class="empty-icon">👜</span>
-                <p>Your nightmare bag is empty</p>
+                <span class="empty-icon">🛍️</span>
+                <p>Your bag is empty</p>
+                <p class="empty-subtitle">Add some mischievous fashion!</p>
             </div>
         </div>
         <div class="cart-footer" id="cartFooter" style="display: none;">
             <div class="cart-total">
                 <span>Total: $<span id="cartTotal">0.00</span></span>
             </div>
-            <button class="checkout-btn">Proceed to Summoning</button>
+            <button class="checkout-btn">Checkout</button>
         </div>
     </div>
 
