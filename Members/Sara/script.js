@@ -814,6 +814,139 @@ function setupCategoryFilters() {
     });
 }
 
+// Shop page initialization
+function initializeShopPage() {
+    // Initialize all existing functionality
+    initializeWebsite();
+    setupEventListeners();
+    updateCartUI();
+
+    // Add category filtering for shop page
+    setupShopCategoryFiltering();
+
+    // Add product interactions
+    setupProductInteractions();
+
+    // Add sort functionality
+    setupSortFunctionality();
+}
+
+function setupShopCategoryFiltering() {
+    const categoryCards = document.querySelectorAll('.category-card');
+    const productCards = document.querySelectorAll('.product-card');
+
+    categoryCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const category = card.dataset.category;
+
+            // Update active category
+            categoryCards.forEach(c => c.classList.remove('active'));
+            card.classList.add('active');
+
+            // Filter products
+            productCards.forEach(product => {
+                const productCategory = product.dataset.category;
+
+                if (category === 'all' || productCategory === category) {
+                    product.classList.remove('hidden');
+                } else {
+                    product.classList.add('hidden');
+                }
+            });
+
+            // Show notification
+            showNotification(`Showing ${category === 'all' ? 'all' : category} products`);
+        });
+    });
+}
+
+function setupProductInteractions() {
+    // Add to cart buttons
+    const addToCartBtns = document.querySelectorAll('.add-to-cart-btn');
+    addToCartBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const productId = parseInt(e.target.dataset.productId || e.target.closest('.add-to-cart-btn').dataset.productId);
+            const productCard = e.target.closest('.product-card');
+            const productName = productCard.querySelector('.product-title').textContent;
+            const productPrice = parseFloat(productCard.querySelector('.current-price').textContent.replace('$', ''));
+
+            // Create product object
+            const product = {
+                id: productId,
+                name: productName,
+                price: productPrice,
+                image: productCard.querySelector('.placeholder-icon').textContent,
+                quantity: 1
+            };
+
+            addToCartFromShop(product);
+        });
+    });
+
+    // Quick view buttons
+    const quickViewBtns = document.querySelectorAll('.quick-view-btn');
+    quickViewBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const productCard = e.target.closest('.product-card');
+            const productName = productCard.querySelector('.product-title').textContent;
+            showNotification(`Quick view for ${productName} would open here!`);
+        });
+    });
+}
+
+function addToCartFromShop(product) {
+    const existingItem = cart.find(item => item.id === product.id);
+
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push(product);
+    }
+
+    updateCartUI();
+    saveCart();
+    showCartAddedAnimation();
+    showNotification(`${product.name} added to your bag!`);
+}
+
+function setupSortFunctionality() {
+    const sortSelect = document.getElementById('sortSelect');
+
+    if (sortSelect) {
+        sortSelect.addEventListener('change', (e) => {
+            const sortValue = e.target.value;
+            const productGrid = document.getElementById('productsGrid');
+            const products = Array.from(productGrid.querySelectorAll('.product-card'));
+
+            products.sort((a, b) => {
+                switch (sortValue) {
+                    case 'price-low':
+                        return getProductPrice(a) - getProductPrice(b);
+                    case 'price-high':
+                        return getProductPrice(b) - getProductPrice(a);
+                    case 'newest':
+                        return a.querySelector('.new-badge') ? -1 : 1;
+                    default:
+                        return 0;
+                }
+            });
+
+            // Reorder DOM elements
+            products.forEach(product => {
+                productGrid.appendChild(product);
+            });
+
+            showNotification(`Products sorted by ${sortValue.replace('-', ' ')}`);
+        });
+    }
+}
+
+function getProductPrice(productCard) {
+    const priceText = productCard.querySelector('.current-price').textContent;
+    return parseFloat(priceText.replace('$', ''));
+}
+
 // Export functions for potential external use
 window.KuromiShop = {
     addToCart,
@@ -823,6 +956,7 @@ window.KuromiShop = {
     showNotification,
     loadShopProducts,
     setupCategoryFilters,
+    initializeShopPage,
     cart
 };
 
