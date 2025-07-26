@@ -2114,6 +2114,7 @@ html {
     height: 100%;
     object-fit: cover;
     transition: var(--transition-smooth);
+    cursor: zoom-in;
 }
 
 .product-image-placeholder {
