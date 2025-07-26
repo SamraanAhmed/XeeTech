@@ -275,9 +275,9 @@ function loadLimitedProducts() {
     ).join('');
 
     // Add event listeners to product buttons
-    limitedProductsContainer.querySelectorAll('.product-btn').forEach(button => {
+    limitedProductsContainer.querySelectorAll('.add-to-cart-btn').forEach(button => {
         button.addEventListener('click', (e) => {
-            const productId = parseInt(e.target.dataset.productId);
+            const productId = parseInt(e.target.dataset.productId || e.target.closest('.add-to-cart-btn').dataset.productId);
             addToCart(productId);
         });
     });
