@@ -401,10 +401,13 @@ function updateCartUI() {
 }
 
 function createCartItem(item) {
+    // Check if image is a file path (contains . and file extension) or an emoji/icon
+    const isImageFile = item.image && (item.image.includes('.') || item.image.startsWith('http'));
+
     return `
         <div class="cart-item">
             <div class="cart-item-image">
-                ${item.image.startsWith('http') ? `<img src="${item.image}" alt="${item.name}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">` : `<span style="font-size: 40px;">${item.image}</span>`}
+                ${isImageFile ? `<img src="${item.image}" alt="${item.name}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div style="display: none; width: 60px; height: 60px; background: var(--lavender-blush); border-radius: 8px; align-items: center; justify-content: center; font-size: 24px;">🛍️</div>` : `<span style="font-size: 40px;">${item.image}</span>`}
             </div>
             <div class="cart-item-info">
                 <div class="cart-item-name">${item.name}</div>
