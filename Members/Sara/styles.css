@@ -2164,6 +2164,61 @@ html {
     box-shadow: 0 4px 15px rgba(153, 50, 204, 0.3);
 }
 
+.wishlist-btn {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    transition: var(--transition-smooth);
+    opacity: 0;
+    transform: scale(0.8);
+    backdrop-filter: blur(10px);
+    color: #666;
+}
+
+.wishlist-btn.active {
+    color: #e74c3c;
+    background: rgba(255, 255, 255, 1);
+}
+
+.wishlist-btn:hover {
+    color: #e74c3c;
+    background: var(--soft-white);
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+.product-card:hover .wishlist-btn {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.wishlist-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: linear-gradient(45deg, var(--deep-orchid), var(--bubblegum-pink));
+    color: var(--soft-white);
+    border-radius: 50%;
+    min-width: 20px;
+    height: 20px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    animation: pulse 0.3s ease;
+}
+
 .product-card:hover .product-image {
     transform: scale(1.05);
 }
