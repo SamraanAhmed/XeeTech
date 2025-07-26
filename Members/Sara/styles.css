@@ -3059,10 +3059,10 @@ html {
 
 .cat-sparkle {
     position: absolute;
-    font-size: 1.2em;
+    font-size: 1em;
     opacity: 0;
     transition: var(--transition-smooth);
-    animation: catSparkle 2s ease-in-out infinite;
+    animation: catSparkle 6s ease-in-out infinite;
 }
 
 .cat-sparkle:nth-child(1) {
