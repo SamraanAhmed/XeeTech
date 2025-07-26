@@ -336,17 +336,14 @@ body {
 
 .sparkle {
     position: absolute;
-    font-size: 1.5em;
-    opacity: 0.7;
-    animation: sparkleFloat 6s ease-in-out infinite;
+    font-size: 1.2em;
+    opacity: 0.4;
+    animation: sparkleFloat 8s ease-in-out infinite;
 }
 
-.sparkle-1 { top: 20%; left: 10%; animation-delay: 0s; }
-.sparkle-2 { top: 15%; right: 15%; animation-delay: 1s; }
-.sparkle-3 { bottom: 30%; left: 20%; animation-delay: 2s; }
-.sparkle-4 { top: 60%; right: 25%; animation-delay: 3s; }
-.sparkle-5 { bottom: 20%; right: 10%; animation-delay: 4s; }
-.sparkle-6 { top: 70%; left: 15%; animation-delay: 5s; }
+.sparkle-1 { top: 15%; left: 12%; animation-delay: 0s; }
+.sparkle-3 { bottom: 25%; left: 85%; animation-delay: 3s; }
+.sparkle-5 { bottom: 15%; right: 15%; animation-delay: 6s; }
 
 @keyframes sparkleFloat {
     0%, 100% {
