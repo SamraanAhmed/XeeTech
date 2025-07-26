@@ -287,12 +287,23 @@ function createProductCard(product) {
     return `
         <div class="product-card">
             <div class="product-badge">${product.badge}</div>
-            <div class="product-image">${product.image}</div>
-            <h3 class="product-name">${product.name}</h3>
-            <div class="product-price">$${product.price}</div>
-            <button class="product-btn" data-product-id="${product.id}">
-                Add to Bag
-            </button>
+            <div class="product-image-container">
+                <img src="placeholder-product.jpg" alt="${product.name}" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="product-image-placeholder" style="display: flex;">
+                    <span class="placeholder-icon">${product.image}</span>
+                </div>
+                <button class="quick-view-btn" title="Quick View">👁️</button>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">${product.name}</h3>
+                <div class="product-price">
+                    <span class="current-price">$${product.price}</span>
+                </div>
+                <button class="add-to-cart-btn" data-product-id="${product.id}">
+                    <span class="btn-text">Add to Bag</span>
+                    <span class="btn-sparkle">✨</span>
+                </button>
+            </div>
         </div>
     `;
 }
