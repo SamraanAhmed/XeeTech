@@ -9,21 +9,21 @@ const limitedProducts = [
         id: 1,
         name: "Kuromi Devil Wings Jacket",
         price: 89.99,
-        image: "🦇",
+        image: "jacket.webp",
         badge: "Limited Edition"
     },
     {
         id: 2,
         name: "Mischievous Heart Necklace",
         price: 45.99,
-        image: "💜",
+        image: "choker.jpeg",
         badge: "Almost Gone"
     },
     {
         id: 3,
         name: "Gothic Lolita Dress Set",
         price: 129.99,
-        image: "👗",
+        image: "goth dress.jpeg",
         badge: "New Arrival"
     }
 ];
@@ -288,9 +288,9 @@ function createProductCard(product) {
         <div class="product-card">
             <div class="product-badge">${product.badge}</div>
             <div class="product-image-container">
-                <img src="placeholder-product.jpg" alt="${product.name}" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="product-image-placeholder" style="display: flex;">
-                    <span class="placeholder-icon">${product.image}</span>
+                <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="product-image-placeholder" style="display: none;">
+                    <span class="placeholder-icon">📦</span>
                 </div>
                 <button class="quick-view-btn" title="Quick View">👁️</button>
             </div>
