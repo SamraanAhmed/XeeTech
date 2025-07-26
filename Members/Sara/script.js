@@ -207,6 +207,12 @@ function setupEventListeners() {
         });
     }
 
+    // Help functionality
+    const helpBtn = document.getElementById('helpBtn');
+    if (helpBtn) {
+        helpBtn.addEventListener('click', openHelpModal);
+    }
+
     // Cart functionality
     const cartBtn = document.getElementById('cartBtn');
     const cartClose = document.getElementById('cartClose');
