@@ -3,35 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop | Kuromi's Nightmare Shop</title>
+    <title>Shop | Kuromi's Fashion Empire</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Quicksand:wght@300;400;500;600;700&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="navbar-fixes.css">
-    <meta name="description" content="Shop Kuromi's spookily kawaii collection - plushies, accessories, clothing and home decor">
+    <meta name="description" content="Shop Kuromi's Fashion Empire - Premium kawaii fashion, accessories, stationery, and room decor">
 </head>
 <body>
-    <!-- Seasonal Banner -->
-    <div class="seasonal-banner" id="seasonalBanner">
-        <div class="banner-content">
-            <span class="bat-icon">🦇</span>
-            <span>Free Shipping Over $50! Limited Time Only</span>
-            <span class="bat-icon">🦇</span>
-        </div>
-        <button class="banner-close" id="bannerClose">
-            <span class="skull-x">💀</span>
-        </button>
-    </div>
-
     <!-- Sticky Navbar -->
-    <nav class="navbar sticky-nav">
+    <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <a href="index.html" class="logo-text">
-                   <img class="nav-logo" src="1289-kuromiwink.png" alt="">
-                    <span class="shop-name">Kuro.co</span>
-                    <div class="logo-wink"></div>
+                <a href="index.html" class="logo-link">
+                    <img class="kuromi-icon" src="1289-kuromiwink.png" alt="Kuromi">
+                    <span class="brand-name">Kuro.co</span>
                 </a>
             </div>
 
@@ -45,200 +31,687 @@
             <!-- Navigation Menu -->
             <div class="nav-menu" id="navMenu">
                 <div class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
                     <a href="shop.html" class="nav-link active">Shop</a>
-                    <a href="trending.html" class="nav-link">Trending</a>
                     <a href="about.html" class="nav-link">About</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                    <a href="#" class="nav-link" id="orderTrackingNav">Orders</a>
                 </div>
 
-                <!-- Search Icon -->
-                <div class="search-container" id="searchContainer">
-                    <button class="search-toggle" id="searchToggle">🔍</button>
-                    <div class="search-dropdown" id="searchDropdown">
-                        <input type="text" class="search-input" placeholder="What's haunting you today?" id="searchInput">
-                        <button class="search-submit" id="searchSubmit">Search</button>
+                <div class="nav-actions">
+                    <!-- Search Icon -->
+                    <button class="nav-icon search-btn" id="searchBtn" title="Search">
+                        🔍
+                    </button>
+
+                    <!-- Language Selector -->
+                    <div class="language-selector">
+                        <button class="nav-icon lang-btn" id="langBtn" title="Language">
+                            🌐
+                        </button>
+                        <div class="lang-dropdown" id="langDropdown">
+                            <a href="#" class="lang-option active" data-lang="en">English</a>
+                            <a href="#" class="lang-option" data-lang="ja">日本語</a>
+                            <a href="#" class="lang-option" data-lang="ko">한국어</a>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Cart Icon -->
-                <div class="cart-container" id="cartContainer">
-                    <div class="cart-icon">
-                        <span class="kuromi-bag">👜</span>
+                    <!-- Wishlist Icon -->
+                    <button class="nav-icon wishlist-nav-btn" id="wishlistNavBtn" title="Wishlist">
+                        ♡
+                        <span class="wishlist-count" id="wishlistNavCount">0</span>
+                    </button>
+
+                    <!-- Cart Icon -->
+                    <button class="nav-icon cart-btn" id="cartBtn" title="Cart">
+                        🛍️
                         <span class="cart-count" id="cartCount">0</span>
-                    </div>
+                    </button>
                 </div>
+            </div>
+        </div>
+
+        <!-- Search Dropdown -->
+        <div class="search-dropdown" id="searchDropdown">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search for mischievous fashion..." id="searchInput">
+                <button class="search-submit" id="searchSubmit">Search</button>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="shop-main">
-        <!-- Page Header -->
-        <section class="page-header">
-            <div class="container">
-                <h1 class="page-title">
-                    <span class="bat-icon">🦇</span>
-                    Nightmare Collection
-                    <span class="bat-icon">🦇</span>
+    <!-- Shop Header -->
+    <section class="shop-header">
+        <div class="shop-bg">
+            <div class="sparkle sparkle-1">✨</div>
+            <div class="sparkle sparkle-2">⭐</div>
+            <div class="sparkle sparkle-3">💫</div>
+            <div class="sparkle sparkle-4">✨</div>
+            <div class="sparkle sparkle-5">⭐</div>
+            <div class="sparkle sparkle-6">💫</div>
+        </div>
+        
+        <div class="container">
+            <div class="shop-header-content">
+                <h1 class="shop-title">
+                    <span class="title-main">Mischievous</span>
+                    <span class="title-sub">Fashion Collection</span>
                 </h1>
-                <p class="page-subtitle">Discover all our spookily kawaii treasures in one place</p>
+                <p class="shop-subtitle">Discover unique pieces that let your rebellious kawaii spirit shine</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories-section">
+        <div class="container">
+            <h2 class="section-title">Shop by Category</h2>
+            
+            <div class="categories-grid">
+                <div class="category-card" data-category="clothing">
+                    <div class="category-icon">👗</div>
+                    <h3 class="category-name">Clothing</h3>
+                    <p class="category-desc">Gothic kawaii fashion</p>
+                    <div class="category-overlay"></div>
+                </div>
                 
-                <!-- Category Filter -->
-                <div class="category-filter">
-                    <button class="filter-btn active" data-category="all">All Items</button>
-                    <button class="filter-btn" data-category="plushies">Plushies</button>
-                    <button class="filter-btn" data-category="accessories">Accessories</button>
-                    <button class="filter-btn" data-category="clothing">Clothing</button>
-                    <button class="filter-btn" data-category="home">Home Decor</button>
+                <div class="category-card" data-category="accessories">
+                    <div class="category-icon">💎</div>
+                    <h3 class="category-name">Accessories</h3>
+                    <p class="category-desc">Perfect finishing touches</p>
+                    <div class="category-overlay"></div>
+                </div>
+                
+                <div class="category-card" data-category="stationery">
+                    <div class="category-icon">📝</div>
+                    <h3 class="category-name">Stationery</h3>
+                    <p class="category-desc">Cute creative supplies</p>
+                    <div class="category-overlay"></div>
+                </div>
+                
+                <div class="category-card" data-category="room-decor">
+                    <div class="category-icon">🏠</div>
+                    <h3 class="category-name">Room Decor</h3>
+                    <p class="category-desc">Transform your space</p>
+                    <div class="category-overlay"></div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Plushies Section -->
-        <section class="category-section" id="plushies-section">
-            <div class="container">
-                <h2 class="category-title">
-                    <span class="category-icon">🖤</span>
-                    Cursed Plushies
-                </h2>
-                <div class="products-grid" id="plushiesGrid">
-                    <!-- Products will be loaded dynamically -->
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="container">
+            <div class="products-header">
+                <h2 class="section-title">All Products</h2>
+                <div class="filter-controls">
+                    <select class="sort-select" id="sortSelect">
+                        <option value="featured">Featured</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="newest">Newest First</option>
+                    </select>
                 </div>
             </div>
-        </section>
 
-        <!-- Accessories Section -->
-        <section class="category-section" id="accessories-section">
-            <div class="container">
-                <h2 class="category-title">
-                    <span class="category-icon">📱</span>
-                    Spooky Accessories
-                </h2>
-                <div class="products-grid" id="accessoriesGrid">
-                    <!-- Products will be loaded dynamically -->
+            <div class="products-grid" id="productsGrid">
+                <!-- Clothing Products -->
+                <div class="product-card" data-category="clothing">
+                    <div class="product-badges">
+                        <span class="badge sale-badge">SALE</span>
+                    </div>
+                    <div class="product-image-container">
+                        <img src="hoodie.webp" alt="Kuromi Gothic Hoodie" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <button class="quick-view-btn" title="Quick View">👁️</button>
+                        <button class="wishlist-btn" title="Add to Wishlist" data-product-id="1">♡</button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Kuromi Gothic Hoodie</h3>
+                        <div class="product-price">
+                            <span class="current-price">$39.99</span>
+                            <span class="original-price">$55.99</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-product-id="1">
+                            <span class="btn-text">Add to Cart</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- Clothing Section -->
-        <section class="category-section" id="clothing-section">
-            <div class="container">
-                <h2 class="category-title">
-                    <span class="category-icon">👗</span>
-                    Gothic Kawaii Fashion
-                </h2>
-                <div class="products-grid" id="clothingGrid">
-                    <!-- Products will be loaded dynamically -->
+                <div class="product-card" data-category="clothing">
+                    <div class="product-badges">
+                        <span class="badge new-badge">NEW</span>
+                    </div>
+                    <div class="product-image-container">
+                        <img src="goth dress.jpeg" alt="Gothic Lolita Dress" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <button class="quick-view-btn" title="Quick View">👁️</button>
+                        <button class="wishlist-btn" title="Add to Wishlist" data-product-id="2">♡</button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Gothic Lolita Dress</h3>
+                        <div class="product-price">
+                            <span class="current-price">$129.99</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-product-id="2">
+                            <span class="btn-text">Add to Cart</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- Home Decor Section -->
-        <section class="category-section" id="home-section">
-            <div class="container">
-                <h2 class="category-title">
-                    <span class="category-icon">🫖</span>
-                    Nightmare Home Decor
-                </h2>
-                <div class="products-grid" id="homeGrid">
-                    <!-- Products will be loaded dynamically -->
+                <div class="product-card" data-category="clothing">
+                    <div class="product-image-container">
+                        <img src="croptop.webp" alt="Mischief Crop Top" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <button class="quick-view-btn" title="Quick View">👁️</button>
+                        <button class="wishlist-btn" title="Add to Wishlist" data-product-id="3">♡</button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Mischief Crop Top</h3>
+                        <div class="product-price">
+                            <span class="current-price">$24.99</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-product-id="3">
+                            <span class="btn-text">Add to Cart</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="clothing">
+                    <div class="product-badges">
+                        <span class="badge sale-badge">SALE</span>
+                    </div>
+                    <div class="product-image-container">
+                        <img src="dress.jpg" alt="Gothic Skirt Set" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        
+                        <button class="quick-view-btn" title="Quick View">👁️</button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Gothic Skirt Set</h3>
+                        <div class="product-price">
+                            <span class="current-price">$45.99</span>
+                            <span class="original-price">$65.99</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-product-id="12">
+                            <span class="btn-text">Add to Cart</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="clothing">
+                    <div class="product-image-container">
+                        <img src="jacket.webp" alt="Kawaii Jacket" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                       
+                        <button class="quick-view-btn" title="Quick View">👁️</button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Kawaii Jacket</h3>
+                        <div class="product-price">
+                            <span class="current-price">$79.99</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-product-id="13">
+                            <span class="btn-text">Add to Cart</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="clothing">
+                    <div class="product-badges">
+                        <span class="badge new-badge">NEW</span>
+                    </div>
+                    <div class="product-image-container">
+                        <img src="pants.jpeg" alt="Mischief Pants" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                       
+                        <button class="quick-view-btn" title="Quick View">👁️</button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Mischief Pants</h3>
+                        <div class="product-price">
+                            <span class="current-price">$35.99</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-product-id="14">
+                            <span class="btn-text">Add to Cart</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Accessories Products -->
+                <div class="product-card" data-category="accessories">
+                    <div class="product-badges">
+                        <span class="badge sale-badge">SALE</span>
+                    </div>
+                    <div class="product-image-container">
+                        <img src="headband.webp" alt="Devil Horn Headband" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <button class="quick-view-btn" title="Quick View">👁️</button>
+                        <button class="wishlist-btn" title="Add to Wishlist" data-product-id="4">♡</button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Devil Horn Headband</h3>
+                        <div class="product-price">
+                            <span class="current-price">$19.99</span>
+                            <span class="original-price">$29.99</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-product-id="4">
+                            <span class="btn-text">Add to Cart</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="accessories">
+                    <div class="product-image-container">
+                        <img src="choker.jpeg" alt="Gothic Choker Set" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <button class="quick-view-btn" title="Quick View">👁️</button>
+                        <button class="wishlist-btn" title="Add to Wishlist" data-product-id="5">♡</button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Gothic Choker Set</h3>
+                        <div class="product-price">
+                            <span class="current-price">$35.99</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-product-id="5">
+                            <span class="btn-text">Add to Cart</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="accessories">
+                    <div class="product-badges">
+                        <span class="badge new-badge">NEW</span>
+                    </div>
+                    <div class="product-image-container">
+                        <img src="phone cae.webp" alt="Mischief Phone Case" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                       
+                        <button class="quick-view-btn" title="Quick View">👁️</button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Mischief Phone Case</h3>
+                        <div class="product-price">
+                            <span class="current-price">$22.99</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-product-id="6">
+                            <span class="btn-text">Add to Cart</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="accessories">
+                    <div class="product-image-container">
+                        <img src="clip.jpeg" alt="Kawaii Hair Clips" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        
+                        <button class="quick-view-btn" title="Quick View">👁️</button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Kawaii Hair Clips</h3>
+                        <div class="product-price">
+                            <span class="current-price">$18.99</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-product-id="15">
+                            <span class="btn-text">Add to Cart</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="accessories">
+                    <div class="product-badges">
+                        <span class="badge sale-badge">SALE</span>
+                    </div>
+                    <div class="product-image-container">
+                        <img src="sara.webp" alt="Gothic Ring Set" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                       
+                        <button class="quick-view-btn" title="Quick View">👁️</button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Gothic Ring Set</h3>
+                        <div class="product-price">
+                            <span class="current-price">$29.99</span>
+                            <span class="original-price">$45.99</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-product-id="16">
+                            <span class="btn-text">Add to Cart</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="accessories">
+                    <div class="product-image-container">
+                        <img src="bag charm.webp" alt="Mischief Bag Charm" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        
+                      
+                        <button class="quick-view-btn" title="Quick View">👁️</button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Mischief Bag Charm</h3>
+                        <div class="product-price">
+                            <span class="current-price">$14.99</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-product-id="17">
+                            <span class="btn-text">Add to Cart</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stationery Products -->
+                <div class="product-card" data-category="stationery">
+                    <div class="product-image-container">
+                        <img src="notebook.webp" alt="Kuromi Notebook Set" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        
+                        <button class="quick-view-btn" title="Quick View">👁️</button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Kuromi Notebook Set</h3>
+                        <div class="product-price">
+                            <span class="current-price">$18.99</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-product-id="7">
+                            <span class="btn-text">Add to Cart</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="stationery">
+                    <div class="product-badges">
+                        <span class="badge sale-badge">SALE</span>
+                    </div>
+                    <div class="product-image-container">
+                        <img src="pen.webp" alt="Gothic Pen Collection" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                       
+                        <button class="quick-view-btn" title="Quick View">👁️</button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Gothic Pen Collection</h3>
+                        <div class="product-price">
+                            <span class="current-price">$12.99</span>
+                            <span class="original-price">$19.99</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-product-id="8">
+                            <span class="btn-text">Add to Cart</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="stationery">
+                    <div class="product-badges">
+                        <span class="badge new-badge">NEW</span>
+                    </div>
+                    <div class="product-image-container">
+                        <img src="sticker.webp" alt="Kawaii Sticker Pack" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                      
+                        <button class="quick-view-btn" title="Quick View">👁️</button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Kawaii Sticker Pack</h3>
+                        <div class="product-price">
+                            <span class="current-price">$8.99</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-product-id="18">
+                            <span class="btn-text">Add to Cart</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="stationery">
+                    <div class="product-image-container">
+                        <img src="planner.webp" alt="Mischief Planner" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                       
+                        <button class="quick-view-btn" title="Quick View">👁️</button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Mischief Planner</h3>
+                        <div class="product-price">
+                            <span class="current-price">$25.99</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-product-id="19">
+                            <span class="btn-text">Add to Cart</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="stationery">
+                    <div class="product-image-container">
+                        <img src="markers.webp" alt="Gothic Markers Set" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+
+                        <button class="quick-view-btn" title="Quick View">👁️</button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Gothic Markers Set</h3>
+                        <div class="product-price">
+                            <span class="current-price">$16.99</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-product-id="20">
+                            <span class="btn-text">Add to Cart</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Room Decor Products -->
+                <div class="product-card" data-category="room-decor">
+                    <div class="product-badges">
+                        <span class="badge new-badge">NEW</span>
+                    </div>
+                    <div class="product-image-container">
+                        <img src="wall art.webp" alt="Kuromi Wall Art Set" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                      
+                        <button class="quick-view-btn" title="Quick View">👁️</button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Kuromi Wall Art Set</h3>
+                        <div class="product-price">
+                            <span class="current-price">$45.99</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-product-id="9">
+                            <span class="btn-text">Add to Cart</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="room-decor">
+                    <div class="product-image-container">
+                        <img src="fairy lights.webp" alt="Gothic Fairy Lights" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                       
+                        <button class="quick-view-btn" title="Quick View">👁️</button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">kawaii Lamps</h3>
+                        <div class="product-price">
+                            <span class="current-price">$32.99</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-product-id="10">
+                            <span class="btn-text">Add to Cart</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="room-decor">
+                    <div class="product-badges">
+                        <span class="badge sale-badge">SALE</span>
+                    </div>
+                    <div class="product-image-container">
+                        <img src="pillow.webp" alt="Mischief Throw Pillow" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        
+                        <button class="quick-view-btn" title="Quick View">👁️</button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Mischief Throw Pillow</h3>
+                        <div class="product-price">
+                            <span class="current-price">$26.99</span>
+                            <span class="original-price">$39.99</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-product-id="11">
+                            <span class="btn-text">Add to Cart</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="room-decor">
+                    <div class="product-badges">
+                        <span class="badge new-badge">NEW</span>
+                    </div>
+                    <div class="product-image-container">
+                        <img src="candle.webp" alt="Gothic Candle Set" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                       
+                        <button class="quick-view-btn" title="Quick View">👁️</button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Gothic Candle Set</h3>
+                        <div class="product-price">
+                            <span class="current-price">$38.99</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-product-id="21">
+                            <span class="btn-text">Add to Cart</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="room-decor">
+                    <div class="product-image-container">
+                        <img src="mirrors.webp" alt="Kawaii Mirror" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        
+                        <button class="quick-view-btn" title="Quick View">👁️</button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Kawaii Mirror</h3>
+                        <div class="product-price">
+                            <span class="current-price">$42.99</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-product-id="22">
+                            <span class="btn-text">Add to Cart</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="room-decor">
+                    <div class="product-badges">
+                        <span class="badge sale-badge">SALE</span>
+                    </div>
+                    <div class="product-image-container">
+                        <img src="cur tins.webp" alt="Mischief Curtains" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                       
+                        <button class="quick-view-btn" title="Quick View">👁️</button>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Mischief Curtains</h3>
+                        <div class="product-price">
+                            <span class="current-price">$55.99</span>
+                            <span class="original-price">$79.99</span>
+                        </div>
+                        <button class="add-to-cart-btn" data-product-id="23">
+                            <span class="btn-text">Add to Cart</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
+
+    <!-- Related Products Section -->
+    <section class="related-products-section">
+        <div class="container">
+            <h2 class="section-title">You Might Also Like</h2>
+            <div class="related-products-grid" id="relatedProductsGrid">
+                <!-- Related products will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3 class="footer-title">Join Kuromi's Nightmare Collective! 🖤</h3>
-                <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 20px; line-height: 1.6;">Get exclusive access to hellish deals, new arrivals, and spooky surprises delivered straight to your mortal inbox!</p>
-                <form class="newsletter-form" id="newsletterForm">
-                    <input type="email" class="newsletter-input" placeholder="Enter your soul... I mean email address" required>
-                    <button type="submit" class="newsletter-btn">🦇 Join the Darkness</button>
-                </form>
-            </div>
-
-            <div class="footer-section">
-                <h3 class="footer-title">Quick Escapes</h3>
-                <ul class="footer-links">
-                    <li><a href="index.html">Home Portal</a></li>
-                    <li><a href="shop.html">Shop Nightmares</a></li>
-                    <li><a href="trending.html">What's Hot in Hell</a></li>
-                    <li><a href="about.html">Our Dark Story</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h3 class="footer-title">Follow the Chaos</h3>
-                <div class="social-icons">
-                    <a href="#" class="social-icon" data-platform="Instagram">📷</a>
-                    <a href="#" class="social-icon" data-platform="Twitter">🐦</a>
-                    <a href="#" class="social-icon" data-platform="TikTok">🎵</a>
-                    <a href="#" class="social-icon" data-platform="YouTube">📺</a>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img class="kuromi-mascot" src="1289-kuromiwink.png" alt="Kuromi">
+                        <span class="footer-brand">Kuromi</span>
+                    </div>
+                    <p class="footer-desc">Where mischief meets fashion. Creating unique, rebellious style for the kawaii at heart.</p>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link" data-platform="instagram">📷</a>
+                        <a href="#" class="social-link" data-platform="tiktok">🎵</a>
+                        <a href="#" class="social-link" data-platform="twitter">🐦</a>
+                        <a href="#" class="social-link" data-platform="youtube">📺</a>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <div class="footer-bottom-content">
-                <p class="copyright">© 2024 Kuromi's Nightmare Shop. All rights reserved.</p>
-                <div class="kuromi-love">
-                    Made with 🖤 & nightmares
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="shop.html">Shop All</a></li>
+                        <li><a href="#clothing">Clothing</a></li>
+                        <li><a href="#accessories">Accessories</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                    </ul>
                 </div>
-                <p class="disclaimer">Fan-made tribute • Kuromi © Sanrio Co., Ltd.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Kuromi Chatbot -->
-    <div class="chatbot-container" id="chatbotContainer">
-        <div class="chatbot-toggle" id="chatbotToggle">
-            <img src="1289-kuromiwink.png" alt="Kuromi" class="kuromi-chat-face">
-            <div class="chat-notification" id="chatNotification">💬</div>
-        </div>
-        
-        <div class="chatbot-window" id="chatbotWindow">
-            <div class="chatbot-header">
-                <img src="1289-kuromiwink.png" alt="Kuromi" class="kuromi-avatar">
-                <div class="chatbot-title">
-                    <h4>Kuromi</h4>
-                    <p>Your nightmare assistant</p>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Customer Care</h3>
+                    <ul class="footer-links">
+                        <li><a href="#size-guide">Size Guide</a></li>
+                        <li><a href="#shipping">Shipping Info</a></li>
+                        <li><a href="#returns">Returns</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#support">Support</a></li>
+                    </ul>
                 </div>
-                <button class="chatbot-close" id="chatbotClose">×</button>
-            </div>
-            
-            <div class="chatbot-messages" id="chatbotMessages">
-                <div class="chat-message bot-message">
-                    <div class="message-content">
-                        Nyahaha~ Looking for something specific? I can help you find it! 🦇
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Contact Info</h3>
+                    <div class="contact-info">
+                        <p>📧 hello@kuromi-fashion.com</p>
+                        <p>���� 1-800-MISCHIEF</p>
+                        <p>📍 Kawaii District, Fashion City</p>
                     </div>
                 </div>
             </div>
             
-            <div class="chatbot-input-container">
-                <input type="text" class="chatbot-input" id="chatbotInput" placeholder="Type your nightmare here...">
-                <button class="chatbot-send" id="chatbotSend">Send</button>
+            <div class="footer-bottom">
+                <p class="copyright">© 2024 Kuromi Fashion Empire. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="#privacy">Privacy Policy</a>
+                    <a href="#terms">Terms of Service</a>
+                </div>
             </div>
         </div>
-    </div>
+    </footer>
 
     <!-- Cart Sidebar -->
     <div class="cart-sidebar" id="cartSidebar">
         <div class="cart-header">
-            <h3>Your Nightmare Bag</h3>
+            <h3>Your Mischief Bag</h3>
             <button class="cart-close" id="cartClose">×</button>
         </div>
         <div class="cart-items" id="cartItems">
             <div class="empty-cart">
-                <span class="empty-icon">👜</span>
-                <p>Your nightmare bag is empty</p>
+                <span class="empty-icon">🛍️</span>
+                <p>Your bag is empty</p>
+                <p class="empty-subtitle">Add some mischievous fashion!</p>
             </div>
         </div>
         <div class="cart-footer" id="cartFooter" style="display: none;">
             <div class="cart-total">
                 <span>Total: $<span id="cartTotal">0.00</span></span>
             </div>
-            <button class="checkout-btn">Proceed to Summoning</button>
+            <button class="checkout-btn" id="checkoutBtn">Checkout</button>
         </div>
     </div>
 
@@ -249,8 +722,7 @@
     <script>
         // Initialize shop page
         document.addEventListener('DOMContentLoaded', function() {
-            loadShopProducts();
-            setupCategoryFilters();
+            initializeShopPage();
         });
     </script>
 </body>
