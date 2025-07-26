@@ -35,6 +35,7 @@
                     <a href="shop.html" class="nav-link active">Shop</a>
                     <a href="about.html" class="nav-link">About</a>
                     <a href="#contact" class="nav-link">Contact</a>
+                    <a href="#" class="nav-link" id="orderTrackingNav">Orders</a>
                 </div>
 
                 <div class="nav-actions">
@@ -54,6 +55,12 @@
                             <a href="#" class="lang-option" data-lang="ko">한국어</a>
                         </div>
                     </div>
+
+                    <!-- Wishlist Icon -->
+                    <button class="nav-icon wishlist-nav-btn" id="wishlistNavBtn" title="Wishlist">
+                        ♡
+                        <span class="wishlist-count" id="wishlistNavCount">0</span>
+                    </button>
 
                     <!-- Cart Icon -->
                     <button class="nav-icon cart-btn" id="cartBtn" title="Cart">
@@ -156,6 +163,7 @@
                     <div class="product-image-container">
                         <img src="hoodie.webp" alt="Kuromi Gothic Hoodie" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <button class="quick-view-btn" title="Quick View">👁️</button>
+                        <button class="wishlist-btn" title="Add to Wishlist" data-product-id="1">♡</button>
                     </div>
                     <div class="product-info">
                         <h3 class="product-title">Kuromi Gothic Hoodie</h3>
@@ -176,8 +184,8 @@
                     </div>
                     <div class="product-image-container">
                         <img src="goth dress.jpeg" alt="Gothic Lolita Dress" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                       
                         <button class="quick-view-btn" title="Quick View">👁️</button>
+                        <button class="wishlist-btn" title="Add to Wishlist" data-product-id="2">♡</button>
                     </div>
                     <div class="product-info">
                         <h3 class="product-title">Gothic Lolita Dress</h3>
@@ -194,8 +202,8 @@
                 <div class="product-card" data-category="clothing">
                     <div class="product-image-container">
                         <img src="croptop.webp" alt="Mischief Crop Top" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                       
                         <button class="quick-view-btn" title="Quick View">👁️</button>
+                        <button class="wishlist-btn" title="Add to Wishlist" data-product-id="3">♡</button>
                     </div>
                     <div class="product-info">
                         <h3 class="product-title">Mischief Crop Top</h3>
@@ -277,8 +285,8 @@
                     </div>
                     <div class="product-image-container">
                         <img src="headband.webp" alt="Devil Horn Headband" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-
                         <button class="quick-view-btn" title="Quick View">👁️</button>
+                        <button class="wishlist-btn" title="Add to Wishlist" data-product-id="4">♡</button>
                     </div>
                     <div class="product-info">
                         <h3 class="product-title">Devil Horn Headband</h3>
@@ -296,8 +304,8 @@
                 <div class="product-card" data-category="accessories">
                     <div class="product-image-container">
                         <img src="choker.jpeg" alt="Gothic Choker Set" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                       
                         <button class="quick-view-btn" title="Quick View">👁️</button>
+                        <button class="wishlist-btn" title="Add to Wishlist" data-product-id="5">♡</button>
                     </div>
                     <div class="product-info">
                         <h3 class="product-title">Gothic Choker Set</h3>
@@ -615,6 +623,16 @@
         </div>
     </section>
 
+    <!-- Related Products Section -->
+    <section class="related-products-section">
+        <div class="container">
+            <h2 class="section-title">You Might Also Like</h2>
+            <div class="related-products-grid" id="relatedProductsGrid">
+                <!-- Related products will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -693,7 +711,7 @@
             <div class="cart-total">
                 <span>Total: $<span id="cartTotal">0.00</span></span>
             </div>
-            <button class="checkout-btn">Checkout</button>
+            <button class="checkout-btn" id="checkoutBtn">Checkout</button>
         </div>
     </div>
 
