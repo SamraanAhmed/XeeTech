@@ -3,29 +3,93 @@ let cart = JSON.parse(localStorage.getItem('kuromiCart')) || [];
 let searchOpen = false;
 let cartOpen = false;
 
-// Sample limited edition products
-const limitedProducts = [
-    {
+// Enhanced product database with full details
+const enhancedProducts = {
+    1: {
         id: 1,
-        name: "Kuromi Devil Wings Jacket",
-        price: 89.99,
-        image: "jacket.webp",
-        badge: "Limited Edition"
+        name: "Kuromi Gothic Hoodie",
+        price: 39.99,
+        originalPrice: 55.99,
+        image: "hoodie.webp",
+        images: ["hoodie.webp", "jacket.webp", "croptop.webp"],
+        badge: "SALE",
+        category: "clothing",
+        description: "Embrace your mischievous side with this premium gothic hoodie featuring Kuromi's signature style. Made from ultra-soft cotton blend with a cozy fleece interior.",
+        features: ["100% Cotton Blend", "Fleece-lined Interior", "Embroidered Details", "Kangaroo Pocket", "Unisex Fit"],
+        sizes: ["XS", "S", "M", "L", "XL", "XXL"],
+        colors: ["Black", "Purple", "Pink"],
+        stock: 15,
+        rating: 4.8,
+        reviews: 124
     },
-    {
+    2: {
         id: 2,
-        name: "Mischievous Heart Necklace",
-        price: 45.99,
-        image: "choker.jpeg",
-        badge: "Almost Gone"
-    },
-    {
-        id: 3,
-        name: "Gothic Lolita Dress Set",
+        name: "Gothic Lolita Dress",
         price: 129.99,
         image: "goth dress.jpeg",
-        badge: "New Arrival"
+        images: ["goth dress.jpeg", "dress.jpg"],
+        badge: "NEW",
+        category: "clothing",
+        description: "Stunning gothic lolita dress with intricate lace details and a rebellious kawaii aesthetic. Perfect for special occasions or daily mischief.",
+        features: ["Premium Lace Fabric", "Fitted Bodice", "Flared Skirt", "Hidden Back Zipper", "Gothic Accessories Included"],
+        sizes: ["XS", "S", "M", "L", "XL"],
+        colors: ["Black", "Deep Purple"],
+        stock: 8,
+        rating: 4.9,
+        reviews: 67
+    },
+    3: {
+        id: 3,
+        name: "Mischief Crop Top",
+        price: 24.99,
+        image: "croptop.webp",
+        images: ["croptop.webp", "hoodie.webp"],
+        category: "clothing",
+        description: "Show off your rebellious style with this cute yet edgy crop top featuring Kuromi's devil horn motif.",
+        features: ["Soft Cotton Blend", "Stretch Fabric", "Machine Washable", "Graphic Print"],
+        sizes: ["XS", "S", "M", "L", "XL"],
+        colors: ["Black", "White", "Pink"],
+        stock: 23,
+        rating: 4.7,
+        reviews: 89
+    },
+    4: {
+        id: 4,
+        name: "Devil Horn Headband",
+        price: 19.99,
+        originalPrice: 29.99,
+        image: "headband.webp",
+        images: ["headband.webp", "clip.jpeg"],
+        badge: "SALE",
+        category: "accessories",
+        description: "Complete your mischievous look with this adorable devil horn headband. Comfortable and adjustable for all-day wear.",
+        features: ["Adjustable Fit", "Soft Padding", "Durable Materials", "Lightweight Design"],
+        colors: ["Black", "Purple", "Pink"],
+        stock: 31,
+        rating: 4.6,
+        reviews: 156
+    },
+    5: {
+        id: 5,
+        name: "Gothic Choker Set",
+        price: 35.99,
+        image: "choker.jpeg",
+        images: ["choker.jpeg", "sara.webp"],
+        category: "accessories",
+        description: "Elegant gothic choker set with multiple pieces to mix and match. Perfect for creating your unique dark kawaii style.",
+        features: ["3-Piece Set", "Adjustable Length", "Hypoallergenic Materials", "Gothic Charms"],
+        colors: ["Black", "Silver", "Rose Gold"],
+        stock: 18,
+        rating: 4.8,
+        reviews: 94
     }
+};
+
+// Sample limited edition products (keeping for compatibility)
+const limitedProducts = [
+    enhancedProducts[1],
+    enhancedProducts[2],
+    enhancedProducts[3]
 ];
 
 // Initialize the website
@@ -1145,6 +1209,637 @@ function showOrderConfirmation(orderData) {
 // Initialize checkout when DOM is loaded
 document.addEventListener('DOMContentLoaded', initializeCheckout);
 
+// Quick View Modal functionality
+function openQuickViewModal(productId) {
+    const product = enhancedProducts[productId];
+    if (!product) {
+        showNotification('Product details not available');
+        return;
+    }
+
+    const modal = createQuickViewModal(product);
+    document.body.appendChild(modal);
+
+    // Setup event listeners
+    setupQuickViewEventListeners(modal, product);
+
+    // Show modal
+    setTimeout(() => {
+        modal.classList.add('active');
+    }, 10);
+}
+
+function createQuickViewModal(product) {
+    const modal = document.createElement('div');
+    modal.className = 'quick-view-modal';
+
+    const stockStatus = product.stock > 10 ? 'In Stock' : product.stock > 0 ? `Only ${product.stock} left!` : 'Out of Stock';
+    const stockClass = product.stock > 10 ? 'in-stock' : product.stock > 0 ? 'low-stock' : 'out-of-stock';
+
+    modal.innerHTML = `
+        <div class="quick-view-overlay"></div>
+        <div class="quick-view-content">
+            <button class="quick-view-close">&times;</button>
+
+            <div class="quick-view-body">
+                <div class="quick-view-images">
+                    <div class="main-image-container">
+                        <img src="${product.image}" alt="${product.name}" class="main-product-image" id="mainImage">
+                        ${product.badge ? `<div class="product-badge-qv">${product.badge}</div>` : ''}
+                    </div>
+                    ${product.images && product.images.length > 1 ? `
+                        <div class="image-thumbnails">
+                            ${product.images.map((img, index) => `
+                                <img src="${img}" alt="${product.name} ${index + 1}"
+                                     class="thumbnail ${index === 0 ? 'active' : ''}"
+                                     onclick="switchMainImage('${img}', this)">
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+
+                <div class="quick-view-details">
+                    <h2 class="qv-product-name">${product.name}</h2>
+
+                    <div class="qv-rating">
+                        ${product.rating ? `
+                            <div class="stars">${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))}</div>
+                            <span class="rating-text">${product.rating} (${product.reviews} reviews)</span>
+                        ` : ''}
+                    </div>
+
+                    <div class="qv-price">
+                        <span class="current-price">$${product.price.toFixed(2)}</span>
+                        ${product.originalPrice ? `<span class="original-price">$${product.originalPrice.toFixed(2)}</span>` : ''}
+                    </div>
+
+                    <div class="qv-stock ${stockClass}">
+                        <span class="stock-indicator">●</span>
+                        <span>${stockStatus}</span>
+                    </div>
+
+                    <div class="qv-description">
+                        <p>${product.description}</p>
+                    </div>
+
+                    ${product.features ? `
+                        <div class="qv-features">
+                            <h4>Features:</h4>
+                            <ul>
+                                ${product.features.map(feature => `<li>${feature}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+
+                    ${product.sizes ? `
+                        <div class="qv-sizes">
+                            <h4>Size:</h4>
+                            <div class="size-options">
+                                ${product.sizes.map(size => `
+                                    <button class="size-btn" data-size="${size}">${size}</button>
+                                `).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+
+                    ${product.colors ? `
+                        <div class="qv-colors">
+                            <h4>Color:</h4>
+                            <div class="color-options">
+                                ${product.colors.map((color, index) => `
+                                    <button class="color-btn ${index === 0 ? 'active' : ''}"
+                                            data-color="${color}"
+                                            title="${color}"
+                                            style="background: ${getColorCode(color)};"></button>
+                                `).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+
+                    <div class="qv-quantity">
+                        <h4>Quantity:</h4>
+                        <div class="quantity-controls">
+                            <button class="qty-btn minus" ${product.stock === 0 ? 'disabled' : ''}>-</button>
+                            <input type="number" class="qty-input" value="1" min="1" max="${product.stock}" ${product.stock === 0 ? 'disabled' : ''}>
+                            <button class="qty-btn plus" ${product.stock === 0 ? 'disabled' : ''}>+</button>
+                        </div>
+                    </div>
+
+                    <div class="qv-actions">
+                        <button class="add-to-cart-qv" data-product-id="${product.id}" ${product.stock === 0 ? 'disabled' : ''}>
+                            <span class="btn-text">${product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                        <button class="add-to-wishlist-qv" data-product-id="${product.id}">
+                            <span class="heart">♡</span>
+                            <span>Add to Wishlist</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Add styles
+    const style = document.createElement('style');
+    style.textContent = `
+        .quick-view-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10002;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .quick-view-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .quick-view-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .quick-view-content {
+            position: relative;
+            background: white;
+            border-radius: 20px;
+            max-width: 900px;
+            width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .quick-view-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .quick-view-close:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+
+        .quick-view-body {
+            display: flex;
+            gap: 40px;
+            padding: 40px;
+        }
+
+        .quick-view-images {
+            flex: 1;
+        }
+
+        .main-image-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .main-product-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .main-product-image:hover {
+            transform: scale(1.05);
+        }
+
+        .product-badge-qv {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: linear-gradient(45deg, #d63384, #f06292);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .image-thumbnails {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+        }
+
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .thumbnail:hover,
+        .thumbnail.active {
+            border-color: var(--deep-orchid);
+            transform: scale(1.05);
+        }
+
+        .quick-view-details {
+            flex: 1;
+        }
+
+        .qv-product-name {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--midnight-black);
+            margin-bottom: 16px;
+        }
+
+        .qv-rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .stars {
+            color: #ffc107;
+            font-size: 18px;
+        }
+
+        .rating-text {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .qv-price {
+            margin-bottom: 16px;
+        }
+
+        .qv-price .current-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--deep-orchid);
+            margin-right: 12px;
+        }
+
+        .qv-price .original-price {
+            font-size: 18px;
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        .qv-stock {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .stock-indicator {
+            font-size: 12px;
+        }
+
+        .in-stock .stock-indicator {
+            color: #28a745;
+        }
+
+        .low-stock .stock-indicator {
+            color: #ffc107;
+        }
+
+        .out-of-stock .stock-indicator {
+            color: #dc3545;
+        }
+
+        .qv-description {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .qv-features {
+            margin-bottom: 20px;
+        }
+
+        .qv-features h4 {
+            margin-bottom: 8px;
+            color: var(--midnight-black);
+        }
+
+        .qv-features ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .qv-features li {
+            padding: 4px 0;
+            color: #666;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .qv-features li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--deep-orchid);
+            font-weight: bold;
+        }
+
+        .qv-sizes,
+        .qv-colors,
+        .qv-quantity {
+            margin-bottom: 20px;
+        }
+
+        .qv-sizes h4,
+        .qv-colors h4,
+        .qv-quantity h4 {
+            margin-bottom: 8px;
+            color: var(--midnight-black);
+        }
+
+        .size-options,
+        .color-options {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .size-btn {
+            padding: 8px 16px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .size-btn:hover,
+        .size-btn.active {
+            border-color: var(--deep-orchid);
+            background: var(--deep-orchid);
+            color: white;
+        }
+
+        .color-btn {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #ddd;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .color-btn:hover,
+        .color-btn.active {
+            border-color: var(--deep-orchid);
+            transform: scale(1.1);
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .qty-btn {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--deep-orchid);
+            background: white;
+            color: var(--deep-orchid);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .qty-btn:hover {
+            background: var(--deep-orchid);
+            color: white;
+        }
+
+        .qty-input {
+            width: 80px;
+            height: 40px;
+            text-align: center;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .qv-actions {
+            display: flex;
+            gap: 16px;
+            margin-top: 30px;
+        }
+
+        .add-to-cart-qv {
+            flex: 1;
+            padding: 16px;
+            background: linear-gradient(45deg, var(--deep-orchid), var(--bubblegum-pink));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .add-to-cart-qv:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(153, 50, 204, 0.3);
+        }
+
+        .add-to-cart-qv:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .add-to-wishlist-qv {
+            padding: 16px;
+            background: white;
+            border: 2px solid var(--deep-orchid);
+            color: var(--deep-orchid);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .add-to-wishlist-qv:hover {
+            background: var(--deep-orchid);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .quick-view-body {
+                flex-direction: column;
+                padding: 20px;
+                gap: 20px;
+            }
+
+            .qv-actions {
+                flex-direction: column;
+            }
+        }
+    `;
+
+    modal.appendChild(style);
+    return modal;
+}
+
+function getColorCode(colorName) {
+    const colorMap = {
+        'Black': '#000000',
+        'White': '#FFFFFF',
+        'Pink': '#FFB6C1',
+        'Purple': '#9932CC',
+        'Deep Purple': '#4B0082',
+        'Silver': '#C0C0C0',
+        'Rose Gold': '#E8B4B8'
+    };
+    return colorMap[colorName] || '#000000';
+}
+
+function switchMainImage(imageSrc, thumbnail) {
+    const mainImage = document.getElementById('mainImage');
+    const thumbnails = document.querySelectorAll('.thumbnail');
+
+    mainImage.src = imageSrc;
+
+    thumbnails.forEach(thumb => thumb.classList.remove('active'));
+    thumbnail.classList.add('active');
+}
+
+function setupQuickViewEventListeners(modal, product) {
+    // Close modal
+    const closeBtn = modal.querySelector('.quick-view-close');
+    const overlay = modal.querySelector('.quick-view-overlay');
+
+    [closeBtn, overlay].forEach(element => {
+        element.addEventListener('click', () => closeQuickViewModal(modal));
+    });
+
+    // Size selection
+    const sizeButtons = modal.querySelectorAll('.size-btn');
+    sizeButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            sizeButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
+
+    // Color selection
+    const colorButtons = modal.querySelectorAll('.color-btn');
+    colorButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            colorButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
+
+    // Quantity controls
+    const qtyInput = modal.querySelector('.qty-input');
+    const minusBtn = modal.querySelector('.qty-btn.minus');
+    const plusBtn = modal.querySelector('.qty-btn.plus');
+
+    minusBtn.addEventListener('click', () => {
+        const current = parseInt(qtyInput.value);
+        if (current > 1) {
+            qtyInput.value = current - 1;
+        }
+    });
+
+    plusBtn.addEventListener('click', () => {
+        const current = parseInt(qtyInput.value);
+        if (current < product.stock) {
+            qtyInput.value = current + 1;
+        }
+    });
+
+    // Add to cart
+    const addToCartBtn = modal.querySelector('.add-to-cart-qv');
+    addToCartBtn.addEventListener('click', () => {
+        const quantity = parseInt(qtyInput.value);
+        const selectedSize = modal.querySelector('.size-btn.active')?.dataset.size;
+        const selectedColor = modal.querySelector('.color-btn.active')?.dataset.color;
+
+        const productToAdd = {
+            ...product,
+            quantity: quantity,
+            selectedSize,
+            selectedColor
+        };
+
+        // Add multiple quantities
+        for (let i = 0; i < quantity; i++) {
+            addToCartFromShop({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                image: product.image,
+                quantity: 1
+            });
+        }
+
+        closeQuickViewModal(modal);
+        showNotification(`${quantity}x ${product.name} added to cart!`);
+    });
+
+    // Add to wishlist
+    const wishlistBtn = modal.querySelector('.add-to-wishlist-qv');
+    wishlistBtn.addEventListener('click', () => {
+        addToWishlist(product.id);
+        showNotification(`${product.name} added to wishlist!`);
+    });
+}
+
+function closeQuickViewModal(modal) {
+    modal.classList.remove('active');
+    setTimeout(() => {
+        document.body.removeChild(modal);
+    }, 300);
+}
+
 // Intersection Observer for animations
 function initScrollAnimations() {
     const observerOptions = {
@@ -1465,8 +2160,8 @@ function setupProductInteractions() {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
             const productCard = e.target.closest('.product-card');
-            const productName = productCard.querySelector('.product-title').textContent;
-            showNotification(`Quick view for ${productName} would open here!`);
+            const productId = parseInt(productCard.querySelector('.add-to-cart-btn').dataset.productId);
+            openQuickViewModal(productId);
         });
     });
 }
@@ -1535,6 +2230,16 @@ window.KuromiShop = {
     initializeShopPage,
     cart
 };
+
+// Wishlist functionality (placeholder for now)
+let wishlist = JSON.parse(localStorage.getItem('kuromiWishlist')) || [];
+
+function addToWishlist(productId) {
+    if (!wishlist.includes(productId)) {
+        wishlist.push(productId);
+        localStorage.setItem('kuromiWishlist', JSON.stringify(wishlist));
+    }
+}
 
 console.log('🦇 Welcome to Kuromi\'s Fashion Empire! 💜');
 console.log('Try the Konami code for a special surprise! ✨');
