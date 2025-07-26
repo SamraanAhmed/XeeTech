@@ -403,16 +403,19 @@ function updateCartUI() {
 function createCartItem(item) {
     return `
         <div class="cart-item">
-            <div class="cart-item-image">${item.image}</div>
+            <div class="cart-item-image">
+                ${item.image.startsWith('http') ? `<img src="${item.image}" alt="${item.name}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">` : `<span style="font-size: 40px;">${item.image}</span>`}
+            </div>
             <div class="cart-item-info">
                 <div class="cart-item-name">${item.name}</div>
-                <div class="cart-item-price">$${item.price}</div>
+                <div class="cart-item-price">$${item.price.toFixed(2)}</div>
                 <div class="cart-item-quantity">
                     <button class="quantity-btn" data-product-id="${item.id}" data-action="decrease">-</button>
                     <span class="quantity-display">${item.quantity}</span>
                     <button class="quantity-btn" data-product-id="${item.id}" data-action="increase">+</button>
                     <button class="remove-item" data-product-id="${item.id}">Remove</button>
                 </div>
+                <div class="cart-item-total">Total: $${(item.price * item.quantity).toFixed(2)}</div>
             </div>
         </div>
     `;
@@ -586,6 +589,558 @@ function activateKonamiCode() {
 
 // Initialize special features
 initKonamiCode();
+
+// Checkout functionality
+function initializeCheckout() {
+    const checkoutBtns = document.querySelectorAll('.checkout-btn');
+    checkoutBtns.forEach(btn => {
+        btn.addEventListener('click', openCheckoutModal);
+    });
+}
+
+function openCheckoutModal() {
+    if (cart.length === 0) {
+        showNotification('Your cart is empty! Add some items first.');
+        return;
+    }
+
+    const modal = createCheckoutModal();
+    document.body.appendChild(modal);
+
+    // Add event listeners for checkout form
+    setupCheckoutEventListeners(modal);
+
+    // Show modal
+    setTimeout(() => {
+        modal.classList.add('active');
+    }, 10);
+}
+
+function createCheckoutModal() {
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+    const modal = document.createElement('div');
+    modal.className = 'checkout-modal';
+    modal.innerHTML = `
+        <div class="checkout-overlay"></div>
+        <div class="checkout-content">
+            <div class="checkout-header">
+                <h2>Checkout</h2>
+                <button class="checkout-close">&times;</button>
+            </div>
+
+            <div class="checkout-body">
+                <div class="checkout-summary">
+                    <h3>Order Summary</h3>
+                    <div class="summary-items">
+                        ${cart.map(item => `
+                            <div class="summary-item">
+                                <span>${item.name} x${item.quantity}</span>
+                                <span>$${(item.price * item.quantity).toFixed(2)}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="summary-total">
+                        <strong>Total: $${total.toFixed(2)} (${itemCount} items)</strong>
+                    </div>
+                </div>
+
+                <div class="checkout-form">
+                    <h3>Shipping Information</h3>
+                    <form id="checkoutForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name *</label>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name *</label>
+                                <input type="text" id="lastName" name="lastName" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address">Address *</label>
+                            <input type="text" id="address" name="address" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city">City *</label>
+                                <input type="text" id="city" name="city" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="zipCode">ZIP Code *</label>
+                                <input type="text" id="zipCode" name="zipCode" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="country">Country *</label>
+                            <select id="country" name="country" required>
+                                <option value="">Select Country</option>
+                                <option value="US">United States</option>
+                                <option value="CA">Canada</option>
+                                <option value="UK">United Kingdom</option>
+                                <option value="AU">Australia</option>
+                                <option value="DE">Germany</option>
+                                <option value="JP">Japan</option>
+                                <option value="KR">South Korea</option>
+                            </select>
+                        </div>
+
+                        <h3>Payment Method</h3>
+                        <div class="payment-options">
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="card" checked>
+                                <span>💳 Credit/Debit Card</span>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="paypal">
+                                <span>💰 PayPal</span>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="apple">
+                                <span>📱 Apple Pay</span>
+                            </label>
+                        </div>
+
+                        <div class="checkout-actions">
+                            <button type="button" class="btn-secondary" id="backToCart">Back to Cart</button>
+                            <button type="submit" class="btn-primary">Complete Order ($${total.toFixed(2)})</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // Add styles for the modal
+    const style = document.createElement('style');
+    style.textContent = `
+        .checkout-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .checkout-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .checkout-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .checkout-content {
+            position: relative;
+            background: white;
+            border-radius: 16px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .checkout-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .checkout-header h2 {
+            margin: 0;
+            color: #2d1b69;
+        }
+
+        .checkout-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.2s ease;
+        }
+
+        .checkout-close:hover {
+            background-color: #f5f5f5;
+        }
+
+        .checkout-body {
+            padding: 24px;
+        }
+
+        .checkout-summary {
+            margin-bottom: 24px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+
+        .checkout-summary h3 {
+            margin: 0 0 16px 0;
+            color: #2d1b69;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .summary-total {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 2px solid #d63384;
+            font-size: 18px;
+            color: #2d1b69;
+        }
+
+        .checkout-form h3 {
+            margin: 0 0 16px 0;
+            color: #2d1b69;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+        }
+
+        .form-group {
+            flex: 1;
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #2d1b69;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #d63384;
+        }
+
+        .payment-options {
+            margin-bottom: 24px;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .payment-option:hover {
+            border-color: #d63384;
+            background-color: #fdf2f8;
+        }
+
+        .payment-option input[type="radio"] {
+            margin-right: 12px;
+        }
+
+        .checkout-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 24px;
+        }
+
+        .btn-secondary {
+            padding: 12px 24px;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-primary {
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #d63384, #f06292);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .checkout-content {
+                width: 95%;
+                margin: 20px;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .checkout-actions {
+                flex-direction: column;
+            }
+        }
+    `;
+
+    modal.appendChild(style);
+    return modal;
+}
+
+function setupCheckoutEventListeners(modal) {
+    // Close modal
+    const closeBtn = modal.querySelector('.checkout-close');
+    const overlay = modal.querySelector('.checkout-overlay');
+    const backBtn = modal.querySelector('#backToCart');
+
+    [closeBtn, overlay, backBtn].forEach(element => {
+        if (element) {
+            element.addEventListener('click', () => closeCheckoutModal(modal));
+        }
+    });
+
+    // Form submission
+    const form = modal.querySelector('#checkoutForm');
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        processOrder(modal, new FormData(form));
+    });
+}
+
+function closeCheckoutModal(modal) {
+    modal.classList.remove('active');
+    setTimeout(() => {
+        document.body.removeChild(modal);
+    }, 300);
+}
+
+function processOrder(modal, formData) {
+    // Show loading state
+    const submitBtn = modal.querySelector('.btn-primary');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Processing...';
+    submitBtn.disabled = true;
+
+    // Simulate order processing
+    setTimeout(() => {
+        const orderData = {
+            items: [...cart],
+            total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+            customer: {
+                firstName: formData.get('firstName'),
+                lastName: formData.get('lastName'),
+                email: formData.get('email'),
+                address: formData.get('address'),
+                city: formData.get('city'),
+                zipCode: formData.get('zipCode'),
+                country: formData.get('country')
+            },
+            paymentMethod: formData.get('payment'),
+            orderDate: new Date().toISOString(),
+            orderId: 'KUR-' + Date.now()
+        };
+
+        // Save order to localStorage (in a real app, this would go to a server)
+        const orders = JSON.parse(localStorage.getItem('kuromiOrders') || '[]');
+        orders.push(orderData);
+        localStorage.setItem('kuromiOrders', JSON.stringify(orders));
+
+        // Clear cart
+        cart = [];
+        saveCart();
+        updateCartUI();
+
+        // Close modal
+        closeCheckoutModal(modal);
+        closeCart();
+
+        // Show success message
+        showOrderConfirmation(orderData);
+
+    }, 2000);
+}
+
+function showOrderConfirmation(orderData) {
+    const confirmation = document.createElement('div');
+    confirmation.className = 'order-confirmation';
+    confirmation.innerHTML = `
+        <div class="confirmation-overlay"></div>
+        <div class="confirmation-content">
+            <div class="confirmation-icon">🎉</div>
+            <h2>Order Confirmed!</h2>
+            <p>Thank you ${orderData.customer.firstName}! Your mischievous order has been placed successfully.</p>
+            <div class="order-details">
+                <p><strong>Order ID:</strong> ${orderData.orderId}</p>
+                <p><strong>Total:</strong> $${orderData.total.toFixed(2)}</p>
+                <p><strong>Items:</strong> ${orderData.items.length} item(s)</p>
+            </div>
+            <p class="confirmation-note">A confirmation email will be sent to ${orderData.customer.email}</p>
+            <button class="confirmation-close">Continue Shopping</button>
+        </div>
+    `;
+
+    // Add styles
+    const style = document.createElement('style');
+    style.textContent = `
+        .order-confirmation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .confirmation-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .confirmation-content {
+            position: relative;
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .confirmation-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .confirmation-content h2 {
+            color: #2d1b69;
+            margin-bottom: 16px;
+        }
+
+        .order-details {
+            background: #f8f9fa;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            text-align: left;
+        }
+
+        .confirmation-note {
+            font-size: 14px;
+            color: #666;
+            margin: 16px 0;
+        }
+
+        .confirmation-close {
+            background: linear-gradient(45deg, #d63384, #f06292);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: transform 0.2s ease;
+        }
+
+        .confirmation-close:hover {
+            transform: translateY(-2px);
+        }
+    `;
+
+    confirmation.appendChild(style);
+    document.body.appendChild(confirmation);
+
+    // Close confirmation
+    confirmation.querySelector('.confirmation-close').addEventListener('click', () => {
+        document.body.removeChild(confirmation);
+    });
+
+    confirmation.querySelector('.confirmation-overlay').addEventListener('click', () => {
+        document.body.removeChild(confirmation);
+    });
+}
+
+// Initialize checkout when DOM is loaded
+document.addEventListener('DOMContentLoaded', initializeCheckout);
 
 // Intersection Observer for animations
 function initScrollAnimations() {
@@ -880,13 +1435,20 @@ function setupProductInteractions() {
             const productCard = e.target.closest('.product-card');
             const productName = productCard.querySelector('.product-title').textContent;
             const productPrice = parseFloat(productCard.querySelector('.current-price').textContent.replace('$', ''));
+            const productImage = productCard.querySelector('.product-image');
+
+            // Get image source or use placeholder
+            let imageSrc = '🛍️';
+            if (productImage && productImage.src && !productImage.src.includes('undefined')) {
+                imageSrc = productImage.src;
+            }
 
             // Create product object
             const product = {
                 id: productId,
                 name: productName,
                 price: productPrice,
-                image: productCard.querySelector('.placeholder-icon').textContent,
+                image: imageSrc,
                 quantity: 1
             };
 
