@@ -288,9 +288,9 @@ function createProductCard(product) {
         <div class="product-card">
             <div class="product-badge">${product.badge}</div>
             <div class="product-image-container">
-                <img src="placeholder-product.jpg" alt="${product.name}" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="product-image-placeholder" style="display: flex;">
-                    <span class="placeholder-icon">${product.image}</span>
+                <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="product-image-placeholder" style="display: none;">
+                    <span class="placeholder-icon">📦</span>
                 </div>
                 <button class="quick-view-btn" title="Quick View">👁️</button>
             </div>
