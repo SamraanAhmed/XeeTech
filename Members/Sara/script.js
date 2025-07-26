@@ -2466,6 +2466,9 @@ function initializeShopPage() {
 
     // Add sort functionality
     setupSortFunctionality();
+
+    // Add related products
+    loadRelatedProducts();
 }
 
 function setupShopCategoryFiltering() {
@@ -3349,7 +3352,7 @@ function addStockIndicators() {
                 stockIndicator = `⚠️ Only ${product.stock} left!`;
                 stockClass = 'stock-urgent';
             } else if (product.stock <= 15) {
-                stockIndicator = `🔥 ${product.stock} in stock`;
+                stockIndicator = `���� ${product.stock} in stock`;
                 stockClass = 'stock-low';
             } else if (Math.random() > 0.7) { // Show for 30% of products
                 stockIndicator = `✅ In Stock`;
@@ -3368,6 +3371,159 @@ function addStockIndicators() {
             }
         }
     });
+}
+
+// Related Products functionality
+function loadRelatedProducts() {
+    const relatedGrid = document.getElementById('relatedProductsGrid');
+    if (!relatedGrid) return;
+
+    // Get current page category or random products
+    const currentCategory = getCurrentPageCategory();
+    const relatedProducts = getRelatedProducts(currentCategory);
+
+    relatedGrid.innerHTML = relatedProducts.map(product => createRelatedProductCard(product)).join('');
+
+    // Add event listeners
+    setupRelatedProductsEventListeners(relatedGrid);
+}
+
+function getCurrentPageCategory() {
+    // Determine current page context
+    const path = window.location.pathname;
+    if (path.includes('shop.html')) {
+        return 'mixed'; // Show variety on shop page
+    }
+    return 'mixed';
+}
+
+function getRelatedProducts(category = 'mixed', limit = 4) {
+    const allProducts = Object.values(enhancedProducts);
+
+    if (category === 'mixed') {
+        // Shuffle and return random products
+        const shuffled = allProducts.sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, limit);
+    }
+
+    // Filter by category and return random selection
+    const categoryProducts = allProducts.filter(p => p.category === category);
+    const shuffled = categoryProducts.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, limit);
+}
+
+function createRelatedProductCard(product) {
+    return `
+        <div class="related-product-card" data-product-id="${product.id}">
+            <div class="related-product-image-container">
+                <img src="${product.image}" alt="${product.name}" class="related-product-image">
+                ${product.badge ? `<div class="related-product-badge">${product.badge}</div>` : ''}
+                <div class="related-product-overlay">
+                    <button class="related-quick-view" data-product-id="${product.id}" title="Quick View">👁️</button>
+                    <button class="related-wishlist" data-product-id="${product.id}" title="Add to Wishlist">♡</button>
+                </div>
+            </div>
+            <div class="related-product-info">
+                <h3 class="related-product-name">${product.name}</h3>
+                <div class="related-product-price">
+                    <span class="current-price">$${product.price.toFixed(2)}</span>
+                    ${product.originalPrice ? `<span class="original-price">$${product.originalPrice.toFixed(2)}</span>` : ''}
+                </div>
+                ${product.rating ? `
+                    <div class="related-product-rating">
+                        <div class="stars">${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))}</div>
+                        <span class="rating-count">(${product.reviews})</span>
+                    </div>
+                ` : ''}
+                <button class="related-add-to-cart" data-product-id="${product.id}">
+                    <span>Add to Cart</span>
+                    <span class="btn-sparkle">✨</span>
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+function setupRelatedProductsEventListeners(grid) {
+    // Add to cart buttons
+    grid.querySelectorAll('.related-add-to-cart').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const productId = parseInt(btn.dataset.productId);
+            const product = enhancedProducts[productId];
+            if (product) {
+                addToCartFromShop({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1
+                });
+                showNotification(`${product.name} added to cart!`);
+            }
+        });
+    });
+
+    // Quick view buttons
+    grid.querySelectorAll('.related-quick-view').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const productId = parseInt(btn.dataset.productId);
+            openQuickViewModal(productId);
+        });
+    });
+
+    // Wishlist buttons
+    grid.querySelectorAll('.related-wishlist').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const productId = parseInt(btn.dataset.productId);
+            const wasAdded = toggleWishlist(productId);
+            const product = enhancedProducts[productId];
+            if (product) {
+                btn.innerHTML = wishlist.includes(productId) ? '♥' : '♡';
+                showNotification(
+                    wasAdded
+                        ? `${product.name} added to wishlist!`
+                        : `${product.name} removed from wishlist!`
+                );
+            }
+        });
+    });
+
+    // Card clicks for quick view
+    grid.querySelectorAll('.related-product-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const productId = parseInt(card.dataset.productId);
+            openQuickViewModal(productId);
+        });
+    });
+}
+
+// "Customers who bought this also bought" functionality
+function getRecommendedProducts(currentProductId, limit = 3) {
+    const currentProduct = enhancedProducts[currentProductId];
+    if (!currentProduct) return [];
+
+    const allProducts = Object.values(enhancedProducts);
+
+    // Filter products by same category, exclude current product
+    let recommended = allProducts.filter(p =>
+        p.id !== currentProductId &&
+        p.category === currentProduct.category
+    );
+
+    // If not enough products in same category, add from other categories
+    if (recommended.length < limit) {
+        const otherProducts = allProducts.filter(p =>
+            p.id !== currentProductId &&
+            p.category !== currentProduct.category
+        );
+        recommended = [...recommended, ...otherProducts];
+    }
+
+    // Shuffle and return limited results
+    return recommended.sort(() => 0.5 - Math.random()).slice(0, limit);
 }
 
 // Initialize social proof on page load
