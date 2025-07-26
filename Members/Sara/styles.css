@@ -2909,8 +2909,9 @@ html {
 
 .avatar-sparkle {
     position: absolute;
-    font-size: 1.2em;
-    animation: avatarSparkle 2s ease-in-out infinite;
+    font-size: 1em;
+    animation: avatarSparkle 4s ease-in-out infinite;
+    opacity: 0.5;
 }
 
 .avatar-sparkle:nth-child(1) {
