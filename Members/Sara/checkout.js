@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Refresh cart from localStorage
     refreshCart();
 
+    // Update cart count display
+    updateCartCount();
+
     initializeCheckout();
     setupEventListeners();
     updateOrderTotals();
