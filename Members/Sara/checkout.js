@@ -103,11 +103,19 @@ function showEmptyCartMessage() {
 
 function populateOrderItems() {
     const orderItems = document.getElementById('orderItems');
-    if (!orderItems) return;
-    
+    console.log('Order items element:', orderItems);
+
+    if (!orderItems) {
+        console.error('orderItems element not found!');
+        return;
+    }
+
+    console.log('Populating order items for cart:', cart);
+
     const itemsHTML = cart.map(item => {
+        console.log('Processing item:', item);
         const itemTotal = (item.price * item.quantity).toFixed(2);
-        
+
         return `
             <div class="order-item">
                 <div class="item-image">
@@ -121,7 +129,8 @@ function populateOrderItems() {
             </div>
         `;
     }).join('');
-    
+
+    console.log('Generated HTML:', itemsHTML);
     orderItems.innerHTML = itemsHTML;
 }
 
