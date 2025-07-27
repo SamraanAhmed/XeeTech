@@ -863,6 +863,127 @@ function showNotification(message) {
     }, 3000);
 }
 
+// Confetti Animation Function
+function createConfetti() {
+    const confettiContainer = document.createElement('div');
+    confettiContainer.id = 'confetti-container';
+    confettiContainer.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+        overflow: hidden;
+    `;
+    document.body.appendChild(confettiContainer);
+
+    // Kuromi-themed confetti colors and shapes
+    const confettiColors = ['#9932CC', '#FFB6C1', '#000000', '#FFFFFF', '#F8E6F2'];
+    const confettiShapes = ['🎀', '🖤', '💜', '✨', '🦇', '💫', '⭐', '🌟'];
+    const confettiTypes = ['circle', 'square', 'emoji'];
+
+    function createConfettiPiece() {
+        const piece = document.createElement('div');
+        const type = confettiTypes[Math.floor(Math.random() * confettiTypes.length)];
+
+        if (type === 'emoji') {
+            piece.textContent = confettiShapes[Math.floor(Math.random() * confettiShapes.length)];
+            piece.style.fontSize = (Math.random() * 20 + 15) + 'px';
+        } else {
+            piece.style.width = piece.style.height = (Math.random() * 10 + 5) + 'px';
+            piece.style.backgroundColor = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+            if (type === 'square') {
+                piece.style.borderRadius = '2px';
+            } else {
+                piece.style.borderRadius = '50%';
+            }
+        }
+
+        piece.style.cssText += `
+            position: absolute;
+            top: -20px;
+            left: ${Math.random() * 100}%;
+            animation: confettiFall ${Math.random() * 3 + 2}s linear forwards;
+            transform: rotate(${Math.random() * 360}deg);
+        `;
+
+        return piece;
+    }
+
+    // Create confetti burst
+    function confettiBurst() {
+        for (let i = 0; i < 150; i++) {
+            setTimeout(() => {
+                if (document.getElementById('confetti-container')) {
+                    const piece = createConfettiPiece();
+                    confettiContainer.appendChild(piece);
+
+                    // Remove piece after animation
+                    setTimeout(() => {
+                        if (piece.parentNode) {
+                            piece.parentNode.removeChild(piece);
+                        }
+                    }, 5000);
+                }
+            }, i * 20);
+        }
+    }
+
+    // Add CSS animation for falling confetti
+    if (!document.getElementById('confetti-styles')) {
+        const style = document.createElement('style');
+        style.id = 'confetti-styles';
+        style.textContent = `
+            @keyframes confettiFall {
+                0% {
+                    transform: translateY(-20px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(100vh) rotateX(360deg) rotateY(180deg) rotateZ(360deg);
+                    opacity: 0;
+                }
+            }
+
+            @keyframes confettiSpin {
+                0% { transform: rotateZ(0deg); }
+                100% { transform: rotateZ(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // Start confetti burst
+    confettiBurst();
+
+    // Add extra bursts for more celebration
+    setTimeout(confettiBurst, 300);
+    setTimeout(confettiBurst, 600);
+
+    // Clean up container after animation
+    setTimeout(() => {
+        if (document.getElementById('confetti-container')) {
+            document.body.removeChild(confettiContainer);
+        }
+    }, 8000);
+}
+
+// Enhanced Order Success with Confetti
+function triggerOrderConfetti() {
+    // Create multiple confetti bursts
+    createConfetti();
+
+    // Add extra celebration effects
+    setTimeout(createConfetti, 1000);
+
+    // Show celebration notification
+    setTimeout(() => {
+        showNotification('🎉 Congratulations! Your order is confirmed! 🦇');
+    }, 500);
+}
+
 // Update cart count in navigation
 function updateCartCount() {
     const cartCount = document.getElementById('cartCount');
