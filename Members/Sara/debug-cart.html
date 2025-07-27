@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart Debug Tool</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .debug-section {
+            background: #f5f5f5;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>Cart Debug Tool</h1>
+    
+    <div class="debug-section">
+        <h2>Raw localStorage Data:</h2>
+        <pre id="rawData">Loading...</pre>
+    </div>
+    
+    <div class="debug-section">
+        <h2>Parsed Cart Data:</h2>
+        <pre id="parsedData">Loading...</pre>
+    </div>
+    
+    <div class="debug-section">
+        <h2>Cart Structure Analysis:</h2>
+        <pre id="analysis">Loading...</pre>
+    </div>
+    
+    <div class="debug-section">
+        <h2>Sample Item Properties:</h2>
+        <pre id="itemProps">Loading...</pre>
+    </div>
+    
+    <button onclick="clearCart()">Clear Cart</button>
+    <button onclick="addTestItem()">Add Test Item</button>
+    <button onclick="refreshDebug()">Refresh</button>
+    
+    <script>
+        function debugCart() {
+            // Raw data
+            const raw = localStorage.getItem('kuromiCart');
+            document.getElementById('rawData').textContent = raw || 'No cart data found';
+            
+            // Parsed data
+            try {
+                const parsed = JSON.parse(raw || '[]');
+                document.getElementById('parsedData').textContent = JSON.stringify(parsed, null, 2);
+                
+                // Analysis
+                let analysis = `Cart length: ${parsed.length}\n`;
+                analysis += `Cart type: ${Array.isArray(parsed) ? 'Array' : typeof parsed}\n\n`;
+                
+                if (parsed.length > 0) {
+                    const firstItem = parsed[0];
+                    analysis += `First item type: ${typeof firstItem}\n`;
+                    analysis += `First item keys: ${Object.keys(firstItem).join(', ')}\n\n`;
+                    
+                    // Check required properties
+                    const requiredProps = ['id', 'name', 'price', 'quantity'];
+                    const missingProps = requiredProps.filter(prop => !(prop in firstItem));
+                    
+                    if (missingProps.length > 0) {
+                        analysis += `❌ Missing properties: ${missingProps.join(', ')}\n`;
+                    } else {
+                        analysis += `✅ All required properties present\n`;
+                    }
+                    
+                    // Show item properties
+                    document.getElementById('itemProps').textContent = JSON.stringify(firstItem, null, 2);
+                } else {
+                    analysis += 'No items in cart';
+                    document.getElementById('itemProps').textContent = 'No items to show';
+                }
+                
+                document.getElementById('analysis').textContent = analysis;
+                
+            } catch (e) {
+                document.getElementById('parsedData').innerHTML = '<span class="error">Error parsing JSON: ' + e.message + '</span>';
+                document.getElementById('analysis').innerHTML = '<span class="error">Cannot analyze - invalid JSON</span>';
+                document.getElementById('itemProps').innerHTML = '<span class="error">Cannot show - invalid data</span>';
+            }
+        }
+        
+        function clearCart() {
+            localStorage.removeItem('kuromiCart');
+            refreshDebug();
+        }
+        
+        function addTestItem() {
+            const testItem = {
+                id: 999,
+                name: "Test Item",
+                price: 29.99,
+                quantity: 1,
+                emoji: "🧪"
+            };
+            
+            const cart = JSON.parse(localStorage.getItem('kuromiCart') || '[]');
+            cart.push(testItem);
+            localStorage.setItem('kuromiCart', JSON.stringify(cart));
+            refreshDebug();
+        }
+        
+        function refreshDebug() {
+            debugCart();
+        }
+        
+        // Initial load
+        debugCart();
+    </script>
+</body>
+</html>
