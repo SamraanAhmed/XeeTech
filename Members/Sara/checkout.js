@@ -41,7 +41,7 @@ class CheckoutSystem {
                     name: item.name || 'Unknown Item',
                     price: parseFloat(item.price) || 0,
                     quantity: parseInt(item.quantity) || 1,
-                    image: item.image || item.emoji || '🖤',
+                    image: this.getItemEmoji(item),
                     category: item.category || 'misc'
                 }));
                 console.log('Cart loaded successfully:', this.cart);
@@ -53,6 +53,48 @@ class CheckoutSystem {
             console.error('Error loading cart:', error);
             this.cart = [];
         }
+    }
+
+    getItemEmoji(item) {
+        // If item already has emoji, use it
+        if (item.emoji && !item.emoji.includes('.')) {
+            return item.emoji;
+        }
+
+        // Map file paths to emojis
+        const imageToEmojiMap = {
+            'hoodie.webp': '🖤',
+            'croptop.webp': '💜',
+            'jacket.webp': '🦇',
+            'dress.jpg': '👗',
+            'goth dress.jpeg': '🖤',
+            'pants.jpeg': '👖',
+            'headband.webp': '🎀',
+            'choker.jpeg': '⛓️',
+            'clip.jpeg': '💎',
+            'phone cae.webp': '📱',
+            'bag charm.webp': '🔮',
+            'sara.webp': '🧸',
+            'notebook.webp': '📓',
+            'pen.webp': '✒️',
+            'sticker.webp': '✨',
+            'planner.webp': '📅',
+            'markers.webp': '🖊️',
+            'wall art.webp': '🖼️',
+            'fairy lights.webp': '💫',
+            'pillow.webp': '🛏️',
+            'candle.webp': '🕯️',
+            'mirrors.webp': '🪞',
+            'cur tins.webp': '🏠'
+        };
+
+        // Check if item.image is a file path
+        if (item.image && item.image.includes('.')) {
+            return imageToEmojiMap[item.image] || '🖤';
+        }
+
+        // Fallback to item.image or default emoji
+        return item.image || '🖤';
     }
     
     validateCartAndRedirect() {
