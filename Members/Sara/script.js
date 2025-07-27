@@ -1213,7 +1213,7 @@ function createCheckoutModal() {
                             </label>
                             <label class="payment-option">
                                 <input type="radio" name="payment" value="paypal">
-                                <span>�� PayPal</span>
+                                <span>💰 PayPal</span>
                             </label>
                             <label class="payment-option">
                                 <input type="radio" name="payment" value="apple">
@@ -2944,11 +2944,11 @@ function addToCartFromShop(product) {
     if (existingItem) {
         existingItem.quantity += 1;
     } else {
-        // Ensure new items have proper structure
+        // Ensure new items have proper structure with emoji mapping
         const cartItem = {
             ...product,
             quantity: 1,
-            emoji: product.image || product.emoji || '🖤' // Use image as emoji fallback
+            emoji: getEmojiForImage(product.image || product.emoji || '🖤')
         };
         cart.push(cartItem);
     }
@@ -2957,6 +2957,42 @@ function addToCartFromShop(product) {
     saveCart();
     showCartAddedAnimation();
     showNotification(`${product.name} added to your bag!`);
+}
+
+function getEmojiForImage(image) {
+    // If it's already an emoji, return it
+    if (image && !image.includes('.')) {
+        return image;
+    }
+
+    // Map file paths to emojis
+    const imageToEmojiMap = {
+        'hoodie.webp': '🖤',
+        'croptop.webp': '💜',
+        'jacket.webp': '🦇',
+        'dress.jpg': '👗',
+        'goth dress.jpeg': '🖤',
+        'pants.jpeg': '👖',
+        'headband.webp': '🎀',
+        'choker.jpeg': '⛓️',
+        'clip.jpeg': '💎',
+        'phone cae.webp': '📱',
+        'bag charm.webp': '🔮',
+        'sara.webp': '🧸',
+        'notebook.webp': '📓',
+        'pen.webp': '✒️',
+        'sticker.webp': '✨',
+        'planner.webp': '📅',
+        'markers.webp': '🖊️',
+        'wall art.webp': '🖼️',
+        'fairy lights.webp': '💫',
+        'pillow.webp': '🛏️',
+        'candle.webp': '🕯️',
+        'mirrors.webp': '🪞',
+        'cur tins.webp': '🏠'
+    };
+
+    return imageToEmojiMap[image] || '🖤';
 }
 
 function setupSortFunctionality() {
