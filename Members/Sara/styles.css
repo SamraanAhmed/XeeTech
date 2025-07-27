@@ -6097,6 +6097,23 @@ html {
     .modal-actions {
         flex-direction: column;
     }
+
+    /* Bottom Order Section Mobile */
+    .bottom-order-container {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+        padding: 0 15px;
+    }
+
+    .place-order-btn-bottom {
+        width: 100%;
+        min-width: auto;
+    }
+
+    .total-amount {
+        font-size: 1.5em;
+    }
 }
 
 @media (max-width: 480px) {
