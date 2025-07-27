@@ -33,8 +33,7 @@
                 <div class="nav-links">
                     <a href="index.html" class="nav-link">Home</a>
                     <a href="shop.html" class="nav-link">Shop</a>
-                    <button class="nav-link categories-btn" id="categoriesBtn">Categories</button>
-                    <a href="#contact" class="nav-link">Contact</a>
+                    <a href="about.html" class="nav-link">About</a>
                 </div>
 
                 <div class="nav-actions">
@@ -48,179 +47,101 @@
         </div>
     </nav>
 
-    <!-- Checkout Header -->
-    <section class="checkout-header">
+    <!-- Simple Checkout Container -->
+    <div class="simple-checkout">
         <div class="container">
-            <div class="checkout-breadcrumb">
-                <a href="index.html">Home</a>
-                <span class="breadcrumb-separator">›</span>
-                <a href="shop.html">Shop</a>
-                <span class="breadcrumb-separator">›</span>
-                <span class="breadcrumb-current">Checkout</span>
+            <div class="checkout-header">
+                <h1 class="checkout-title">🛍️ Complete Your Order</h1>
+                <p class="checkout-subtitle">Almost there! Fill in your details below.</p>
             </div>
-            <h1 class="checkout-title">Complete Your Order</h1>
-            <p class="checkout-subtitle">Almost there! Just a few more details to make your mischief official.</p>
-        </div>
-    </section>
 
-    <!-- Main Checkout Content -->
-    <section class="checkout-main">
-        <div class="container">
-
-
-            <div class="checkout-layout">
-
-                <!-- Left Column - Forms -->
-                <div class="checkout-forms">
+            <div class="checkout-content">
+                <!-- Order Summary -->
+                <div class="order-summary-section">
+                    <h2 class="section-title">📋 Your Order</h2>
+                    <div class="order-items" id="orderItems">
+                        <!-- Items will be populated here -->
+                    </div>
                     
-                    <!-- Order Summary Mobile -->
-                    <div class="order-summary-mobile">
-                        <button class="order-toggle" id="orderToggle">
-                            <span>Show order summary</span>
-                            <span class="order-total" id="orderTotalMobile">$0.00</span>
-                            <span class="toggle-icon">▼</span>
-                        </button>
-                        <div class="order-details-mobile" id="orderDetailsMobile">
-                            <!-- Order items will be populated here -->
+                    <div class="order-totals">
+                        <div class="total-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">$0.00</span>
+                        </div>
+                        <div class="total-row">
+                            <span>Shipping:</span>
+                            <span>$5.99</span>
+                        </div>
+                        <div class="total-row total-final">
+                            <span>Total:</span>
+                            <span id="finalTotal">$5.99</span>
                         </div>
                     </div>
-
-                    <!-- Simple Customer Information -->
-                    <div class="checkout-section">
-                        <div class="section-header">
-                            <h2 class="section-title">
-                                <span class="section-number">1</span>
-                                Quick Order Details
-                            </h2>
-                        </div>
-
-                        <form class="checkout-form" id="customerForm">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="firstName">First Name</label>
-                                    <input type="text" id="firstName" name="firstName" placeholder="Enter your first name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="lastName">Last Name</label>
-                                    <input type="text" id="lastName" name="lastName" placeholder="Enter your last name">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="email">Email Address</label>
-                                <input type="email" id="email" name="email" placeholder="your@email.com">
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- Simple Address -->
-                    <div class="checkout-section">
-                        <div class="section-header">
-                            <h2 class="section-title">
-                                <span class="section-number">2</span>
-                                Address (Optional)
-                            </h2>
-                        </div>
-
-                        <form class="checkout-form" id="shippingForm">
-                            <div class="form-group">
-                                <label for="address">Address</label>
-                                <input type="text" id="address" name="address" placeholder="123 Mischief Lane (optional)">
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="city">City</label>
-                                    <input type="text" id="city" name="city" placeholder="Your city">
-                                </div>
-                                <div class="form-group">
-                                    <label for="country">Country</label>
-                                    <select id="country" name="country">
-                                        <option value="US" selected>United States</option>
-                                        <option value="CA">Canada</option>
-                                        <option value="UK">United Kingdom</option>
-                                        <option value="JP">Japan</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-
-
                 </div>
 
-                <!-- Right Column - Order Summary -->
-                <div class="order-summary">
-                    <div class="summary-container">
-                        <h2 class="summary-title">Order Summary</h2>
+                <!-- Customer Details -->
+                <div class="customer-details-section">
+                    <h2 class="section-title">👤 Your Details</h2>
+                    <form class="simple-form" id="checkoutForm">
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label for="customerName">Full Name</label>
+                                <input type="text" id="customerName" name="customerName" placeholder="Enter your name" required>
+                            </div>
+                            <div class="form-field">
+                                <label for="customerEmail">Email</label>
+                                <input type="email" id="customerEmail" name="customerEmail" placeholder="your@email.com" required>
+                            </div>
+                        </div>
                         
-                        <div class="summary-items" id="summaryItems">
-                            <!-- Order items will be populated here -->
-                        </div>
-
-                        <div class="summary-calculations">
-                            <div class="calculation-row">
-                                <span>Subtotal</span>
-                                <span id="subtotal">$0.00</span>
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label for="customerPhone">Phone (Optional)</label>
+                                <input type="tel" id="customerPhone" name="customerPhone" placeholder="Your phone number">
                             </div>
-                            <div class="calculation-row">
-                                <span>Shipping</span>
-                                <span id="shippingCost">$5.99</span>
-                            </div>
-                            <div class="calculation-row">
-                                <span>Tax</span>
-                                <span id="taxAmount">$0.00</span>
-                            </div>
-                            <div class="calculation-row discount-row" id="discountRow" style="display: none;">
-                                <span>Discount</span>
-                                <span id="discountAmount">-$0.00</span>
-                            </div>
-                            <div class="calculation-row total-row">
-                                <span>Total</span>
-                                <span id="orderTotal">$0.00</span>
+                            <div class="form-field">
+                                <label for="customerAddress">Address (Optional)</label>
+                                <input type="text" id="customerAddress" name="customerAddress" placeholder="Your address">
                             </div>
                         </div>
+                    </form>
+                </div>
 
-                        <div class="promo-code">
-                            <div class="promo-input-group">
-                                <input type="text" id="promoCode" placeholder="Enter promo code">
-                                <button type="button" id="applyPromo">Apply</button>
-                            </div>
-                        </div>
-
-                        <button class="complete-order-btn" id="completeOrderBtn">
-                            <span class="btn-text">Complete Order</span>
-                            <span class="btn-price" id="finalTotal">$0.00</span>
-                            <span class="btn-icon">✨</span>
-                        </button>
-
-                        <div class="security-badges">
-                            <div class="security-item">
-                                <span class="security-icon">🔒</span>
-                                <span class="security-text">Secure Checkout</span>
-                            </div>
-                            <div class="security-item">
-                                <span class="security-icon">✅</span>
-                                <span class="security-text">SSL Protected</span>
-                            </div>
-                        </div>
-
-                        <div class="return-policy">
-                            <h4>💜 Kuromi Promise</h4>
-                            <ul>
-                                <li>✨ 30-day returns</li>
-                                <li>🚚 Free returns on orders over $75</li>
-                                <li>💝 Satisfaction guaranteed</li>
-                                <li>🦇 Mischief approved quality</li>
-                            </ul>
-                        </div>
+                <!-- Promo Code -->
+                <div class="promo-section">
+                    <h3>🎁 Have a promo code?</h3>
+                    <div class="promo-input-group">
+                        <input type="text" id="promoCode" placeholder="Enter promo code">
+                        <button type="button" id="applyPromo" class="apply-btn">Apply</button>
                     </div>
                 </div>
 
+                <!-- Confirm Order Button -->
+                <div class="confirm-section">
+                    <button class="confirm-order-btn" id="confirmOrderBtn">
+                        <span class="btn-icon">✨</span>
+                        <span class="btn-text">Confirm Order</span>
+                        <span class="btn-price" id="btnTotal">$5.99</span>
+                    </button>
+                    
+                    <div class="trust-badges">
+                        <div class="trust-item">
+                            <span>🔒</span>
+                            <span>Secure Checkout</span>
+                        </div>
+                        <div class="trust-item">
+                            <span>💝</span>
+                            <span>30-Day Returns</span>
+                        </div>
+                        <div class="trust-item">
+                            <span>🚚</span>
+                            <span>Free Shipping $75+</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
