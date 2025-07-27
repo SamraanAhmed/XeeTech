@@ -39,15 +39,16 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initializeCheckout() {
-    // Debug cart contents
-    console.log('Cart contents:', cart);
-    console.log('Cart length:', cart.length);
+    console.log('Initializing checkout with cart:', cart);
 
     // Check if cart is empty
     if (cart.length === 0) {
+        console.log('Cart is empty, showing empty message');
         showEmptyCartMessage();
         return;
     }
+
+    console.log('Cart has items, proceeding with checkout setup');
 
     // Set up mobile menu
     setupMobileMenu();
