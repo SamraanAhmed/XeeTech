@@ -2944,7 +2944,13 @@ function addToCartFromShop(product) {
     if (existingItem) {
         existingItem.quantity += 1;
     } else {
-        cart.push(product);
+        // Ensure new items have proper structure
+        const cartItem = {
+            ...product,
+            quantity: 1,
+            emoji: product.image || product.emoji || '🖤' // Use image as emoji fallback
+        };
+        cart.push(cartItem);
     }
 
     updateCartUI();
@@ -3505,7 +3511,7 @@ function showRecentPurchaseNotification(purchase) {
     notification.className = 'recent-purchase-notification';
     notification.innerHTML = `
         <div class="recent-purchase-content">
-            <div class="recent-purchase-icon">🛍️</div>
+            <div class="recent-purchase-icon">��️</div>
             <div class="recent-purchase-text">
                 <div class="purchase-item">${purchase.name}</div>
                 <div class="purchase-details">Recently purchased in ${purchase.location}</div>
