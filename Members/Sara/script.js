@@ -292,12 +292,18 @@ function setupEventListeners() {
 function toggleMobileMenu() {
     const navMenu = document.getElementById('navMenu');
     const mobileToggle = document.getElementById('mobileToggle');
-    
-    navMenu.classList.toggle('active');
-    mobileToggle.classList.toggle('active');
-    
+
+    if (navMenu) {
+        navMenu.classList.toggle('active');
+    }
+    if (mobileToggle) {
+        mobileToggle.classList.toggle('active');
+    }
+
     // Prevent body scroll when menu is open
-    document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+    if (navMenu) {
+        document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+    }
 }
 
 function closeMobileMenu() {
