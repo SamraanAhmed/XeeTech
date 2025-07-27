@@ -183,14 +183,12 @@ body {
     border: none;
     font-size: 1.2em;
     padding: 10px;
-    border-radius: 50%;
     cursor: pointer;
     transition: var(--transition-smooth);
     position: relative;
 }
 
 .nav-icon:hover {
-    background: rgba(153, 50, 204, 0.1);
     transform: scale(1.1);
 }
 
