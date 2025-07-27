@@ -1213,7 +1213,7 @@ function createCheckoutModal() {
                             </label>
                             <label class="payment-option">
                                 <input type="radio" name="payment" value="paypal">
-                                <span>💰 PayPal</span>
+                                <span>�� PayPal</span>
                             </label>
                             <label class="payment-option">
                                 <input type="radio" name="payment" value="apple">
@@ -3652,12 +3652,18 @@ function showRecentPurchaseNotification(purchase) {
 }
 
 function closeRecentPurchaseNotification(notification) {
-    notification.classList.remove('show');
-    setTimeout(() => {
-        if (document.body.contains(notification)) {
-            document.body.removeChild(notification);
-        }
-    }, 400);
+    if (notification && notification.parentNode) {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            if (notification.parentNode && document.body.contains(notification)) {
+                try {
+                    document.body.removeChild(notification);
+                } catch (e) {
+                    console.log('Notification already removed');
+                }
+            }
+        }, 400);
+    }
 }
 
 function updateVisitorCounter() {
