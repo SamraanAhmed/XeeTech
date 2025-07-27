@@ -17,7 +17,7 @@
             <div class="nav-logo">
                 <a href="index.html" class="logo-link">
                     <img class="kuromi-icon" src="1289-kuromiwink.png" alt="Kuromi">
-                    <span class="brand-name">Kuro.co</span>
+                    <span class="brand-name">kuro.co</span>
                 </a>
             </div>
 
@@ -33,9 +33,8 @@
                 <div class="nav-links">
                     <a href="index.html" class="nav-link">Home</a>
                     <a href="shop.html" class="nav-link active">Shop</a>
-                    <a href="about.html" class="nav-link">About</a>
+                    <button class="nav-link categories-btn" id="categoriesBtn">Categories</button>
                     <a href="#contact" class="nav-link">Contact</a>
-                    <a href="#" class="nav-link" id="orderTrackingNav">Orders</a>
                 </div>
 
                 <div class="nav-actions">
@@ -44,22 +43,9 @@
                         🔍
                     </button>
 
-                    <!-- Language Selector -->
-                    <div class="language-selector">
-                        <button class="nav-icon lang-btn" id="langBtn" title="Language">
-                            🌐
-                        </button>
-                        <div class="lang-dropdown" id="langDropdown">
-                            <a href="#" class="lang-option active" data-lang="en">English</a>
-                            <a href="#" class="lang-option" data-lang="ja">日本語</a>
-                            <a href="#" class="lang-option" data-lang="ko">한국어</a>
-                        </div>
-                    </div>
-
-                    <!-- Wishlist Icon -->
-                    <button class="nav-icon wishlist-nav-btn" id="wishlistNavBtn" title="Wishlist">
-                        ♡
-                        <span class="wishlist-count" id="wishlistNavCount">0</span>
+                    <!-- Help Icon -->
+                    <button class="nav-icon help-btn" id="helpBtn" title="Help & Support">
+                        ❓
                     </button>
 
                     <!-- Cart Icon -->
@@ -102,42 +88,7 @@
         </div>
     </section>
 
-    <!-- Categories Section -->
-    <section class="categories-section">
-        <div class="container">
-            <h2 class="section-title">Shop by Category</h2>
-            
-            <div class="categories-grid">
-                <div class="category-card" data-category="clothing">
-                    <div class="category-icon">👗</div>
-                    <h3 class="category-name">Clothing</h3>
-                    <p class="category-desc">Gothic kawaii fashion</p>
-                    <div class="category-overlay"></div>
-                </div>
-                
-                <div class="category-card" data-category="accessories">
-                    <div class="category-icon">💎</div>
-                    <h3 class="category-name">Accessories</h3>
-                    <p class="category-desc">Perfect finishing touches</p>
-                    <div class="category-overlay"></div>
-                </div>
-                
-                <div class="category-card" data-category="stationery">
-                    <div class="category-icon">📝</div>
-                    <h3 class="category-name">Stationery</h3>
-                    <p class="category-desc">Cute creative supplies</p>
-                    <div class="category-overlay"></div>
-                </div>
-                
-                <div class="category-card" data-category="room-decor">
-                    <div class="category-icon">🏠</div>
-                    <h3 class="category-name">Room Decor</h3>
-                    <p class="category-desc">Transform your space</p>
-                    <div class="category-overlay"></div>
-                </div>
-            </div>
-        </div>
-    </section>
+
 
     <!-- Products Section -->
     <section class="products-section">
@@ -717,6 +668,47 @@
 
     <!-- Cart Overlay -->
     <div class="cart-overlay" id="cartOverlay"></div>
+
+    <!-- Categories Slide Menu -->
+    <div class="categories-menu" id="categoriesMenu">
+        <div class="categories-menu-header">
+            <h3 class="categories-title">Shop by Category</h3>
+            <button class="categories-close" id="categoriesClose">×</button>
+        </div>
+        <div class="categories-menu-content">
+            <div class="category-item" data-category="clothing">
+                <div class="category-icon">👗</div>
+                <div class="category-info">
+                    <h4 class="category-name">Clothing</h4>
+                    <p class="category-desc">Gothic kawaii fashion</p>
+                </div>
+            </div>
+            <div class="category-item" data-category="accessories">
+                <div class="category-icon">💎</div>
+                <div class="category-info">
+                    <h4 class="category-name">Accessories</h4>
+                    <p class="category-desc">Perfect finishing touches</p>
+                </div>
+            </div>
+            <div class="category-item" data-category="stationery">
+                <div class="category-icon">📝</div>
+                <div class="category-info">
+                    <h4 class="category-name">Stationery</h4>
+                    <p class="category-desc">Cute creative supplies</p>
+                </div>
+            </div>
+            <div class="category-item" data-category="room-decor">
+                <div class="category-icon">🏠</div>
+                <div class="category-info">
+                    <h4 class="category-name">Room Decor</h4>
+                    <p class="category-desc">Transform your space</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Menu Overlay -->
+    <div class="categories-overlay" id="categoriesOverlay"></div>
 
     <script src="script.js"></script>
     <script>

@@ -4387,3 +4387,147 @@ document.addEventListener('DOMContentLoaded', initializeSocialProof);
 
 console.log('🦇 Welcome to Kuromi\'s Fashion Empire! 💜');
 console.log('Try the Konami code for a special surprise! ✨');
+
+// Categories Slide Menu functionality
+let categoriesMenuOpen = false;
+
+function initializeCategoriesMenu() {
+    const categoriesBtn = document.getElementById('categoriesBtn');
+    const categoriesMenu = document.getElementById('categoriesMenu');
+    const categoriesClose = document.getElementById('categoriesClose');
+    const categoriesOverlay = document.getElementById('categoriesOverlay');
+    const categoryItems = document.querySelectorAll('.category-item');
+
+    // Categories button click
+    if (categoriesBtn) {
+        categoriesBtn.addEventListener('click', openCategoriesMenu);
+    }
+
+    // Close button click
+    if (categoriesClose) {
+        categoriesClose.addEventListener('click', closeCategoriesMenu);
+    }
+
+    // Overlay click
+    if (categoriesOverlay) {
+        categoriesOverlay.addEventListener('click', closeCategoriesMenu);
+    }
+
+    // Category item clicks
+    categoryItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const category = item.dataset.category;
+            handleCategorySelection(category);
+        });
+    });
+
+    // Escape key to close
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && categoriesMenuOpen) {
+            closeCategoriesMenu();
+        }
+    });
+}
+
+function openCategoriesMenu() {
+    const categoriesMenu = document.getElementById('categoriesMenu');
+    const categoriesOverlay = document.getElementById('categoriesOverlay');
+
+    if (categoriesMenu && categoriesOverlay) {
+        categoriesMenu.classList.add('open');
+        categoriesOverlay.classList.add('show');
+        categoriesMenuOpen = true;
+        document.body.style.overflow = 'hidden';
+
+        // Add animation delay for category items
+        const categoryItems = categoriesMenu.querySelectorAll('.category-item');
+        categoryItems.forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.1}s`;
+            item.style.animation = 'slideInLeft 0.3s ease forwards';
+        });
+    }
+}
+
+function closeCategoriesMenu() {
+    const categoriesMenu = document.getElementById('categoriesMenu');
+    const categoriesOverlay = document.getElementById('categoriesOverlay');
+
+    if (categoriesMenu && categoriesOverlay) {
+        categoriesMenu.classList.remove('open');
+        categoriesOverlay.classList.remove('show');
+        categoriesMenuOpen = false;
+        document.body.style.overflow = '';
+    }
+}
+
+function handleCategorySelection(category) {
+    // If we're on the shop page, filter products
+    if (window.location.pathname.includes('shop.html')) {
+        filterProductsByCategory(category);
+    } else {
+        // Navigate to shop page with category filter
+        window.location.href = `shop.html?category=${category}`;
+    }
+
+    closeCategoriesMenu();
+    showNotification(`Showing ${category} products`);
+}
+
+function filterProductsByCategory(category) {
+    const productCards = document.querySelectorAll('.product-card[data-category]');
+
+    productCards.forEach(card => {
+        const productCategory = card.dataset.category;
+
+        if (category === 'all' || productCategory === category) {
+            card.classList.remove('hidden');
+            card.style.display = 'block';
+        } else {
+            card.classList.add('hidden');
+            card.style.display = 'none';
+        }
+    });
+
+    // Update products header
+    const productsTitle = document.querySelector('.products-section .section-title');
+    if (productsTitle) {
+        const categoryNames = {
+            'clothing': 'Clothing',
+            'accessories': 'Accessories',
+            'stationery': 'Stationery',
+            'room-decor': 'Room Decor',
+            'all': 'All Products'
+        };
+        productsTitle.textContent = categoryNames[category] || 'All Products';
+    }
+}
+
+// Initialize categories menu when DOM loads
+document.addEventListener('DOMContentLoaded', () => {
+    initializeCategoriesMenu();
+
+    // Check for category filter in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryFilter = urlParams.get('category');
+    if (categoryFilter && window.location.pathname.includes('shop.html')) {
+        setTimeout(() => {
+            filterProductsByCategory(categoryFilter);
+        }, 100);
+    }
+});
+
+// Add slideInLeft animation to CSS
+const categoriesAnimationStyle = document.createElement('style');
+categoriesAnimationStyle.textContent = `
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+`;
+document.head.appendChild(categoriesAnimationStyle);
