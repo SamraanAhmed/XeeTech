@@ -353,14 +353,15 @@ class SinglePageCheckout {
         const tax = this.calculateTax();
         const shipping = this.cart.length > 0 ? this.shippingCost : 0;
         const total = this.calculateTotal();
-        
+
         // Update DOM elements
         this.updateElement('subtotalAmount', `$${subtotal.toFixed(2)}`);
         this.updateElement('shippingAmount', `$${shipping.toFixed(2)}`);
         this.updateElement('taxAmount', `$${tax.toFixed(2)}`);
         this.updateElement('totalAmount', `$${total.toFixed(2)}`);
         this.updateElement('finalPrice', `$${total.toFixed(2)}`);
-        
+        this.updateElement('bottomTotalAmount', `$${total.toFixed(2)}`); // Update bottom total
+
         // Show/hide discount
         const discountLine = document.getElementById('discountLine');
         if (this.discount > 0) {
