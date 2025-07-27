@@ -323,14 +323,18 @@ function toggleSearch() {
 function openSearch() {
     const searchDropdown = document.getElementById('searchDropdown');
     const searchInput = document.getElementById('searchInput');
-    
-    searchDropdown.classList.add('active');
+
+    if (searchDropdown) {
+        searchDropdown.classList.add('active');
+    }
     searchOpen = true;
-    
+
     // Focus on input after animation
-    setTimeout(() => {
-        searchInput.focus();
-    }, 150);
+    if (searchInput) {
+        setTimeout(() => {
+            searchInput.focus();
+        }, 150);
+    }
 }
 
 function closeSearch() {
