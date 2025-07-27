@@ -3479,6 +3479,11 @@ function initializeSocialProof() {
 }
 
 function showRecentlyPurchasedNotifications() {
+    // Only show on homepage and shop page, not on checkout
+    if (window.location.pathname.includes('checkout.html')) {
+        return;
+    }
+
     const recentPurchases = [
         { name: 'Gothic Lolita Dress', location: 'Tokyo, Japan', time: '2 minutes ago' },
         { name: 'Devil Horn Headband', location: 'Los Angeles, CA', time: '5 minutes ago' },
@@ -3488,8 +3493,15 @@ function showRecentlyPurchasedNotifications() {
     ];
 
     let currentIndex = 0;
+    let notificationInterval;
 
     function showNextNotification() {
+        // Remove any existing notifications first
+        const existingNotifications = document.querySelectorAll('.recent-purchase-notification');
+        existingNotifications.forEach(notification => {
+            closeRecentPurchaseNotification(notification);
+        });
+
         if (currentIndex < recentPurchases.length) {
             const purchase = recentPurchases[currentIndex];
             showRecentPurchaseNotification(purchase);
@@ -3499,11 +3511,18 @@ function showRecentlyPurchasedNotifications() {
         }
     }
 
-    // Show first notification after 3 seconds
-    setTimeout(showNextNotification, 3000);
+    // Show first notification after 5 seconds
+    setTimeout(showNextNotification, 5000);
 
-    // Show subsequent notifications every 25 seconds
-    setInterval(showNextNotification, 25000);
+    // Show subsequent notifications every 30 seconds
+    notificationInterval = setInterval(showNextNotification, 30000);
+
+    // Clean up on page unload
+    window.addEventListener('beforeunload', () => {
+        if (notificationInterval) {
+            clearInterval(notificationInterval);
+        }
+    });
 }
 
 function showRecentPurchaseNotification(purchase) {
