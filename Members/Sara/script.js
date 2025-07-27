@@ -929,6 +929,13 @@ function openCart() {
     const cartSidebar = document.getElementById('cartSidebar');
     const cartOverlay = document.getElementById('cartOverlay');
 
+    // Check if cart elements exist (they might not exist on checkout page)
+    if (!cartSidebar || !cartOverlay) {
+        // On checkout page or pages without cart sidebar, redirect to cart/checkout
+        window.location.href = 'checkout.html';
+        return;
+    }
+
     cartSidebar.classList.add('active');
     cartOverlay.classList.add('active');
     cartOpen = true;
@@ -938,6 +945,11 @@ function openCart() {
 function closeCart() {
     const cartSidebar = document.getElementById('cartSidebar');
     const cartOverlay = document.getElementById('cartOverlay');
+
+    // Check if cart elements exist before trying to manipulate them
+    if (!cartSidebar || !cartOverlay) {
+        return;
+    }
 
     cartSidebar.classList.remove('active');
     cartOverlay.classList.remove('active');
