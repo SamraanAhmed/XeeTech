@@ -5980,7 +5980,7 @@ html {
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-    .checkout-layout {
+    .single-page-layout {
         grid-template-columns: 1fr;
         gap: 30px;
     }
