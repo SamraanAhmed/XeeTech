@@ -573,11 +573,40 @@ function processOrder() {
         return;
     }
     
-    // Show processing state
+    // Show processing state with celebration
     const completeOrderBtn = document.getElementById('completeOrderBtn');
     const originalText = completeOrderBtn.innerHTML;
+
+    // Add processing animation
     completeOrderBtn.innerHTML = '<span>Processing Order...</span> ⏳';
     completeOrderBtn.disabled = true;
+    completeOrderBtn.style.background = 'linear-gradient(45deg, #9932CC, #FFB6C1, #9932CC, #FFB6C1)';
+    completeOrderBtn.style.backgroundSize = '400% 400%';
+    completeOrderBtn.style.animation = 'processingGradient 1s ease-in-out infinite';
+
+    // Add processing animation CSS if not exists
+    if (!document.getElementById('processing-styles')) {
+        const style = document.createElement('style');
+        style.id = 'processing-styles';
+        style.textContent = `
+            @keyframes processingGradient {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+
+            .btn-celebration {
+                animation: btnCelebrate 0.6s ease-in-out;
+            }
+
+            @keyframes btnCelebrate {
+                0%, 100% { transform: scale(1); }
+                25% { transform: scale(1.1) rotate(-2deg); }
+                75% { transform: scale(1.1) rotate(2deg); }
+            }
+        `;
+        document.head.appendChild(style);
+    }
     
     // Collect order data
     const orderData = collectOrderData();
@@ -985,7 +1014,7 @@ function triggerOrderConfetti() {
 
     // Show celebration notification
     setTimeout(() => {
-        showNotification('🎉 Congratulations! Your order is confirmed! 🦇');
+        showNotification('���� Congratulations! Your order is confirmed! 🦇');
     }, 500);
 }
 
