@@ -576,6 +576,9 @@ function processOrder() {
     // Add immediate button celebration on click
     const completeOrderBtn = document.getElementById('completeOrderBtn');
     completeOrderBtn.classList.add('btn-celebration');
+
+    // Mini confetti burst on button click
+    createMiniConfetti(completeOrderBtn);
     
     // Show processing state with celebration
     const completeOrderBtn = document.getElementById('completeOrderBtn');
