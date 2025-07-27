@@ -1398,14 +1398,11 @@ body {
     .nav-icon {
         padding: 12px;
         font-size: 1.3em;
-        background: var(--lavender-blush);
-        border-radius: 50%;
         transition: var(--transition-smooth);
     }
 
     .nav-icon:hover {
-        background: var(--deep-orchid);
-        color: var(--soft-white);
+        color: var(--deep-orchid);
         transform: scale(1.1);
     }
 
