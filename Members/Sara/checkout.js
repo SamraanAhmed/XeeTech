@@ -19,6 +19,10 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initializeCheckout() {
+    // Debug cart contents
+    console.log('Cart contents:', cart);
+    console.log('Cart length:', cart.length);
+
     // Check if cart is empty
     if (cart.length === 0) {
         showEmptyCartMessage();
@@ -27,10 +31,10 @@ function initializeCheckout() {
 
     // Set up mobile menu
     setupMobileMenu();
-    
+
     // Populate order items
     populateOrderItems();
-    
+
     // Update totals
     updateOrderTotals();
 }
