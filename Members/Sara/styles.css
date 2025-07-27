@@ -3106,6 +3106,25 @@ html {
         padding: 40px 0;
     }
 
+    .confetti-section {
+        padding: 40px 20px;
+        margin: 0 -20px 30px;
+        border-radius: 0;
+    }
+
+    .confetti-title {
+        font-size: 2em;
+    }
+
+    .confetti-subtitle {
+        font-size: 1em;
+    }
+
+    .main-confetti-btn {
+        padding: 15px 25px;
+        font-size: 1.1em;
+    }
+
     .checkout-section {
         padding: 20px;
         margin-bottom: 25px;
