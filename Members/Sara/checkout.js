@@ -99,30 +99,7 @@ function setupEventListeners() {
         completeOrderBtn.addEventListener('click', processOrder);
     }
 
-    // Main confetti button
-    const mainConfettiBtn = document.getElementById('mainConfettiBtn');
-    if (mainConfettiBtn) {
-        mainConfettiBtn.addEventListener('click', function() {
-            // Add button animation
-            this.style.animation = 'btnCelebrate 0.6s ease-in-out';
 
-            // Create immediate mini confetti
-            createMiniConfetti(this);
-
-            // Show notification
-            showNotification('🎉 Confetti Magic Activated! 🦇');
-
-            // Trigger main confetti after short delay
-            setTimeout(() => {
-                triggerOrderConfetti();
-            }, 300);
-
-            // Reset button animation
-            setTimeout(() => {
-                this.style.animation = '';
-            }, 600);
-        });
-    }
 
     // Form validation on input
     setupFormValidation();
