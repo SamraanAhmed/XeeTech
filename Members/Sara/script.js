@@ -918,6 +918,11 @@ function handleCartQuantityChange(e) {
 }
 
 function toggleCart() {
+    // If we're on the checkout page, don't toggle cart, just stay here
+    if (window.location.pathname.includes('checkout.html')) {
+        return;
+    }
+
     if (cartOpen) {
         closeCart();
     } else {
