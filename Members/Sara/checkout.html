@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout | Kuromi's Fashion Empire</title>
+    <title>Checkout - Kuromi's Fashion Empire</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Quicksand:wght@300;400;500;600;700&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <meta name="description" content="Complete your mischievous fashion order - Kuromi's Fashion Empire Checkout">
+    <meta name="description" content="Complete your order - Secure checkout for Kuromi's Fashion Empire">
 </head>
 <body>
     <!-- Sticky Navbar -->
@@ -21,15 +21,7 @@
                 </a>
             </div>
 
-            <!-- Mobile Menu Toggle -->
-            <button class="mobile-menu-toggle" id="mobileToggle">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-            </button>
-
-            <!-- Navigation Menu -->
-            <div class="nav-menu" id="navMenu">
+            <div class="nav-menu">
                 <div class="nav-links">
                     <a href="index.html" class="nav-link">Home</a>
                     <a href="shop.html" class="nav-link">Shop</a>
@@ -37,7 +29,6 @@
                 </div>
 
                 <div class="nav-actions">
-                    <!-- Cart Icon -->
                     <button class="nav-icon cart-btn" id="cartBtn" title="Cart">
                         🛍️
                         <span class="cart-count" id="cartCount">0</span>
@@ -47,95 +38,199 @@
         </div>
     </nav>
 
-    <!-- Simple Checkout Container -->
-    <div class="simple-checkout">
+    <!-- Checkout Container -->
+    <div class="checkout-container">
         <div class="container">
+            <!-- Checkout Header -->
             <div class="checkout-header">
-                <h1 class="checkout-title">🛍️ Complete Your Order</h1>
-                <p class="checkout-subtitle">Almost there! Fill in your details below.</p>
+                <div class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span>›</span>
+                    <a href="shop.html">Shop</a>
+                    <span>›</span>
+                    <span class="current">Checkout</span>
+                </div>
+                <h1 class="checkout-title">✨ Secure Checkout</h1>
+                <p class="checkout-subtitle">Complete your order in just a few clicks</p>
             </div>
 
-            <div class="checkout-content">
-                <!-- Order Summary -->
-                <div class="order-summary-section">
-                    <h2 class="section-title">📋 Your Order</h2>
-                    <div class="order-items" id="orderItems">
-                        <!-- Items will be populated here -->
-                    </div>
-                    
-                    <div class="order-totals">
-                        <div class="total-row">
-                            <span>Subtotal:</span>
-                            <span id="subtotal">$0.00</span>
-                        </div>
-                        <div class="total-row">
-                            <span>Shipping:</span>
-                            <span>$5.99</span>
-                        </div>
-                        <div class="total-row total-final">
-                            <span>Total:</span>
-                            <span id="finalTotal">$5.99</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Customer Details -->
-                <div class="customer-details-section">
-                    <h2 class="section-title">👤 Your Details</h2>
-                    <form class="simple-form" id="checkoutForm">
-                        <div class="form-row">
-                            <div class="form-field">
-                                <label for="customerName">Full Name</label>
-                                <input type="text" id="customerName" name="customerName" placeholder="Enter your name" required>
-                            </div>
-                            <div class="form-field">
-                                <label for="customerEmail">Email</label>
-                                <input type="email" id="customerEmail" name="customerEmail" placeholder="your@email.com" required>
-                            </div>
+            <!-- Main Checkout Layout -->
+            <div class="checkout-layout">
+                <!-- Left Side: Forms -->
+                <div class="checkout-forms">
+                    <!-- Step 1: Order Review -->
+                    <div class="checkout-step active" id="step1">
+                        <div class="step-header">
+                            <div class="step-number">1</div>
+                            <h2 class="step-title">Review Your Order</h2>
                         </div>
                         
-                        <div class="form-row">
-                            <div class="form-field">
-                                <label for="customerPhone">Phone (Optional)</label>
-                                <input type="tel" id="customerPhone" name="customerPhone" placeholder="Your phone number">
-                            </div>
-                            <div class="form-field">
-                                <label for="customerAddress">Address (Optional)</label>
-                                <input type="text" id="customerAddress" name="customerAddress" placeholder="Your address">
-                            </div>
+                        <div class="order-review" id="orderReview">
+                            <!-- Order items will be populated here -->
                         </div>
-                    </form>
-                </div>
+                    </div>
 
-                <!-- Promo Code -->
-                <div class="promo-section">
-                    <h3>🎁 Have a promo code?</h3>
-                    <div class="promo-input-group">
-                        <input type="text" id="promoCode" placeholder="Enter promo code">
-                        <button type="button" id="applyPromo" class="apply-btn">Apply</button>
+                    <!-- Step 2: Customer Information -->
+                    <div class="checkout-step" id="step2">
+                        <div class="step-header">
+                            <div class="step-number">2</div>
+                            <h2 class="step-title">Contact Information</h2>
+                        </div>
+                        
+                        <form class="customer-form" id="customerForm">
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" required placeholder="your@email.com">
+                                <div class="form-help">We'll send your receipt here</div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName">First Name *</label>
+                                    <input type="text" id="firstName" name="firstName" required placeholder="First name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Last Name *</label>
+                                    <input type="text" id="lastName" name="lastName" required placeholder="Last name">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Phone Number (Optional)</label>
+                                <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567">
+                                <div class="form-help">For delivery updates</div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Step 3: Shipping Address -->
+                    <div class="checkout-step" id="step3">
+                        <div class="step-header">
+                            <div class="step-number">3</div>
+                            <h2 class="step-title">Shipping Address</h2>
+                        </div>
+                        
+                        <form class="shipping-form" id="shippingForm">
+                            <div class="form-group">
+                                <label for="address">Street Address *</label>
+                                <input type="text" id="address" name="address" required placeholder="123 Mischief Lane">
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="city">City *</label>
+                                    <input type="text" id="city" name="city" required placeholder="City">
+                                </div>
+                                <div class="form-group">
+                                    <label for="state">State *</label>
+                                    <select id="state" name="state" required>
+                                        <option value="">Select State</option>
+                                        <option value="CA">California</option>
+                                        <option value="NY">New York</option>
+                                        <option value="TX">Texas</option>
+                                        <option value="FL">Florida</option>
+                                        <!-- Add more states as needed -->
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="zip">ZIP Code *</label>
+                                    <input type="text" id="zip" name="zip" required placeholder="12345">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="country">Country *</label>
+                                <select id="country" name="country" required>
+                                    <option value="US" selected>United States</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="UK">United Kingdom</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <div class="step-navigation">
+                        <button type="button" class="btn-secondary" id="prevBtn" style="display: none;">← Previous</button>
+                        <button type="button" class="btn-primary" id="nextBtn">Continue →</button>
                     </div>
                 </div>
 
-                <!-- Confirm Order Button -->
-                <div class="confirm-section">
-                    <button class="confirm-order-btn" id="confirmOrderBtn">
-                        <span class="btn-icon">✨</span>
-                        <span class="btn-text">Confirm Order</span>
-                        <span class="btn-price" id="btnTotal">$5.99</span>
-                    </button>
-                    
-                    <div class="trust-badges">
-                        <div class="trust-item">
-                            <span>🔒</span>
-                            <span>Secure Checkout</span>
+                <!-- Right Side: Order Summary -->
+                <div class="order-summary-sidebar">
+                    <div class="summary-card">
+                        <h3 class="summary-title">Order Summary</h3>
+                        
+                        <!-- Order Items -->
+                        <div class="summary-items" id="summaryItems">
+                            <!-- Items will be populated here -->
                         </div>
-                        <div class="trust-item">
-                            <span>💝</span>
-                            <span>30-Day Returns</span>
+
+                        <!-- Promo Code -->
+                        <div class="promo-section">
+                            <div class="promo-toggle" id="promoToggle">
+                                <span>Have a promo code?</span>
+                                <span class="toggle-icon">+</span>
+                            </div>
+                            <div class="promo-input" id="promoInput" style="display: none;">
+                                <div class="input-group">
+                                    <input type="text" id="promoCode" placeholder="Enter code">
+                                    <button type="button" id="applyPromo" class="apply-btn">Apply</button>
+                                </div>
+                                <div class="promo-message" id="promoMessage"></div>
+                            </div>
                         </div>
-                        <div class="trust-item">
-                            <span>🚚</span>
-                            <span>Free Shipping $75+</span>
+
+                        <!-- Order Totals -->
+                        <div class="order-totals">
+                            <div class="total-line">
+                                <span>Subtotal</span>
+                                <span id="subtotalAmount">$0.00</span>
+                            </div>
+                            <div class="total-line">
+                                <span>Shipping</span>
+                                <span id="shippingAmount">$5.99</span>
+                            </div>
+                            <div class="total-line" id="discountLine" style="display: none;">
+                                <span>Discount</span>
+                                <span id="discountAmount">-$0.00</span>
+                            </div>
+                            <div class="total-line tax-line">
+                                <span>Tax</span>
+                                <span id="taxAmount">$0.00</span>
+                            </div>
+                            <div class="total-line final-total">
+                                <span>Total</span>
+                                <span id="totalAmount">$5.99</span>
+                            </div>
+                        </div>
+
+                        <!-- Place Order Button -->
+                        <button class="place-order-btn" id="placeOrderBtn" disabled>
+                            <span class="btn-content">
+                                <span class="btn-text">Complete Order</span>
+                                <span class="btn-price" id="finalPrice">$5.99</span>
+                            </span>
+                            <div class="btn-loading" style="display: none;">
+                                <div class="spinner"></div>
+                                <span>Processing...</span>
+                            </div>
+                        </button>
+
+                        <!-- Security Badges -->
+                        <div class="security-info">
+                            <div class="security-item">
+                                <span class="icon">🔒</span>
+                                <span>SSL Encrypted</span>
+                            </div>
+                            <div class="security-item">
+                                <span class="icon">💳</span>
+                                <span>Secure Payment</span>
+                            </div>
+                            <div class="security-item">
+                                <span class="icon">🛡️</span>
+                                <span>Money Back Guarantee</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -143,43 +238,32 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-logo">
-                        <img class="kuromi-mascot" src="1289-kuromiwink.png" alt="Kuromi">
-                        <span class="footer-brand">Kuromi</span>
-                    </div>
-                    <p class="footer-desc">Where mischief meets fashion. Creating unique, rebellious style for the kawaii at heart.</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h3 class="footer-title">Customer Care</h3>
-                    <ul class="footer-links">
-                        <li><a href="#size-guide">Size Guide</a></li>
-                        <li><a href="#shipping">Shipping Info</a></li>
-                        <li><a href="#returns">Returns</a></li>
-                        <li><a href="#support">Support</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h3 class="footer-title">Contact Info</h3>
-                    <div class="contact-info">
-                        <p>📧 hello@kuromi-fashion.com</p>
-                        <p>📞 1-800-MISCHIEF</p>
-                    </div>
-                </div>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h3>Processing Your Order</h3>
+            <p>Please don't close this window...</p>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal" style="display: none;">
+        <div class="modal-content">
+            <div class="success-animation">
+                <div class="checkmark">✓</div>
             </div>
-            
-            <div class="footer-bottom">
-                <p class="copyright">© 2024 Kuromi Fashion Empire. All rights reserved.</p>
+            <h2>Order Confirmed!</h2>
+            <p class="order-id">Order #<span id="orderNumber"></span></p>
+            <p class="success-message">Thank you for your purchase! We'll send a confirmation email shortly.</p>
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="window.location.href='index.html'">Continue Shopping</button>
+                <button class="btn-secondary" onclick="window.location.href='shop.html'">View Products</button>
             </div>
         </div>
-    </footer>
+    </div>
 
+    <!-- Scripts -->
     <script src="script.js"></script>
     <script src="checkout.js"></script>
 </body>
