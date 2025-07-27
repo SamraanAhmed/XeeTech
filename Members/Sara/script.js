@@ -303,9 +303,13 @@ function toggleMobileMenu() {
 function closeMobileMenu() {
     const navMenu = document.getElementById('navMenu');
     const mobileToggle = document.getElementById('mobileToggle');
-    
-    navMenu.classList.remove('active');
-    mobileToggle.classList.remove('active');
+
+    if (navMenu) {
+        navMenu.classList.remove('active');
+    }
+    if (mobileToggle) {
+        mobileToggle.classList.remove('active');
+    }
     document.body.style.overflow = '';
 }
 
