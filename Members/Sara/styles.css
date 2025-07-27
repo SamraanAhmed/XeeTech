@@ -6032,7 +6032,7 @@ html {
 }
 
 @media (max-width: 480px) {
-    .checkout-forms,
+    .checkout-section,
     .summary-card {
         padding: 20px;
     }
