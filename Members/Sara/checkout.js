@@ -13,6 +13,21 @@ const promoCodes = {
 
 // Initialize checkout page
 document.addEventListener('DOMContentLoaded', function() {
+    // Debug localStorage
+    console.log('Raw localStorage cart:', localStorage.getItem('kuromiCart'));
+
+    // Check if cart is being loaded correctly
+    const storedCart = localStorage.getItem('kuromiCart');
+    if (storedCart) {
+        try {
+            const parsedCart = JSON.parse(storedCart);
+            console.log('Parsed cart from localStorage:', parsedCart);
+            cart = parsedCart;
+        } catch (e) {
+            console.error('Error parsing cart from localStorage:', e);
+        }
+    }
+
     initializeCheckout();
     setupEventListeners();
     updateOrderTotals();
