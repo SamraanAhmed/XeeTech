@@ -3413,7 +3413,7 @@ function closeWishlistModal(modal) {
 // Social Proof Elements
 function initializeSocialProof() {
     showRecentlyPurchasedNotifications();
-    updateVisitorCounter();
+    // updateVisitorCounter(); // Removed visitor counter
     addStockIndicators();
 }
 
