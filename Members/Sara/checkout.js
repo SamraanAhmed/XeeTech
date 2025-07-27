@@ -140,11 +140,11 @@ function populateOrderItems() {
         return `
             <div class="order-item">
                 <div class="item-image">
-                    ${item.emoji || '🖤'}
+                    ${item.emoji || item.image || '🖤'}
                 </div>
                 <div class="item-info">
                     <div class="item-name">${item.name}</div>
-                    <div class="item-quantity">Qty: ${item.quantity}</div>
+                    <div class="item-quantity">Qty: ${item.quantity || 1}</div>
                 </div>
                 <div class="item-price">$${itemTotal}</div>
             </div>
