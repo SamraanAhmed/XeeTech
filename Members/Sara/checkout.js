@@ -1,5 +1,5 @@
 // Simple Checkout functionality
-let cart = JSON.parse(localStorage.getItem('kuromiCart')) || [];
+let cart = [];
 let appliedPromoCode = null;
 let promoDiscount = 0;
 
