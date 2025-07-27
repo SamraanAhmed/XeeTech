@@ -156,7 +156,12 @@ function populateOrderItems() {
 }
 
 function calculateSubtotal() {
-    return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    return cart.reduce((sum, item) => {
+        const quantity = item.quantity || 1;
+        const price = item.price || 0;
+        console.log(`Item: ${item.name}, Price: ${price}, Quantity: ${quantity}, Total: ${price * quantity}`);
+        return sum + (price * quantity);
+    }, 0);
 }
 
 function updateOrderTotals() {
