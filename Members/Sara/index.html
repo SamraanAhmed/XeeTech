@@ -346,6 +346,87 @@
     <!-- Categories Menu Overlay -->
     <div class="categories-overlay" id="categoriesOverlay"></div>
 
+    <!-- Product Detail Modal -->
+    <div class="product-modal" id="productModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">×</button>
+
+            <div class="modal-body">
+                <div class="modal-left">
+                    <div class="product-images">
+                        <div class="main-image-container">
+                            <img id="modalMainImage" class="modal-main-image" src="" alt="">
+                            <div class="image-zoom-overlay"></div>
+                        </div>
+                        <div class="thumbnail-images" id="modalThumbnails">
+                            <!-- Thumbnails will be generated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-right">
+                    <div class="product-details">
+                        <div class="product-header">
+                            <h1 id="modalProductName" class="modal-product-title"></h1>
+                            <div class="product-rating">
+                                <div class="stars" id="modalRating"></div>
+                                <span class="review-count" id="modalReviewCount"></span>
+                            </div>
+                        </div>
+
+                        <div class="product-pricing">
+                            <div class="price-info">
+                                <span id="modalCurrentPrice" class="modal-current-price"></span>
+                                <span id="modalOriginalPrice" class="modal-original-price"></span>
+                                <span id="modalDiscount" class="modal-discount"></span>
+                            </div>
+                            <div class="stock-info">
+                                <span id="modalStock" class="stock-indicator"></span>
+                            </div>
+                        </div>
+
+                        <div class="product-description">
+                            <h3>Description</h3>
+                            <p id="modalDescription"></p>
+                        </div>
+
+                        <div class="product-features">
+                            <h3>Features</h3>
+                            <ul id="modalFeatures"></ul>
+                        </div>
+
+                        <div class="product-options">
+                            <div class="size-selector" id="modalSizeSelector" style="display: none;">
+                                <h3>Size</h3>
+                                <div class="size-options" id="modalSizes"></div>
+                            </div>
+
+                            <div class="color-selector" id="modalColorSelector" style="display: none;">
+                                <h3>Color</h3>
+                                <div class="color-options" id="modalColors"></div>
+                            </div>
+                        </div>
+
+                        <div class="product-actions">
+                            <div class="quantity-selector">
+                                <button class="quantity-btn" id="modalDecrement">-</button>
+                                <input type="number" id="modalQuantity" value="1" min="1" max="10">
+                                <button class="quantity-btn" id="modalIncrement">+</button>
+                            </div>
+
+                            <button class="modal-add-to-cart" id="modalAddToCart">
+                                <span class="btn-text">Add to Bag</span>
+                                <span class="btn-price" id="modalBtnPrice">$0.00</span>
+                                <span class="btn-sparkle">✨</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
