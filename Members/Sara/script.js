@@ -737,21 +737,28 @@ function loadLimitedProducts() {
 
 function createProductCard(product) {
     return `
-        <div class="product-card">
-            <div class="product-badge">${product.badge}</div>
+        <div class="product-card" data-product-id="${product.id}">
+            ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
             <div class="product-image-container">
                 <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="product-image-placeholder" style="display: none;">
                     <span class="placeholder-icon">📦</span>
                 </div>
-                <button class="quick-view-btn" title="Quick View">👁️</button>
+                <button class="quick-view-btn" title="Quick View" onclick="event.stopPropagation(); openProductModal(${product.id})">👁️</button>
             </div>
             <div class="product-info">
                 <h3 class="product-title">${product.name}</h3>
                 <div class="product-price">
                     <span class="current-price">$${product.price}</span>
+                    ${product.originalPrice ? `<span class="original-price">$${product.originalPrice}</span>` : ''}
                 </div>
-                <button class="add-to-cart-btn" data-product-id="${product.id}">
+                ${product.rating ? `
+                    <div class="product-rating">
+                        <span class="stars">${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))}</span>
+                        <span class="rating-text">(${product.reviews || 0})</span>
+                    </div>
+                ` : ''}
+                <button class="add-to-cart-btn" data-product-id="${product.id}" onclick="event.stopPropagation(); addToCart(${product.id})">
                     <span class="btn-text">Add to Bag</span>
                     <span class="btn-sparkle">✨</span>
                 </button>
