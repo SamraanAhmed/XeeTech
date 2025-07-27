@@ -3216,38 +3216,39 @@ html {
 
 /* Categories Button Styles */
 .categories-btn {
-    background: linear-gradient(135deg, rgba(153, 50, 204, 0.1), rgba(255, 182, 193, 0.1));
-    border: 2px solid transparent;
+    background: none;
+    border: none;
     cursor: pointer;
     font-family: var(--font-body);
     font-size: inherit;
     color: var(--midnight-black);
     text-decoration: none;
     position: relative;
-    transition: var(--transition-bouncy);
+    transition: var(--transition-smooth);
     padding: 8px 16px;
     border-radius: var(--radius-medium);
-    font-weight: 600;
-    overflow: hidden;
-}
-
-.categories-btn::before {
-    content: '🗂️';
-    margin-right: 8px;
-    font-size: 1.1em;
-    transition: var(--transition-smooth);
+    font-weight: 500;
 }
 
 .categories-btn:hover {
-    color: var(--soft-white);
-    background: linear-gradient(135deg, var(--deep-orchid), var(--bubblegum-pink));
-    border-color: var(--deep-orchid);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(153, 50, 204, 0.3);
+    background: rgba(153, 50, 204, 0.1);
+    color: var(--deep-orchid);
 }
 
-.categories-btn:hover::before {
-    transform: rotate(20deg) scale(1.2);
+.categories-btn::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--bubblegum-pink);
+    transition: var(--transition-smooth);
+    transform: translateX(-50%);
+}
+
+.categories-btn:hover::after {
+    width: 80%;
 }
 
 /* Categories Slide Menu */
