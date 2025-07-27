@@ -1056,8 +1056,18 @@ initKonamiCode();
 function initializeCheckout() {
     const checkoutBtns = document.querySelectorAll('.checkout-btn');
     checkoutBtns.forEach(btn => {
-        btn.addEventListener('click', openCheckoutModal);
+        btn.addEventListener('click', redirectToCheckout);
     });
+}
+
+function redirectToCheckout() {
+    if (cart.length === 0) {
+        showNotification('Your cart is empty! Add some items first.');
+        return;
+    }
+
+    // Redirect to checkout page
+    window.location.href = 'checkout.html';
 }
 
 function openCheckoutModal() {
