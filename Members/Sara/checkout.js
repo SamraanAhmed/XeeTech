@@ -1011,6 +1011,82 @@ function createConfetti() {
     }, 8000);
 }
 
+// Mini confetti burst from button
+function createMiniConfetti(button) {
+    const rect = button.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    const miniContainer = document.createElement('div');
+    miniContainer.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9998;
+    `;
+    document.body.appendChild(miniContainer);
+
+    // Create mini burst
+    for (let i = 0; i < 30; i++) {
+        const piece = document.createElement('div');
+        const isEmoji = Math.random() > 0.5;
+
+        if (isEmoji) {
+            piece.textContent = ['✨', '💜', '🖤', '💫'][Math.floor(Math.random() * 4)];
+            piece.style.fontSize = '12px';
+        } else {
+            piece.style.width = piece.style.height = '4px';
+            piece.style.backgroundColor = ['#9932CC', '#FFB6C1', '#000000'][Math.floor(Math.random() * 3)];
+            piece.style.borderRadius = '50%';
+        }
+
+        const angle = (Math.PI * 2 * i) / 30;
+        const velocity = Math.random() * 3 + 2;
+        const startX = centerX;
+        const startY = centerY;
+
+        piece.style.cssText += `
+            position: absolute;
+            left: ${startX}px;
+            top: ${startY}px;
+            animation: miniConfettiBurst 0.8s ease-out forwards;
+            --dx: ${Math.cos(angle) * velocity * 20}px;
+            --dy: ${Math.sin(angle) * velocity * 20}px;
+        `;
+
+        miniContainer.appendChild(piece);
+    }
+
+    // Add mini confetti animation if not exists
+    if (!document.getElementById('mini-confetti-styles')) {
+        const style = document.createElement('style');
+        style.id = 'mini-confetti-styles';
+        style.textContent = `
+            @keyframes miniConfettiBurst {
+                0% {
+                    transform: translate(0, 0) scale(1);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translate(var(--dx), var(--dy)) scale(0);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // Clean up
+    setTimeout(() => {
+        if (miniContainer.parentNode) {
+            miniContainer.parentNode.removeChild(miniContainer);
+        }
+    }, 1000);
+}
+
 // Enhanced Order Success with Confetti
 function triggerOrderConfetti() {
     // Create multiple confetti bursts
