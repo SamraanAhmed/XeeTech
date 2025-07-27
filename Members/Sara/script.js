@@ -255,13 +255,15 @@ function setupEventListeners() {
 
     // Close dropdowns when clicking outside
     document.addEventListener('click', (e) => {
-        // Close search dropdown
-        if (!e.target.closest('.search-dropdown') && !e.target.closest('#searchBtn')) {
+        // Close search dropdown (only if search elements exist and search is open)
+        if (searchOpen && !e.target.closest('.search-dropdown') && !e.target.closest('#searchBtn')) {
             closeSearch();
         }
 
-        // Close mobile menu
-        if (!e.target.closest('.nav-menu') && !e.target.closest('.mobile-menu-toggle')) {
+        // Close mobile menu (only if mobile menu elements exist)
+        const navMenu = document.getElementById('navMenu');
+        if (navMenu && navMenu.classList.contains('active') &&
+            !e.target.closest('.nav-menu') && !e.target.closest('.mobile-menu-toggle')) {
             closeMobileMenu();
         }
     });
