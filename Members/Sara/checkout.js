@@ -11,6 +11,20 @@ const promoCodes = {
     'FREESHIP': { discount: 5.99, type: 'fixed' }
 };
 
+// Function to refresh cart from localStorage
+function refreshCart() {
+    try {
+        const storedCart = localStorage.getItem('kuromiCart');
+        cart = storedCart ? JSON.parse(storedCart) : [];
+        console.log('Cart refreshed:', cart);
+        return cart;
+    } catch (e) {
+        console.error('Error refreshing cart:', e);
+        cart = [];
+        return cart;
+    }
+}
+
 // Initialize checkout page
 document.addEventListener('DOMContentLoaded', function() {
     // Debug localStorage
