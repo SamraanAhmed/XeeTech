@@ -1,16 +1,7 @@
-// Checkout page functionality
+// Simple Checkout functionality
 let cart = JSON.parse(localStorage.getItem('kuromiCart')) || [];
-let selectedShipping = 'standard';
-let selectedPayment = 'credit-card';
 let appliedPromoCode = null;
 let promoDiscount = 0;
-
-// Shipping costs
-const shippingCosts = {
-    standard: 5.99,
-    express: 12.99,
-    overnight: 24.99
-};
 
 // Promo codes
 const promoCodes = {
@@ -24,7 +15,7 @@ const promoCodes = {
 document.addEventListener('DOMContentLoaded', function() {
     initializeCheckout();
     setupEventListeners();
-    updateOrderSummary();
+    updateOrderTotals();
 });
 
 function initializeCheckout() {
@@ -34,48 +25,27 @@ function initializeCheckout() {
         return;
     }
 
-    // Set up mobile menu functionality
+    // Set up mobile menu
     setupMobileMenu();
     
-    // Populate order summary
-    populateOrderSummary();
+    // Populate order items
+    populateOrderItems();
     
-    // Auto-fill customer info if available
-    loadSavedCustomerInfo();
-    
-    // Set default shipping method
-    updateShippingCost();
-    
-    // Show/hide payment forms based on selection
-    togglePaymentForm();
-    
-    // Format card number input
-    formatCardInputs();
+    // Update totals
+    updateOrderTotals();
 }
 
 function setupEventListeners() {
-    // Mobile order summary toggle
-    const orderToggle = document.getElementById('orderToggle');
-    if (orderToggle) {
-        orderToggle.addEventListener('click', toggleMobileOrderSummary);
+    // Mobile menu toggle
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navMenu = document.getElementById('navMenu');
+    
+    if (mobileToggle && navMenu) {
+        mobileToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            mobileToggle.classList.toggle('active');
+        });
     }
-
-    // Shipping method selection
-    document.querySelectorAll('input[name="shipping"]').forEach(input => {
-        input.addEventListener('change', function() {
-            selectedShipping = this.value;
-            updateShippingCost();
-            updateOrderSummary();
-        });
-    });
-
-    // Payment method selection
-    document.querySelectorAll('input[name="payment"]').forEach(input => {
-        input.addEventListener('change', function() {
-            selectedPayment = this.value;
-            togglePaymentForm();
-        });
-    });
 
     // Promo code application
     const applyPromoBtn = document.getElementById('applyPromo');
@@ -93,21 +63,10 @@ function setupEventListeners() {
         });
     }
 
-    // Complete order button
-    const completeOrderBtn = document.getElementById('completeOrderBtn');
-    if (completeOrderBtn) {
-        completeOrderBtn.addEventListener('click', processOrder);
-    }
-
-
-
-    // Form validation on input
-    setupFormValidation();
-    
-    // Country selection
-    const countrySelect = document.getElementById('country');
-    if (countrySelect) {
-        countrySelect.addEventListener('change', updateTaxCalculation);
+    // Confirm order button
+    const confirmOrderBtn = document.getElementById('confirmOrderBtn');
+    if (confirmOrderBtn) {
+        confirmOrderBtn.addEventListener('click', confirmOrder);
     }
 }
 
@@ -124,86 +83,34 @@ function setupMobileMenu() {
 }
 
 function showEmptyCartMessage() {
-    const checkoutMain = document.querySelector('.checkout-main');
-    checkoutMain.innerHTML = `
-        <div class="container">
-            <div class="empty-checkout">
-                <div class="empty-icon">🛍️</div>
-                <h2>Your cart is empty</h2>
-                <p>Add some mischievous fashion to your cart before checking out!</p>
-                <a href="shop.html" class="shop-btn">
-                    <span>Continue Shopping</span>
-                    <span>✨</span>
-                </a>
-            </div>
+    const checkoutContent = document.querySelector('.checkout-content');
+    checkoutContent.innerHTML = `
+        <div class="empty-cart">
+            <div class="empty-icon">🛍️</div>
+            <h2>Your cart is empty</h2>
+            <p>Add some mischievous fashion to your cart before checking out!</p>
+            <a href="shop.html" class="shop-btn">
+                <span>Continue Shopping</span>
+                <span>✨</span>
+            </a>
         </div>
     `;
-    
-    // Add styles for empty cart
-    const style = document.createElement('style');
-    style.textContent = `
-        .empty-checkout {
-            text-align: center;
-            padding: 80px 20px;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        
-        .empty-icon {
-            font-size: 4em;
-            margin-bottom: 20px;
-        }
-        
-        .empty-checkout h2 {
-            color: var(--midnight-black);
-            margin-bottom: 15px;
-            font-size: 1.8em;
-        }
-        
-        .empty-checkout p {
-            color: var(--midnight-black);
-            opacity: 0.7;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-        
-        .shop-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: linear-gradient(45deg, var(--deep-orchid), var(--bubblegum-pink));
-            color: var(--soft-white);
-            padding: 15px 30px;
-            border-radius: var(--radius-large);
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition-smooth);
-        }
-        
-        .shop-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--glow-effect);
-        }
-    `;
-    document.head.appendChild(style);
 }
 
-function populateOrderSummary() {
-    const summaryItems = document.getElementById('summaryItems');
-    const orderDetailsMobile = document.getElementById('orderDetailsMobile');
+function populateOrderItems() {
+    const orderItems = document.getElementById('orderItems');
+    if (!orderItems) return;
     
     const itemsHTML = cart.map(item => {
         const itemTotal = (item.price * item.quantity).toFixed(2);
-        const options = [];
-        if (item.selectedSize) options.push(`Size: ${item.selectedSize}`);
-        if (item.selectedColor) options.push(`Color: ${item.selectedColor}`);
         
         return `
-            <div class="summary-item">
-                <img src="${item.image}" alt="${item.name}" class="item-image" onerror="this.style.display='none'">
-                <div class="item-details">
+            <div class="order-item">
+                <div class="item-image">
+                    ${item.emoji || '🖤'}
+                </div>
+                <div class="item-info">
                     <div class="item-name">${item.name}</div>
-                    ${options.length > 0 ? `<div class="item-options">${options.join(', ')}</div>` : ''}
                     <div class="item-quantity">Qty: ${item.quantity}</div>
                 </div>
                 <div class="item-price">$${itemTotal}</div>
@@ -211,88 +118,18 @@ function populateOrderSummary() {
         `;
     }).join('');
     
-    if (summaryItems) {
-        summaryItems.innerHTML = itemsHTML;
-    }
-    
-    if (orderDetailsMobile) {
-        orderDetailsMobile.innerHTML = itemsHTML;
-    }
-}
-
-function toggleMobileOrderSummary() {
-    const orderToggle = document.getElementById('orderToggle');
-    const orderDetailsMobile = document.getElementById('orderDetailsMobile');
-    
-    orderToggle.classList.toggle('active');
-    orderDetailsMobile.classList.toggle('active');
-}
-
-function updateShippingCost() {
-    const shippingCostElement = document.getElementById('shippingCost');
-    const cost = shippingCosts[selectedShipping];
-    
-    if (shippingCostElement) {
-        shippingCostElement.textContent = `$${cost.toFixed(2)}`;
-    }
-}
-
-function updateTaxCalculation() {
-    const country = document.getElementById('country').value;
-    const subtotal = calculateSubtotal();
-    let taxRate = 0;
-    
-    // Simple tax calculation based on country
-    switch (country) {
-        case 'US':
-            taxRate = 0.08; // 8% average sales tax
-            break;
-        case 'CA':
-            taxRate = 0.13; // 13% HST
-            break;
-        case 'UK':
-            taxRate = 0.20; // 20% VAT
-            break;
-        case 'AU':
-            taxRate = 0.10; // 10% GST
-            break;
-        case 'DE':
-        case 'FR':
-            taxRate = 0.19; // 19% VAT
-            break;
-        default:
-            taxRate = 0;
-    }
-    
-    const taxAmount = subtotal * taxRate;
-    const taxAmountElement = document.getElementById('taxAmount');
-    
-    if (taxAmountElement) {
-        taxAmountElement.textContent = `$${taxAmount.toFixed(2)}`;
-    }
-    
-    updateOrderSummary();
+    orderItems.innerHTML = itemsHTML;
 }
 
 function calculateSubtotal() {
     return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 }
 
-function calculateTax() {
-    const taxElement = document.getElementById('taxAmount');
-    if (taxElement) {
-        const taxText = taxElement.textContent.replace('$', '');
-        return parseFloat(taxText) || 0;
-    }
-    return 0;
-}
-
-function updateOrderSummary() {
+function updateOrderTotals() {
     const subtotal = calculateSubtotal();
-    const shipping = shippingCosts[selectedShipping];
-    const tax = calculateTax();
+    const shipping = 5.99;
     const discount = promoDiscount;
-    const total = subtotal + shipping + tax - discount;
+    const total = subtotal + shipping - discount;
     
     // Update subtotal
     const subtotalElement = document.getElementById('subtotal');
@@ -300,24 +137,35 @@ function updateOrderSummary() {
         subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
     }
     
-    // Update discount
-    const discountRow = document.getElementById('discountRow');
-    const discountAmount = document.getElementById('discountAmount');
-    if (discount > 0) {
-        discountRow.style.display = 'flex';
-        discountAmount.textContent = `-$${discount.toFixed(2)}`;
-    } else {
-        discountRow.style.display = 'none';
-    }
-    
-    // Update total
-    const orderTotal = document.getElementById('orderTotal');
+    // Update final total
     const finalTotal = document.getElementById('finalTotal');
-    const orderTotalMobile = document.getElementById('orderTotalMobile');
+    const btnTotal = document.getElementById('btnTotal');
     
-    if (orderTotal) orderTotal.textContent = `$${total.toFixed(2)}`;
     if (finalTotal) finalTotal.textContent = `$${total.toFixed(2)}`;
-    if (orderTotalMobile) orderTotalMobile.textContent = `$${total.toFixed(2)}`;
+    if (btnTotal) btnTotal.textContent = `$${total.toFixed(2)}`;
+    
+    // Show/hide discount
+    const orderTotals = document.querySelector('.order-totals');
+    const existingDiscount = orderTotals.querySelector('.discount-row');
+    
+    if (discount > 0) {
+        if (!existingDiscount) {
+            const discountRow = document.createElement('div');
+            discountRow.className = 'total-row discount-row';
+            discountRow.innerHTML = `
+                <span>Discount (${appliedPromoCode}):</span>
+                <span>-$${discount.toFixed(2)}</span>
+            `;
+            orderTotals.insertBefore(discountRow, orderTotals.querySelector('.total-final'));
+        } else {
+            existingDiscount.innerHTML = `
+                <span>Discount (${appliedPromoCode}):</span>
+                <span>-$${discount.toFixed(2)}</span>
+            `;
+        }
+    } else if (existingDiscount) {
+        existingDiscount.remove();
+    }
 }
 
 function applyPromoCode() {
@@ -325,12 +173,12 @@ function applyPromoCode() {
     const code = promoInput.value.trim().toUpperCase();
     
     if (!code) {
-        showNotification('Please enter a promo code');
+        showNotification('Please enter a promo code', 'error');
         return;
     }
     
     if (appliedPromoCode === code) {
-        showNotification('This promo code is already applied');
+        showNotification('This promo code is already applied', 'info');
         return;
     }
     
@@ -351,385 +199,145 @@ function applyPromoCode() {
         const applyBtn = document.getElementById('applyPromo');
         applyBtn.textContent = 'Applied ✓';
         applyBtn.disabled = true;
+        applyBtn.style.background = '#28a745';
         
-        updateOrderSummary();
-        showNotification(`Promo code applied! You saved $${promoDiscount.toFixed(2)}`);
+        updateOrderTotals();
+        showNotification(`Promo code applied! You saved $${promoDiscount.toFixed(2)}`, 'success');
     } else {
-        showNotification('Invalid promo code');
+        showNotification('Invalid promo code', 'error');
         promoInput.focus();
     }
 }
 
-function togglePaymentForm() {
-    const cardForm = document.getElementById('cardForm');
+function confirmOrder() {
+    // Validate form
+    const form = document.getElementById('checkoutForm');
+    const name = document.getElementById('customerName').value.trim();
+    const email = document.getElementById('customerEmail').value.trim();
     
-    if (selectedPayment === 'credit-card') {
-        cardForm.style.display = 'block';
-    } else {
-        cardForm.style.display = 'none';
-    }
-}
-
-function formatCardInputs() {
-    const cardNumber = document.getElementById('cardNumber');
-    const expiryDate = document.getElementById('expiryDate');
-    const cvv = document.getElementById('cvv');
-    
-    if (cardNumber) {
-        cardNumber.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
-            e.target.value = formattedValue;
-        });
-    }
-    
-    if (expiryDate) {
-        expiryDate.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length >= 2) {
-                value = value.substring(0, 2) + '/' + value.substring(2, 4);
-            }
-            e.target.value = value;
-        });
-    }
-    
-    if (cvv) {
-        cvv.addEventListener('input', function(e) {
-            e.target.value = e.target.value.replace(/\D/g, '');
-        });
-    }
-}
-
-function setupFormValidation() {
-    // Real-time validation for required fields
-    const requiredFields = document.querySelectorAll('input[required], select[required]');
-    
-    requiredFields.forEach(field => {
-        field.addEventListener('blur', function() {
-            validateField(this);
-        });
-        
-        field.addEventListener('input', function() {
-            if (this.classList.contains('error')) {
-                validateField(this);
-            }
-        });
-    });
-    
-    // Email validation
-    const emailField = document.getElementById('email');
-    if (emailField) {
-        emailField.addEventListener('blur', function() {
-            validateEmail(this);
-        });
-    }
-}
-
-function validateField(field) {
-    const value = field.value.trim();
-    
-    if (field.hasAttribute('required') && !value) {
-        showFieldError(field, 'This field is required');
-        return false;
-    } else {
-        clearFieldError(field);
-        return true;
-    }
-}
-
-function validateEmail(field) {
-    const email = field.value.trim();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
-    if (email && !emailRegex.test(email)) {
-        showFieldError(field, 'Please enter a valid email address');
-        return false;
-    } else {
-        clearFieldError(field);
-        return true;
-    }
-}
-
-function showFieldError(field, message) {
-    field.classList.add('error');
-    
-    // Remove existing error message
-    const existingError = field.parentElement.querySelector('.field-error');
-    if (existingError) {
-        existingError.remove();
-    }
-    
-    // Add new error message
-    const errorElement = document.createElement('div');
-    errorElement.className = 'field-error';
-    errorElement.textContent = message;
-    field.parentElement.appendChild(errorElement);
-    
-    // Add error styles
-    if (!document.getElementById('validation-styles')) {
-        const style = document.createElement('style');
-        style.id = 'validation-styles';
-        style.textContent = `
-            .form-group input.error,
-            .form-group select.error {
-                border-color: #dc3545;
-                box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
-            }
-            
-            .field-error {
-                color: #dc3545;
-                font-size: 0.8em;
-                margin-top: 5px;
-            }
-        `;
-        document.head.appendChild(style);
-    }
-}
-
-function clearFieldError(field) {
-    field.classList.remove('error');
-    const errorElement = field.parentElement.querySelector('.field-error');
-    if (errorElement) {
-        errorElement.remove();
-    }
-}
-
-function validateAllForms() {
-    let isValid = true;
-    
-    // Validate customer information
-    const customerForm = document.getElementById('customerForm');
-    const requiredCustomerFields = customerForm.querySelectorAll('input[required], select[required]');
-    
-    requiredCustomerFields.forEach(field => {
-        if (!validateField(field)) {
-            isValid = false;
-        }
-    });
-    
-    // Validate email
-    const emailField = document.getElementById('email');
-    if (!validateEmail(emailField)) {
-        isValid = false;
-    }
-    
-    // Validate shipping address
-    const shippingForm = document.getElementById('shippingForm');
-    const requiredShippingFields = shippingForm.querySelectorAll('input[required], select[required]');
-    
-    requiredShippingFields.forEach(field => {
-        if (!validateField(field)) {
-            isValid = false;
-        }
-    });
-    
-    // Validate payment method
-    if (selectedPayment === 'credit-card') {
-        const cardForm = document.getElementById('cardForm');
-        const requiredCardFields = cardForm.querySelectorAll('input[required]');
-        
-        requiredCardFields.forEach(field => {
-            if (!validateField(field)) {
-                isValid = false;
-            }
-        });
-        
-        // Validate card number
-        const cardNumber = document.getElementById('cardNumber');
-        const cardValue = cardNumber.value.replace(/\s/g, '');
-        if (cardValue.length < 13 || cardValue.length > 19) {
-            showFieldError(cardNumber, 'Please enter a valid card number');
-            isValid = false;
-        }
-        
-        // Validate expiry date
-        const expiryDate = document.getElementById('expiryDate');
-        const expiryValue = expiryDate.value;
-        if (expiryValue.length !== 5) {
-            showFieldError(expiryDate, 'Please enter a valid expiry date (MM/YY)');
-            isValid = false;
-        }
-        
-        // Validate CVV
-        const cvv = document.getElementById('cvv');
-        const cvvValue = cvv.value;
-        if (cvvValue.length < 3 || cvvValue.length > 4) {
-            showFieldError(cvv, 'Please enter a valid CVV');
-            isValid = false;
-        }
-    }
-    
-    return isValid;
-}
-
-function processOrder() {
-    // Validate all forms
-    if (!validateAllForms()) {
-        showNotification('Please correct the errors in the form');
-
-        // Scroll to first error
-        const firstError = document.querySelector('.field-error');
-        if (firstError) {
-            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+    if (!name) {
+        showNotification('Please enter your name', 'error');
+        document.getElementById('customerName').focus();
         return;
     }
-
-    // Add immediate button celebration on click
-    const completeOrderBtn = document.getElementById('completeOrderBtn');
-    completeOrderBtn.classList.add('btn-celebration');
-
-    // Mini confetti burst on button click
-    createMiniConfetti(completeOrderBtn);
     
-    // Show processing state with celebration
-    const completeOrderBtn = document.getElementById('completeOrderBtn');
-    const originalText = completeOrderBtn.innerHTML;
-
-    // Add processing animation
-    completeOrderBtn.innerHTML = '<span>Processing Order...</span> ⏳';
-    completeOrderBtn.disabled = true;
-    completeOrderBtn.style.background = 'linear-gradient(45deg, #9932CC, #FFB6C1, #9932CC, #FFB6C1)';
-    completeOrderBtn.style.backgroundSize = '400% 400%';
-    completeOrderBtn.style.animation = 'processingGradient 1s ease-in-out infinite';
-
-    // Add processing animation CSS if not exists
-    if (!document.getElementById('processing-styles')) {
-        const style = document.createElement('style');
-        style.id = 'processing-styles';
-        style.textContent = `
-            @keyframes processingGradient {
-                0% { background-position: 0% 50%; }
-                50% { background-position: 100% 50%; }
-                100% { background-position: 0% 50%; }
-            }
-
-            .btn-celebration {
-                animation: btnCelebrate 0.6s ease-in-out;
-            }
-
-            @keyframes btnCelebrate {
-                0%, 100% { transform: scale(1); }
-                25% { transform: scale(1.1) rotate(-2deg); }
-                75% { transform: scale(1.1) rotate(2deg); }
-            }
-        `;
-        document.head.appendChild(style);
+    if (!email) {
+        showNotification('Please enter your email', 'error');
+        document.getElementById('customerEmail').focus();
+        return;
     }
     
-    // Collect order data
-    const orderData = collectOrderData();
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        showNotification('Please enter a valid email address', 'error');
+        document.getElementById('customerEmail').focus();
+        return;
+    }
     
-    // Simulate order processing
+    // Show processing state
+    const confirmBtn = document.getElementById('confirmOrderBtn');
+    const originalHTML = confirmBtn.innerHTML;
+    
+    confirmBtn.innerHTML = '<span>Processing... ⏳</span>';
+    confirmBtn.disabled = true;
+    confirmBtn.style.background = 'linear-gradient(45deg, #9932CC, #FFB6C1)';
+    confirmBtn.style.opacity = '0.8';
+    
+    // Process order
     setTimeout(() => {
-        // Generate order ID
-        const orderId = 'KUR-' + Date.now();
-
-        // Save order to localStorage
-        const orders = JSON.parse(localStorage.getItem('kuromiOrders') || '[]');
-        orders.push({
-            ...orderData,
-            orderId,
-            orderDate: new Date().toISOString(),
-            status: 'confirmed'
-        });
-        localStorage.setItem('kuromiOrders', JSON.stringify(orders));
-
-        // Clear cart
-        localStorage.removeItem('kuromiCart');
-
-        // 🎉 TRIGGER CONFETTI CELEBRATION! 🎉
-        triggerOrderConfetti();
-
-        // Show success page after confetti starts
-        setTimeout(() => {
-            showOrderSuccess(orderId, orderData);
-        }, 1500);
-
+        processOrder();
     }, 2000);
 }
 
-function collectOrderData() {
-    const subtotal = calculateSubtotal();
-    const shipping = shippingCosts[selectedShipping];
-    const tax = calculateTax();
-    const discount = promoDiscount;
-    const total = subtotal + shipping + tax - discount;
+function processOrder() {
+    // Generate order ID
+    const orderId = 'KUR-' + Date.now();
     
-    return {
+    // Collect order data
+    const orderData = {
+        orderId,
         items: [...cart],
         customer: {
-            firstName: document.getElementById('firstName').value,
-            lastName: document.getElementById('lastName').value,
-            email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value
-        },
-        shipping: {
-            country: document.getElementById('country').value,
-            address: document.getElementById('address').value,
-            apartment: document.getElementById('apartment').value,
-            city: document.getElementById('city').value,
-            state: document.getElementById('state').value,
-            zipCode: document.getElementById('zipCode').value,
-            method: selectedShipping
-        },
-        payment: {
-            method: selectedPayment
+            name: document.getElementById('customerName').value,
+            email: document.getElementById('customerEmail').value,
+            phone: document.getElementById('customerPhone').value,
+            address: document.getElementById('customerAddress').value
         },
         pricing: {
-            subtotal,
-            shipping,
-            tax,
-            discount,
-            total
+            subtotal: calculateSubtotal(),
+            shipping: 5.99,
+            discount: promoDiscount,
+            total: calculateSubtotal() + 5.99 - promoDiscount
         },
         promoCode: appliedPromoCode,
-        notes: document.getElementById('orderNotes').value
+        orderDate: new Date().toISOString(),
+        status: 'confirmed'
     };
+    
+    // Save order to localStorage
+    const orders = JSON.parse(localStorage.getItem('kuromiOrders') || '[]');
+    orders.push(orderData);
+    localStorage.setItem('kuromiOrders', JSON.stringify(orders));
+    
+    // Clear cart
+    localStorage.removeItem('kuromiCart');
+    
+    // Show confetti
+    createConfetti();
+    
+    // Show success page
+    setTimeout(() => {
+        showOrderSuccess(orderData);
+    }, 1500);
 }
 
-function showOrderSuccess(orderId, orderData) {
-    // Replace page content with success message
+function showOrderSuccess(orderData) {
     document.body.innerHTML = `
         <div class="order-success">
             <div class="success-container">
-                <div class="success-icon">🎉</div>
-                <h1 class="success-title">Order Confirmed!</h1>
-                <p class="success-message">Thank you ${orderData.customer.firstName}! Your mischievous order has been placed successfully.</p>
+                <div class="success-animation">
+                    <div class="success-icon">🎉</div>
+                    <div class="kuromi-celebration">🖤💜</div>
+                </div>
                 
-                <div class="order-details">
-                    <h3>Order Details</h3>
-                    <div class="detail-row">
+                <h1 class="success-title">Order Confirmed!</h1>
+                <p class="success-message">Thank you ${orderData.customer.name}! Your mischievous order has been placed successfully.</p>
+                
+                <div class="order-summary">
+                    <h3>Order Summary</h3>
+                    <div class="summary-row">
                         <span>Order ID:</span>
-                        <span>${orderId}</span>
+                        <span class="order-id">${orderData.orderId}</span>
                     </div>
-                    <div class="detail-row">
-                        <span>Total:</span>
-                        <span>$${orderData.pricing.total.toFixed(2)}</span>
-                    </div>
-                    <div class="detail-row">
+                    <div class="summary-row">
                         <span>Items:</span>
                         <span>${orderData.items.length} item(s)</span>
                     </div>
-                    <div class="detail-row">
-                        <span>Shipping Method:</span>
-                        <span>${orderData.shipping.method}</span>
+                    <div class="summary-row">
+                        <span>Total:</span>
+                        <span class="total-amount">$${orderData.pricing.total.toFixed(2)}</span>
                     </div>
                 </div>
                 
-                <p class="confirmation-note">A confirmation email will be sent to ${orderData.customer.email}</p>
+                <p class="confirmation-email">A confirmation email will be sent to ${orderData.customer.email}</p>
                 
                 <div class="success-actions">
-                    <a href="index.html" class="btn-primary">Continue Shopping</a>
-                    <a href="shop.html" class="btn-secondary">View Products</a>
+                    <a href="index.html" class="btn-primary">Back to Home</a>
+                    <a href="shop.html" class="btn-secondary">Continue Shopping</a>
                 </div>
             </div>
         </div>
     `;
     
     // Add success page styles
+    addSuccessPageStyles();
+}
+
+function addSuccessPageStyles() {
     const style = document.createElement('style');
     style.textContent = `
+        /* Success Page Styles */
         body {
             margin: 0;
             font-family: 'Quicksand', sans-serif;
@@ -752,11 +360,43 @@ function showOrderSuccess(orderId, orderData) {
             padding: 50px;
             text-align: center;
             box-shadow: 0 20px 40px rgba(153, 50, 204, 0.1);
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .success-animation {
+            margin-bottom: 30px;
         }
         
         .success-icon {
-            font-size: 5em;
-            margin-bottom: 20px;
+            font-size: 4em;
+            margin-bottom: 10px;
+            animation: bounce 1s ease-in-out infinite;
+        }
+        
+        .kuromi-celebration {
+            font-size: 2em;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
         
         .success-title {
@@ -773,34 +413,40 @@ function showOrderSuccess(orderId, orderData) {
             line-height: 1.6;
         }
         
-        .order-details {
+        .order-summary {
             background: #F8E6F2;
             padding: 25px;
             border-radius: 12px;
             margin: 30px 0;
-            text-align: left;
         }
         
-        .order-details h3 {
+        .order-summary h3 {
             color: #9932CC;
-            margin-bottom: 15px;
-            text-align: center;
+            margin-bottom: 20px;
         }
         
-        .detail-row {
+        .summary-row {
             display: flex;
             justify-content: space-between;
             margin-bottom: 10px;
             padding: 8px 0;
-            border-bottom: 1px solid rgba(153, 50, 204, 0.1);
         }
         
-        .detail-row:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
+        .order-id {
+            font-family: monospace;
+            background: #fff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
         }
         
-        .confirmation-note {
+        .total-amount {
+            font-weight: 700;
+            color: #9932CC;
+            font-size: 1.1em;
+        }
+        
+        .confirmation-email {
             color: #666;
             font-size: 0.9em;
             margin: 20px 0;
@@ -850,66 +496,8 @@ function showOrderSuccess(orderId, orderData) {
     document.head.appendChild(style);
 }
 
-function loadSavedCustomerInfo() {
-    // Load any saved customer information from localStorage
-    const savedInfo = JSON.parse(localStorage.getItem('kuromiCustomerInfo') || '{}');
-    
-    Object.keys(savedInfo).forEach(key => {
-        const field = document.getElementById(key);
-        if (field) {
-            field.value = savedInfo[key];
-        }
-    });
-}
-
-function showNotification(message) {
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = 'checkout-notification';
-    notification.innerHTML = `
-        <div class="notification-content">
-            <span class="notification-message">${message}</span>
-        </div>
-    `;
-
-    // Add styles
-    notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        right: 20px;
-        background: linear-gradient(45deg, var(--deep-orchid), var(--bubblegum-pink));
-        color: var(--soft-white);
-        padding: 15px 20px;
-        border-radius: var(--radius-large);
-        box-shadow: var(--shadow-medium);
-        z-index: 2000;
-        transform: translateX(100%);
-        transition: transform 0.3s ease;
-        max-width: 300px;
-    `;
-
-    document.body.appendChild(notification);
-
-    // Animate in
-    setTimeout(() => {
-        notification.style.transform = 'translateX(0)';
-    }, 100);
-
-    // Animate out and remove
-    setTimeout(() => {
-        notification.style.transform = 'translateX(100%)';
-        setTimeout(() => {
-            if (document.body.contains(notification)) {
-                document.body.removeChild(notification);
-            }
-        }, 300);
-    }, 3000);
-}
-
-// Confetti Animation Function
 function createConfetti() {
     const confettiContainer = document.createElement('div');
-    confettiContainer.id = 'confetti-container';
     confettiContainer.style.cssText = `
         position: fixed;
         top: 0;
@@ -922,26 +510,21 @@ function createConfetti() {
     `;
     document.body.appendChild(confettiContainer);
 
-    // Kuromi-themed confetti colors and shapes
-    const confettiColors = ['#9932CC', '#FFB6C1', '#000000', '#FFFFFF', '#F8E6F2'];
-    const confettiShapes = ['🎀', '🖤', '💜', '✨', '🦇', '💫', '⭐', '🌟'];
-    const confettiTypes = ['circle', 'square', 'emoji'];
+    // Kuromi-themed confetti
+    const confettiColors = ['#9932CC', '#FFB6C1', '#000000', '#FFFFFF'];
+    const confettiShapes = ['🎀', '🖤', '💜', '✨', '🦇', '💫'];
 
     function createConfettiPiece() {
         const piece = document.createElement('div');
-        const type = confettiTypes[Math.floor(Math.random() * confettiTypes.length)];
+        const isEmoji = Math.random() > 0.3;
 
-        if (type === 'emoji') {
+        if (isEmoji) {
             piece.textContent = confettiShapes[Math.floor(Math.random() * confettiShapes.length)];
             piece.style.fontSize = (Math.random() * 20 + 15) + 'px';
         } else {
-            piece.style.width = piece.style.height = (Math.random() * 10 + 5) + 'px';
+            piece.style.width = piece.style.height = (Math.random() * 8 + 4) + 'px';
             piece.style.backgroundColor = confettiColors[Math.floor(Math.random() * confettiColors.length)];
-            if (type === 'square') {
-                piece.style.borderRadius = '2px';
-            } else {
-                piece.style.borderRadius = '50%';
-            }
+            piece.style.borderRadius = '50%';
         }
 
         piece.style.cssText += `
@@ -949,131 +532,37 @@ function createConfetti() {
             top: -20px;
             left: ${Math.random() * 100}%;
             animation: confettiFall ${Math.random() * 3 + 2}s linear forwards;
-            transform: rotate(${Math.random() * 360}deg);
         `;
 
         return piece;
     }
 
     // Create confetti burst
-    function confettiBurst() {
-        for (let i = 0; i < 150; i++) {
-            setTimeout(() => {
-                if (document.getElementById('confetti-container')) {
-                    const piece = createConfettiPiece();
-                    confettiContainer.appendChild(piece);
+    for (let i = 0; i < 100; i++) {
+        setTimeout(() => {
+            const piece = createConfettiPiece();
+            confettiContainer.appendChild(piece);
 
-                    // Remove piece after animation
-                    setTimeout(() => {
-                        if (piece.parentNode) {
-                            piece.parentNode.removeChild(piece);
-                        }
-                    }, 5000);
+            setTimeout(() => {
+                if (piece.parentNode) {
+                    piece.parentNode.removeChild(piece);
                 }
-            }, i * 20);
-        }
+            }, 5000);
+        }, i * 30);
     }
 
-    // Add CSS animation for falling confetti
+    // Add CSS animation
     if (!document.getElementById('confetti-styles')) {
         const style = document.createElement('style');
         style.id = 'confetti-styles';
         style.textContent = `
             @keyframes confettiFall {
                 0% {
-                    transform: translateY(-20px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+                    transform: translateY(-20px) rotateZ(0deg);
                     opacity: 1;
                 }
                 100% {
-                    transform: translateY(100vh) rotateX(360deg) rotateY(180deg) rotateZ(360deg);
-                    opacity: 0;
-                }
-            }
-
-            @keyframes confettiSpin {
-                0% { transform: rotateZ(0deg); }
-                100% { transform: rotateZ(360deg); }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-
-    // Start confetti burst
-    confettiBurst();
-
-    // Add extra bursts for more celebration
-    setTimeout(confettiBurst, 300);
-    setTimeout(confettiBurst, 600);
-
-    // Clean up container after animation
-    setTimeout(() => {
-        if (document.getElementById('confetti-container')) {
-            document.body.removeChild(confettiContainer);
-        }
-    }, 8000);
-}
-
-// Mini confetti burst from button
-function createMiniConfetti(button) {
-    const rect = button.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-
-    const miniContainer = document.createElement('div');
-    miniContainer.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 9998;
-    `;
-    document.body.appendChild(miniContainer);
-
-    // Create mini burst
-    for (let i = 0; i < 30; i++) {
-        const piece = document.createElement('div');
-        const isEmoji = Math.random() > 0.5;
-
-        if (isEmoji) {
-            piece.textContent = ['✨', '💜', '🖤', '💫'][Math.floor(Math.random() * 4)];
-            piece.style.fontSize = '12px';
-        } else {
-            piece.style.width = piece.style.height = '4px';
-            piece.style.backgroundColor = ['#9932CC', '#FFB6C1', '#000000'][Math.floor(Math.random() * 3)];
-            piece.style.borderRadius = '50%';
-        }
-
-        const angle = (Math.PI * 2 * i) / 30;
-        const velocity = Math.random() * 3 + 2;
-        const startX = centerX;
-        const startY = centerY;
-
-        piece.style.cssText += `
-            position: absolute;
-            left: ${startX}px;
-            top: ${startY}px;
-            animation: miniConfettiBurst 0.8s ease-out forwards;
-            --dx: ${Math.cos(angle) * velocity * 20}px;
-            --dy: ${Math.sin(angle) * velocity * 20}px;
-        `;
-
-        miniContainer.appendChild(piece);
-    }
-
-    // Add mini confetti animation if not exists
-    if (!document.getElementById('mini-confetti-styles')) {
-        const style = document.createElement('style');
-        style.id = 'mini-confetti-styles';
-        style.textContent = `
-            @keyframes miniConfettiBurst {
-                0% {
-                    transform: translate(0, 0) scale(1);
-                    opacity: 1;
-                }
-                100% {
-                    transform: translate(var(--dx), var(--dy)) scale(0);
+                    transform: translateY(100vh) rotateZ(360deg);
                     opacity: 0;
                 }
             }
@@ -1083,24 +572,53 @@ function createMiniConfetti(button) {
 
     // Clean up
     setTimeout(() => {
-        if (miniContainer.parentNode) {
-            miniContainer.parentNode.removeChild(miniContainer);
+        if (confettiContainer.parentNode) {
+            confettiContainer.parentNode.removeChild(confettiContainer);
         }
-    }, 1000);
+    }, 8000);
 }
 
-// Enhanced Order Success with Confetti
-function triggerOrderConfetti() {
-    // Create multiple confetti bursts
-    createConfetti();
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.textContent = message;
 
-    // Add extra celebration effects
-    setTimeout(createConfetti, 1000);
+    const colors = {
+        success: 'linear-gradient(45deg, #28a745, #20c997)',
+        error: 'linear-gradient(45deg, #dc3545, #fd7e14)',
+        info: 'linear-gradient(45deg, #9932CC, #FFB6C1)'
+    };
 
-    // Show celebration notification
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${colors[type]};
+        color: white;
+        padding: 15px 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 9999;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        max-width: 300px;
+        font-weight: 500;
+    `;
+
+    document.body.appendChild(notification);
+
     setTimeout(() => {
-        showNotification('🎉 Congratulations! Your order is confirmed! 🦇');
-    }, 500);
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
 }
 
 // Update cart count in navigation
