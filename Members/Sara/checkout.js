@@ -1,9 +1,7 @@
-// Perfect Checkout System - Bug-free Implementation
-class CheckoutSystem {
+// Single Page Checkout System - Simple & Clean
+class SinglePageCheckout {
     constructor() {
         this.cart = [];
-        this.currentStep = 1;
-        this.totalSteps = 3;
         this.promoCode = null;
         this.discount = 0;
         this.taxRate = 0.08; // 8% default tax
@@ -27,7 +25,6 @@ class CheckoutSystem {
         this.updateCartCount();
         this.populateOrderItems();
         this.calculateTotals();
-        this.updateUI();
     }
     
     loadCart() {
@@ -54,13 +51,13 @@ class CheckoutSystem {
             this.cart = [];
         }
     }
-
+    
     getItemEmoji(item) {
         // If item already has emoji, use it
         if (item.emoji && !item.emoji.includes('.')) {
             return item.emoji;
         }
-
+        
         // Map file paths to emojis
         const imageToEmojiMap = {
             'hoodie.webp': '🖤',
@@ -87,12 +84,12 @@ class CheckoutSystem {
             'mirrors.webp': '🪞',
             'cur tins.webp': '🏠'
         };
-
+        
         // Check if item.image is a file path
         if (item.image && item.image.includes('.')) {
             return imageToEmojiMap[item.image] || '🖤';
         }
-
+        
         // Fallback to item.image or default emoji
         return item.image || '🖤';
     }
@@ -106,7 +103,7 @@ class CheckoutSystem {
     }
     
     showEmptyCart() {
-        document.querySelector('.checkout-layout').innerHTML = `
+        document.querySelector('.single-page-layout').innerHTML = `
             <div class="empty-cart-container">
                 <div class="empty-cart-content">
                     <div class="empty-icon">🛍️</div>
@@ -122,18 +119,6 @@ class CheckoutSystem {
     }
     
     setupEventListeners() {
-        // Step navigation
-        const nextBtn = document.getElementById('nextBtn');
-        const prevBtn = document.getElementById('prevBtn');
-        
-        if (nextBtn) {
-            nextBtn.addEventListener('click', () => this.nextStep());
-        }
-        
-        if (prevBtn) {
-            prevBtn.addEventListener('click', () => this.prevStep());
-        }
-        
         // Cart button
         const cartBtn = document.getElementById('cartBtn');
         if (cartBtn) {
@@ -180,17 +165,10 @@ class CheckoutSystem {
     }
     
     setupFormValidation() {
-        const forms = ['customerForm', 'shippingForm'];
-        
-        forms.forEach(formId => {
-            const form = document.getElementById(formId);
-            if (form) {
-                const inputs = form.querySelectorAll('input[required], select[required]');
-                inputs.forEach(input => {
-                    input.addEventListener('blur', () => this.validateField(input));
-                    input.addEventListener('input', () => this.clearFieldError(input));
-                });
-            }
+        const inputs = document.querySelectorAll('input[required], select[required]');
+        inputs.forEach(input => {
+            input.addEventListener('blur', () => this.validateField(input));
+            input.addEventListener('input', () => this.clearFieldError(input));
         });
     }
     
@@ -243,90 +221,17 @@ class CheckoutSystem {
         }
     }
     
-    validateCurrentStep() {
+    validateAllFields() {
         let isValid = true;
+        const requiredFields = document.querySelectorAll('input[required], select[required]');
         
-        if (this.currentStep === 2) {
-            // Validate customer form
-            const form = document.getElementById('customerForm');
-            const requiredFields = form.querySelectorAll('input[required]');
-            
-            requiredFields.forEach(field => {
-                if (!this.validateField(field)) {
-                    isValid = false;
-                }
-            });
-        } else if (this.currentStep === 3) {
-            // Validate shipping form
-            const form = document.getElementById('shippingForm');
-            const requiredFields = form.querySelectorAll('input[required], select[required]');
-            
-            requiredFields.forEach(field => {
-                if (!this.validateField(field)) {
-                    isValid = false;
-                }
-            });
-        }
-        
-        return isValid;
-    }
-    
-    nextStep() {
-        if (!this.validateCurrentStep()) {
-            this.showNotification('Please fill in all required fields', 'error');
-            return;
-        }
-        
-        if (this.currentStep < this.totalSteps) {
-            this.currentStep++;
-            this.updateStepDisplay();
-        } else {
-            this.placeOrder();
-        }
-    }
-    
-    prevStep() {
-        if (this.currentStep > 1) {
-            this.currentStep--;
-            this.updateStepDisplay();
-        }
-    }
-    
-    updateStepDisplay() {
-        // Hide all steps
-        document.querySelectorAll('.checkout-step').forEach(step => {
-            step.classList.remove('active');
+        requiredFields.forEach(field => {
+            if (!this.validateField(field)) {
+                isValid = false;
+            }
         });
         
-        // Show current step
-        const currentStepElement = document.getElementById(`step${this.currentStep}`);
-        if (currentStepElement) {
-            currentStepElement.classList.add('active');
-        }
-        
-        // Update navigation buttons
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const placeOrderBtn = document.getElementById('placeOrderBtn');
-        
-        if (prevBtn) {
-            prevBtn.style.display = this.currentStep > 1 ? 'block' : 'none';
-        }
-        
-        if (nextBtn) {
-            if (this.currentStep === this.totalSteps) {
-                nextBtn.style.display = 'none';
-                if (placeOrderBtn) {
-                    placeOrderBtn.disabled = false;
-                }
-            } else {
-                nextBtn.style.display = 'block';
-                nextBtn.textContent = this.currentStep === this.totalSteps - 1 ? 'Review Order →' : 'Continue →';
-                if (placeOrderBtn) {
-                    placeOrderBtn.disabled = true;
-                }
-            }
-        }
+        return isValid;
     }
     
     updateCartCount() {
@@ -489,7 +394,6 @@ class CheckoutSystem {
     
     applyPromoCode() {
         const codeInput = document.getElementById('promoCode');
-        const messageElement = document.getElementById('promoMessage');
         const code = codeInput.value.trim().toUpperCase();
         
         if (!code) {
@@ -537,13 +441,14 @@ class CheckoutSystem {
         }
     }
     
-    updateUI() {
-        this.updateStepDisplay();
-    }
-    
     async placeOrder() {
-        if (!this.validateCurrentStep()) {
+        if (!this.validateAllFields()) {
             this.showNotification('Please fill in all required fields', 'error');
+            // Scroll to first error
+            const firstError = document.querySelector('.field-error');
+            if (firstError) {
+                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
             return;
         }
         
@@ -745,10 +650,10 @@ class CheckoutSystem {
     }
 }
 
-// Initialize checkout system
+// Initialize single page checkout system
 let checkout;
 document.addEventListener('DOMContentLoaded', () => {
-    checkout = new CheckoutSystem();
+    checkout = new SinglePageCheckout();
 });
 
 // Global functions for onclick handlers
