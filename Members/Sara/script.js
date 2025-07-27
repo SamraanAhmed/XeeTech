@@ -336,10 +336,14 @@ function openSearch() {
 function closeSearch() {
     const searchDropdown = document.getElementById('searchDropdown');
     const searchInput = document.getElementById('searchInput');
-    
-    searchDropdown.classList.remove('active');
+
+    if (searchDropdown) {
+        searchDropdown.classList.remove('active');
+    }
     searchOpen = false;
-    searchInput.value = '';
+    if (searchInput) {
+        searchInput.value = '';
+    }
 }
 
 function performSearch(query) {
