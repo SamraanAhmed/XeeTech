@@ -645,4 +645,6 @@ function updateCartCount() {
 }
 
 // Initialize cart count
-updateCartCount();
+document.addEventListener('DOMContentLoaded', function() {
+    updateCartCount();
+});
