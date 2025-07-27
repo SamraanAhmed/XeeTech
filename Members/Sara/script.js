@@ -918,6 +918,12 @@ function handleCartQuantityChange(e) {
 }
 
 function toggleCart() {
+    // If we're on the checkout page, redirect to shop page
+    if (window.location.pathname.includes('checkout.html')) {
+        window.location.href = 'shop.html';
+        return;
+    }
+
     if (cartOpen) {
         closeCart();
     } else {
@@ -929,6 +935,13 @@ function openCart() {
     const cartSidebar = document.getElementById('cartSidebar');
     const cartOverlay = document.getElementById('cartOverlay');
 
+    // Check if cart elements exist (they might not exist on checkout page)
+    if (!cartSidebar || !cartOverlay) {
+        // On checkout page or pages without cart sidebar, redirect to cart/checkout
+        window.location.href = 'checkout.html';
+        return;
+    }
+
     cartSidebar.classList.add('active');
     cartOverlay.classList.add('active');
     cartOpen = true;
@@ -938,6 +951,11 @@ function openCart() {
 function closeCart() {
     const cartSidebar = document.getElementById('cartSidebar');
     const cartOverlay = document.getElementById('cartOverlay');
+
+    // Check if cart elements exist before trying to manipulate them
+    if (!cartSidebar || !cartOverlay) {
+        return;
+    }
 
     cartSidebar.classList.remove('active');
     cartOverlay.classList.remove('active');
@@ -2926,13 +2944,55 @@ function addToCartFromShop(product) {
     if (existingItem) {
         existingItem.quantity += 1;
     } else {
-        cart.push(product);
+        // Ensure new items have proper structure with emoji mapping
+        const cartItem = {
+            ...product,
+            quantity: 1,
+            emoji: getEmojiForImage(product.image || product.emoji || '🖤')
+        };
+        cart.push(cartItem);
     }
 
     updateCartUI();
     saveCart();
     showCartAddedAnimation();
     showNotification(`${product.name} added to your bag!`);
+}
+
+function getEmojiForImage(image) {
+    // If it's already an emoji, return it
+    if (image && !image.includes('.')) {
+        return image;
+    }
+
+    // Map file paths to emojis
+    const imageToEmojiMap = {
+        'hoodie.webp': '🖤',
+        'croptop.webp': '💜',
+        'jacket.webp': '🦇',
+        'dress.jpg': '👗',
+        'goth dress.jpeg': '🖤',
+        'pants.jpeg': '👖',
+        'headband.webp': '🎀',
+        'choker.jpeg': '⛓️',
+        'clip.jpeg': '💎',
+        'phone cae.webp': '📱',
+        'bag charm.webp': '🔮',
+        'sara.webp': '🧸',
+        'notebook.webp': '📓',
+        'pen.webp': '✒️',
+        'sticker.webp': '✨',
+        'planner.webp': '📅',
+        'markers.webp': '🖊️',
+        'wall art.webp': '🖼️',
+        'fairy lights.webp': '💫',
+        'pillow.webp': '🛏️',
+        'candle.webp': '🕯️',
+        'mirrors.webp': '🪞',
+        'cur tins.webp': '🏠'
+    };
+
+    return imageToEmojiMap[image] || '🖤';
 }
 
 function setupSortFunctionality() {
@@ -3455,6 +3515,11 @@ function initializeSocialProof() {
 }
 
 function showRecentlyPurchasedNotifications() {
+    // Only show on homepage and shop page, not on checkout
+    if (window.location.pathname.includes('checkout.html')) {
+        return;
+    }
+
     const recentPurchases = [
         { name: 'Gothic Lolita Dress', location: 'Tokyo, Japan', time: '2 minutes ago' },
         { name: 'Devil Horn Headband', location: 'Los Angeles, CA', time: '5 minutes ago' },
@@ -3464,8 +3529,15 @@ function showRecentlyPurchasedNotifications() {
     ];
 
     let currentIndex = 0;
+    let notificationInterval;
 
     function showNextNotification() {
+        // Remove any existing notifications first
+        const existingNotifications = document.querySelectorAll('.recent-purchase-notification');
+        existingNotifications.forEach(notification => {
+            closeRecentPurchaseNotification(notification);
+        });
+
         if (currentIndex < recentPurchases.length) {
             const purchase = recentPurchases[currentIndex];
             showRecentPurchaseNotification(purchase);
@@ -3475,11 +3547,18 @@ function showRecentlyPurchasedNotifications() {
         }
     }
 
-    // Show first notification after 3 seconds
-    setTimeout(showNextNotification, 3000);
+    // Show first notification after 5 seconds
+    setTimeout(showNextNotification, 5000);
 
-    // Show subsequent notifications every 25 seconds
-    setInterval(showNextNotification, 25000);
+    // Show subsequent notifications every 30 seconds
+    notificationInterval = setInterval(showNextNotification, 30000);
+
+    // Clean up on page unload
+    window.addEventListener('beforeunload', () => {
+        if (notificationInterval) {
+            clearInterval(notificationInterval);
+        }
+    });
 }
 
 function showRecentPurchaseNotification(purchase) {
@@ -3487,7 +3566,7 @@ function showRecentPurchaseNotification(purchase) {
     notification.className = 'recent-purchase-notification';
     notification.innerHTML = `
         <div class="recent-purchase-content">
-            <div class="recent-purchase-icon">🛍️</div>
+            <div class="recent-purchase-icon">��️</div>
             <div class="recent-purchase-text">
                 <div class="purchase-item">${purchase.name}</div>
                 <div class="purchase-details">Recently purchased in ${purchase.location}</div>
@@ -3609,12 +3688,18 @@ function showRecentPurchaseNotification(purchase) {
 }
 
 function closeRecentPurchaseNotification(notification) {
-    notification.classList.remove('show');
-    setTimeout(() => {
-        if (document.body.contains(notification)) {
-            document.body.removeChild(notification);
-        }
-    }, 400);
+    if (notification && notification.parentNode) {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            if (notification.parentNode && document.body.contains(notification)) {
+                try {
+                    document.body.removeChild(notification);
+                } catch (e) {
+                    console.log('Notification already removed');
+                }
+            }
+        }, 400);
+    }
 }
 
 function updateVisitorCounter() {

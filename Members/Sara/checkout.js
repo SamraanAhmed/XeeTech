@@ -1,1117 +1,661 @@
-// Checkout page functionality
-let cart = JSON.parse(localStorage.getItem('kuromiCart')) || [];
-let selectedShipping = 'standard';
-let selectedPayment = 'credit-card';
-let appliedPromoCode = null;
-let promoDiscount = 0;
-
-// Shipping costs
-const shippingCosts = {
-    standard: 5.99,
-    express: 12.99,
-    overnight: 24.99
-};
-
-// Promo codes
-const promoCodes = {
-    'NIGHTMARE30': { discount: 0.30, type: 'percentage' },
-    'MISCHIEF10': { discount: 0.10, type: 'percentage' },
-    'WELCOME15': { discount: 0.15, type: 'percentage' },
-    'FREESHIP': { discount: 5.99, type: 'fixed' }
-};
-
-// Initialize checkout page
-document.addEventListener('DOMContentLoaded', function() {
-    initializeCheckout();
-    setupEventListeners();
-    updateOrderSummary();
-});
-
-function initializeCheckout() {
-    // Check if cart is empty
-    if (cart.length === 0) {
-        showEmptyCartMessage();
-        return;
+// Single Page Checkout System - Simple & Clean
+class SinglePageCheckout {
+    constructor() {
+        this.cart = [];
+        this.promoCode = null;
+        this.discount = 0;
+        this.taxRate = 0.08; // 8% default tax
+        this.shippingCost = 5.99;
+        
+        // Promo codes
+        this.promoCodes = {
+            'NIGHTMARE30': { discount: 0.30, type: 'percentage', description: '30% off' },
+            'MISCHIEF10': { discount: 0.10, type: 'percentage', description: '10% off' },
+            'WELCOME15': { discount: 0.15, type: 'percentage', description: '15% off' },
+            'FREESHIP': { discount: 5.99, type: 'fixed', description: 'Free shipping' }
+        };
+        
+        this.init();
     }
-
-    // Set up mobile menu functionality
-    setupMobileMenu();
     
-    // Populate order summary
-    populateOrderSummary();
-    
-    // Auto-fill customer info if available
-    loadSavedCustomerInfo();
-    
-    // Set default shipping method
-    updateShippingCost();
-    
-    // Show/hide payment forms based on selection
-    togglePaymentForm();
-    
-    // Format card number input
-    formatCardInputs();
-}
-
-function setupEventListeners() {
-    // Mobile order summary toggle
-    const orderToggle = document.getElementById('orderToggle');
-    if (orderToggle) {
-        orderToggle.addEventListener('click', toggleMobileOrderSummary);
+    init() {
+        this.loadCart();
+        this.setupEventListeners();
+        this.validateCartAndRedirect();
+        this.updateCartCount();
+        this.populateOrderItems();
+        this.calculateTotals();
     }
-
-    // Shipping method selection
-    document.querySelectorAll('input[name="shipping"]').forEach(input => {
-        input.addEventListener('change', function() {
-            selectedShipping = this.value;
-            updateShippingCost();
-            updateOrderSummary();
-        });
-    });
-
-    // Payment method selection
-    document.querySelectorAll('input[name="payment"]').forEach(input => {
-        input.addEventListener('change', function() {
-            selectedPayment = this.value;
-            togglePaymentForm();
-        });
-    });
-
-    // Promo code application
-    const applyPromoBtn = document.getElementById('applyPromo');
-    if (applyPromoBtn) {
-        applyPromoBtn.addEventListener('click', applyPromoCode);
-    }
-
-    // Enter key for promo code
-    const promoInput = document.getElementById('promoCode');
-    if (promoInput) {
-        promoInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                applyPromoCode();
+    
+    loadCart() {
+        try {
+            const cartData = localStorage.getItem('kuromiCart');
+            if (cartData) {
+                this.cart = JSON.parse(cartData);
+                // Ensure all items have required properties
+                this.cart = this.cart.map(item => ({
+                    id: item.id || Date.now(),
+                    name: item.name || 'Unknown Item',
+                    price: parseFloat(item.price) || 0,
+                    quantity: parseInt(item.quantity) || 1,
+                    image: this.getItemEmoji(item),
+                    category: item.category || 'misc'
+                }));
+                console.log('Cart loaded successfully:', this.cart);
+            } else {
+                this.cart = [];
+                console.log('No cart data found');
             }
-        });
+        } catch (error) {
+            console.error('Error loading cart:', error);
+            this.cart = [];
+        }
     }
-
-    // Complete order button
-    const completeOrderBtn = document.getElementById('completeOrderBtn');
-    if (completeOrderBtn) {
-        completeOrderBtn.addEventListener('click', processOrder);
+    
+    getItemEmoji(item) {
+        // If item already has emoji, use it
+        if (item.emoji && !item.emoji.includes('.')) {
+            return item.emoji;
+        }
+        
+        // Map file paths to emojis
+        const imageToEmojiMap = {
+            'hoodie.webp': '🖤',
+            'croptop.webp': '💜',
+            'jacket.webp': '🦇',
+            'dress.jpg': '👗',
+            'goth dress.jpeg': '🖤',
+            'pants.jpeg': '👖',
+            'headband.webp': '🎀',
+            'choker.jpeg': '⛓️',
+            'clip.jpeg': '💎',
+            'phone cae.webp': '📱',
+            'bag charm.webp': '🔮',
+            'sara.webp': '🧸',
+            'notebook.webp': '📓',
+            'pen.webp': '✒️',
+            'sticker.webp': '✨',
+            'planner.webp': '📅',
+            'markers.webp': '🖊️',
+            'wall art.webp': '🖼️',
+            'fairy lights.webp': '💫',
+            'pillow.webp': '🛏️',
+            'candle.webp': '🕯️',
+            'mirrors.webp': '🪞',
+            'cur tins.webp': '🏠'
+        };
+        
+        // Check if item.image is a file path
+        if (item.image && item.image.includes('.')) {
+            return imageToEmojiMap[item.image] || '🖤';
+        }
+        
+        // Fallback to item.image or default emoji
+        return item.image || '🖤';
     }
-
-
-
-    // Form validation on input
-    setupFormValidation();
     
-    // Country selection
-    const countrySelect = document.getElementById('country');
-    if (countrySelect) {
-        countrySelect.addEventListener('change', updateTaxCalculation);
+    validateCartAndRedirect() {
+        if (this.cart.length === 0) {
+            this.showEmptyCart();
+            return false;
+        }
+        return true;
     }
-}
-
-function setupMobileMenu() {
-    const mobileToggle = document.getElementById('mobileToggle');
-    const navMenu = document.getElementById('navMenu');
     
-    if (mobileToggle && navMenu) {
-        mobileToggle.addEventListener('click', function() {
-            navMenu.classList.toggle('active');
-            mobileToggle.classList.toggle('active');
-        });
-    }
-}
-
-function showEmptyCartMessage() {
-    const checkoutMain = document.querySelector('.checkout-main');
-    checkoutMain.innerHTML = `
-        <div class="container">
-            <div class="empty-checkout">
-                <div class="empty-icon">🛍️</div>
-                <h2>Your cart is empty</h2>
-                <p>Add some mischievous fashion to your cart before checking out!</p>
-                <a href="shop.html" class="shop-btn">
-                    <span>Continue Shopping</span>
-                    <span>✨</span>
-                </a>
-            </div>
-        </div>
-    `;
-    
-    // Add styles for empty cart
-    const style = document.createElement('style');
-    style.textContent = `
-        .empty-checkout {
-            text-align: center;
-            padding: 80px 20px;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        
-        .empty-icon {
-            font-size: 4em;
-            margin-bottom: 20px;
-        }
-        
-        .empty-checkout h2 {
-            color: var(--midnight-black);
-            margin-bottom: 15px;
-            font-size: 1.8em;
-        }
-        
-        .empty-checkout p {
-            color: var(--midnight-black);
-            opacity: 0.7;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-        
-        .shop-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: linear-gradient(45deg, var(--deep-orchid), var(--bubblegum-pink));
-            color: var(--soft-white);
-            padding: 15px 30px;
-            border-radius: var(--radius-large);
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition-smooth);
-        }
-        
-        .shop-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--glow-effect);
-        }
-    `;
-    document.head.appendChild(style);
-}
-
-function populateOrderSummary() {
-    const summaryItems = document.getElementById('summaryItems');
-    const orderDetailsMobile = document.getElementById('orderDetailsMobile');
-    
-    const itemsHTML = cart.map(item => {
-        const itemTotal = (item.price * item.quantity).toFixed(2);
-        const options = [];
-        if (item.selectedSize) options.push(`Size: ${item.selectedSize}`);
-        if (item.selectedColor) options.push(`Color: ${item.selectedColor}`);
-        
-        return `
-            <div class="summary-item">
-                <img src="${item.image}" alt="${item.name}" class="item-image" onerror="this.style.display='none'">
-                <div class="item-details">
-                    <div class="item-name">${item.name}</div>
-                    ${options.length > 0 ? `<div class="item-options">${options.join(', ')}</div>` : ''}
-                    <div class="item-quantity">Qty: ${item.quantity}</div>
+    showEmptyCart() {
+        document.querySelector('.single-page-layout').innerHTML = `
+            <div class="empty-cart-container">
+                <div class="empty-cart-content">
+                    <div class="empty-icon">🛍️</div>
+                    <h2>Your cart is empty</h2>
+                    <p>Looks like you haven't added any mischievous items to your cart yet!</p>
+                    <a href="shop.html" class="btn-primary">
+                        <span>Start Shopping</span>
+                        <span>✨</span>
+                    </a>
                 </div>
-                <div class="item-price">$${itemTotal}</div>
             </div>
         `;
-    }).join('');
-    
-    if (summaryItems) {
-        summaryItems.innerHTML = itemsHTML;
     }
     
-    if (orderDetailsMobile) {
-        orderDetailsMobile.innerHTML = itemsHTML;
-    }
-}
-
-function toggleMobileOrderSummary() {
-    const orderToggle = document.getElementById('orderToggle');
-    const orderDetailsMobile = document.getElementById('orderDetailsMobile');
-    
-    orderToggle.classList.toggle('active');
-    orderDetailsMobile.classList.toggle('active');
-}
-
-function updateShippingCost() {
-    const shippingCostElement = document.getElementById('shippingCost');
-    const cost = shippingCosts[selectedShipping];
-    
-    if (shippingCostElement) {
-        shippingCostElement.textContent = `$${cost.toFixed(2)}`;
-    }
-}
-
-function updateTaxCalculation() {
-    const country = document.getElementById('country').value;
-    const subtotal = calculateSubtotal();
-    let taxRate = 0;
-    
-    // Simple tax calculation based on country
-    switch (country) {
-        case 'US':
-            taxRate = 0.08; // 8% average sales tax
-            break;
-        case 'CA':
-            taxRate = 0.13; // 13% HST
-            break;
-        case 'UK':
-            taxRate = 0.20; // 20% VAT
-            break;
-        case 'AU':
-            taxRate = 0.10; // 10% GST
-            break;
-        case 'DE':
-        case 'FR':
-            taxRate = 0.19; // 19% VAT
-            break;
-        default:
-            taxRate = 0;
-    }
-    
-    const taxAmount = subtotal * taxRate;
-    const taxAmountElement = document.getElementById('taxAmount');
-    
-    if (taxAmountElement) {
-        taxAmountElement.textContent = `$${taxAmount.toFixed(2)}`;
-    }
-    
-    updateOrderSummary();
-}
-
-function calculateSubtotal() {
-    return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-}
-
-function calculateTax() {
-    const taxElement = document.getElementById('taxAmount');
-    if (taxElement) {
-        const taxText = taxElement.textContent.replace('$', '');
-        return parseFloat(taxText) || 0;
-    }
-    return 0;
-}
-
-function updateOrderSummary() {
-    const subtotal = calculateSubtotal();
-    const shipping = shippingCosts[selectedShipping];
-    const tax = calculateTax();
-    const discount = promoDiscount;
-    const total = subtotal + shipping + tax - discount;
-    
-    // Update subtotal
-    const subtotalElement = document.getElementById('subtotal');
-    if (subtotalElement) {
-        subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
-    }
-    
-    // Update discount
-    const discountRow = document.getElementById('discountRow');
-    const discountAmount = document.getElementById('discountAmount');
-    if (discount > 0) {
-        discountRow.style.display = 'flex';
-        discountAmount.textContent = `-$${discount.toFixed(2)}`;
-    } else {
-        discountRow.style.display = 'none';
-    }
-    
-    // Update total
-    const orderTotal = document.getElementById('orderTotal');
-    const finalTotal = document.getElementById('finalTotal');
-    const orderTotalMobile = document.getElementById('orderTotalMobile');
-    
-    if (orderTotal) orderTotal.textContent = `$${total.toFixed(2)}`;
-    if (finalTotal) finalTotal.textContent = `$${total.toFixed(2)}`;
-    if (orderTotalMobile) orderTotalMobile.textContent = `$${total.toFixed(2)}`;
-}
-
-function applyPromoCode() {
-    const promoInput = document.getElementById('promoCode');
-    const code = promoInput.value.trim().toUpperCase();
-    
-    if (!code) {
-        showNotification('Please enter a promo code');
-        return;
-    }
-    
-    if (appliedPromoCode === code) {
-        showNotification('This promo code is already applied');
-        return;
-    }
-    
-    if (promoCodes[code]) {
-        const promo = promoCodes[code];
-        const subtotal = calculateSubtotal();
+    setupEventListeners() {
+        // Cart button
+        const cartBtn = document.getElementById('cartBtn');
+        if (cartBtn) {
+            cartBtn.addEventListener('click', () => {
+                window.location.href = 'shop.html';
+            });
+        }
         
-        if (promo.type === 'percentage') {
-            promoDiscount = subtotal * promo.discount;
+        // Promo code
+        const promoToggle = document.getElementById('promoToggle');
+        const applyPromo = document.getElementById('applyPromo');
+        const promoCodeInput = document.getElementById('promoCode');
+        
+        if (promoToggle) {
+            promoToggle.addEventListener('click', () => this.togglePromoCode());
+        }
+        
+        if (applyPromo) {
+            applyPromo.addEventListener('click', () => this.applyPromoCode());
+        }
+        
+        if (promoCodeInput) {
+            promoCodeInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    this.applyPromoCode();
+                }
+            });
+        }
+        
+        // Place order
+        const placeOrderBtn = document.getElementById('placeOrderBtn');
+        if (placeOrderBtn) {
+            placeOrderBtn.addEventListener('click', () => this.placeOrder());
+        }
+        
+        // Form validation
+        this.setupFormValidation();
+        
+        // Country/state change for tax calculation
+        const countrySelect = document.getElementById('country');
+        if (countrySelect) {
+            countrySelect.addEventListener('change', () => this.calculateTotals());
+        }
+    }
+    
+    setupFormValidation() {
+        const inputs = document.querySelectorAll('input[required], select[required]');
+        inputs.forEach(input => {
+            input.addEventListener('blur', () => this.validateField(input));
+            input.addEventListener('input', () => this.clearFieldError(input));
+        });
+    }
+    
+    validateField(field) {
+        const value = field.value.trim();
+        let isValid = true;
+        let message = '';
+        
+        if (field.hasAttribute('required') && !value) {
+            isValid = false;
+            message = 'This field is required';
+        } else if (field.type === 'email' && value) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(value)) {
+                isValid = false;
+                message = 'Please enter a valid email address';
+            }
+        }
+        
+        if (!isValid) {
+            this.showFieldError(field, message);
         } else {
-            promoDiscount = promo.discount;
+            this.clearFieldError(field);
         }
         
-        appliedPromoCode = code;
-        promoInput.value = code;
-        promoInput.disabled = true;
+        return isValid;
+    }
+    
+    showFieldError(field, message) {
+        field.classList.add('error');
         
-        const applyBtn = document.getElementById('applyPromo');
-        applyBtn.textContent = 'Applied ✓';
-        applyBtn.disabled = true;
-        
-        updateOrderSummary();
-        showNotification(`Promo code applied! You saved $${promoDiscount.toFixed(2)}`);
-    } else {
-        showNotification('Invalid promo code');
-        promoInput.focus();
-    }
-}
-
-function togglePaymentForm() {
-    const cardForm = document.getElementById('cardForm');
-    
-    if (selectedPayment === 'credit-card') {
-        cardForm.style.display = 'block';
-    } else {
-        cardForm.style.display = 'none';
-    }
-}
-
-function formatCardInputs() {
-    const cardNumber = document.getElementById('cardNumber');
-    const expiryDate = document.getElementById('expiryDate');
-    const cvv = document.getElementById('cvv');
-    
-    if (cardNumber) {
-        cardNumber.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
-            e.target.value = formattedValue;
-        });
-    }
-    
-    if (expiryDate) {
-        expiryDate.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length >= 2) {
-                value = value.substring(0, 2) + '/' + value.substring(2, 4);
-            }
-            e.target.value = value;
-        });
-    }
-    
-    if (cvv) {
-        cvv.addEventListener('input', function(e) {
-            e.target.value = e.target.value.replace(/\D/g, '');
-        });
-    }
-}
-
-function setupFormValidation() {
-    // Real-time validation for required fields
-    const requiredFields = document.querySelectorAll('input[required], select[required]');
-    
-    requiredFields.forEach(field => {
-        field.addEventListener('blur', function() {
-            validateField(this);
-        });
-        
-        field.addEventListener('input', function() {
-            if (this.classList.contains('error')) {
-                validateField(this);
-            }
-        });
-    });
-    
-    // Email validation
-    const emailField = document.getElementById('email');
-    if (emailField) {
-        emailField.addEventListener('blur', function() {
-            validateEmail(this);
-        });
-    }
-}
-
-function validateField(field) {
-    const value = field.value.trim();
-    
-    if (field.hasAttribute('required') && !value) {
-        showFieldError(field, 'This field is required');
-        return false;
-    } else {
-        clearFieldError(field);
-        return true;
-    }
-}
-
-function validateEmail(field) {
-    const email = field.value.trim();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
-    if (email && !emailRegex.test(email)) {
-        showFieldError(field, 'Please enter a valid email address');
-        return false;
-    } else {
-        clearFieldError(field);
-        return true;
-    }
-}
-
-function showFieldError(field, message) {
-    field.classList.add('error');
-    
-    // Remove existing error message
-    const existingError = field.parentElement.querySelector('.field-error');
-    if (existingError) {
-        existingError.remove();
-    }
-    
-    // Add new error message
-    const errorElement = document.createElement('div');
-    errorElement.className = 'field-error';
-    errorElement.textContent = message;
-    field.parentElement.appendChild(errorElement);
-    
-    // Add error styles
-    if (!document.getElementById('validation-styles')) {
-        const style = document.createElement('style');
-        style.id = 'validation-styles';
-        style.textContent = `
-            .form-group input.error,
-            .form-group select.error {
-                border-color: #dc3545;
-                box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
-            }
-            
-            .field-error {
-                color: #dc3545;
-                font-size: 0.8em;
-                margin-top: 5px;
-            }
-        `;
-        document.head.appendChild(style);
-    }
-}
-
-function clearFieldError(field) {
-    field.classList.remove('error');
-    const errorElement = field.parentElement.querySelector('.field-error');
-    if (errorElement) {
-        errorElement.remove();
-    }
-}
-
-function validateAllForms() {
-    let isValid = true;
-    
-    // Validate customer information
-    const customerForm = document.getElementById('customerForm');
-    const requiredCustomerFields = customerForm.querySelectorAll('input[required], select[required]');
-    
-    requiredCustomerFields.forEach(field => {
-        if (!validateField(field)) {
-            isValid = false;
+        // Remove existing error
+        const existingError = field.parentElement.querySelector('.field-error');
+        if (existingError) {
+            existingError.remove();
         }
-    });
-    
-    // Validate email
-    const emailField = document.getElementById('email');
-    if (!validateEmail(emailField)) {
-        isValid = false;
+        
+        // Add new error
+        const errorElement = document.createElement('div');
+        errorElement.className = 'field-error';
+        errorElement.textContent = message;
+        field.parentElement.appendChild(errorElement);
     }
     
-    // Validate shipping address
-    const shippingForm = document.getElementById('shippingForm');
-    const requiredShippingFields = shippingForm.querySelectorAll('input[required], select[required]');
-    
-    requiredShippingFields.forEach(field => {
-        if (!validateField(field)) {
-            isValid = false;
+    clearFieldError(field) {
+        field.classList.remove('error');
+        const errorElement = field.parentElement.querySelector('.field-error');
+        if (errorElement) {
+            errorElement.remove();
         }
-    });
+    }
     
-    // Validate payment method
-    if (selectedPayment === 'credit-card') {
-        const cardForm = document.getElementById('cardForm');
-        const requiredCardFields = cardForm.querySelectorAll('input[required]');
+    validateAllFields() {
+        let isValid = true;
+        const requiredFields = document.querySelectorAll('input[required], select[required]');
         
-        requiredCardFields.forEach(field => {
-            if (!validateField(field)) {
+        requiredFields.forEach(field => {
+            if (!this.validateField(field)) {
                 isValid = false;
             }
         });
         
-        // Validate card number
-        const cardNumber = document.getElementById('cardNumber');
-        const cardValue = cardNumber.value.replace(/\s/g, '');
-        if (cardValue.length < 13 || cardValue.length > 19) {
-            showFieldError(cardNumber, 'Please enter a valid card number');
-            isValid = false;
+        return isValid;
+    }
+    
+    updateCartCount() {
+        const cartCount = document.getElementById('cartCount');
+        if (cartCount) {
+            const totalItems = this.cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+        }
+    }
+    
+    populateOrderItems() {
+        const orderReview = document.getElementById('orderReview');
+        const summaryItems = document.getElementById('summaryItems');
+        
+        if (this.cart.length === 0) {
+            return;
         }
         
-        // Validate expiry date
-        const expiryDate = document.getElementById('expiryDate');
-        const expiryValue = expiryDate.value;
-        if (expiryValue.length !== 5) {
-            showFieldError(expiryDate, 'Please enter a valid expiry date (MM/YY)');
-            isValid = false;
-        }
-        
-        // Validate CVV
-        const cvv = document.getElementById('cvv');
-        const cvvValue = cvv.value;
-        if (cvvValue.length < 3 || cvvValue.length > 4) {
-            showFieldError(cvv, 'Please enter a valid CVV');
-            isValid = false;
-        }
-    }
-    
-    return isValid;
-}
-
-function processOrder() {
-    // Validate all forms
-    if (!validateAllForms()) {
-        showNotification('Please correct the errors in the form');
-
-        // Scroll to first error
-        const firstError = document.querySelector('.field-error');
-        if (firstError) {
-            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-        return;
-    }
-
-    // Add immediate button celebration on click
-    const completeOrderBtn = document.getElementById('completeOrderBtn');
-    completeOrderBtn.classList.add('btn-celebration');
-
-    // Mini confetti burst on button click
-    createMiniConfetti(completeOrderBtn);
-    
-    // Show processing state with celebration
-    const completeOrderBtn = document.getElementById('completeOrderBtn');
-    const originalText = completeOrderBtn.innerHTML;
-
-    // Add processing animation
-    completeOrderBtn.innerHTML = '<span>Processing Order...</span> ⏳';
-    completeOrderBtn.disabled = true;
-    completeOrderBtn.style.background = 'linear-gradient(45deg, #9932CC, #FFB6C1, #9932CC, #FFB6C1)';
-    completeOrderBtn.style.backgroundSize = '400% 400%';
-    completeOrderBtn.style.animation = 'processingGradient 1s ease-in-out infinite';
-
-    // Add processing animation CSS if not exists
-    if (!document.getElementById('processing-styles')) {
-        const style = document.createElement('style');
-        style.id = 'processing-styles';
-        style.textContent = `
-            @keyframes processingGradient {
-                0% { background-position: 0% 50%; }
-                50% { background-position: 100% 50%; }
-                100% { background-position: 0% 50%; }
-            }
-
-            .btn-celebration {
-                animation: btnCelebrate 0.6s ease-in-out;
-            }
-
-            @keyframes btnCelebrate {
-                0%, 100% { transform: scale(1); }
-                25% { transform: scale(1.1) rotate(-2deg); }
-                75% { transform: scale(1.1) rotate(2deg); }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-    
-    // Collect order data
-    const orderData = collectOrderData();
-    
-    // Simulate order processing
-    setTimeout(() => {
-        // Generate order ID
-        const orderId = 'KUR-' + Date.now();
-
-        // Save order to localStorage
-        const orders = JSON.parse(localStorage.getItem('kuromiOrders') || '[]');
-        orders.push({
-            ...orderData,
-            orderId,
-            orderDate: new Date().toISOString(),
-            status: 'confirmed'
-        });
-        localStorage.setItem('kuromiOrders', JSON.stringify(orders));
-
-        // Clear cart
-        localStorage.removeItem('kuromiCart');
-
-        // 🎉 TRIGGER CONFETTI CELEBRATION! 🎉
-        triggerOrderConfetti();
-
-        // Show success page after confetti starts
-        setTimeout(() => {
-            showOrderSuccess(orderId, orderData);
-        }, 1500);
-
-    }, 2000);
-}
-
-function collectOrderData() {
-    const subtotal = calculateSubtotal();
-    const shipping = shippingCosts[selectedShipping];
-    const tax = calculateTax();
-    const discount = promoDiscount;
-    const total = subtotal + shipping + tax - discount;
-    
-    return {
-        items: [...cart],
-        customer: {
-            firstName: document.getElementById('firstName').value,
-            lastName: document.getElementById('lastName').value,
-            email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value
-        },
-        shipping: {
-            country: document.getElementById('country').value,
-            address: document.getElementById('address').value,
-            apartment: document.getElementById('apartment').value,
-            city: document.getElementById('city').value,
-            state: document.getElementById('state').value,
-            zipCode: document.getElementById('zipCode').value,
-            method: selectedShipping
-        },
-        payment: {
-            method: selectedPayment
-        },
-        pricing: {
-            subtotal,
-            shipping,
-            tax,
-            discount,
-            total
-        },
-        promoCode: appliedPromoCode,
-        notes: document.getElementById('orderNotes').value
-    };
-}
-
-function showOrderSuccess(orderId, orderData) {
-    // Replace page content with success message
-    document.body.innerHTML = `
-        <div class="order-success">
-            <div class="success-container">
-                <div class="success-icon">🎉</div>
-                <h1 class="success-title">Order Confirmed!</h1>
-                <p class="success-message">Thank you ${orderData.customer.firstName}! Your mischievous order has been placed successfully.</p>
-                
-                <div class="order-details">
-                    <h3>Order Details</h3>
-                    <div class="detail-row">
-                        <span>Order ID:</span>
-                        <span>${orderId}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span>Total:</span>
-                        <span>$${orderData.pricing.total.toFixed(2)}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span>Items:</span>
-                        <span>${orderData.items.length} item(s)</span>
-                    </div>
-                    <div class="detail-row">
-                        <span>Shipping Method:</span>
-                        <span>${orderData.shipping.method}</span>
+        const itemsHTML = this.cart.map(item => `
+            <div class="order-item">
+                <div class="item-image">${item.image}</div>
+                <div class="item-details">
+                    <h4 class="item-name">${item.name}</h4>
+                    <p class="item-category">${item.category}</p>
+                    <div class="item-quantity">
+                        <button class="qty-btn" onclick="checkout.updateQuantity(${item.id}, -1)">-</button>
+                        <span class="qty-value">${item.quantity}</span>
+                        <button class="qty-btn" onclick="checkout.updateQuantity(${item.id}, 1)">+</button>
                     </div>
                 </div>
-                
-                <p class="confirmation-note">A confirmation email will be sent to ${orderData.customer.email}</p>
-                
-                <div class="success-actions">
-                    <a href="index.html" class="btn-primary">Continue Shopping</a>
-                    <a href="shop.html" class="btn-secondary">View Products</a>
+                <div class="item-price">
+                    <span class="price">$${(item.price * item.quantity).toFixed(2)}</span>
+                    <span class="unit-price">$${item.price.toFixed(2)} each</span>
                 </div>
+                <button class="remove-item" onclick="checkout.removeItem(${item.id})" title="Remove item">×</button>
             </div>
-        </div>
-    `;
+        `).join('');
+        
+        const summaryHTML = this.cart.map(item => `
+            <div class="summary-item">
+                <div class="item-info">
+                    <span class="item-name">${item.name}</span>
+                    <span class="item-qty">Qty: ${item.quantity}</span>
+                </div>
+                <span class="item-total">$${(item.price * item.quantity).toFixed(2)}</span>
+            </div>
+        `).join('');
+        
+        if (orderReview) {
+            orderReview.innerHTML = itemsHTML;
+        }
+        
+        if (summaryItems) {
+            summaryItems.innerHTML = summaryHTML;
+        }
+    }
     
-    // Add success page styles
-    const style = document.createElement('style');
-    style.textContent = `
-        body {
-            margin: 0;
-            font-family: 'Quicksand', sans-serif;
-            background: linear-gradient(135deg, #F8E6F2 0%, #FFFFFF 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    updateQuantity(itemId, change) {
+        const itemIndex = this.cart.findIndex(item => item.id === itemId);
+        if (itemIndex === -1) return;
+        
+        this.cart[itemIndex].quantity += change;
+        
+        if (this.cart[itemIndex].quantity <= 0) {
+            this.cart.splice(itemIndex, 1);
         }
         
-        .order-success {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
+        this.saveCart();
+        this.populateOrderItems();
+        this.calculateTotals();
+        this.updateCartCount();
+        
+        if (this.cart.length === 0) {
+            this.showEmptyCart();
+        }
+    }
+    
+    removeItem(itemId) {
+        const itemIndex = this.cart.findIndex(item => item.id === itemId);
+        if (itemIndex !== -1) {
+            const item = this.cart[itemIndex];
+            this.cart.splice(itemIndex, 1);
+            this.saveCart();
+            this.populateOrderItems();
+            this.calculateTotals();
+            this.updateCartCount();
+            this.showNotification(`${item.name} removed from cart`, 'success');
+            
+            if (this.cart.length === 0) {
+                this.showEmptyCart();
+            }
+        }
+    }
+    
+    saveCart() {
+        localStorage.setItem('kuromiCart', JSON.stringify(this.cart));
+    }
+    
+    calculateSubtotal() {
+        return this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    }
+    
+    calculateTax() {
+        const subtotal = this.calculateSubtotal();
+        const discountedSubtotal = subtotal - this.discount;
+        return Math.max(0, discountedSubtotal) * this.taxRate;
+    }
+    
+    calculateTotal() {
+        const subtotal = this.calculateSubtotal();
+        const tax = this.calculateTax();
+        const shipping = this.cart.length > 0 ? this.shippingCost : 0;
+        return subtotal + tax + shipping - this.discount;
+    }
+    
+    calculateTotals() {
+        const subtotal = this.calculateSubtotal();
+        const tax = this.calculateTax();
+        const shipping = this.cart.length > 0 ? this.shippingCost : 0;
+        const total = this.calculateTotal();
+
+        // Update DOM elements
+        this.updateElement('subtotalAmount', `$${subtotal.toFixed(2)}`);
+        this.updateElement('shippingAmount', `$${shipping.toFixed(2)}`);
+        this.updateElement('taxAmount', `$${tax.toFixed(2)}`);
+        this.updateElement('totalAmount', `$${total.toFixed(2)}`);
+        this.updateElement('finalPrice', `$${total.toFixed(2)}`);
+        this.updateElement('bottomTotalAmount', `$${total.toFixed(2)}`); // Update bottom total
+
+        // Show/hide discount
+        const discountLine = document.getElementById('discountLine');
+        if (this.discount > 0) {
+            discountLine.style.display = 'flex';
+            this.updateElement('discountAmount', `-$${this.discount.toFixed(2)}`);
+        } else {
+            discountLine.style.display = 'none';
+        }
+    }
+    
+    updateElement(id, value) {
+        const element = document.getElementById(id);
+        if (element) {
+            element.textContent = value;
+        }
+    }
+    
+    togglePromoCode() {
+        const promoInput = document.getElementById('promoInput');
+        const toggleIcon = document.querySelector('.toggle-icon');
+        
+        if (promoInput.style.display === 'none') {
+            promoInput.style.display = 'block';
+            toggleIcon.textContent = '−';
+            document.getElementById('promoCode').focus();
+        } else {
+            promoInput.style.display = 'none';
+            toggleIcon.textContent = '+';
+        }
+    }
+    
+    applyPromoCode() {
+        const codeInput = document.getElementById('promoCode');
+        const code = codeInput.value.trim().toUpperCase();
+        
+        if (!code) {
+            this.showPromoMessage('Please enter a promo code', 'error');
+            return;
         }
         
-        .success-container {
-            background: white;
-            border-radius: 20px;
-            padding: 50px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(153, 50, 204, 0.1);
+        if (this.promoCode === code) {
+            this.showPromoMessage('This promo code is already applied', 'info');
+            return;
         }
         
-        .success-icon {
-            font-size: 5em;
-            margin-bottom: 20px;
-        }
-        
-        .success-title {
-            color: #2E2E2E;
-            font-size: 2.5em;
-            margin-bottom: 15px;
-            font-family: 'Creepster', cursive;
-        }
-        
-        .success-message {
-            color: #2E2E2E;
-            font-size: 1.2em;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-        
-        .order-details {
-            background: #F8E6F2;
-            padding: 25px;
-            border-radius: 12px;
-            margin: 30px 0;
-            text-align: left;
-        }
-        
-        .order-details h3 {
-            color: #9932CC;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(153, 50, 204, 0.1);
-        }
-        
-        .detail-row:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-        
-        .confirmation-note {
-            color: #666;
-            font-size: 0.9em;
-            margin: 20px 0;
-        }
-        
-        .success-actions {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 30px;
-        }
-        
-        .btn-primary, .btn-secondary {
-            padding: 12px 25px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(45deg, #9932CC, #FFB6C1);
-            color: white;
-        }
-        
-        .btn-secondary {
-            background: transparent;
-            color: #9932CC;
-            border: 2px solid #9932CC;
-        }
-        
-        .btn-primary:hover, .btn-secondary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(153, 50, 204, 0.3);
-        }
-        
-        @media (max-width: 768px) {
-            .success-container {
-                padding: 30px 20px;
+        if (this.promoCodes[code]) {
+            const promo = this.promoCodes[code];
+            const subtotal = this.calculateSubtotal();
+            
+            if (promo.type === 'percentage') {
+                this.discount = subtotal * promo.discount;
+            } else {
+                this.discount = promo.discount;
             }
             
-            .success-actions {
-                flex-direction: column;
-            }
+            this.promoCode = code;
+            codeInput.value = code;
+            codeInput.disabled = true;
+            
+            const applyBtn = document.getElementById('applyPromo');
+            applyBtn.textContent = 'Applied ✓';
+            applyBtn.disabled = true;
+            applyBtn.classList.add('applied');
+            
+            this.calculateTotals();
+            this.showPromoMessage(`${promo.description} applied! You saved $${this.discount.toFixed(2)}`, 'success');
+            this.showNotification(`Promo code applied! You saved $${this.discount.toFixed(2)}`, 'success');
+        } else {
+            this.showPromoMessage('Invalid promo code', 'error');
         }
-    `;
-    document.head.appendChild(style);
-}
-
-function loadSavedCustomerInfo() {
-    // Load any saved customer information from localStorage
-    const savedInfo = JSON.parse(localStorage.getItem('kuromiCustomerInfo') || '{}');
+    }
     
-    Object.keys(savedInfo).forEach(key => {
-        const field = document.getElementById(key);
-        if (field) {
-            field.value = savedInfo[key];
+    showPromoMessage(message, type) {
+        const messageElement = document.getElementById('promoMessage');
+        if (messageElement) {
+            messageElement.textContent = message;
+            messageElement.className = `promo-message ${type}`;
         }
-    });
-}
-
-function showNotification(message) {
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = 'checkout-notification';
-    notification.innerHTML = `
-        <div class="notification-content">
-            <span class="notification-message">${message}</span>
-        </div>
-    `;
-
-    // Add styles
-    notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        right: 20px;
-        background: linear-gradient(45deg, var(--deep-orchid), var(--bubblegum-pink));
-        color: var(--soft-white);
-        padding: 15px 20px;
-        border-radius: var(--radius-large);
-        box-shadow: var(--shadow-medium);
-        z-index: 2000;
-        transform: translateX(100%);
-        transition: transform 0.3s ease;
-        max-width: 300px;
-    `;
-
-    document.body.appendChild(notification);
-
-    // Animate in
-    setTimeout(() => {
-        notification.style.transform = 'translateX(0)';
-    }, 100);
-
-    // Animate out and remove
-    setTimeout(() => {
-        notification.style.transform = 'translateX(100%)';
+    }
+    
+    async placeOrder() {
+        if (!this.validateAllFields()) {
+            this.showNotification('Please fill in all required fields', 'error');
+            // Scroll to first error
+            const firstError = document.querySelector('.field-error');
+            if (firstError) {
+                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            return;
+        }
+        
+        // Show loading
+        const placeOrderBtn = document.getElementById('placeOrderBtn');
+        const btnContent = placeOrderBtn.querySelector('.btn-content');
+        const btnLoading = placeOrderBtn.querySelector('.btn-loading');
+        
+        btnContent.style.display = 'none';
+        btnLoading.style.display = 'flex';
+        placeOrderBtn.disabled = true;
+        
+        // Show loading overlay
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        loadingOverlay.style.display = 'flex';
+        
+        try {
+            // Simulate processing time
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            // Collect order data
+            const orderData = this.collectOrderData();
+            
+            // Generate order number
+            const orderNumber = 'KUR-' + Date.now();
+            
+            // Save order
+            const orders = JSON.parse(localStorage.getItem('kuromiOrders') || '[]');
+            orders.push({
+                ...orderData,
+                orderNumber,
+                orderDate: new Date().toISOString(),
+                status: 'confirmed'
+            });
+            localStorage.setItem('kuromiOrders', JSON.stringify(orders));
+            
+            // Clear cart
+            localStorage.removeItem('kuromiCart');
+            
+            // Hide loading overlay
+            loadingOverlay.style.display = 'none';
+            
+            // Show success
+            this.showSuccessModal(orderNumber);
+            
+            // Trigger confetti
+            this.createConfetti();
+            
+        } catch (error) {
+            console.error('Order processing error:', error);
+            
+            // Hide loading
+            loadingOverlay.style.display = 'none';
+            btnContent.style.display = 'flex';
+            btnLoading.style.display = 'none';
+            placeOrderBtn.disabled = false;
+            
+            this.showNotification('There was an error processing your order. Please try again.', 'error');
+        }
+    }
+    
+    collectOrderData() {
+        return {
+            items: this.cart,
+            customer: {
+                email: document.getElementById('email').value,
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                phone: document.getElementById('phone').value
+            },
+            shipping: {
+                address: document.getElementById('address').value,
+                city: document.getElementById('city').value,
+                state: document.getElementById('state').value,
+                zip: document.getElementById('zip').value,
+                country: document.getElementById('country').value
+            },
+            pricing: {
+                subtotal: this.calculateSubtotal(),
+                shipping: this.shippingCost,
+                tax: this.calculateTax(),
+                discount: this.discount,
+                total: this.calculateTotal()
+            },
+            promoCode: this.promoCode
+        };
+    }
+    
+    showSuccessModal(orderNumber) {
+        const modal = document.getElementById('successModal');
+        const orderNumberElement = document.getElementById('orderNumber');
+        
+        if (orderNumberElement) {
+            orderNumberElement.textContent = orderNumber;
+        }
+        
+        modal.style.display = 'flex';
+        
+        // Animate the checkmark
         setTimeout(() => {
-            if (document.body.contains(notification)) {
-                document.body.removeChild(notification);
+            const checkmark = modal.querySelector('.checkmark');
+            if (checkmark) {
+                checkmark.style.animation = 'checkmarkPop 0.6s ease-out';
             }
-        }, 300);
-    }, 3000);
-}
-
-// Confetti Animation Function
-function createConfetti() {
-    const confettiContainer = document.createElement('div');
-    confettiContainer.id = 'confetti-container';
-    confettiContainer.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 9999;
-        overflow: hidden;
-    `;
-    document.body.appendChild(confettiContainer);
-
-    // Kuromi-themed confetti colors and shapes
-    const confettiColors = ['#9932CC', '#FFB6C1', '#000000', '#FFFFFF', '#F8E6F2'];
-    const confettiShapes = ['🎀', '🖤', '💜', '✨', '🦇', '💫', '⭐', '🌟'];
-    const confettiTypes = ['circle', 'square', 'emoji'];
-
-    function createConfettiPiece() {
-        const piece = document.createElement('div');
-        const type = confettiTypes[Math.floor(Math.random() * confettiTypes.length)];
-
-        if (type === 'emoji') {
-            piece.textContent = confettiShapes[Math.floor(Math.random() * confettiShapes.length)];
-            piece.style.fontSize = (Math.random() * 20 + 15) + 'px';
-        } else {
-            piece.style.width = piece.style.height = (Math.random() * 10 + 5) + 'px';
-            piece.style.backgroundColor = confettiColors[Math.floor(Math.random() * confettiColors.length)];
-            if (type === 'square') {
-                piece.style.borderRadius = '2px';
-            } else {
-                piece.style.borderRadius = '50%';
-            }
-        }
-
-        piece.style.cssText += `
-            position: absolute;
-            top: -20px;
-            left: ${Math.random() * 100}%;
-            animation: confettiFall ${Math.random() * 3 + 2}s linear forwards;
-            transform: rotate(${Math.random() * 360}deg);
-        `;
-
-        return piece;
+        }, 100);
     }
-
-    // Create confetti burst
-    function confettiBurst() {
-        for (let i = 0; i < 150; i++) {
+    
+    createConfetti() {
+        const colors = ['#9932CC', '#FFB6C1', '#000000', '#FFFFFF'];
+        const confettiCount = 100;
+        
+        for (let i = 0; i < confettiCount; i++) {
+            const confetti = document.createElement('div');
+            confetti.style.cssText = `
+                position: fixed;
+                top: -10px;
+                left: ${Math.random() * 100}%;
+                width: 10px;
+                height: 10px;
+                background: ${colors[Math.floor(Math.random() * colors.length)]};
+                border-radius: 50%;
+                animation: confettiFall ${Math.random() * 3 + 2}s linear forwards;
+                z-index: 10000;
+                pointer-events: none;
+            `;
+            
+            document.body.appendChild(confetti);
+            
             setTimeout(() => {
-                if (document.getElementById('confetti-container')) {
-                    const piece = createConfettiPiece();
-                    confettiContainer.appendChild(piece);
-
-                    // Remove piece after animation
-                    setTimeout(() => {
-                        if (piece.parentNode) {
-                            piece.parentNode.removeChild(piece);
-                        }
-                    }, 5000);
+                if (confetti.parentNode) {
+                    confetti.parentNode.removeChild(confetti);
                 }
-            }, i * 20);
+            }, 5000);
+        }
+        
+        // Add confetti animation if not exists
+        if (!document.getElementById('confetti-animation')) {
+            const style = document.createElement('style');
+            style.id = 'confetti-animation';
+            style.textContent = `
+                @keyframes confettiFall {
+                    to {
+                        transform: translateY(100vh) rotate(360deg);
+                        opacity: 0;
+                    }
+                }
+                
+                @keyframes checkmarkPop {
+                    0% { transform: scale(0) rotate(0deg); }
+                    50% { transform: scale(1.2) rotate(180deg); }
+                    100% { transform: scale(1) rotate(360deg); }
+                }
+            `;
+            document.head.appendChild(style);
         }
     }
-
-    // Add CSS animation for falling confetti
-    if (!document.getElementById('confetti-styles')) {
-        const style = document.createElement('style');
-        style.id = 'confetti-styles';
-        style.textContent = `
-            @keyframes confettiFall {
-                0% {
-                    transform: translateY(-20px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
-                    opacity: 1;
-                }
-                100% {
-                    transform: translateY(100vh) rotateX(360deg) rotateY(180deg) rotateZ(360deg);
-                    opacity: 0;
-                }
-            }
-
-            @keyframes confettiSpin {
-                0% { transform: rotateZ(0deg); }
-                100% { transform: rotateZ(360deg); }
-            }
+    
+    showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.textContent = message;
+        
+        const colors = {
+            success: '#28a745',
+            error: '#dc3545',
+            info: '#9932CC'
+        };
+        
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${colors[type] || colors.info};
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 9999;
+            font-weight: 500;
+            max-width: 300px;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
         `;
-        document.head.appendChild(style);
-    }
-
-    // Start confetti burst
-    confettiBurst();
-
-    // Add extra bursts for more celebration
-    setTimeout(confettiBurst, 300);
-    setTimeout(confettiBurst, 600);
-
-    // Clean up container after animation
-    setTimeout(() => {
-        if (document.getElementById('confetti-container')) {
-            document.body.removeChild(confettiContainer);
-        }
-    }, 8000);
-}
-
-// Mini confetti burst from button
-function createMiniConfetti(button) {
-    const rect = button.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-
-    const miniContainer = document.createElement('div');
-    miniContainer.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 9998;
-    `;
-    document.body.appendChild(miniContainer);
-
-    // Create mini burst
-    for (let i = 0; i < 30; i++) {
-        const piece = document.createElement('div');
-        const isEmoji = Math.random() > 0.5;
-
-        if (isEmoji) {
-            piece.textContent = ['✨', '💜', '🖤', '💫'][Math.floor(Math.random() * 4)];
-            piece.style.fontSize = '12px';
-        } else {
-            piece.style.width = piece.style.height = '4px';
-            piece.style.backgroundColor = ['#9932CC', '#FFB6C1', '#000000'][Math.floor(Math.random() * 3)];
-            piece.style.borderRadius = '50%';
-        }
-
-        const angle = (Math.PI * 2 * i) / 30;
-        const velocity = Math.random() * 3 + 2;
-        const startX = centerX;
-        const startY = centerY;
-
-        piece.style.cssText += `
-            position: absolute;
-            left: ${startX}px;
-            top: ${startY}px;
-            animation: miniConfettiBurst 0.8s ease-out forwards;
-            --dx: ${Math.cos(angle) * velocity * 20}px;
-            --dy: ${Math.sin(angle) * velocity * 20}px;
-        `;
-
-        miniContainer.appendChild(piece);
-    }
-
-    // Add mini confetti animation if not exists
-    if (!document.getElementById('mini-confetti-styles')) {
-        const style = document.createElement('style');
-        style.id = 'mini-confetti-styles';
-        style.textContent = `
-            @keyframes miniConfettiBurst {
-                0% {
-                    transform: translate(0, 0) scale(1);
-                    opacity: 1;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.transform = 'translateX(0)';
+        }, 100);
+        
+        setTimeout(() => {
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
                 }
-                100% {
-                    transform: translate(var(--dx), var(--dy)) scale(0);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-
-    // Clean up
-    setTimeout(() => {
-        if (miniContainer.parentNode) {
-            miniContainer.parentNode.removeChild(miniContainer);
-        }
-    }, 1000);
-}
-
-// Enhanced Order Success with Confetti
-function triggerOrderConfetti() {
-    // Create multiple confetti bursts
-    createConfetti();
-
-    // Add extra celebration effects
-    setTimeout(createConfetti, 1000);
-
-    // Show celebration notification
-    setTimeout(() => {
-        showNotification('🎉 Congratulations! Your order is confirmed! 🦇');
-    }, 500);
-}
-
-// Update cart count in navigation
-function updateCartCount() {
-    const cartCount = document.getElementById('cartCount');
-    if (cartCount) {
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-        cartCount.textContent = totalItems;
-        cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+            }, 300);
+        }, 3000);
     }
 }
 
-// Initialize cart count
-updateCartCount();
+// Initialize single page checkout system
+let checkout;
+document.addEventListener('DOMContentLoaded', () => {
+    checkout = new SinglePageCheckout();
+});
+
+// Global functions for onclick handlers
+window.checkout = checkout;
