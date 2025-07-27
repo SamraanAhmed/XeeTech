@@ -5748,7 +5748,7 @@ html {
     color: var(--deep-orchid);
 }
 
-/* Place Order Button */
+/* Place Order Button (Original - for sidebar if needed) */
 .place-order-btn {
     width: 100%;
     background: linear-gradient(45deg, var(--deep-orchid), var(--bubblegum-pink));
@@ -5771,6 +5771,74 @@ html {
 }
 
 .place-order-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Bottom Order Section */
+.bottom-order-section {
+    background: var(--soft-white);
+    border-top: 2px solid var(--lavender-blush);
+    margin-top: 40px;
+    padding: 30px 0;
+    box-shadow: 0 -4px 20px rgba(153, 50, 204, 0.1);
+}
+
+.bottom-order-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.order-total-display {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.total-label {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: var(--midnight-black);
+}
+
+.total-amount {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: var(--deep-orchid);
+    background: var(--lavender-blush);
+    padding: 8px 16px;
+    border-radius: var(--radius-medium);
+}
+
+/* Bottom Place Order Button */
+.place-order-btn-bottom {
+    background: linear-gradient(45deg, var(--deep-orchid), var(--bubblegum-pink));
+    color: var(--soft-white);
+    border: none;
+    border-radius: var(--radius-large);
+    padding: 18px 30px;
+    font-size: 1.2em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    min-width: 280px;
+    box-shadow: var(--shadow-medium);
+}
+
+.place-order-btn-bottom:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-strong);
+}
+
+.place-order-btn-bottom:disabled {
     opacity: 0.6;
     cursor: not-allowed;
     transform: none;
