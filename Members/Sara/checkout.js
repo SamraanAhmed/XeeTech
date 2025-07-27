@@ -586,7 +586,7 @@ function processOrder() {
     setTimeout(() => {
         // Generate order ID
         const orderId = 'KUR-' + Date.now();
-        
+
         // Save order to localStorage
         const orders = JSON.parse(localStorage.getItem('kuromiOrders') || '[]');
         orders.push({
@@ -596,13 +596,18 @@ function processOrder() {
             status: 'confirmed'
         });
         localStorage.setItem('kuromiOrders', JSON.stringify(orders));
-        
+
         // Clear cart
         localStorage.removeItem('kuromiCart');
-        
-        // Redirect to confirmation page or show success
-        showOrderSuccess(orderId, orderData);
-        
+
+        // 🎉 TRIGGER CONFETTI CELEBRATION! 🎉
+        triggerOrderConfetti();
+
+        // Show success page after confetti starts
+        setTimeout(() => {
+            showOrderSuccess(orderId, orderData);
+        }, 1500);
+
     }, 2000);
 }
 
