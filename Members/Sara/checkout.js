@@ -653,11 +653,15 @@ function showNotification(message, type = 'info') {
 
 // Update cart count in navigation
 function updateCartCount() {
+    // Refresh cart before counting
+    refreshCart();
+
     const cartCount = document.getElementById('cartCount');
     if (cartCount) {
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
         cartCount.textContent = totalItems;
         cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+        console.log('Updated cart count:', totalItems);
     }
 }
 
