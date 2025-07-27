@@ -918,8 +918,9 @@ function handleCartQuantityChange(e) {
 }
 
 function toggleCart() {
-    // If we're on the checkout page, don't toggle cart, just stay here
+    // If we're on the checkout page, redirect to shop page
     if (window.location.pathname.includes('checkout.html')) {
+        window.location.href = 'shop.html';
         return;
     }
 
