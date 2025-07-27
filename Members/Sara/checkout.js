@@ -564,7 +564,7 @@ function processOrder() {
     // Validate all forms
     if (!validateAllForms()) {
         showNotification('Please correct the errors in the form');
-        
+
         // Scroll to first error
         const firstError = document.querySelector('.field-error');
         if (firstError) {
@@ -572,6 +572,10 @@ function processOrder() {
         }
         return;
     }
+
+    // Add immediate button celebration on click
+    const completeOrderBtn = document.getElementById('completeOrderBtn');
+    completeOrderBtn.classList.add('btn-celebration');
     
     // Show processing state with celebration
     const completeOrderBtn = document.getElementById('completeOrderBtn');
@@ -1014,7 +1018,7 @@ function triggerOrderConfetti() {
 
     // Show celebration notification
     setTimeout(() => {
-        showNotification('���� Congratulations! Your order is confirmed! 🦇');
+        showNotification('🎉 Congratulations! Your order is confirmed! 🦇');
     }, 500);
 }
 
