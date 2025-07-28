@@ -756,6 +756,14 @@ function loadLimitedProducts() {
 
     console.log('Limited products loaded, container innerHTML:', limitedProductsContainer.innerHTML.substring(0, 200));
 
+    // Ensure all limited product cards are immediately visible
+    const productCards = limitedProductsContainer.querySelectorAll('.product-card');
+    productCards.forEach(card => {
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+        card.style.transition = 'all 0.3s ease';
+    });
+
     // Add event listeners to product buttons
     limitedProductsContainer.querySelectorAll('.add-to-cart-btn').forEach(button => {
         button.addEventListener('click', (e) => {
@@ -2992,7 +3000,7 @@ function getEmojiForImage(image) {
         'jacket.webp': '🦇',
         'dress.jpg': '👗',
         'goth dress.jpeg': '🖤',
-        'pants.jpeg': '👖',
+        'pants.jpeg': '����',
         'headband.webp': '🎀',
         'choker.jpeg': '⛓️',
         'clip.jpeg': '💎',
