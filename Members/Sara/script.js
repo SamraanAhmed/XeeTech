@@ -4280,14 +4280,15 @@ function showRecentPurchaseNotification(purchase) {
             position: fixed;
             bottom: 20px;
             left: 20px;
-            background: white;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1b3d 100%);
             border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 25px rgba(93, 42, 111, 0.4);
             z-index: 9999;
             max-width: 300px;
             transform: translateX(-100%);
             transition: transform 0.4s ease;
-            border-left: 4px solid var(--deep-orchid);
+            border: 2px solid #5d2a6f;
+            backdrop-filter: blur(10px);
         }
 
         .recent-purchase-notification.show {
@@ -4311,20 +4312,20 @@ function showRecentPurchaseNotification(purchase) {
 
         .purchase-item {
             font-weight: 600;
-            color: var(--midnight-black);
+            color: #FFFFFF !important;
             font-size: 14px;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
         }
 
         .purchase-details {
             font-size: 12px;
-            color: #666;
+            color: #CCCCCC !important;
             margin-bottom: 2px;
         }
 
         .purchase-time {
             font-size: 11px;
-            color: var(--deep-orchid);
+            color: #9d7cff !important;
             font-weight: 500;
         }
 
@@ -4332,10 +4333,10 @@ function showRecentPurchaseNotification(purchase) {
             position: absolute;
             top: 8px;
             right: 8px;
-            background: none;
+            background: rgba(255, 255, 255, 0.1);
             border: none;
             font-size: 16px;
-            color: #999;
+            color: #FFFFFF !important;
             cursor: pointer;
             width: 20px;
             height: 20px;
@@ -4347,8 +4348,8 @@ function showRecentPurchaseNotification(purchase) {
         }
 
         .recent-purchase-close:hover {
-            background: #f5f5f5;
-            color: #666;
+            background: rgba(255, 255, 255, 0.2);
+            color: #FFFFFF !important;
         }
 
         @media (max-width: 768px) {
