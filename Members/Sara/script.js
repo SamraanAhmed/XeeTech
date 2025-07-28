@@ -4277,18 +4277,19 @@ function showRecentPurchaseNotification(purchase) {
     const style = document.createElement('style');
     style.textContent = `
         .recent-purchase-notification {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
+            position: fixed !important;
+            bottom: 30px !important;
+            left: 30px !important;
             background: linear-gradient(135deg, #1a1a1a 0%, #2d1b3d 100%);
             border-radius: 12px;
             box-shadow: 0 8px 25px rgba(93, 42, 111, 0.4);
-            z-index: 9999;
+            z-index: 999999 !important;
             max-width: 300px;
             transform: translateX(-100%);
             transition: transform 0.4s ease;
             border: 2px solid #5d2a6f;
             backdrop-filter: blur(10px);
+            pointer-events: auto !important;
         }
 
         .recent-purchase-notification.show {
