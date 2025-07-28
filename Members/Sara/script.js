@@ -394,6 +394,88 @@ function showNotification(message, type = 'success') {
     }, 3000);
 }
 
+// Enhanced Wishlist Effects
+function createWishlistParticles(button) {
+    const particles = document.createElement('div');
+    particles.className = 'wishlist-particles';
+
+    // Create 8 particles
+    for (let i = 0; i < 8; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'wishlist-particle';
+        particles.appendChild(particle);
+    }
+
+    button.appendChild(particles);
+
+    // Remove particles after animation
+    setTimeout(() => {
+        if (particles.parentNode) {
+            particles.parentNode.removeChild(particles);
+        }
+    }, 1000);
+}
+
+function updateWishlistCounter() {
+    // Update navigation wishlist counter with enhanced animation
+    const navCounter = document.getElementById('wishlistNavCount');
+    if (navCounter) {
+        const prevCount = parseInt(navCounter.textContent) || 0;
+        const newCount = wishlist.length;
+
+        if (newCount !== prevCount) {
+            navCounter.textContent = newCount;
+
+            if (newCount > 0) {
+                navCounter.style.display = 'flex';
+                if (newCount > prevCount) {
+                    // Animate counter increase
+                    navCounter.classList.add('show');
+                    navCounter.style.animation = 'counterBounce 0.6s ease-out';
+                }
+            } else {
+                navCounter.style.display = 'none';
+            }
+        }
+    }
+
+    // Update individual wishlist buttons with counters
+    document.querySelectorAll('.wishlist-btn').forEach(btn => {
+        updateButtonCounter(btn);
+    });
+}
+
+function updateButtonCounter(button) {
+    const productId = parseInt(button.dataset.productId);
+    const isInWishlist = wishlist.includes(productId);
+
+    // Remove existing counter
+    const existingCounter = button.querySelector('.wishlist-counter');
+    if (existingCounter) {
+        existingCounter.remove();
+    }
+
+    // Add counter if item is in wishlist
+    if (isInWishlist) {
+        const counter = document.createElement('div');
+        counter.className = 'wishlist-counter show';
+        counter.textContent = '♥';
+        button.appendChild(counter);
+    }
+}
+
+// Add ripple animation to CSS
+const rippleStyle = document.createElement('style');
+rippleStyle.textContent = `
+    @keyframes ripple {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(rippleStyle);
+
 function initializeWebsite() {
     // Add loading class to elements that need smooth entry
     const elementsToAnimate = document.querySelectorAll('.category-card, .product-card, .review-bubble');
