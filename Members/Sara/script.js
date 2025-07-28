@@ -1528,7 +1528,7 @@ function handleNewsletterSignup(e) {
     const email = e.target.querySelector('.newsletter-input').value;
 
     if (email) {
-        showNotification(`Welcome to the Mischief Club! 💜 Check ${email} for your 10% discount code!`);
+        showNotification(`Welcome to the Mischief Club! ��� Check ${email} for your 10% discount code!`);
         e.target.reset();
     }
 }
@@ -4195,6 +4195,11 @@ function showRecentlyPurchasedNotifications() {
         return;
     }
 
+    // Prevent multiple instances from running
+    if (window.notificationInterval) {
+        clearInterval(window.notificationInterval);
+    }
+
     const recentPurchases = [
         { name: 'Gothic Lolita Dress', location: 'Tokyo, Japan', time: '2 minutes ago' },
         { name: 'Devil Horn Headband', location: 'Los Angeles, CA', time: '5 minutes ago' },
@@ -4204,7 +4209,8 @@ function showRecentlyPurchasedNotifications() {
     ];
 
     let currentIndex = 0;
-    let notificationInterval;
+    let showCount = 0;
+    const maxShows = 3; // Only show 3 notifications total
 
     function showNextNotification() {
         // Remove any existing notifications first
@@ -4213,12 +4219,27 @@ function showRecentlyPurchasedNotifications() {
             closeRecentPurchaseNotification(notification);
         });
 
+        // Stop after showing maximum number of notifications
+        if (showCount >= maxShows) {
+            if (window.notificationInterval) {
+                clearInterval(window.notificationInterval);
+                window.notificationInterval = null;
+            }
+            return;
+        }
+
         if (currentIndex < recentPurchases.length) {
             const purchase = recentPurchases[currentIndex];
             showRecentPurchaseNotification(purchase);
             currentIndex++;
+            showCount++;
         } else {
-            currentIndex = 0; // Reset to loop
+            // Stop when all notifications have been shown
+            if (window.notificationInterval) {
+                clearInterval(window.notificationInterval);
+                window.notificationInterval = null;
+            }
+            return;
         }
     }
 
@@ -4226,12 +4247,13 @@ function showRecentlyPurchasedNotifications() {
     setTimeout(showNextNotification, 5000);
 
     // Show subsequent notifications every 30 seconds
-    notificationInterval = setInterval(showNextNotification, 30000);
+    window.notificationInterval = setInterval(showNextNotification, 30000);
 
     // Clean up on page unload
     window.addEventListener('beforeunload', () => {
-        if (notificationInterval) {
-            clearInterval(notificationInterval);
+        if (window.notificationInterval) {
+            clearInterval(window.notificationInterval);
+            window.notificationInterval = null;
         }
     });
 }
@@ -4255,21 +4277,28 @@ function showRecentPurchaseNotification(purchase) {
     const style = document.createElement('style');
     style.textContent = `
         .recent-purchase-notification {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            z-index: 9999;
-            max-width: 300px;
-            transform: translateX(-100%);
-            transition: transform 0.4s ease;
-            border-left: 4px solid var(--deep-orchid);
+            position: fixed !important;
+            bottom: 30px !important;
+            left: 30px !important;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1b3d 100%) !important;
+            border-radius: 12px !important;
+            box-shadow: 0 8px 25px rgba(93, 42, 111, 0.4) !important;
+            z-index: 999999 !important;
+            max-width: 300px !important;
+            min-width: 280px !important;
+            opacity: 0 !important;
+            transform: translateX(-100%) !important;
+            transition: all 0.4s ease !important;
+            border: 2px solid #5d2a6f !important;
+            backdrop-filter: blur(10px) !important;
+            pointer-events: auto !important;
+            visibility: hidden !important;
         }
 
         .recent-purchase-notification.show {
-            transform: translateX(0);
+            opacity: 1 !important;
+            transform: translateX(0) !important;
+            visibility: visible !important;
         }
 
         .recent-purchase-content {
@@ -4289,20 +4318,20 @@ function showRecentPurchaseNotification(purchase) {
 
         .purchase-item {
             font-weight: 600;
-            color: var(--midnight-black);
+            color: #FFFFFF !important;
             font-size: 14px;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
         }
 
         .purchase-details {
             font-size: 12px;
-            color: #666;
+            color: #CCCCCC !important;
             margin-bottom: 2px;
         }
 
         .purchase-time {
             font-size: 11px;
-            color: var(--deep-orchid);
+            color: #9d7cff !important;
             font-weight: 500;
         }
 
@@ -4310,10 +4339,10 @@ function showRecentPurchaseNotification(purchase) {
             position: absolute;
             top: 8px;
             right: 8px;
-            background: none;
+            background: rgba(255, 255, 255, 0.1);
             border: none;
             font-size: 16px;
-            color: #999;
+            color: #FFFFFF !important;
             cursor: pointer;
             width: 20px;
             height: 20px;
@@ -4325,8 +4354,8 @@ function showRecentPurchaseNotification(purchase) {
         }
 
         .recent-purchase-close:hover {
-            background: #f5f5f5;
-            color: #666;
+            background: rgba(255, 255, 255, 0.2);
+            color: #FFFFFF !important;
         }
 
         @media (max-width: 768px) {
@@ -4512,6 +4541,13 @@ function addStockIndicators() {
 function loadRelatedProducts() {
     const relatedGrid = document.getElementById('relatedProductsGrid');
     if (!relatedGrid) return;
+
+    // Check if content already exists (static HTML content)
+    if (relatedGrid.children.length > 0) {
+        // Content already exists, just setup event listeners
+        setupRelatedProductsEventListeners(relatedGrid);
+        return;
+    }
 
     // Get current page category or random products
     const currentCategory = getCurrentPageCategory();
