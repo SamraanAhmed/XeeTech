@@ -290,14 +290,72 @@ function setupModalInteractions(modal, product) {
         showNotification(`${product.name} added to cart!`);
     });
 
-    // Wishlist functionality
+    // Detail wishlist functionality
+    const detailWishlistBtn = modal.querySelector('.detail-wishlist-btn');
+    if (detailWishlistBtn) {
+        detailWishlistBtn.addEventListener('click', () => {
+            const wasAdded = toggleWishlist(product.id);
+
+            // Update button state
+            detailWishlistBtn.classList.toggle('active', wasAdded);
+            const iconSpan = detailWishlistBtn.querySelector('.wishlist-icon');
+            const textSpan = detailWishlistBtn.querySelector('.wishlist-text');
+
+            if (iconSpan) {
+                iconSpan.textContent = wasAdded ? '♥' : '♡';
+            }
+            if (textSpan) {
+                textSpan.textContent = wasAdded ? 'Remove from Wishlist' : 'Add to Wishlist';
+            }
+
+            // Add animation
+            detailWishlistBtn.classList.add('adding');
+            setTimeout(() => {
+                detailWishlistBtn.classList.remove('adding');
+            }, 800);
+
+            // Create particles effect
+            createWishlistParticles(detailWishlistBtn);
+
+            // Show success message
+            showWishlistSuccessMessage(detailWishlistBtn, wasAdded, product.name);
+
+            // Update other wishlist buttons in the modal
+            const modalWishlistBtn = modal.querySelector('.modal-wishlist-btn');
+            if (modalWishlistBtn) {
+                modalWishlistBtn.classList.toggle('active', wasAdded);
+                modalWishlistBtn.textContent = wasAdded ? '♥' : '♡';
+            }
+
+            showNotification(wasAdded ? `${product.name} added to wishlist!` : `${product.name} removed from wishlist!`);
+        });
+    }
+
+    // Modal wishlist functionality
     const wishlistBtn = modal.querySelector('.modal-wishlist-btn');
-    wishlistBtn.addEventListener('click', () => {
-        const wasAdded = toggleWishlist(product.id);
-        wishlistBtn.classList.toggle('active', wasAdded);
-        wishlistBtn.textContent = wasAdded ? '♥' : '♡';
-        showNotification(wasAdded ? `${product.name} added to wishlist!` : `${product.name} removed from wishlist!`);
-    });
+    if (wishlistBtn) {
+        wishlistBtn.addEventListener('click', () => {
+            const wasAdded = toggleWishlist(product.id);
+            wishlistBtn.classList.toggle('active', wasAdded);
+            wishlistBtn.textContent = wasAdded ? '♥' : '♡';
+
+            // Update detail wishlist button too
+            if (detailWishlistBtn) {
+                detailWishlistBtn.classList.toggle('active', wasAdded);
+                const iconSpan = detailWishlistBtn.querySelector('.wishlist-icon');
+                const textSpan = detailWishlistBtn.querySelector('.wishlist-text');
+
+                if (iconSpan) {
+                    iconSpan.textContent = wasAdded ? '♥' : '♡';
+                }
+                if (textSpan) {
+                    textSpan.textContent = wasAdded ? 'Remove from Wishlist' : 'Add to Wishlist';
+                }
+            }
+
+            showNotification(wasAdded ? `${product.name} added to wishlist!` : `${product.name} removed from wishlist!`);
+        });
+    }
 }
 
 function setupImageZoom(container) {
