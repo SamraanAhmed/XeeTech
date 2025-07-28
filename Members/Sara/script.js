@@ -3444,7 +3444,7 @@ function setupShopWishlistButtons() {
             if (wasAdded) {
                 btn.classList.add('active');
                 btn.style.color = '#ffffff';
-                showNotification(`Added to wishlist! ♥`);
+                showNotification(`Added to wishlist! ��`);
             } else {
                 btn.classList.remove('active');
                 btn.style.color = '#ffffff';
@@ -3637,7 +3637,12 @@ function setupSortFunctionality() {
 }
 
 function getProductPrice(productCard) {
-    const priceText = productCard.querySelector('.product-price').textContent;
+    const priceElement = productCard.querySelector('.product-price');
+    if (!priceElement) {
+        console.error('Product price element not found');
+        return 0;
+    }
+    const priceText = priceElement.textContent;
     return parseFloat(priceText.replace('$', ''));
 }
 
