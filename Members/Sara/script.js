@@ -3627,7 +3627,7 @@ function setupSortFunctionality() {
 }
 
 function getProductPrice(productCard) {
-    const priceText = productCard.querySelector('.current-price').textContent;
+    const priceText = productCard.querySelector('.product-price').textContent;
     return parseFloat(priceText.replace('$', ''));
 }
 
