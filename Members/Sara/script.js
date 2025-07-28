@@ -212,6 +212,14 @@ function createProductModal(product) {
                         </div>
                     ` : ''}
 
+                    <div class="product-detail-wishlist">
+                        <button class="detail-wishlist-btn ${isInWishlist ? 'active' : ''}" data-product-id="${product.id}"
+                                title="${isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}">
+                            <span class="wishlist-icon">${isInWishlist ? '♥' : '♡'}</span>
+                            <span class="wishlist-text">${isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}</span>
+                        </button>
+                    </div>
+
                     <div class="modal-actions">
                         <button class="modal-add-to-cart" data-product-id="${product.id}">
                             Add to Bag - $${product.price.toFixed(2)}
