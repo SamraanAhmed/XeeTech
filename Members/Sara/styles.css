@@ -2273,27 +2273,14 @@ body {
 }
 
 .wishlist-btn::before {
-    content: "♥";
+    content: "❤️";
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: #ffffff;
     font-size: 1.2rem;
-}
-
-.wishlist-btn::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: radial-gradient(circle, rgba(255, 107, 157, 0.3) 0%, transparent 70%);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: all 0.3s ease;
-    z-index: -1;
+    z-index: 2;
 }
 
 .wishlist-btn::after {
