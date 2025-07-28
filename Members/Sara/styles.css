@@ -737,7 +737,7 @@ p, span, div, a, button, input, textarea, label, li {
 }
 
 .limited-products .product-card * {
-    color: var(--midnight-black) !important;
+    color: #ffffff !important;
 }
 
 .product-card {
