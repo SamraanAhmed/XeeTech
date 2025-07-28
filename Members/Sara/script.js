@@ -2989,7 +2989,7 @@ function getEmojiForImage(image) {
         'pen.webp': '✒️',
         'sticker.webp': '✨',
         'planner.webp': '📅',
-        'markers.webp': '���️',
+        'markers.webp': '🖊️',
         'wall art.webp': '🖼️',
         'fairy lights.webp': '💫',
         'pillow.webp': '🛏️',
@@ -3417,7 +3417,7 @@ function createWishlistCard(product) {
                 <div class="wishlist-card-price">$${product.price.toFixed(2)}</div>
                 <div class="wishlist-card-actions">
                     <button class="wishlist-card-btn move-to-cart-btn" data-product-id="${product.id}">
-                        Add to Cart
+                        Add to Bag
                     </button>
                     <button class="wishlist-card-btn remove-wishlist-btn" data-product-id="${product.id}">
                         Remove
