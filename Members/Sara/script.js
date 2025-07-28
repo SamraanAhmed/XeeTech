@@ -761,13 +761,16 @@ function loadLimitedProducts() {
 function createProductCard(product) {
     return `
         <div class="product-card" data-product-id="${product.id}">
-            ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+            <div class="product-badges">
+                ${product.badge ? `<span class="badge ${product.badge.toLowerCase()}-badge">${product.badge}</span>` : ''}
+            </div>
             <div class="product-image-container">
                 <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="product-image-placeholder" style="display: none;">
                     <span class="placeholder-icon">📦</span>
                 </div>
                 <button class="quick-view-btn" title="Quick View" onclick="event.stopPropagation(); openProductModal(${product.id})">👁️</button>
+                <button class="wishlist-btn" title="Add to Wishlist" data-product-id="${product.id}" onclick="event.stopPropagation(); toggleWishlist(${product.id})">♡</button>
             </div>
             <div class="product-info">
                 <h3 class="product-title">${product.name}</h3>
@@ -1216,7 +1219,7 @@ function createCheckoutModal() {
                             </label>
                             <label class="payment-option">
                                 <input type="radio" name="payment" value="paypal">
-                                <span>💰 PayPal</span>
+                                <span>���� PayPal</span>
                             </label>
                             <label class="payment-option">
                                 <input type="radio" name="payment" value="apple">
