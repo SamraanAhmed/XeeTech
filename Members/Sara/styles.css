@@ -3368,10 +3368,11 @@ html {
     padding: 6px 12px;
     border-radius: var(--radius-medium);
     font-size: 0.75em;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
+    border: 1px solid #ffffff;
 }
 
 .sale-badge {
