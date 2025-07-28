@@ -87,6 +87,22 @@ h1, h2, h3, h4, h5, h6,
     color: var(--soft-white) !important;
 }
 
+/* Additional glow effects for secondary headings */
+.product-title,
+.category-name,
+.footer-title,
+.cart-header h3,
+.review-author,
+.brand-name {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.6),
+                 0 0 20px rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Ensure all text is visible */
+p, span, div, a, button, input, textarea, label, li {
+    color: var(--soft-white) !important;
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
