@@ -3411,8 +3411,8 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, var(--lavender-blush), rgba(153, 50, 204, 0.1));
-    color: var(--deep-orchid);
+    background: linear-gradient(135deg, #1a1a1a, #333333);
+    color: #ffffff;
 }
 
 .placeholder-icon {
