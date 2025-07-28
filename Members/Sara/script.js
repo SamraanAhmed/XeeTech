@@ -5433,15 +5433,20 @@ function setupColorOptions(product) {
             });
             colorsContainer.appendChild(colorOption);
         });
-    } else {
+    } else if (colorSelector) {
         colorSelector.style.display = 'none';
     }
 }
 
 function updateModalButtonPrice() {
-    const quantity = parseInt(document.getElementById('modalQuantity').value) || 1;
-    const totalPrice = (currentModalProduct.price * quantity).toFixed(2);
-    document.getElementById('modalBtnPrice').textContent = `$${totalPrice}`;
+    const quantityElement = document.getElementById('modalQuantity');
+    const btnPriceElement = document.getElementById('modalBtnPrice');
+
+    if (quantityElement && btnPriceElement && currentModalProduct) {
+        const quantity = parseInt(quantityElement.value) || 1;
+        const totalPrice = (currentModalProduct.price * quantity).toFixed(2);
+        btnPriceElement.textContent = `$${totalPrice}`;
+    }
 }
 
 function setupModalEventListeners() {
