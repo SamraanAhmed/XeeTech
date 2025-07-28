@@ -4195,6 +4195,11 @@ function showRecentlyPurchasedNotifications() {
         return;
     }
 
+    // Prevent multiple instances from running
+    if (window.notificationInterval) {
+        clearInterval(window.notificationInterval);
+    }
+
     const recentPurchases = [
         { name: 'Gothic Lolita Dress', location: 'Tokyo, Japan', time: '2 minutes ago' },
         { name: 'Devil Horn Headband', location: 'Los Angeles, CA', time: '5 minutes ago' },
@@ -4204,7 +4209,8 @@ function showRecentlyPurchasedNotifications() {
     ];
 
     let currentIndex = 0;
-    let notificationInterval;
+    let showCount = 0;
+    const maxShows = 3; // Only show 3 notifications total
 
     function showNextNotification() {
         // Remove any existing notifications first
@@ -4213,12 +4219,27 @@ function showRecentlyPurchasedNotifications() {
             closeRecentPurchaseNotification(notification);
         });
 
+        // Stop after showing maximum number of notifications
+        if (showCount >= maxShows) {
+            if (window.notificationInterval) {
+                clearInterval(window.notificationInterval);
+                window.notificationInterval = null;
+            }
+            return;
+        }
+
         if (currentIndex < recentPurchases.length) {
             const purchase = recentPurchases[currentIndex];
             showRecentPurchaseNotification(purchase);
             currentIndex++;
+            showCount++;
         } else {
-            currentIndex = 0; // Reset to loop
+            // Stop when all notifications have been shown
+            if (window.notificationInterval) {
+                clearInterval(window.notificationInterval);
+                window.notificationInterval = null;
+            }
+            return;
         }
     }
 
@@ -4226,12 +4247,13 @@ function showRecentlyPurchasedNotifications() {
     setTimeout(showNextNotification, 5000);
 
     // Show subsequent notifications every 30 seconds
-    notificationInterval = setInterval(showNextNotification, 30000);
+    window.notificationInterval = setInterval(showNextNotification, 30000);
 
     // Clean up on page unload
     window.addEventListener('beforeunload', () => {
-        if (notificationInterval) {
-            clearInterval(notificationInterval);
+        if (window.notificationInterval) {
+            clearInterval(window.notificationInterval);
+            window.notificationInterval = null;
         }
     });
 }
