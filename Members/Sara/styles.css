@@ -39,8 +39,8 @@
 
 body {
     font-family: var(--font-body);
-    background: linear-gradient(135deg, var(--lavender-blush) 0%, var(--soft-white) 100%);
-    color: var(--midnight-black);
+    background: linear-gradient(135deg, var(--lavender-blush) 0%, var(--midnight-black) 100%);
+    color: var(--soft-white);
     line-height: 1.6;
     overflow-x: hidden;
 }
