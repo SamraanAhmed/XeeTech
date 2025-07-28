@@ -58,8 +58,8 @@ const enhancedProducts = {
         name: "Devil Horn Headband",
         price: 19.99,
         originalPrice: 29.99,
-        image: "headband.webp",
-        images: ["headband.webp", "clip.jpeg"],
+        image: "",
+        images: [],
         badge: "SALE",
         category: "accessories",
         description: "Complete your mischievous look with this adorable devil horn headband. Comfortable and adjustable for all-day wear.",
@@ -1743,7 +1743,7 @@ function createHelpModal() {
                 </div>
 
                 <div class="help-contact">
-                    <h3>💌 Still Need Help?</h3>
+                    <h3>���� Still Need Help?</h3>
                     <p>Our mischievous support team is here to help!</p>
                     <div class="contact-options">
                         <a href="mailto:hello@kuromi-fashion.com" class="contact-btn">
