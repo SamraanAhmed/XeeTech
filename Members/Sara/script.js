@@ -4430,9 +4430,6 @@ function addStockIndicators() {
             } else if (product.stock <= 15) {
                 stockIndicator = ``;
                 stockClass = 'stock-low';
-            } else if (Math.random() > 0.7) { // Show for 30% of products
-                stockIndicator = `�� In Stock`;
-                stockClass = 'stock-good';
             }
 
             if (stockIndicator) {
