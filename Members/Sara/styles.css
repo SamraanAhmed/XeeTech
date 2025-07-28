@@ -87,7 +87,7 @@ h1, h2, h3, h4, h5, h6,
     color: var(--soft-white) !important;
 }
 
-/* Additional glow effects for secondary headings */
+/* Secondary headings styling */
 .product-title,
 .category-name,
 .footer-title,
@@ -95,7 +95,7 @@ h1, h2, h3, h4, h5, h6,
 .review-author,
 .brand-name {
     color: #FFFFFF !important;
-    text-shadow: 0 0 3px rgba(255, 255, 255, 0.4) !important;
+    text-shadow: none !important;
     font-weight: 600 !important;
 }
 
