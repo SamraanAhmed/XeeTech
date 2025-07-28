@@ -5364,25 +5364,29 @@ function setupModalImages(product) {
         }
     }
 
-    // Set thumbnails
-    thumbnailContainer.innerHTML = '';
-    const images = product.images || [product.image];
+    // Set thumbnails with null check
+    if (thumbnailContainer) {
+        thumbnailContainer.innerHTML = '';
+        const images = product.images || [product.image];
 
-    if (images && images.length > 1) {
-        images.forEach((img, index) => {
-            if (img) {
-                const thumbnail = document.createElement('img');
-                thumbnail.src = img;
-                thumbnail.alt = `${product.name} view ${index + 1}`;
-                thumbnail.className = `thumbnail-image ${index === 0 ? 'active' : ''}`;
-                thumbnail.addEventListener('click', () => {
-                    mainImage.src = img;
-                    thumbnailContainer.querySelectorAll('.thumbnail-image').forEach(t => t.classList.remove('active'));
-                    thumbnail.classList.add('active');
-                });
-                thumbnailContainer.appendChild(thumbnail);
-            }
-        });
+        if (images && images.length > 1) {
+            images.forEach((img, index) => {
+                if (img) {
+                    const thumbnail = document.createElement('img');
+                    thumbnail.src = img;
+                    thumbnail.alt = `${product.name} view ${index + 1}`;
+                    thumbnail.className = `thumbnail-image ${index === 0 ? 'active' : ''}`;
+                    thumbnail.addEventListener('click', () => {
+                        if (mainImage) {
+                            mainImage.src = img;
+                        }
+                        thumbnailContainer.querySelectorAll('.thumbnail-image').forEach(t => t.classList.remove('active'));
+                        thumbnail.classList.add('active');
+                    });
+                    thumbnailContainer.appendChild(thumbnail);
+                }
+            });
+        }
     }
 }
 
