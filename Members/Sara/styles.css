@@ -709,6 +709,12 @@ p, span, div, a, button, input, textarea, label, li {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 40px;
+    margin-top: 50px;
+}
+
+.limited-products .product-card {
+    background: var(--bubblegum-pink) !important;
+    border: 2px solid var(--deep-orchid) !important;
 }
 
 .product-card {
