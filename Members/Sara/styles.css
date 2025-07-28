@@ -2308,10 +2308,10 @@ body {
 }
 
 .wishlist-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 107, 157, 0.8);
+    background: rgba(156, 124, 255, 0.9);
+    border-color: rgba(156, 124, 255, 0.8);
     transform: scale(1.15) rotate(5deg);
-    color: #ff6b9d;
+    color: #ffffff;
     box-shadow:
         0 8px 25px rgba(255, 107, 157, 0.4),
         0 0 0 4px rgba(255, 107, 157, 0.1);
