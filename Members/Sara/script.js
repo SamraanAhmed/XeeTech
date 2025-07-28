@@ -232,9 +232,12 @@ function setupEventListeners() {
     const heroCta = document.getElementById('heroCta');
     if (heroCta) {
         heroCta.addEventListener('click', () => {
-            document.querySelector('.category-preview').scrollIntoView({
-                behavior: 'smooth'
-            });
+            const categorySection = document.querySelector('.category-preview');
+            if (categorySection) {
+                categorySection.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
         });
     }
 
@@ -650,7 +653,7 @@ function createSearchResultCard(product) {
                 <div class="search-result-price">$${product.price.toFixed(2)}</div>
                 <div class="search-result-actions">
                     <button class="search-result-btn add-to-cart-search" data-product-id="${product.id}">
-                        Add to Cart
+                        Add to Bag
                     </button>
                     <button class="search-result-btn quick-view-search" data-product-id="${product.id}">
                         Quick View
@@ -740,11 +743,26 @@ function navigateToCategory(category) {
 // Load limited edition products
 function loadLimitedProducts() {
     const limitedProductsContainer = document.getElementById('limitedProducts');
-    if (!limitedProductsContainer) return;
+    if (!limitedProductsContainer) {
+        console.error('Limited products container not found!');
+        return;
+    }
 
-    limitedProductsContainer.innerHTML = limitedProducts.map(product => 
+    console.log('Loading limited products:', limitedProducts);
+
+    limitedProductsContainer.innerHTML = limitedProducts.map(product =>
         createProductCard(product)
     ).join('');
+
+    console.log('Limited products loaded, container innerHTML:', limitedProductsContainer.innerHTML.substring(0, 200));
+
+    // Ensure all limited product cards are immediately visible
+    const productCards = limitedProductsContainer.querySelectorAll('.product-card');
+    productCards.forEach(card => {
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+        card.style.transition = 'all 0.3s ease';
+    });
 
     // Add event listeners to product buttons
     limitedProductsContainer.querySelectorAll('.add-to-cart-btn').forEach(button => {
@@ -758,13 +776,16 @@ function loadLimitedProducts() {
 function createProductCard(product) {
     return `
         <div class="product-card" data-product-id="${product.id}">
-            ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+            <div class="product-badges">
+                ${product.badge ? `<span class="badge ${product.badge.toLowerCase()}-badge">${product.badge}</span>` : ''}
+            </div>
             <div class="product-image-container">
                 <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="product-image-placeholder" style="display: none;">
                     <span class="placeholder-icon">📦</span>
                 </div>
                 <button class="quick-view-btn" title="Quick View" onclick="event.stopPropagation(); openProductModal(${product.id})">👁️</button>
+                <button class="wishlist-btn" title="Add to Wishlist" data-product-id="${product.id}" onclick="event.stopPropagation(); toggleWishlist(${product.id})">♡</button>
             </div>
             <div class="product-info">
                 <h3 class="product-title">${product.name}</h3>
@@ -2096,7 +2117,7 @@ function createQuickViewModal(product) {
 
                     <div class="qv-actions">
                         <button class="add-to-cart-qv" data-product-id="${product.id}" ${product.stock === 0 ? 'disabled' : ''}>
-                            <span class="btn-text">${product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}</span>
+                            <span class="btn-text">${product.stock === 0 ? 'Out of Stock' : 'Add to Bag'}</span>
                             <span class="btn-sparkle">✨</span>
                         </button>
                         <button class="add-to-wishlist-qv" data-product-id="${product.id}">
@@ -2625,13 +2646,20 @@ function initScrollAnimations() {
         });
     }, observerOptions);
 
-    // Observe elements that should animate on scroll
-    const elementsToObserve = document.querySelectorAll('.category-card, .product-card, .review-bubble, .social-frame');
+    // Observe elements that should animate on scroll (exclude limited products)
+    const elementsToObserve = document.querySelectorAll('.category-card, .review-bubble, .social-frame, .product-card:not(.limited-products .product-card)');
     elementsToObserve.forEach(element => {
         element.style.opacity = '0';
         element.style.transform = 'translateY(30px)';
         element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(element);
+    });
+
+    // Ensure limited products are always visible
+    const limitedProductCards = document.querySelectorAll('.limited-products .product-card');
+    limitedProductCards.forEach(card => {
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
     });
 }
 
@@ -2972,7 +3000,7 @@ function getEmojiForImage(image) {
         'jacket.webp': '🦇',
         'dress.jpg': '👗',
         'goth dress.jpeg': '🖤',
-        'pants.jpeg': '👖',
+        'pants.jpeg': '����',
         'headband.webp': '🎀',
         'choker.jpeg': '⛓️',
         'clip.jpeg': '💎',
@@ -3411,7 +3439,7 @@ function createWishlistCard(product) {
                 <div class="wishlist-card-price">$${product.price.toFixed(2)}</div>
                 <div class="wishlist-card-actions">
                     <button class="wishlist-card-btn move-to-cart-btn" data-product-id="${product.id}">
-                        Add to Cart
+                        Add to Bag
                     </button>
                     <button class="wishlist-card-btn remove-wishlist-btn" data-product-id="${product.id}">
                         Remove
@@ -3899,7 +3927,7 @@ function createRelatedProductCard(product) {
                     </div>
                 ` : ''}
                 <button class="related-add-to-cart" data-product-id="${product.id}">
-                    <span>Add to Cart</span>
+                    <span>Add to Bag</span>
                     <span class="btn-sparkle">✨</span>
                 </button>
             </div>
