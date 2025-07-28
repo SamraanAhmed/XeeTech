@@ -748,8 +748,8 @@ p, span, div, a, button, input, textarea, label, li {
 
 .product-card:hover {
     transform: translateY(-8px);
-    box-shadow: var(--shadow-strong);
-    border-color: rgba(153, 50, 204, 0.2);
+    box-shadow: 0 12px 40px rgba(255, 255, 255, 0.2);
+    border-color: #666666;
 }
 
 .product-badge {
@@ -3351,8 +3351,8 @@ html {
 
 .product-card:hover {
     transform: translateY(-8px);
-    box-shadow: var(--shadow-strong);
-    border-color: rgba(153, 50, 204, 0.2);
+    box-shadow: 0 12px 40px rgba(255, 255, 255, 0.2);
+    border-color: #666666;
 }
 
 .product-badges {
