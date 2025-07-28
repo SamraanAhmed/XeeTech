@@ -2638,13 +2638,20 @@ function initScrollAnimations() {
         });
     }, observerOptions);
 
-    // Observe elements that should animate on scroll
-    const elementsToObserve = document.querySelectorAll('.category-card, .product-card, .review-bubble, .social-frame');
+    // Observe elements that should animate on scroll (exclude limited products)
+    const elementsToObserve = document.querySelectorAll('.category-card, .review-bubble, .social-frame, .product-card:not(.limited-products .product-card)');
     elementsToObserve.forEach(element => {
         element.style.opacity = '0';
         element.style.transform = 'translateY(30px)';
         element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(element);
+    });
+
+    // Ensure limited products are always visible
+    const limitedProductCards = document.querySelectorAll('.limited-products .product-card');
+    limitedProductCards.forEach(card => {
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
     });
 }
 
