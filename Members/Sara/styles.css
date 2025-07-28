@@ -4696,8 +4696,8 @@ body {
 .wishlist-btn {
     position: absolute;
     top: 15px;
-    left: 15px;
-    background: rgba(255, 255, 255, 0.9);
+    right: 15px;
+    background: rgba(156, 124, 255, 0.8);
     border: none;
     border-radius: 50%;
     width: 40px;
