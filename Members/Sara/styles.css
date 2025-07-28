@@ -746,16 +746,13 @@ p, span, div, a, button, input, textarea, label, li {
     padding: 0;
     text-align: center;
     box-shadow:
-        0 12px 48px rgba(0, 0, 0, 0.5),
-        0 4px 16px rgba(255, 255, 255, 0.08),
-        inset 0 1px 2px rgba(255, 255, 255, 0.15),
-        0 0 0 1px rgba(255, 255, 255, 0.1);
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        0 8px 24px rgba(0, 0, 0, 0.4),
+        0 2px 8px rgba(255, 255, 255, 0.06),
+        inset 0 1px 2px rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 2px solid rgba(255, 255, 255, 0.15);
     position: relative;
     overflow: hidden;
-    backdrop-filter: blur(15px);
-    transform-style: preserve-3d;
 }
 
 .product-card:hover {
