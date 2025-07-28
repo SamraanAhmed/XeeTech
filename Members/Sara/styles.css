@@ -1450,8 +1450,8 @@ p, span, div, a, button, input, textarea, label, li {
     }
 
     .limited-products {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
+        flex-direction: row;
+        gap: 15px;
     }
 
     .reviews-grid {
@@ -1601,8 +1601,8 @@ p, span, div, a, button, input, textarea, label, li {
     }
 
     .limited-products {
-        grid-template-columns: 1fr;
-        gap: 25px;
+        flex-direction: row;
+        gap: 10px;
     }
 
     .product-card {
