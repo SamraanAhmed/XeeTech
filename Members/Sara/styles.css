@@ -3184,6 +3184,20 @@ body {
         flex-direction: column;
         gap: 12px;
     }
+
+    .detail-wishlist-btn {
+        padding: 14px 18px;
+        font-size: 0.9rem;
+    }
+
+    .wishlist-icon {
+        font-size: 1.2rem;
+    }
+
+    .product-detail-wishlist {
+        margin-bottom: 20px;
+        padding-bottom: 16px;
+    }
 }
 
 /* Focus styles for accessibility */
