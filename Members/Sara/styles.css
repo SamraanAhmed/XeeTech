@@ -96,9 +96,7 @@ h1, h2, h3, h4, h5, h6,
 .review-author,
 .brand-name {
     color: #FFFFFF !important;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 1),
-                 0 0 10px rgba(255, 255, 255, 0.8),
-                 0 0 15px rgba(255, 255, 255, 0.6) !important;
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.4) !important;
     font-weight: 600 !important;
 }
 
