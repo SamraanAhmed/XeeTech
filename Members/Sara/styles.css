@@ -3821,8 +3821,10 @@ html {
 }
 
 .add-to-cart-btn:hover {
+    background: linear-gradient(45deg, #555555, #888888);
+    border-color: #ffffff;
     transform: translateY(-2px);
-    box-shadow: var(--glow-effect);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
 }
 
 .btn-sparkle {
