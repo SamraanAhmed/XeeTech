@@ -3905,7 +3905,7 @@ function createRelatedProductCard(product) {
                     </div>
                 ` : ''}
                 <button class="related-add-to-cart" data-product-id="${product.id}">
-                    <span>Add to Cart</span>
+                    <span>Add to Bag</span>
                     <span class="btn-sparkle">✨</span>
                 </button>
             </div>
