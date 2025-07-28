@@ -3366,7 +3366,7 @@ function getEmojiForImage(image) {
         'markers.webp': '🖊️',
         'wall art.webp': '🖼️',
         'fairy lights.webp': '💫',
-        'pillow.webp': '����️',
+        'pillow.webp': '🛏️',
         'candle.webp': '🕯️',
         'mirrors.webp': '🪞',
         'cur tins.webp': '🏠'
@@ -3447,16 +3447,23 @@ function addToWishlist(productId) {
         wishlist.push(productId);
         saveWishlist();
 
-        // Add heartbeat animation to the button
+        // Enhanced wishlist button animation
         const wishlistBtn = document.querySelector(`.wishlist-btn[data-product-id="${productId}"]`);
         if (wishlistBtn) {
+            // Add heartbeat animation
             wishlistBtn.classList.add('adding');
+
+            // Create particle effect
+            createWishlistParticles(wishlistBtn);
+
+            // Remove animation class after completion
             setTimeout(() => {
                 wishlistBtn.classList.remove('adding');
-            }, 600);
+            }, 800);
         }
 
         updateWishlistUI();
+        updateWishlistCounter();
         return true;
     }
     return false;
@@ -4290,7 +4297,7 @@ function createRelatedProductCard(product) {
                 ` : ''}
                 <button class="related-add-to-cart" data-product-id="${product.id}">
                     <span>Add to Bag</span>
-                    <span class="btn-sparkle">✨</span>
+                    <span class="btn-sparkle">���</span>
                 </button>
             </div>
         </div>
