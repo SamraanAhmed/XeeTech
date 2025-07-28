@@ -3582,7 +3582,8 @@ html {
 
 .related-product-card:hover {
     transform: translateY(-8px);
-    box-shadow: var(--shadow-strong);
+    box-shadow: 0 12px 40px rgba(255, 255, 255, 0.2);
+    border-color: #666666;
 }
 
 .related-product-image-container {
