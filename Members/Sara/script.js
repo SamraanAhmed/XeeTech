@@ -5394,7 +5394,7 @@ function setupSizeOptions(product) {
     const sizeSelector = document.getElementById('modalSizeSelector');
     const sizesContainer = document.getElementById('modalSizes');
 
-    if (product.sizes && product.sizes.length > 0) {
+    if (product.sizes && product.sizes.length > 0 && sizeSelector && sizesContainer) {
         sizeSelector.style.display = 'block';
         sizesContainer.innerHTML = '';
 
