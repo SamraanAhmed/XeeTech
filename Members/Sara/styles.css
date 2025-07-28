@@ -3382,9 +3382,11 @@ html {
 }
 
 .new-badge {
-    background: var(--glittery-silver);
-    color: var(--soft-white);
-    box-shadow: 0 2px 8px rgba(192, 192, 192, 0.4);
+    background: #00ff00;
+    color: #000000 !important;
+    box-shadow: 0 2px 8px rgba(0, 255, 0, 0.4);
+    border: 1px solid #ffffff;
+    font-weight: 700;
 }
 
 .product-image-container {
