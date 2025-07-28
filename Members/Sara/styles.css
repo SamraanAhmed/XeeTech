@@ -621,7 +621,7 @@ body {
 }
 
 .product-card {
-    background: var(--soft-white);
+    background: var(--bubblegum-pink);
     border-radius: var(--radius-large);
     padding: 30px;
     text-align: center;
