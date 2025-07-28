@@ -2102,7 +2102,7 @@ function createQuickViewModal(product) {
 
                     <div class="qv-actions">
                         <button class="add-to-cart-qv" data-product-id="${product.id}" ${product.stock === 0 ? 'disabled' : ''}>
-                            <span class="btn-text">${product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}</span>
+                            <span class="btn-text">${product.stock === 0 ? 'Out of Stock' : 'Add to Bag'}</span>
                             <span class="btn-sparkle">✨</span>
                         </button>
                         <button class="add-to-wishlist-qv" data-product-id="${product.id}">
@@ -2989,7 +2989,7 @@ function getEmojiForImage(image) {
         'pen.webp': '✒️',
         'sticker.webp': '✨',
         'planner.webp': '📅',
-        'markers.webp': '🖊️',
+        'markers.webp': '���️',
         'wall art.webp': '🖼️',
         'fairy lights.webp': '💫',
         'pillow.webp': '🛏️',
