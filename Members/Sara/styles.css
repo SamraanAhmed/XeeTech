@@ -681,7 +681,16 @@ p, span, div, a, button, input, textarea, label, li {
 /* Limited Edition */
 .limited-edition {
     padding: 100px 0;
-    background: linear-gradient(135deg, var(--lavender-blush) 0%, var(--midnight-black) 100%);
+    background: var(--lavender-blush);
+    border-top: 2px solid var(--deep-orchid);
+    border-bottom: 2px solid var(--deep-orchid);
+}
+
+.limited-edition .section-title,
+.limited-edition .section-subtitle {
+    color: #FFFFFF !important;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.6),
+                 0 0 10px rgba(255, 255, 255, 0.3) !important;
 }
 
 .section-header {
