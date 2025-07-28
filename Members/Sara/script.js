@@ -4513,6 +4513,13 @@ function loadRelatedProducts() {
     const relatedGrid = document.getElementById('relatedProductsGrid');
     if (!relatedGrid) return;
 
+    // Check if content already exists (static HTML content)
+    if (relatedGrid.children.length > 0) {
+        // Content already exists, just setup event listeners
+        setupRelatedProductsEventListeners(relatedGrid);
+        return;
+    }
+
     // Get current page category or random products
     const currentCategory = getCurrentPageCategory();
     const relatedProducts = getRelatedProducts(currentCategory);
