@@ -104,14 +104,14 @@ p, span, div, a, button, input, textarea, label, li {
     color: #FFFFFF !important;
 }
 
-/* Specific text elements that need extra visibility */
+/* Subtitle text styling */
 .hero-subtitle,
 .page-subtitle,
 .category-desc,
 .newsletter-desc,
 .footer-desc {
     color: #FFFFFF !important;
-    text-shadow: 0 0 2px rgba(255, 255, 255, 0.4) !important;
+    text-shadow: none !important;
 }
 
 /* Fix gradient text elements */
