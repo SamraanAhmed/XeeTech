@@ -106,24 +106,30 @@
 
             <div class="products-grid" id="productsGrid">
                 <!-- Clothing Products -->
-                <div class="product-card" data-category="clothing">
-                    <div class="product-badges">
-                        <span class="badge sale-badge">SALE</span>
-                    </div>
+                <div class="product-card" data-product-id="1" data-category="clothing">
                     <div class="product-image-container">
+                        <div class="product-badge sale">SALE</div>
+
                         <img src="" alt="Kuromi Gothic Hoodie" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-
-
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Kuromi Gothic Hoodie</h3>
-                        <div class="product-price">
-                            <span class="current-price">$39.99</span>
-                            <span class="original-price">$55.99</span>
+                        <div class="product-image-placeholder" style="display: none;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Clothing item</div>
                         </div>
+                    </div>
+
+                    <div class="product-info">
+                        <h3 class="product-name">Kuromi Gothic Hoodie</h3>
+
+                        <div class="product-price-container">
+                            <span class="product-price">$39.99</span>
+                            <span class="product-original-price">$55.99</span>
+                            <span class="price-discount">-29%</span>
+                        </div>
+
                         <button class="add-to-cart-btn" data-product-id="1">
                             <span class="btn-text">Add to Bag</span>
-                            <span class="btn-sparkle">✨</span>
+                            <span class="btn-icon">✨</span>
                         </button>
                     </div>
                 </div>
