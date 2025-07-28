@@ -1528,7 +1528,7 @@ function handleNewsletterSignup(e) {
     const email = e.target.querySelector('.newsletter-input').value;
 
     if (email) {
-        showNotification(`Welcome to the Mischief Club! 💜 Check ${email} for your 10% discount code!`);
+        showNotification(`Welcome to the Mischief Club! ��� Check ${email} for your 10% discount code!`);
         e.target.reset();
     }
 }
@@ -4280,20 +4280,25 @@ function showRecentPurchaseNotification(purchase) {
             position: fixed !important;
             bottom: 30px !important;
             left: 30px !important;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d1b3d 100%);
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(93, 42, 111, 0.4);
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1b3d 100%) !important;
+            border-radius: 12px !important;
+            box-shadow: 0 8px 25px rgba(93, 42, 111, 0.4) !important;
             z-index: 999999 !important;
-            max-width: 300px;
-            transform: translateX(-100%);
-            transition: transform 0.4s ease;
-            border: 2px solid #5d2a6f;
-            backdrop-filter: blur(10px);
+            max-width: 300px !important;
+            min-width: 280px !important;
+            opacity: 0 !important;
+            transform: translateX(-100%) !important;
+            transition: all 0.4s ease !important;
+            border: 2px solid #5d2a6f !important;
+            backdrop-filter: blur(10px) !important;
             pointer-events: auto !important;
+            visibility: hidden !important;
         }
 
         .recent-purchase-notification.show {
-            transform: translateX(0);
+            opacity: 1 !important;
+            transform: translateX(0) !important;
+            visibility: visible !important;
         }
 
         .recent-purchase-content {
