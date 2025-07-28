@@ -3387,14 +3387,15 @@ html {
 }
 
 .badge {
-    padding: 6px 12px;
-    border-radius: var(--radius-medium);
-    font-size: 0.75em;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 0.7em;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
-    border: 1px solid #ffffff;
+    letter-spacing: 0.8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
 }
 
 .sale-badge {
