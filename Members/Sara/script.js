@@ -5191,17 +5191,34 @@ function openProductModal(productId) {
     selectedSize = product.sizes ? product.sizes[0] : null;
     selectedColor = product.colors ? product.colors[0] : null;
 
-    const modal = document.getElementById('productModal');
+    // Try to find existing modal, if not found, create one
+    let modal = document.getElementById('productModal') || document.querySelector('.product-modal');
 
-    // Populate modal content
-    populateModalContent(product);
+    if (!modal) {
+        // Create modal using the existing createProductModal function
+        modal = createProductModal(product);
+        document.body.appendChild(modal);
 
-    // Show modal
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
+        // Trigger modal appearance
+        setTimeout(() => {
+            modal.classList.add('active');
+        }, 10);
 
-    // Setup modal event listeners
-    setupModalEventListeners();
+        // Setup modal interactions
+        setupModalInteractions(modal, product);
+    } else {
+        // Populate existing modal content
+        populateModalContent(product);
+
+        // Show modal
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+
+        // Setup modal event listeners if function exists
+        if (typeof setupModalEventListeners === 'function') {
+            setupModalEventListeners();
+        }
+    }
 }
 
 function closeProductModal() {
