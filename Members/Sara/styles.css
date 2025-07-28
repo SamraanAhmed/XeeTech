@@ -1914,6 +1914,53 @@ p, span, div, a, button, input, textarea, label, li {
         font-size: 1.2em;
     }
 
+    /* Professional Product Card Mobile Styles */
+    .product-image-container {
+        height: 240px;
+    }
+
+    .product-image-placeholder .placeholder-icon {
+        font-size: 3rem;
+    }
+
+    .product-info {
+        padding: 20px 16px;
+    }
+
+    .product-name {
+        font-size: 1.2rem;
+        line-height: 1.2;
+    }
+
+    .product-price {
+        font-size: 1.4rem;
+    }
+
+    .add-to-cart-btn {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+
+    .wishlist-btn {
+        width: 40px;
+        height: 40px;
+        top: 12px;
+        right: 12px;
+    }
+
+    .product-badge {
+        top: 12px;
+        left: 12px;
+        padding: 4px 10px;
+        font-size: 0.7rem;
+    }
+
+    .quick-view-btn {
+        bottom: 12px;
+        padding: 6px 16px;
+        font-size: 0.8rem;
+    }
+
     /* Touch Improvements */
     .nav-link,
     .nav-icon,
@@ -1921,7 +1968,9 @@ p, span, div, a, button, input, textarea, label, li {
     .product-btn,
     .add-to-cart-btn,
     .hero-cta,
-    .newsletter-btn {
+    .newsletter-btn,
+    .wishlist-btn,
+    .quick-view-btn {
         min-height: 44px;
         touch-action: manipulation;
     }
