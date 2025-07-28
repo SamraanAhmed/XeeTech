@@ -73,8 +73,8 @@ const enhancedProducts = {
         id: 5,
         name: "Gothic Choker Set",
         price: 35.99,
-        image: "choker.jpeg",
-        images: ["choker.jpeg", "sara.webp"],
+        image: "",
+        images: [],
         category: "accessories",
         description: "Elegant gothic choker set with multiple pieces to mix and match. Perfect for creating your unique dark kawaii style.",
         features: ["3-Piece Set", "Adjustable Length", "Hypoallergenic Materials", "Gothic Charms"],
@@ -1743,7 +1743,7 @@ function createHelpModal() {
                 </div>
 
                 <div class="help-contact">
-                    <h3>���� Still Need Help?</h3>
+                    <h3>💌 Still Need Help?</h3>
                     <p>Our mischievous support team is here to help!</p>
                     <div class="contact-options">
                         <a href="mailto:hello@kuromi-fashion.com" class="contact-btn">
@@ -2999,7 +2999,7 @@ function getEmojiForImage(image) {
         'croptop.webp': '💜',
         'jacket.webp': '🦇',
         'dress.jpg': '👗',
-        'goth dress.jpeg': '🖤',
+        'goth dress.jpeg': '��',
         'pants.jpeg': '����',
         'headband.webp': '🎀',
         'choker.jpeg': '⛓️',
