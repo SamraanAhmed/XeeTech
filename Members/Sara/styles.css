@@ -3795,8 +3795,9 @@ html {
 .product-price {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 8px;
 }
 
 .current-price {
