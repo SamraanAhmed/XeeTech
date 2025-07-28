@@ -716,15 +716,26 @@ p, span, div, a, button, input, textarea, label, li {
 }
 
 .limited-products {
-    display: grid;
+    display: grid !important;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 40px;
     margin-top: 50px;
+    padding: 20px;
+    min-height: 400px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .limited-products .product-card {
-    background: var(--bubblegum-pink) !important;
-    border: 2px solid var(--deep-orchid) !important;
+    background: #FFFFFF !important;
+    border: 3px solid var(--deep-orchid) !important;
+    color: var(--midnight-black) !important;
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+.limited-products .product-card * {
+    color: var(--midnight-black) !important;
 }
 
 .product-card {
