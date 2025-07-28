@@ -2083,9 +2083,42 @@ p, span, div, a, button, input, textarea, label, li {
     animation: pulse 1.5s ease-in-out infinite;
 }
 
-/* Smooth scrolling */
+/* Smooth scrolling and performance optimizations */
 html {
     scroll-behavior: smooth;
+}
+
+body {
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Performance optimizations */
+* {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    perspective: 1000;
+}
+
+/* Reduce animations on reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .product-card {
+        transition: none !important;
+    }
+
+    .product-card:hover {
+        transform: none !important;
+    }
 }
 
 /* Professional Product Card Components */
