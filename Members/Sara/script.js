@@ -543,6 +543,38 @@ rippleStyle.textContent = `
 `;
 document.head.appendChild(rippleStyle);
 
+// Wishlist success message function
+function showWishlistSuccessMessage(button, wasAdded, productName) {
+    // Remove existing message
+    const existingMessage = button.querySelector('.wishlist-success-message');
+    if (existingMessage) {
+        existingMessage.remove();
+    }
+
+    // Create new message
+    const message = document.createElement('div');
+    message.className = 'wishlist-success-message';
+    message.textContent = wasAdded ? 'Added!' : 'Removed!';
+
+    button.style.position = 'relative';
+    button.appendChild(message);
+
+    // Show message
+    setTimeout(() => {
+        message.classList.add('show');
+    }, 10);
+
+    // Hide and remove message
+    setTimeout(() => {
+        message.classList.remove('show');
+        setTimeout(() => {
+            if (message.parentNode) {
+                message.parentNode.removeChild(message);
+            }
+        }, 400);
+    }, 2000);
+}
+
 function initializeWebsite() {
     // Add loading class to elements that need smooth entry
     const elementsToAnimate = document.querySelectorAll('.category-card, .product-card, .review-bubble');
