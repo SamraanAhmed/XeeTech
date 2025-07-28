@@ -341,6 +341,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add smooth entrance animations
     setTimeout(() => {
         animateCards();
+        updateWishlistCounter();
     }, 100);
 });
 
