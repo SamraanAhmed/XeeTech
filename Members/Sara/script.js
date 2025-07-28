@@ -1282,11 +1282,7 @@ function createProductCard(product) {
                     </div>
                 `}
 
-                <button class="quick-view-btn" data-product-id="${product.id}"
-                        title="Quick View"
-                        onclick="event.stopPropagation(); openProductModal(${product.id});">
-                    👁️ Quick View
-                </button>
+
             </div>
 
             <div class="product-info">
@@ -1301,12 +1297,7 @@ function createProductCard(product) {
 
                 <h3 class="product-name">${product.name}</h3>
 
-                ${product.stock !== undefined ? `
-                    <div class="stock-status ${stockStatus.class}">
-                        <div class="stock-indicator"></div>
-                        ${stockStatus.text}
-                    </div>
-                ` : ''}
+
 
                 <div class="product-price-container">
                     <span class="product-price">$${product.price.toFixed(2)}</span>
@@ -4437,7 +4428,7 @@ function addStockIndicators() {
                 stockIndicator = `⚠️ Only ${product.stock} left!`;
                 stockClass = 'stock-urgent';
             } else if (product.stock <= 15) {
-                stockIndicator = `🔥 ${product.stock} in stock`;
+                stockIndicator = ``;
                 stockClass = 'stock-low';
             } else if (Math.random() > 0.7) { // Show for 30% of products
                 stockIndicator = `�� In Stock`;
