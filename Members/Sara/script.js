@@ -3417,6 +3417,53 @@ function initializeShopPage() {
 
     // Add related products
     loadRelatedProducts();
+
+    // Ensure wishlist buttons are properly initialized
+    setupShopWishlistButtons();
+}
+
+// Specific setup for shop page wishlist buttons
+function setupShopWishlistButtons() {
+    document.querySelectorAll('.wishlist-btn').forEach(btn => {
+        // Remove any existing listeners to avoid duplicates
+        btn.replaceWith(btn.cloneNode(true));
+    });
+
+    // Re-add event listeners to all wishlist buttons
+    document.querySelectorAll('.wishlist-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+
+            const productId = parseInt(btn.dataset.productId);
+            if (!productId) return;
+
+            const wasAdded = toggleWishlist(productId);
+
+            // Update button appearance
+            if (wasAdded) {
+                btn.classList.add('active');
+                btn.style.color = '#ffffff';
+                showNotification(`Added to wishlist! ♥`);
+            } else {
+                btn.classList.remove('active');
+                btn.style.color = '#ffffff';
+                showNotification(`Removed from wishlist`);
+            }
+
+            // Visual feedback
+            btn.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                btn.style.transform = '';
+            }, 200);
+        });
+
+        // Set initial state based on wishlist
+        const productId = parseInt(btn.dataset.productId);
+        if (wishlist && wishlist.includes(productId)) {
+            btn.classList.add('active');
+        }
+    });
 }
 
 function setupShopCategoryFiltering() {
