@@ -344,6 +344,56 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 100);
 });
 
+// Notification System
+function showNotification(message, type = 'success') {
+    // Remove existing notifications
+    const existing = document.querySelector('.notification');
+    if (existing) {
+        existing.remove();
+    }
+
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+
+    // Add styles
+    Object.assign(notification.style, {
+        position: 'fixed',
+        top: '20px',
+        right: '20px',
+        background: type === 'success' ? 'linear-gradient(45deg, #22c55e, #4ade80)' : 'linear-gradient(45deg, #ef4444, #f87171)',
+        color: '#ffffff',
+        padding: '12px 20px',
+        borderRadius: '12px',
+        fontWeight: '600',
+        fontSize: '0.9rem',
+        boxShadow: '0 8px 25px rgba(0, 0, 0, 0.3)',
+        zIndex: '10002',
+        transform: 'translateX(400px)',
+        transition: 'transform 0.3s ease, opacity 0.3s ease',
+        maxWidth: '300px',
+        wordWrap: 'break-word'
+    });
+
+    document.body.appendChild(notification);
+
+    // Slide in
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 10);
+
+    // Slide out and remove
+    setTimeout(() => {
+        notification.style.transform = 'translateX(400px)';
+        notification.style.opacity = '0';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
+}
+
 function initializeWebsite() {
     // Add loading class to elements that need smooth entry
     const elementsToAnimate = document.querySelectorAll('.category-card, .product-card, .review-bubble');
@@ -3316,7 +3366,7 @@ function getEmojiForImage(image) {
         'markers.webp': '🖊️',
         'wall art.webp': '🖼️',
         'fairy lights.webp': '💫',
-        'pillow.webp': '🛏️',
+        'pillow.webp': '����️',
         'candle.webp': '🕯️',
         'mirrors.webp': '🪞',
         'cur tins.webp': '🏠'
