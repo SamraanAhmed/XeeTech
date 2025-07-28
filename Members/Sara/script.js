@@ -774,34 +774,77 @@ function loadLimitedProducts() {
 }
 
 function createProductCard(product) {
+    const isInWishlist = wishlist.includes(product.id);
+    const discountPercent = product.originalPrice ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
+    const stockStatus = getStockStatus(product.stock);
+
     return `
         <div class="product-card" data-product-id="${product.id}">
-            <div class="product-badges">
-                ${product.badge ? `<span class="badge ${product.badge.toLowerCase()}-badge">${product.badge}</span>` : ''}
-            </div>
             <div class="product-image-container">
-                <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="product-image-placeholder" style="display: none;">
-                    <span class="placeholder-icon">📦</span>
-                </div>
-                <button class="quick-view-btn" title="Quick View" onclick="event.stopPropagation(); openProductModal(${product.id})">👁️</button>
-                <button class="wishlist-btn" title="Add to Wishlist" data-product-id="${product.id}" onclick="event.stopPropagation(); toggleWishlist(${product.id})">♡</button>
+                ${product.badge ? `<div class="product-badge ${product.badge.toLowerCase()}">${product.badge}</div>` : ''}
+
+                <button class="wishlist-btn ${isInWishlist ? 'active' : ''}" data-product-id="${product.id}"
+                        title="${isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}"
+                        onclick="event.stopPropagation(); toggleWishlist(${product.id}); updateWishlistUI();">
+                    ${isInWishlist ? '♥' : '♡'}
+                </button>
+
+                ${product.image && product.image.trim() !== '' ? `
+                    <img src="${product.image}"
+                         alt="${product.name}"
+                         class="product-image"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="product-image-placeholder" style="display: none;">
+                        <div class="placeholder-icon">🎀</div>
+                        <div class="placeholder-text">Image Coming Soon</div>
+                        <div class="placeholder-subtext">Premium ${product.category || 'Kawaii'} item</div>
+                    </div>
+                ` : `
+                    <div class="product-image-placeholder">
+                        <div class="placeholder-icon">🎀</div>
+                        <div class="placeholder-text">Image Coming Soon</div>
+                        <div class="placeholder-subtext">Premium ${product.category || 'Kawaii'} item</div>
+                    </div>
+                `}
+
+                <button class="quick-view-btn" data-product-id="${product.id}"
+                        title="Quick View"
+                        onclick="event.stopPropagation(); openProductModal(${product.id});">
+                    👁️ Quick View
+                </button>
             </div>
+
             <div class="product-info">
-                <h3 class="product-title">${product.name}</h3>
-                <div class="product-price">
-                    <span class="current-price">$${product.price}</span>
-                    ${product.originalPrice ? `<span class="original-price">$${product.originalPrice}</span>` : ''}
-                </div>
                 ${product.rating ? `
                     <div class="product-rating">
-                        <span class="stars">${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))}</span>
-                        <span class="rating-text">(${product.reviews || 0})</span>
+                        <div class="rating-stars">
+                            ${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))}
+                        </div>
+                        <span class="rating-count">(${product.reviews || 0})</span>
                     </div>
                 ` : ''}
-                <button class="add-to-cart-btn" data-product-id="${product.id}" onclick="event.stopPropagation(); addToCart(${product.id})">
+
+                <h3 class="product-name">${product.name}</h3>
+
+                ${product.stock !== undefined ? `
+                    <div class="stock-status ${stockStatus.class}">
+                        <div class="stock-indicator"></div>
+                        ${stockStatus.text}
+                    </div>
+                ` : ''}
+
+                <div class="product-price-container">
+                    <span class="product-price">$${product.price.toFixed(2)}</span>
+                    ${product.originalPrice ? `
+                        <span class="product-original-price">$${product.originalPrice.toFixed(2)}</span>
+                        <span class="price-discount">-${discountPercent}%</span>
+                    ` : ''}
+                </div>
+
+                <button class="add-to-cart-btn" data-product-id="${product.id}"
+                        onclick="event.stopPropagation(); addToCart(${product.id});">
                     <span class="btn-text">Add to Bag</span>
-                    <span class="btn-sparkle">✨</span>
+                    <span class="btn-icon">✨</span>
                 </button>
             </div>
         </div>
