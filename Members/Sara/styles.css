@@ -119,6 +119,19 @@ p, span, div, a, button, input, textarea, label, li {
     text-shadow: 0 0 3px rgba(255, 255, 255, 0.8) !important;
 }
 
+/* Fix gradient text elements */
+.title-line,
+.title-line.featured {
+    color: #FFFFFF !important;
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+    background-clip: unset !important;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 1),
+                 0 0 20px rgba(255, 255, 255, 0.8),
+                 0 0 30px rgba(255, 255, 255, 0.6) !important;
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
