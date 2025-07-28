@@ -4720,10 +4720,10 @@ body {
 }
 
 .wishlist-btn:hover {
-    color: #e74c3c;
-    background: var(--bubblegum-pink);
+    color: #ffffff;
+    background: rgba(156, 124, 255, 0.9);
     transform: scale(1.1);
-    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+    box-shadow: 0 4px 15px rgba(156, 124, 255, 0.4);
 }
 
 .product-card:hover .wishlist-btn {
