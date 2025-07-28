@@ -3389,7 +3389,9 @@ html {
     position: relative;
     height: 250px;
     overflow: hidden;
-    background: var(--bubblegum-pink);
+    background: #1a1a1a;
+    border: 1px solid #333333;
+    border-radius: var(--radius-medium);
 }
 
 .product-image {
