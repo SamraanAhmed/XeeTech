@@ -5333,14 +5333,20 @@ function populateModalContent(product) {
         setupModalImages(product);
     }
 
-    // Set size options
-    setupSizeOptions(product);
+    // Set size options only if function exists
+    if (typeof setupSizeOptions === 'function') {
+        setupSizeOptions(product);
+    }
 
-    // Set color options
-    setupColorOptions(product);
+    // Set color options only if function exists
+    if (typeof setupColorOptions === 'function') {
+        setupColorOptions(product);
+    }
 
-    // Update price in button
-    updateModalButtonPrice();
+    // Update price in button only if function exists
+    if (typeof updateModalButtonPrice === 'function') {
+        updateModalButtonPrice();
+    }
 }
 
 function setupModalImages(product) {
