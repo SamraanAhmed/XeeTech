@@ -653,7 +653,7 @@ function createSearchResultCard(product) {
                 <div class="search-result-price">$${product.price.toFixed(2)}</div>
                 <div class="search-result-actions">
                     <button class="search-result-btn add-to-cart-search" data-product-id="${product.id}">
-                        Add to Cart
+                        Add to Bag
                     </button>
                     <button class="search-result-btn quick-view-search" data-product-id="${product.id}">
                         Quick View
@@ -1219,7 +1219,7 @@ function createCheckoutModal() {
                             </label>
                             <label class="payment-option">
                                 <input type="radio" name="payment" value="paypal">
-                                <span>���� PayPal</span>
+                                <span>💰 PayPal</span>
                             </label>
                             <label class="payment-option">
                                 <input type="radio" name="payment" value="apple">
