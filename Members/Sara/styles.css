@@ -151,7 +151,7 @@ body {
 
 .nav-link:hover,
 .nav-link.active {
-    background: rgba(153, 50, 204, 0.1);
+    background: rgba(93, 42, 111, 0.1);
     color: var(--deep-orchid);
 }
 
@@ -1082,7 +1082,7 @@ body {
 }
 
 .cart-close:hover {
-    background: rgba(153, 50, 204, 0.1);
+    background: rgba(93, 42, 111, 0.1);
 }
 
 .cart-items {
@@ -1269,7 +1269,7 @@ body {
 .mobile-menu-toggle {
     display: none;
     flex-direction: column;
-    background: rgba(153, 50, 204, 0.1);
+    background: rgba(93, 42, 111, 0.1);
     border: 2px solid var(--deep-orchid);
     border-radius: 15px;
     cursor: pointer;
@@ -3694,7 +3694,7 @@ html {
 /* Category Filtering */
 .category-card.active {
     border-color: var(--deep-orchid);
-    background: rgba(153, 50, 204, 0.1);
+    background: rgba(93, 42, 111, 0.1);
 }
 
 .product-card[data-category] {
@@ -4804,7 +4804,7 @@ html {
 }
 
 .categories-btn:hover {
-    background: rgba(153, 50, 204, 0.1);
+    background: rgba(93, 42, 111, 0.1);
     color: var(--deep-orchid);
 }
 
