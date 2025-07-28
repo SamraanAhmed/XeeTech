@@ -3584,15 +3584,59 @@ function updateWishlistUI() {
         wishlistNavCount.style.display = wishlist.length > 0 ? 'flex' : 'none';
     }
 
-    // Update heart buttons
+    // Update heart buttons with enhanced effects
     document.querySelectorAll('.wishlist-btn').forEach(btn => {
         const productId = parseInt(btn.dataset.productId);
-        if (wishlist.includes(productId)) {
+        const wasActive = btn.classList.contains('active');
+        const shouldBeActive = wishlist.includes(productId);
+
+        if (shouldBeActive) {
             btn.classList.add('active');
             btn.innerHTML = '♥'; // filled heart
+
+            // Add counter badge
+            updateButtonCounter(btn);
+
+            // Add click ripple effect if just added
+            if (!wasActive) {
+                btn.addEventListener('click', function addRipple(e) {
+                    const ripple = document.createElement('div');
+                    ripple.style.cssText = `
+                        position: absolute;
+                        border-radius: 50%;
+                        background: rgba(255, 107, 157, 0.6);
+                        transform: scale(0);
+                        animation: ripple 0.6s linear;
+                        pointer-events: none;
+                        top: 50%;
+                        left: 50%;
+                        width: 20px;
+                        height: 20px;
+                        margin-top: -10px;
+                        margin-left: -10px;
+                    `;
+
+                    this.appendChild(ripple);
+
+                    setTimeout(() => {
+                        if (ripple.parentNode) {
+                            ripple.parentNode.removeChild(ripple);
+                        }
+                    }, 600);
+
+                    // Remove this event listener after first use
+                    this.removeEventListener('click', addRipple);
+                });
+            }
         } else {
             btn.classList.remove('active');
             btn.innerHTML = '♡'; // empty heart
+
+            // Remove counter badge
+            const existingCounter = btn.querySelector('.wishlist-counter');
+            if (existingCounter) {
+                existingCounter.remove();
+            }
         }
     });
 }
