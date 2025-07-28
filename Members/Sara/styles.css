@@ -787,15 +787,17 @@ p, span, div, a, button, input, textarea, label, li {
 }
 
 .product-btn {
-    background: linear-gradient(45deg, var(--deep-orchid), var(--bubblegum-pink));
-    color: var(--soft-white);
-    border: none;
+    background: linear-gradient(45deg, #333333, #666666);
+    color: #ffffff !important;
+    border: 2px solid #999999;
     padding: 12px 30px;
     border-radius: var(--radius-large);
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     transition: var(--transition-smooth);
     width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .product-btn:hover {
