@@ -2134,7 +2134,6 @@ html {
     font-size: 4rem;
     color: rgba(255, 255, 255, 0.4);
     margin-bottom: 12px;
-    animation: float 3s ease-in-out infinite;
 }
 
 .product-image-placeholder .placeholder-text {
