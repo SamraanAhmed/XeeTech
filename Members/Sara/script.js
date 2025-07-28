@@ -102,6 +102,235 @@ function animateCards() {
     });
 }
 
+// Product Modal Functionality
+function openProductModal(productId) {
+    const product = enhancedProducts[productId];
+    if (!product) return;
+
+    const modal = createProductModal(product);
+    document.body.appendChild(modal);
+
+    // Trigger modal appearance
+    setTimeout(() => {
+        modal.classList.add('active');
+    }, 10);
+
+    // Setup modal interactions
+    setupModalInteractions(modal, product);
+}
+
+function createProductModal(product) {
+    const isInWishlist = wishlist.includes(product.id);
+    const discountPercent = product.originalPrice ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
+
+    const modal = document.createElement('div');
+    modal.className = 'product-modal';
+    modal.innerHTML = `
+        <div class="product-modal-content">
+            <div class="product-modal-header">
+                <h2 style="color: #ffffff; margin: 0;">${product.name}</h2>
+                <button class="modal-close-btn">&times;</button>
+            </div>
+            <div class="product-modal-body">
+                <div class="product-image-zoom">
+                    ${product.image && product.image.trim() !== '' ? `
+                        <div class="zoom-container" data-zoom="false">
+                            <img src="${product.image}"
+                                 alt="${product.name}"
+                                 class="product-main-image"
+                                 onerror="this.parentElement.parentElement.innerHTML = createModalImagePlaceholder('${product.category || 'Kawaii'}');">
+                        </div>
+                    ` : createModalImagePlaceholder(product.category || 'Kawaii')}
+                </div>
+
+                <div class="product-details">
+                    <h1 class="product-modal-title">${product.name}</h1>
+
+                    ${product.rating ? `
+                        <div class="product-modal-rating">
+                            <div class="modal-rating-stars">
+                                ${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))}
+                            </div>
+                            <span class="modal-rating-count">(${product.reviews || 0} reviews)</span>
+                        </div>
+                    ` : ''}
+
+                    <div class="product-modal-price">
+                        <span class="modal-current-price">$${product.price.toFixed(2)}</span>
+                        ${product.originalPrice ? `
+                            <span class="modal-original-price">$${product.originalPrice.toFixed(2)}</span>
+                            <span class="modal-discount-badge">-${discountPercent}%</span>
+                        ` : ''}
+                    </div>
+
+                    ${product.stock !== undefined ? `
+                        <div class="modal-stock-status ${getStockStatus(product.stock).class}">
+                            <div class="stock-indicator"></div>
+                            ${getStockStatus(product.stock).text}
+                        </div>
+                    ` : ''}
+
+                    ${product.description ? `
+                        <div class="product-description">
+                            <h3 class="description-title">Description</h3>
+                            <p class="description-text">${product.description}</p>
+                        </div>
+                    ` : ''}
+
+                    ${product.features ? `
+                        <div class="product-features">
+                            <h3 class="description-title">Features</h3>
+                            <ul class="features-list">
+                                ${product.features.map(feature => `<li>${feature}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+
+                    ${product.sizes || product.colors ? `
+                        <div class="product-options">
+                            ${product.sizes ? `
+                                <div class="option-group">
+                                    <label class="option-label">Size:</label>
+                                    <div class="option-buttons" data-option="size">
+                                        ${product.sizes.map(size => `
+                                            <button class="option-btn" data-value="${size}">${size}</button>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+
+                            ${product.colors ? `
+                                <div class="option-group">
+                                    <label class="option-label">Color:</label>
+                                    <div class="option-buttons" data-option="color">
+                                        ${product.colors.map(color => `
+                                            <button class="option-btn" data-value="${color}">${color}</button>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    ` : ''}
+
+                    <div class="modal-actions">
+                        <button class="modal-add-to-cart" data-product-id="${product.id}">
+                            Add to Bag - $${product.price.toFixed(2)}
+                        </button>
+                        <button class="modal-wishlist-btn ${isInWishlist ? 'active' : ''}" data-product-id="${product.id}">
+                            ${isInWishlist ? '♥' : '♡'}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    return modal;
+}
+
+function createModalImagePlaceholder(category) {
+    return `
+        <div class="modal-image-placeholder">
+            <div class="placeholder-icon">🎀</div>
+            <div class="placeholder-text">Image Coming Soon</div>
+            <div class="placeholder-subtext">Premium ${category} item</div>
+        </div>
+    `;
+}
+
+function setupModalInteractions(modal, product) {
+    // Close modal functionality
+    const closeBtn = modal.querySelector('.modal-close-btn');
+    closeBtn.addEventListener('click', () => closeProductModal(modal));
+
+    // Close on overlay click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeProductModal(modal);
+        }
+    });
+
+    // Close on Escape key
+    const handleEscape = (e) => {
+        if (e.key === 'Escape') {
+            closeProductModal(modal);
+            document.removeEventListener('keydown', handleEscape);
+        }
+    };
+    document.addEventListener('keydown', handleEscape);
+
+    // Image zoom functionality
+    const zoomContainer = modal.querySelector('.zoom-container');
+    if (zoomContainer) {
+        setupImageZoom(zoomContainer);
+    }
+
+    // Option selection functionality
+    const optionButtons = modal.querySelectorAll('.option-btn');
+    optionButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const group = btn.closest('.option-buttons');
+            group.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        });
+    });
+
+    // Add to cart functionality
+    const addToCartBtn = modal.querySelector('.modal-add-to-cart');
+    addToCartBtn.addEventListener('click', () => {
+        addToCart(product.id);
+        showNotification(`${product.name} added to cart!`);
+    });
+
+    // Wishlist functionality
+    const wishlistBtn = modal.querySelector('.modal-wishlist-btn');
+    wishlistBtn.addEventListener('click', () => {
+        const wasAdded = toggleWishlist(product.id);
+        wishlistBtn.classList.toggle('active', wasAdded);
+        wishlistBtn.textContent = wasAdded ? '♥' : '♡';
+        showNotification(wasAdded ? `${product.name} added to wishlist!` : `${product.name} removed from wishlist!`);
+    });
+}
+
+function setupImageZoom(container) {
+    const image = container.querySelector('.product-main-image');
+    let isZooming = false;
+
+    container.addEventListener('click', () => {
+        isZooming = !isZooming;
+        container.classList.toggle('zooming', isZooming);
+        container.dataset.zoom = isZooming;
+    });
+
+    container.addEventListener('mousemove', (e) => {
+        if (!isZooming) return;
+
+        const rect = container.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+        container.style.setProperty('--zoom-x', `${x}%`);
+        container.style.setProperty('--zoom-y', `${y}%`);
+    });
+
+    container.addEventListener('mouseleave', () => {
+        if (isZooming) {
+            isZooming = false;
+            container.classList.remove('zooming');
+            container.dataset.zoom = 'false';
+        }
+    });
+}
+
+function closeProductModal(modal) {
+    modal.classList.remove('active');
+    setTimeout(() => {
+        if (modal.parentNode) {
+            modal.parentNode.removeChild(modal);
+        }
+    }, 300);
+}
+
 // Initialize the website
 document.addEventListener('DOMContentLoaded', function() {
     initializeWebsite();
