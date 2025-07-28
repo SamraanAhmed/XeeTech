@@ -1163,7 +1163,7 @@ function createProductCard(product) {
                 <button class="wishlist-btn ${isInWishlist ? 'active' : ''}" data-product-id="${product.id}"
                         title="${isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}"
                         onclick="event.stopPropagation(); toggleWishlist(${product.id}); updateWishlistUI();">
-                    ${isInWishlist ? '♥' : '���'}
+                    ${isInWishlist ? '♥' : '♡'}
                 </button>
 
                 ${product.image && product.image.trim() !== '' ? `
@@ -5418,7 +5418,7 @@ function setupColorOptions(product) {
     const colorSelector = document.getElementById('modalColorSelector');
     const colorsContainer = document.getElementById('modalColors');
 
-    if (product.colors && product.colors.length > 0) {
+    if (product.colors && product.colors.length > 0 && colorSelector && colorsContainer) {
         colorSelector.style.display = 'block';
         colorsContainer.innerHTML = '';
 
