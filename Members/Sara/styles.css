@@ -20,10 +20,10 @@
     --font-chat: 'Comic Neue', cursive;
 
     /* Shadows and Effects */
-    --shadow-soft: 0 4px 20px rgba(153, 50, 204, 0.15);
-    --shadow-medium: 0 8px 30px rgba(153, 50, 204, 0.25);
-    --shadow-strong: 0 12px 40px rgba(153, 50, 204, 0.35);
-    --glow-effect: 0 0 20px rgba(255, 182, 193, 0.6);
+    --shadow-soft: 0 4px 20px rgba(93, 42, 111, 0.15);
+    --shadow-medium: 0 8px 30px rgba(93, 42, 111, 0.25);
+    --shadow-strong: 0 12px 40px rgba(93, 42, 111, 0.35);
+    --glow-effect: 0 0 20px rgba(59, 25, 77, 0.6);
 
     /* Border Radius */
     --radius-small: 8px;
