@@ -3631,7 +3631,7 @@ function updateWishlistUI() {
             }
         } else {
             btn.classList.remove('active');
-            btn.innerHTML = '♡'; // empty heart
+            btn.innerHTML = '��'; // empty heart
 
             // Remove counter badge
             const existingCounter = btn.querySelector('.wishlist-counter');
@@ -5353,13 +5353,15 @@ function setupModalImages(product) {
     const mainImage = document.getElementById('modalMainImage');
     const thumbnailContainer = document.getElementById('modalThumbnails');
 
-    // Set main image
-    if (product.image) {
-        mainImage.src = product.image;
-        mainImage.alt = product.name;
-    } else {
-        mainImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OTk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';
-        mainImage.alt = 'No image available';
+    // Set main image with null check
+    if (mainImage) {
+        if (product.image) {
+            mainImage.src = product.image;
+            mainImage.alt = product.name;
+        } else {
+            mainImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OTk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';
+            mainImage.alt = 'No image available';
+        }
     }
 
     // Set thumbnails
