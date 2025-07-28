@@ -4724,6 +4724,17 @@ body {
     color: #666;
 }
 
+.wishlist-btn::after {
+    content: "♥";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+    font-size: 1.1rem;
+    z-index: 1;
+}
+
 .wishlist-btn.active {
     color: #e74c3c;
     background: rgba(255, 255, 255, 1);
