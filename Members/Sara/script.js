@@ -5214,41 +5214,60 @@ function closeProductModal() {
 }
 
 function populateModalContent(product) {
-    // Set product title
-    document.getElementById('modalProductName').textContent = product.name;
+    // Set product title with null check
+    const titleElement = document.getElementById('modalProductName') || document.querySelector('.product-modal-title');
+    if (titleElement) {
+        titleElement.textContent = product.name;
+    }
 
-    // Set rating
-    const ratingElement = document.getElementById('modalRating');
-    const reviewCountElement = document.getElementById('modalReviewCount');
-    if (product.rating) {
+    // Set rating with null checks
+    const ratingElement = document.getElementById('modalRating') || document.querySelector('.modal-rating-stars');
+    const reviewCountElement = document.getElementById('modalReviewCount') || document.querySelector('.modal-rating-count');
+    if (product.rating && ratingElement) {
         ratingElement.innerHTML = '★'.repeat(Math.floor(product.rating)) +
                                  (product.rating % 1 ? '☆' : '') +
                                  '☆'.repeat(5 - Math.ceil(product.rating));
-        reviewCountElement.textContent = `(${product.reviews || 0} reviews)`;
-    } else {
+        if (reviewCountElement) {
+            reviewCountElement.textContent = `(${product.reviews || 0} reviews)`;
+        }
+    } else if (ratingElement) {
         ratingElement.innerHTML = '';
-        reviewCountElement.textContent = '';
+        if (reviewCountElement) {
+            reviewCountElement.textContent = '';
+        }
     }
 
-    // Set pricing
-    document.getElementById('modalCurrentPrice').textContent = `$${product.price}`;
-    const originalPriceElement = document.getElementById('modalOriginalPrice');
-    const discountElement = document.getElementById('modalDiscount');
+    // Set pricing with null checks
+    const currentPriceElement = document.getElementById('modalCurrentPrice') || document.querySelector('.modal-current-price');
+    if (currentPriceElement) {
+        currentPriceElement.textContent = `$${product.price}`;
+    }
+
+    const originalPriceElement = document.getElementById('modalOriginalPrice') || document.querySelector('.modal-original-price');
+    const discountElement = document.getElementById('modalDiscount') || document.querySelector('.modal-discount-badge');
 
     if (product.originalPrice && product.originalPrice > product.price) {
-        originalPriceElement.textContent = `$${product.originalPrice}`;
-        originalPriceElement.style.display = 'inline';
-        const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
-        discountElement.textContent = `-${discount}%`;
-        discountElement.style.display = 'inline';
+        if (originalPriceElement) {
+            originalPriceElement.textContent = `$${product.originalPrice}`;
+            originalPriceElement.style.display = 'inline';
+        }
+        if (discountElement) {
+            const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+            discountElement.textContent = `-${discount}%`;
+            discountElement.style.display = 'inline';
+        }
     } else {
-        originalPriceElement.style.display = 'none';
-        discountElement.style.display = 'none';
+        if (originalPriceElement) {
+            originalPriceElement.style.display = 'none';
+        }
+        if (discountElement) {
+            discountElement.style.display = 'none';
+        }
     }
 
-    // Set stock info
-    const stockElement = document.getElementById('modalStock');
-    if (product.stock) {
+    // Set stock info with null check
+    const stockElement = document.getElementById('modalStock') || document.querySelector('.modal-stock-status');
+    if (stockElement && product.stock !== undefined) {
         if (product.stock > 10) {
             stockElement.textContent = 'In Stock';
             stockElement.className = 'stock-indicator in-stock';
@@ -5259,24 +5278,31 @@ function populateModalContent(product) {
             stockElement.textContent = 'Out of Stock';
             stockElement.className = 'stock-indicator out-of-stock';
         }
-    } else {
+    } else if (stockElement) {
         stockElement.textContent = 'In Stock';
         stockElement.className = 'stock-indicator in-stock';
     }
 
-    // Set description
-    document.getElementById('modalDescription').textContent = product.description || 'No description available.';
-
-    // Set features
-    const featuresElement = document.getElementById('modalFeatures');
-    if (product.features && product.features.length > 0) {
-        featuresElement.innerHTML = product.features.map(feature => `<li>${feature}</li>`).join('');
-    } else {
-        featuresElement.innerHTML = '<li>Premium quality</li><li>Fast shipping</li><li>Satisfaction guaranteed</li>';
+    // Set description with null check
+    const descriptionElement = document.getElementById('modalDescription') || document.querySelector('.description-text');
+    if (descriptionElement) {
+        descriptionElement.textContent = product.description || 'No description available.';
     }
 
-    // Set images
-    setupModalImages(product);
+    // Set features with null check
+    const featuresElement = document.getElementById('modalFeatures') || document.querySelector('.features-list');
+    if (featuresElement) {
+        if (product.features && product.features.length > 0) {
+            featuresElement.innerHTML = product.features.map(feature => `<li>${feature}</li>`).join('');
+        } else {
+            featuresElement.innerHTML = '<li>Premium quality</li><li>Fast shipping</li><li>Satisfaction guaranteed</li>';
+        }
+    }
+
+    // Set images only if function exists
+    if (typeof setupModalImages === 'function') {
+        setupModalImages(product);
+    }
 
     // Set size options
     setupSizeOptions(product);
