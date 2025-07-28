@@ -3502,8 +3502,8 @@ function setupProductInteractions() {
         btn.addEventListener('click', (e) => {
             const productId = parseInt(e.target.dataset.productId || e.target.closest('.add-to-cart-btn').dataset.productId);
             const productCard = e.target.closest('.product-card');
-            const productName = productCard.querySelector('.product-title').textContent;
-            const productPrice = parseFloat(productCard.querySelector('.current-price').textContent.replace('$', ''));
+            const productName = productCard.querySelector('.product-name').textContent;
+            const productPrice = parseFloat(productCard.querySelector('.product-price').textContent.replace('$', ''));
             const productImage = productCard.querySelector('.product-image');
 
             // Get image source or use placeholder
