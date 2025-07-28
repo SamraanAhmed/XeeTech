@@ -97,13 +97,26 @@ h1, h2, h3, h4, h5, h6,
 .cart-header h3,
 .review-author,
 .brand-name {
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.6),
-                 0 0 20px rgba(255, 255, 255, 0.4) !important;
+    color: #FFFFFF !important;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 1),
+                 0 0 10px rgba(255, 255, 255, 0.8),
+                 0 0 15px rgba(255, 255, 255, 0.6) !important;
+    font-weight: 600 !important;
 }
 
 /* Ensure all text is visible */
 p, span, div, a, button, input, textarea, label, li {
-    color: var(--soft-white) !important;
+    color: #FFFFFF !important;
+}
+
+/* Specific text elements that need extra visibility */
+.hero-subtitle,
+.page-subtitle,
+.category-desc,
+.newsletter-desc,
+.footer-desc {
+    color: #FFFFFF !important;
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.8) !important;
 }
 
 .container {
