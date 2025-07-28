@@ -3152,6 +3152,16 @@ function addToWishlist(productId) {
     if (!wishlist.includes(productId)) {
         wishlist.push(productId);
         saveWishlist();
+
+        // Add heartbeat animation to the button
+        const wishlistBtn = document.querySelector(`.wishlist-btn[data-product-id="${productId}"]`);
+        if (wishlistBtn) {
+            wishlistBtn.classList.add('adding');
+            setTimeout(() => {
+                wishlistBtn.classList.remove('adding');
+            }, 600);
+        }
+
         updateWishlistUI();
         return true;
     }
