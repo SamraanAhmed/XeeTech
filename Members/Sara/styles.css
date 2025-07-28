@@ -3767,8 +3767,8 @@ html {
 
 .original-price {
     font-size: 1em;
-    color: var(--soft-white);
-    opacity: 0.5;
+    color: #cccccc !important;
+    opacity: 0.8;
     text-decoration: line-through;
 }
 
