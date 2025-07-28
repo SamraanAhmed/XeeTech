@@ -2153,17 +2153,7 @@ html {
     font-style: italic;
 }
 
-/* Shimmer Animation for Placeholder */
-@keyframes shimmer {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-@keyframes shine {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
-}
+/* Removed shimmer and shine animations to fix scrolling issues */
 
 /* Enhanced Product Info Section */
 .product-info {
