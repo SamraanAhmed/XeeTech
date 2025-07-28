@@ -851,6 +851,21 @@ function createProductCard(product) {
     `;
 }
 
+// Helper function for stock status
+function getStockStatus(stock) {
+    if (stock === undefined || stock === null) {
+        return { class: 'in-stock', text: 'Available' };
+    }
+
+    if (stock === 0) {
+        return { class: 'out-of-stock', text: 'Out of Stock' };
+    } else if (stock <= 5) {
+        return { class: 'low-stock', text: `Only ${stock} left` };
+    } else {
+        return { class: 'in-stock', text: 'In Stock' };
+    }
+}
+
 // Cart functionality
 function addToCart(productId) {
     const product = limitedProducts.find(p => p.id === productId);
@@ -3049,7 +3064,7 @@ function getEmojiForImage(image) {
         'clip.jpeg': '💎',
         'phone cae.webp': '📱',
         'bag charm.webp': '🔮',
-        'sara.webp': '🧸',
+        'sara.webp': '��',
         'notebook.webp': '📓',
         'pen.webp': '✒️',
         'sticker.webp': '✨',
