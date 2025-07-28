@@ -3569,14 +3569,15 @@ html {
 }
 
 .related-product-card {
-    background: var(--bubblegum-pink);
+    background: #000000;
     border-radius: var(--radius-large);
     overflow: hidden;
-    box-shadow: var(--shadow-soft);
+    box-shadow: 0 8px 30px rgba(255, 255, 255, 0.1);
     transition: var(--transition-smooth);
     cursor: pointer;
     position: relative;
     animation: fadeInUp 0.6s ease;
+    border: 2px solid #333333;
 }
 
 .related-product-card:hover {
