@@ -65,6 +65,28 @@ h1, h2, h3, h4, h5, h6,
                  0 0 60px rgba(255, 255, 255, 0.4) !important;
 }
 
+/* Exceptions for elements that need specific colors for functionality */
+.btn-text,
+.add-to-cart-btn .btn-text,
+.add-to-bag-btn .btn-text,
+.newsletter-btn,
+.hero-cta,
+.product-btn,
+.checkout-btn {
+    color: var(--soft-white) !important;
+}
+
+/* Price colors */
+.current-price,
+.product-price {
+    color: var(--soft-white) !important;
+}
+
+/* Badge colors - keep their background-based styling */
+.badge {
+    color: var(--soft-white) !important;
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
