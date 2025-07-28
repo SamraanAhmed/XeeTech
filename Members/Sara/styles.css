@@ -237,7 +237,7 @@ body {
 .lang-option {
     display: block;
     padding: 12px 16px;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     text-decoration: none;
     font-size: 0.9em;
     transition: var(--transition-fast);
@@ -459,7 +459,7 @@ body {
 
 .hero-subtitle {
     font-size: 1.2em;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     margin-bottom: 30px;
     line-height: 1.6;
     opacity: 0.8;
@@ -583,13 +583,13 @@ body {
     font-size: 1.5em;
     font-weight: 600;
     margin-bottom: 10px;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     position: relative;
     z-index: 2;
 }
 
 .category-desc {
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.7;
     line-height: 1.5;
     position: relative;
@@ -609,7 +609,7 @@ body {
 
 .section-subtitle {
     font-size: 1.2em;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.7;
     margin-top: 10px;
 }
@@ -658,7 +658,7 @@ body {
     font-size: 1.3em;
     font-weight: 600;
     margin-bottom: 10px;
-    color: var(--midnight-black);
+    color: var(--soft-white);
 }
 
 .product-price {
@@ -734,7 +734,7 @@ body {
     font-style: italic;
     line-height: 1.6;
     margin-bottom: 20px;
-    color: var(--midnight-black);
+    color: var(--soft-white);
 }
 
 .review-author {
@@ -799,7 +799,7 @@ body {
 
 .post-caption {
     margin-bottom: 15px;
-    color: var(--midnight-black);
+    color: var(--soft-white);
 }
 
 .post-engagement {
@@ -1066,7 +1066,7 @@ body {
 }
 
 .cart-header h3 {
-    color: var(--midnight-black);
+    color: var(--soft-white);
     font-size: 1.3em;
 }
 
@@ -1075,7 +1075,7 @@ body {
     border: none;
     font-size: 1.5em;
     cursor: pointer;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     padding: 5px;
     border-radius: 50%;
     transition: var(--transition-fast);
@@ -1126,7 +1126,7 @@ body {
 
 .cart-item-name {
     font-weight: 600;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     font-size: 14px;
     line-height: 1.2;
 }
@@ -1170,7 +1170,7 @@ body {
     min-width: 30px;
     text-align: center;
     font-weight: 600;
-    color: var(--midnight-black);
+    color: var(--soft-white);
 }
 
 .remove-item {
@@ -1200,7 +1200,7 @@ body {
 .empty-cart {
     text-align: center;
     padding: 40px 20px;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.6;
 }
 
@@ -1224,7 +1224,7 @@ body {
     font-size: 1.2em;
     font-weight: 600;
     margin-bottom: 20px;
-    color: var(--midnight-black);
+    color: var(--soft-white);
 }
 
 .checkout-btn {
@@ -1931,7 +1931,7 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--midnight-black);
+    color: var(--soft-white);
 }
 
 .modal-close:hover {
@@ -2035,7 +2035,7 @@ html {
 .modal-product-title {
     font-family: var(--font-gothic);
     font-size: 2.2em;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     margin-bottom: 15px;
     line-height: 1.2;
 }
@@ -2080,7 +2080,7 @@ html {
 
 .modal-original-price {
     font-size: 1.2em;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.6;
     text-decoration: line-through;
 }
@@ -2119,12 +2119,12 @@ html {
     font-size: 1.2em;
     font-weight: 600;
     margin-bottom: 10px;
-    color: var(--midnight-black);
+    color: var(--soft-white);
 }
 
 .product-description p {
     line-height: 1.6;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.8;
 }
 
@@ -2136,7 +2136,7 @@ html {
     font-size: 1.2em;
     font-weight: 600;
     margin-bottom: 10px;
-    color: var(--midnight-black);
+    color: var(--soft-white);
 }
 
 .product-features ul {
@@ -2146,7 +2146,7 @@ html {
 
 .product-features li {
     padding: 5px 0;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.8;
     position: relative;
     padding-left: 20px;
@@ -2173,7 +2173,7 @@ html {
     font-size: 1.1em;
     font-weight: 600;
     margin-bottom: 10px;
-    color: var(--midnight-black);
+    color: var(--soft-white);
 }
 
 .size-options,
@@ -2245,7 +2245,7 @@ html {
     text-align: center;
     font-weight: 600;
     background: var(--soft-white);
-    color: var(--midnight-black);
+    color: var(--soft-white);
 }
 
 .modal-add-to-cart {
@@ -2367,7 +2367,7 @@ html {
 .checkout-breadcrumb {
     margin-bottom: 20px;
     font-size: 0.9em;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.7;
 }
 
@@ -2388,13 +2388,13 @@ html {
 
 .breadcrumb-current {
     font-weight: 600;
-    color: var(--midnight-black);
+    color: var(--soft-white);
 }
 
 .checkout-title {
     font-family: var(--font-gothic);
     font-size: 2.5em;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     margin-bottom: 15px;
     background: linear-gradient(45deg, var(--midnight-black), var(--deep-orchid));
     -webkit-background-clip: text;
@@ -2404,7 +2404,7 @@ html {
 
 .checkout-subtitle {
     font-size: 1.1em;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.8;
     max-width: 600px;
     margin: 0 auto;
@@ -2449,7 +2449,7 @@ html {
     gap: 15px;
     font-size: 1.3em;
     font-weight: 600;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     margin: 0;
 }
 
@@ -2490,7 +2490,7 @@ html {
 .form-group label {
     margin-bottom: 8px;
     font-weight: 500;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     font-size: 0.9em;
 }
 
@@ -2517,7 +2517,7 @@ html {
 .form-help {
     margin-top: 5px;
     font-size: 0.8em;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.6;
 }
 
@@ -2608,13 +2608,13 @@ html {
 
 .shipping-name {
     font-weight: 600;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     margin-bottom: 4px;
 }
 
 .shipping-time {
     font-size: 0.85em;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.7;
 }
 
@@ -2665,7 +2665,7 @@ html {
 
 .payment-name {
     font-weight: 500;
-    color: var(--midnight-black);
+    color: var(--soft-white);
 }
 
 .card-form {
@@ -2692,7 +2692,7 @@ html {
     align-items: center;
     font-family: var(--font-body);
     font-weight: 600;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     cursor: pointer;
 }
 
@@ -2736,7 +2736,7 @@ html {
 .summary-title {
     font-size: 1.4em;
     font-weight: 600;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     margin-bottom: 25px;
     text-align: center;
 }
@@ -2773,20 +2773,20 @@ html {
 
 .item-name {
     font-weight: 600;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     font-size: 0.9em;
     line-height: 1.3;
 }
 
 .item-options {
     font-size: 0.8em;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.7;
 }
 
 .item-quantity {
     font-size: 0.8em;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.7;
 }
 
@@ -2818,7 +2818,7 @@ html {
 .total-row {
     font-size: 1.1em;
     font-weight: 700;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     padding-top: 10px;
     border-top: 1px solid rgba(153, 50, 204, 0.2);
     margin-top: 10px;
@@ -2919,7 +2919,7 @@ html {
     align-items: center;
     gap: 8px;
     font-size: 0.85em;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.8;
 }
 
@@ -2949,7 +2949,7 @@ html {
 .return-policy li {
     margin-bottom: 8px;
     font-size: 0.85em;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.8;
 }
 
@@ -3101,7 +3101,7 @@ html {
 
 .shop-subtitle {
     font-size: 1.2em;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.8;
     line-height: 1.6;
 }
@@ -3166,13 +3166,13 @@ html {
     font-size: 1.5em;
     font-weight: 600;
     margin-bottom: 10px;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     position: relative;
     z-index: 2;
 }
 
 .category-desc {
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.7;
     line-height: 1.5;
     position: relative;
@@ -3205,7 +3205,7 @@ html {
     border: 2px solid rgba(93, 42, 111, 0.2);
     border-radius: var(--radius-medium);
     background: var(--soft-white);
-    color: var(--midnight-black);
+    color: var(--soft-white);
     font-family: var(--font-body);
     font-size: 0.9em;
     cursor: pointer;
@@ -3265,7 +3265,7 @@ html {
 
 .new-badge {
     background: var(--glittery-silver);
-    color: var(--midnight-black);
+    color: var(--soft-white);
     box-shadow: 0 2px 8px rgba(192, 192, 192, 0.4);
 }
 
@@ -3533,7 +3533,7 @@ html {
 .related-product-name {
     font-size: 16px;
     font-weight: 600;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     margin-bottom: 8px;
     line-height: 1.3;
 }
@@ -3623,7 +3623,7 @@ html {
 .product-title {
     font-size: 1.2em;
     font-weight: 600;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     margin-bottom: 15px;
     line-height: 1.3;
     font-family: var(--font-body);
@@ -3644,7 +3644,7 @@ html {
 
 .original-price {
     font-size: 1em;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.5;
     text-decoration: line-through;
 }
@@ -3815,7 +3815,7 @@ html {
 
 .checkout-subtitle {
     font-size: 1.2em;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.8;
 }
 
@@ -3879,7 +3879,7 @@ html {
 
 .item-name {
     font-weight: 600;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     margin-bottom: 5px;
 }
 
@@ -3947,7 +3947,7 @@ html {
 
 .form-field label {
     font-weight: 600;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     font-size: 0.95em;
 }
 
@@ -4088,7 +4088,7 @@ html {
     align-items: center;
     gap: 5px;
     font-size: 0.9em;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.8;
 }
 
@@ -4108,13 +4108,13 @@ html {
 }
 
 .empty-cart h2 {
-    color: var(--midnight-black);
+    color: var(--soft-white);
     margin-bottom: 15px;
     font-size: 1.8em;
 }
 
 .empty-cart p {
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.7;
     margin-bottom: 30px;
     line-height: 1.6;
@@ -4255,7 +4255,7 @@ html {
 
 .about-subtitle {
     font-size: 1.2em;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.8;
     line-height: 1.6;
 }
@@ -4397,7 +4397,7 @@ html {
 .paragraph-content p {
     font-size: 1.1em;
     line-height: 1.7;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     margin: 0;
 }
 
@@ -4522,7 +4522,7 @@ html {
 
 .founder-title {
     font-size: 1.3em;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     font-weight: 600;
     margin-bottom: 20px;
     opacity: 0.8;
@@ -4531,7 +4531,7 @@ html {
 .founder-bio p {
     font-size: 1.1em;
     line-height: 1.7;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     margin-bottom: 15px;
 }
 
@@ -4663,13 +4663,13 @@ html {
     font-size: 1.5em;
     font-weight: 600;
     margin-bottom: 15px;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     position: relative;
     z-index: 2;
 }
 
 .category-description {
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.8;
     line-height: 1.6;
     margin-bottom: 20px;
@@ -4685,7 +4685,7 @@ html {
 }
 
 .category-features li {
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.7;
     font-size: 0.9em;
     margin-bottom: 8px;
@@ -4703,7 +4703,7 @@ html {
 /* Pastel Social Icons */
 .pastel-social {
     background: linear-gradient(45deg, var(--lavender-blush), var(--bubblegum-pink));
-    color: var(--midnight-black);
+    color: var(--soft-white);
     border: 2px solid var(--deep-orchid);
 }
 
@@ -4794,7 +4794,7 @@ html {
     cursor: pointer;
     font-family: var(--font-body);
     font-size: inherit;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     text-decoration: none;
     position: relative;
     transition: var(--transition-smooth);
@@ -5047,7 +5047,7 @@ html {
 .category-item .category-name {
     font-size: 1.4em;
     font-weight: 700;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     margin: 0 0 8px 0;
     font-family: var(--font-body);
     letter-spacing: -0.5px;
@@ -5060,7 +5060,7 @@ html {
 }
 
 .category-item .category-desc {
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.65;
     margin: 0;
     font-size: 0.95em;
@@ -5212,7 +5212,7 @@ html {
 
 .breadcrumb {
     font-size: 0.9em;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.7;
     margin-bottom: 20px;
 }
@@ -5233,7 +5233,7 @@ html {
 
 .breadcrumb .current {
     font-weight: 600;
-    color: var(--midnight-black);
+    color: var(--soft-white);
 }
 
 .checkout-title {
@@ -5246,7 +5246,7 @@ html {
 
 .checkout-subtitle {
     font-size: 1.1em;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.8;
 }
 
@@ -5291,7 +5291,7 @@ html {
 .section-title {
     font-size: 1.3em;
     font-weight: 600;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     margin: 0;
 }
 
@@ -5326,7 +5326,7 @@ html {
 .step-title {
     font-size: 1.4em;
     font-weight: 600;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     margin: 0;
 }
 
@@ -5372,7 +5372,7 @@ html {
 .order-item .item-name {
     font-size: 1.1em;
     font-weight: 600;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     margin: 0 0 5px 0;
 }
 
@@ -5429,7 +5429,7 @@ html {
 
 .order-item .unit-price {
     font-size: 0.8em;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.6;
 }
 
@@ -5487,7 +5487,7 @@ html {
 
 .form-group label {
     font-weight: 600;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     font-size: 0.95em;
 }
 
@@ -5517,7 +5517,7 @@ html {
 
 .form-help {
     font-size: 0.8em;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.6;
 }
 
@@ -5588,7 +5588,7 @@ html {
 .summary-title {
     font-size: 1.4em;
     font-weight: 600;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     margin: 0 0 25px 0;
     text-align: center;
 }
@@ -5618,7 +5618,7 @@ html {
 
 .summary-item .item-name {
     font-weight: 600;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     font-size: 0.9em;
     display: block;
 }
@@ -5804,7 +5804,7 @@ html {
 .total-label {
     font-size: 1.3em;
     font-weight: 600;
-    color: var(--midnight-black);
+    color: var(--soft-white);
 }
 
 .total-amount {
@@ -5893,7 +5893,7 @@ html {
     align-items: center;
     gap: 5px;
     font-size: 0.8em;
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.8;
     text-align: center;
 }
@@ -5926,13 +5926,13 @@ html {
 }
 
 .empty-cart-content h2 {
-    color: var(--midnight-black);
+    color: var(--soft-white);
     margin-bottom: 15px;
     font-size: 1.8em;
 }
 
 .empty-cart-content p {
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.7;
     margin-bottom: 30px;
     line-height: 1.6;
@@ -6018,7 +6018,7 @@ html {
 }
 
 .success-modal h2 {
-    color: var(--midnight-black);
+    color: var(--soft-white);
     margin-bottom: 15px;
     font-size: 2em;
 }
@@ -6034,7 +6034,7 @@ html {
 }
 
 .success-message {
-    color: var(--midnight-black);
+    color: var(--soft-white);
     opacity: 0.8;
     line-height: 1.6;
     margin-bottom: 30px;
