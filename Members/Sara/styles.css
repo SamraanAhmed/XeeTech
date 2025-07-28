@@ -681,16 +681,26 @@ p, span, div, a, button, input, textarea, label, li {
 /* Limited Edition */
 .limited-edition {
     padding: 100px 0;
-    background: var(--lavender-blush);
-    border-top: 2px solid var(--deep-orchid);
-    border-bottom: 2px solid var(--deep-orchid);
+    background: var(--deep-orchid) !important;
+    border-top: 5px solid #FFFFFF;
+    border-bottom: 5px solid #FFFFFF;
+    min-height: 600px !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
-.limited-edition .section-title,
+.limited-edition .section-title {
+    color: #FFFFFF !important;
+    font-size: 2.5em !important;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8) !important;
+    margin-bottom: 20px !important;
+}
+
 .limited-edition .section-subtitle {
     color: #FFFFFF !important;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.6),
-                 0 0 10px rgba(255, 255, 255, 0.3) !important;
+    font-size: 1.3em !important;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.6) !important;
 }
 
 .section-header {
