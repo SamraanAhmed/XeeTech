@@ -4342,7 +4342,7 @@ function addStockIndicators() {
                 stockIndicator = `🔥 ${product.stock} in stock`;
                 stockClass = 'stock-low';
             } else if (Math.random() > 0.7) { // Show for 30% of products
-                stockIndicator = `✅ In Stock`;
+                stockIndicator = `�� In Stock`;
                 stockClass = 'stock-good';
             }
 
@@ -5222,9 +5222,21 @@ function openProductModal(productId) {
 }
 
 function closeProductModal() {
-    const modal = document.getElementById('productModal');
-    modal.classList.remove('active');
-    document.body.style.overflow = '';
+    const modal = document.getElementById('productModal') || document.querySelector('.product-modal.active');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+
+        // If it's a dynamically created modal, remove it after animation
+        if (!document.getElementById('productModal')) {
+            setTimeout(() => {
+                if (modal.parentNode) {
+                    modal.parentNode.removeChild(modal);
+                }
+            }, 300);
+        }
+    }
+
     currentModalProduct = null;
     selectedSize = null;
     selectedColor = null;
