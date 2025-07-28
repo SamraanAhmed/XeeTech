@@ -1163,7 +1163,7 @@ function createProductCard(product) {
                 <button class="wishlist-btn ${isInWishlist ? 'active' : ''}" data-product-id="${product.id}"
                         title="${isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}"
                         onclick="event.stopPropagation(); toggleWishlist(${product.id}); updateWishlistUI();">
-                    ${isInWishlist ? '♥' : '♡'}
+                    ${isInWishlist ? '♥' : '���'}
                 </button>
 
                 ${product.image && product.image.trim() !== '' ? `
@@ -5409,7 +5409,7 @@ function setupSizeOptions(product) {
             });
             sizesContainer.appendChild(sizeOption);
         });
-    } else {
+    } else if (sizeSelector) {
         sizeSelector.style.display = 'none';
     }
 }
