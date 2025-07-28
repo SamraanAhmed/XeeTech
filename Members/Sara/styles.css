@@ -245,7 +245,7 @@ body {
 
 .lang-option:hover,
 .lang-option.active {
-    background: var(--lavender-blush);
+    background: var(--bubblegum-pink);
     color: var(--deep-orchid);
 }
 
@@ -285,7 +285,7 @@ body {
     border-radius: var(--radius-large);
     font-family: var(--font-body);
     font-size: 1em;
-    background: var(--lavender-blush);
+    background: var(--bubblegum-pink);
     transition: var(--transition-smooth);
 }
 
@@ -515,7 +515,7 @@ body {
 /* Category Preview */
 .category-preview {
     padding: 100px 0;
-    background: var(--lavender-blush);
+    background: var(--bubblegum-pink);
 }
 
 .section-title {
@@ -537,7 +537,7 @@ body {
 }
 
 .category-card {
-    background: var(--lavender-blush);
+    background: var(--bubblegum-pink);
     border-radius: var(--radius-large);
     padding: 40px 30px;
     text-align: center;
@@ -688,7 +688,7 @@ body {
 /* Reviews Section */
 .reviews-section {
     padding: 100px 0;
-    background: var(--lavender-blush);
+    background: var(--bubblegum-pink);
 }
 
 .reviews-grid {
@@ -699,7 +699,7 @@ body {
 }
 
 .review-bubble {
-    background: var(--lavender-blush);
+    background: var(--bubblegum-pink);
     border-radius: var(--radius-large);
     padding: 30px;
     position: relative;
@@ -1113,7 +1113,7 @@ body {
     justify-content: center;
     min-width: 60px;
     height: 60px;
-    background: var(--lavender-blush);
+    background: var(--bubblegum-pink);
     border-radius: var(--radius-small);
 }
 
@@ -1376,7 +1376,7 @@ body {
         text-align: center;
         border-radius: var(--radius-medium);
         font-size: 1.1em;
-        background: var(--lavender-blush);
+        background: var(--bubblegum-pink);
         margin-bottom: 5px;
         transition: var(--transition-smooth);
     }
@@ -1949,7 +1949,7 @@ html {
 
 .modal-left {
     padding: 40px;
-    background: var(--lavender-blush);
+    background: var(--bubblegum-pink);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2061,7 +2061,7 @@ html {
 .product-pricing {
     margin-bottom: 25px;
     padding: 20px;
-    background: var(--lavender-blush);
+    background: var(--bubblegum-pink);
     border-radius: var(--radius-medium);
 }
 
@@ -2223,7 +2223,7 @@ html {
     width: 40px;
     height: 40px;
     border: none;
-    background: var(--lavender-blush);
+    background: var(--bubblegum-pink);
     color: var(--deep-orchid);
     font-weight: 600;
     cursor: pointer;
@@ -2586,7 +2586,7 @@ html {
 
 .shipping-option:hover {
     border-color: var(--deep-orchid);
-    background: var(--lavender-blush);
+    background: var(--bubblegum-pink);
 }
 
 .shipping-option input[type="radio"] {
@@ -2645,7 +2645,7 @@ html {
 
 .payment-method:hover {
     border-color: var(--deep-orchid);
-    background: var(--lavender-blush);
+    background: var(--bubblegum-pink);
 }
 
 .payment-method input[type="radio"] {
@@ -2677,7 +2677,7 @@ html {
 .order-summary-mobile {
     display: none;
     margin-bottom: 30px;
-    background: var(--lavender-blush);
+    background: var(--bubblegum-pink);
     border-radius: var(--radius-medium);
     overflow: hidden;
 }
@@ -2727,7 +2727,7 @@ html {
 }
 
 .summary-container {
-    background: var(--lavender-blush);
+    background: var(--bubblegum-pink);
     border-radius: var(--radius-large);
     padding: 30px;
     box-shadow: var(--shadow-soft);
@@ -3120,7 +3120,7 @@ html {
 }
 
 .category-card {
-    background: var(--lavender-blush);
+    background: var(--bubblegum-pink);
     border-radius: var(--radius-large);
     padding: 40px 30px;
     text-align: center;
@@ -3273,7 +3273,7 @@ html {
     position: relative;
     height: 250px;
     overflow: hidden;
-    background: var(--lavender-blush);
+    background: var(--bubblegum-pink);
 }
 
 .product-image {
@@ -3851,7 +3851,7 @@ html {
     align-items: center;
     gap: 15px;
     padding: 15px;
-    background: var(--lavender-blush);
+    background: var(--bubblegum-pink);
     border-radius: var(--radius-medium);
     margin-bottom: 10px;
     transition: var(--transition-smooth);
@@ -3896,7 +3896,7 @@ html {
 
 /* Order Totals */
 .order-totals {
-    background: var(--lavender-blush);
+    background: var(--bubblegum-pink);
     padding: 20px;
     border-radius: var(--radius-medium);
 }
@@ -4371,7 +4371,7 @@ html {
     display: flex;
     align-items: flex-start;
     gap: 30px;
-    background: var(--lavender-blush);
+    background: var(--bubblegum-pink);
     padding: 30px;
     border-radius: var(--radius-large);
     box-shadow: var(--shadow-soft);
@@ -4572,7 +4572,7 @@ html {
 }
 
 .sell-category {
-    background: var(--lavender-blush);
+    background: var(--bubblegum-pink);
     border-radius: var(--radius-large);
     padding: 40px 30px;
     text-align: center;
@@ -5342,7 +5342,7 @@ html {
     align-items: center;
     gap: 15px;
     padding: 20px;
-    background: var(--lavender-blush);
+    background: var(--bubblegum-pink);
     border-radius: var(--radius-medium);
     transition: var(--transition-smooth);
     position: relative;
@@ -5811,7 +5811,7 @@ html {
     font-size: 1.8em;
     font-weight: 700;
     color: var(--deep-orchid);
-    background: var(--lavender-blush);
+    background: var(--bubblegum-pink);
     padding: 8px 16px;
     border-radius: var(--radius-medium);
 }
@@ -6025,7 +6025,7 @@ html {
 
 .order-id {
     font-family: monospace;
-    background: var(--lavender-blush);
+    background: var(--bubblegum-pink);
     padding: 10px 15px;
     border-radius: var(--radius-medium);
     font-weight: 600;
