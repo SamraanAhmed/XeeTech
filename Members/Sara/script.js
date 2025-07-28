@@ -232,9 +232,12 @@ function setupEventListeners() {
     const heroCta = document.getElementById('heroCta');
     if (heroCta) {
         heroCta.addEventListener('click', () => {
-            document.querySelector('.category-preview').scrollIntoView({
-                behavior: 'smooth'
-            });
+            const categorySection = document.querySelector('.category-preview');
+            if (categorySection) {
+                categorySection.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
         });
     }
 
