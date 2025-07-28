@@ -92,12 +92,27 @@ const limitedProducts = [
     enhancedProducts[3]
 ];
 
+// Add professional card animations
+function animateCards() {
+    const cards = document.querySelectorAll('.product-card');
+    cards.forEach((card, index) => {
+        setTimeout(() => {
+            card.classList.add('animate-in');
+        }, index * 100);
+    });
+}
+
 // Initialize the website
 document.addEventListener('DOMContentLoaded', function() {
     initializeWebsite();
     setupEventListeners();
     loadLimitedProducts();
     updateCartUI();
+
+    // Add smooth entrance animations
+    setTimeout(() => {
+        animateCards();
+    }, 100);
 });
 
 function initializeWebsite() {
