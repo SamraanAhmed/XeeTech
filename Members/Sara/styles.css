@@ -714,14 +714,16 @@ p, span, div, a, button, input, textarea, label, li {
 }
 
 .limited-products {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 40px;
+    display: flex !important;
+    flex-direction: row;
+    gap: 20px;
     margin-top: 50px;
     padding: 20px;
     min-height: 400px !important;
     visibility: visible !important;
     opacity: 1 !important;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .limited-products .product-card {
@@ -734,6 +736,8 @@ p, span, div, a, button, input, textarea, label, li {
         0 8px 32px rgba(0, 0, 0, 0.4),
         0 2px 8px rgba(255, 255, 255, 0.05),
         inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
+    flex: 0 0 300px;
+    min-width: 300px;
 }
 
 .limited-products .product-card * {
@@ -1448,8 +1452,8 @@ p, span, div, a, button, input, textarea, label, li {
     }
 
     .limited-products {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
+        flex-direction: row;
+        gap: 15px;
     }
 
     .reviews-grid {
@@ -1599,8 +1603,8 @@ p, span, div, a, button, input, textarea, label, li {
     }
 
     .limited-products {
-        grid-template-columns: 1fr;
-        gap: 25px;
+        flex-direction: row;
+        gap: 10px;
     }
 
     .product-card {
@@ -2249,7 +2253,7 @@ body {
     right: 16px;
     width: 48px;
     height: 48px;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(156, 124, 255, 0.8);
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 50%;
     display: flex;
@@ -2268,18 +2272,16 @@ body {
     position: relative;
 }
 
-.wishlist-btn::before {
-    content: '';
+.product-card .wishlist-btn::before {
+    content: "❤️" !important;
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 0;
-    height: 0;
-    background: radial-gradient(circle, rgba(255, 107, 157, 0.3) 0%, transparent 70%);
-    border-radius: 50%;
     transform: translate(-50%, -50%);
-    transition: all 0.3s ease;
-    z-index: -1;
+    color: #ffffff !important;
+    font-size: 1.2rem;
+    z-index: 2;
+    display: block;
 }
 
 .wishlist-btn::after {
@@ -2304,10 +2306,10 @@ body {
 }
 
 .wishlist-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 107, 157, 0.8);
+    background: rgba(156, 124, 255, 0.9);
+    border-color: rgba(156, 124, 255, 0.8);
     transform: scale(1.15) rotate(5deg);
-    color: #ff6b9d;
+    color: #ffffff;
     box-shadow:
         0 8px 25px rgba(255, 107, 157, 0.4),
         0 0 0 4px rgba(255, 107, 157, 0.1);
@@ -4692,8 +4694,8 @@ body {
 .wishlist-btn {
     position: absolute;
     top: 15px;
-    left: 15px;
-    background: rgba(255, 255, 255, 0.9);
+    right: 15px;
+    background: rgba(156, 124, 255, 0.8);
     border: none;
     border-radius: 50%;
     width: 40px;
@@ -4710,16 +4712,28 @@ body {
     color: #666;
 }
 
+.products-grid .wishlist-btn::before {
+    content: "❤️" !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff !important;
+    font-size: 1.1rem;
+    z-index: 2;
+    display: block;
+}
+
 .wishlist-btn.active {
     color: #e74c3c;
     background: rgba(255, 255, 255, 1);
 }
 
 .wishlist-btn:hover {
-    color: #e74c3c;
-    background: var(--bubblegum-pink);
+    color: #ffffff;
+    background: rgba(156, 124, 255, 0.9);
     transform: scale(1.1);
-    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+    box-shadow: 0 4px 15px rgba(156, 124, 255, 0.4);
 }
 
 .product-card:hover .wishlist-btn {

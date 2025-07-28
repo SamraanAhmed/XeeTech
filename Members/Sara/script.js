@@ -1282,11 +1282,7 @@ function createProductCard(product) {
                     </div>
                 `}
 
-                <button class="quick-view-btn" data-product-id="${product.id}"
-                        title="Quick View"
-                        onclick="event.stopPropagation(); openProductModal(${product.id});">
-                    👁️ Quick View
-                </button>
+
             </div>
 
             <div class="product-info">
@@ -1301,12 +1297,7 @@ function createProductCard(product) {
 
                 <h3 class="product-name">${product.name}</h3>
 
-                ${product.stock !== undefined ? `
-                    <div class="stock-status ${stockStatus.class}">
-                        <div class="stock-indicator"></div>
-                        ${stockStatus.text}
-                    </div>
-                ` : ''}
+
 
                 <div class="product-price-container">
                     <span class="product-price">$${product.price.toFixed(2)}</span>
@@ -3426,6 +3417,53 @@ function initializeShopPage() {
 
     // Add related products
     loadRelatedProducts();
+
+    // Ensure wishlist buttons are properly initialized
+    setupShopWishlistButtons();
+}
+
+// Specific setup for shop page wishlist buttons
+function setupShopWishlistButtons() {
+    document.querySelectorAll('.wishlist-btn').forEach(btn => {
+        // Remove any existing listeners to avoid duplicates
+        btn.replaceWith(btn.cloneNode(true));
+    });
+
+    // Re-add event listeners to all wishlist buttons
+    document.querySelectorAll('.wishlist-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+
+            const productId = parseInt(btn.dataset.productId);
+            if (!productId) return;
+
+            const wasAdded = toggleWishlist(productId);
+
+            // Update button appearance
+            if (wasAdded) {
+                btn.classList.add('active');
+                btn.style.color = '#ffffff';
+                showNotification(`Added to wishlist! ��`);
+            } else {
+                btn.classList.remove('active');
+                btn.style.color = '#ffffff';
+                showNotification(`Removed from wishlist`);
+            }
+
+            // Visual feedback
+            btn.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                btn.style.transform = '';
+            }, 200);
+        });
+
+        // Set initial state based on wishlist
+        const productId = parseInt(btn.dataset.productId);
+        if (wishlist && wishlist.includes(productId)) {
+            btn.classList.add('active');
+        }
+    });
 }
 
 function setupShopCategoryFiltering() {
@@ -3464,8 +3502,18 @@ function setupProductInteractions() {
         btn.addEventListener('click', (e) => {
             const productId = parseInt(e.target.dataset.productId || e.target.closest('.add-to-cart-btn').dataset.productId);
             const productCard = e.target.closest('.product-card');
-            const productName = productCard.querySelector('.product-title').textContent;
-            const productPrice = parseFloat(productCard.querySelector('.current-price').textContent.replace('$', ''));
+
+            // Add null checks to prevent errors
+            const productNameElement = productCard.querySelector('.product-name');
+            const productPriceElement = productCard.querySelector('.product-price');
+
+            if (!productNameElement || !productPriceElement) {
+                console.error('Product card missing required elements');
+                return;
+            }
+
+            const productName = productNameElement.textContent;
+            const productPrice = parseFloat(productPriceElement.textContent.replace('$', ''));
             const productImage = productCard.querySelector('.product-image');
 
             // Get image source or use placeholder
@@ -3589,7 +3637,12 @@ function setupSortFunctionality() {
 }
 
 function getProductPrice(productCard) {
-    const priceText = productCard.querySelector('.current-price').textContent;
+    const priceElement = productCard.querySelector('.product-price');
+    if (!priceElement) {
+        console.error('Product price element not found');
+        return 0;
+    }
+    const priceText = priceElement.textContent;
     return parseFloat(priceText.replace('$', ''));
 }
 
@@ -4437,11 +4490,8 @@ function addStockIndicators() {
                 stockIndicator = `⚠️ Only ${product.stock} left!`;
                 stockClass = 'stock-urgent';
             } else if (product.stock <= 15) {
-                stockIndicator = `🔥 ${product.stock} in stock`;
+                stockIndicator = ``;
                 stockClass = 'stock-low';
-            } else if (Math.random() > 0.7) { // Show for 30% of products
-                stockIndicator = `�� In Stock`;
-                stockClass = 'stock-good';
             }
 
             if (stockIndicator) {
