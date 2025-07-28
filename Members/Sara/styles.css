@@ -3737,6 +3737,8 @@ html {
 
 .product-info {
     padding: 25px;
+    background: #000000;
+    border-top: 1px solid #333333;
 }
 
 .product-title {
