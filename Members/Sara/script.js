@@ -743,11 +743,18 @@ function navigateToCategory(category) {
 // Load limited edition products
 function loadLimitedProducts() {
     const limitedProductsContainer = document.getElementById('limitedProducts');
-    if (!limitedProductsContainer) return;
+    if (!limitedProductsContainer) {
+        console.error('Limited products container not found!');
+        return;
+    }
 
-    limitedProductsContainer.innerHTML = limitedProducts.map(product => 
+    console.log('Loading limited products:', limitedProducts);
+
+    limitedProductsContainer.innerHTML = limitedProducts.map(product =>
         createProductCard(product)
     ).join('');
+
+    console.log('Limited products loaded, container innerHTML:', limitedProductsContainer.innerHTML.substring(0, 200));
 
     // Add event listeners to product buttons
     limitedProductsContainer.querySelectorAll('.add-to-cart-btn').forEach(button => {
