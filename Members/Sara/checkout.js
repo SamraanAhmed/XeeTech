@@ -39,7 +39,7 @@ class SinglePageCheckout {
                     price: parseFloat(item.price) || 0,
                     quantity: parseInt(item.quantity) || 1,
                     image: this.getItemEmoji(item),
-                    category: item.category || 'misc'
+                    category: this.formatCategory(item.category || 'misc')
                 }));
                 console.log('Cart loaded successfully:', this.cart);
             } else {
