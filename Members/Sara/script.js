@@ -685,7 +685,12 @@ function setupEventListeners() {
     if (searchInput) {
         searchInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                performSearch(searchInput.value);
+                const query = searchInput.value.trim();
+                if (query === '') {
+                    clearShopSearch();
+                } else {
+                    performSearch(query);
+                }
             }
         });
     }
@@ -3345,7 +3350,7 @@ function getEmojiForImage(image) {
         'jacket.webp': '🦇',
         'dress.jpg': '👗',
         'goth dress.jpeg': '��',
-        'pants.jpeg': '����',
+        'pants.jpeg': '������',
         'headband.webp': '🎀',
         'choker.jpeg': '⛓️',
         'clip.jpeg': '💎',
