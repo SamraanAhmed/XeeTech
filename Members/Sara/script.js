@@ -909,20 +909,36 @@ function closeSearch() {
 function performSearch(query) {
     if (!query.trim()) return;
 
-    // Always close search dropdown first
-    closeSearch();
+    // Prevent multiple simultaneous searches
+    if (isSearching) return;
 
-    // Check if we're on the shop page by looking for the products grid
-    const productsGrid = document.getElementById('productsGrid');
+    // Clear any existing timeout
+    clearTimeout(searchTimeout);
 
-    if (productsGrid) {
-        // We're on shop page - filter products directly
-        performShopPageSearch(query);
-    } else {
-        // We're on other pages - show search results modal
-        const searchResults = searchProducts(query);
-        showSearchResults(query, searchResults);
-    }
+    // Debounce the search
+    searchTimeout = setTimeout(() => {
+        isSearching = true;
+
+        // Always close search dropdown first
+        closeSearch();
+
+        // Check if we're on the shop page by looking for the products grid
+        const productsGrid = document.getElementById('productsGrid');
+
+        if (productsGrid) {
+            // We're on shop page - filter products directly
+            performShopPageSearch(query);
+        } else {
+            // We're on other pages - show search results modal
+            const searchResults = searchProducts(query);
+            showSearchResults(query, searchResults);
+        }
+
+        // Reset search flag after a delay
+        setTimeout(() => {
+            isSearching = false;
+        }, 500);
+    }, 300);
 }
 
 function performShopPageSearch(query) {
@@ -4955,7 +4971,7 @@ function reorderItems(orderId) {
 // Initialize social proof on page load
 document.addEventListener('DOMContentLoaded', initializeSocialProof);
 
-console.log('🦇 Welcome to Kuromi\'s Fashion Empire! 💜');
+console.log('��� Welcome to Kuromi\'s Fashion Empire! 💜');
 console.log('Try the Konami code for a special surprise! ✨');
 
 // Categories Slide Menu functionality
