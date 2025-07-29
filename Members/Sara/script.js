@@ -7,6 +7,9 @@ let cartOpen = false;
 let searchTimeout;
 let isSearching = false;
 
+// Mobile navigation state
+let mobileMenuOpen = false;
+
 // Enhanced product database with full details
 const enhancedProducts = {
     1: {
@@ -4971,7 +4974,7 @@ function reorderItems(orderId) {
 // Initialize social proof on page load
 document.addEventListener('DOMContentLoaded', initializeSocialProof);
 
-console.log('��� Welcome to Kuromi\'s Fashion Empire! 💜');
+console.log('🦇 Welcome to Kuromi\'s Fashion Empire! 💜');
 console.log('Try the Konami code for a special surprise! ✨');
 
 // Categories Slide Menu functionality
