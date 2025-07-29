@@ -853,10 +853,103 @@ function adjustProductCardsForScreen() {
 function handleOrientationChange() {
     setTimeout(() => {
         adjustProductCardsForScreen();
+        adjustTrendingCarousel();
+        adjustLimitedEditionLayout();
         if (window.innerWidth > 768 && mobileMenuOpen) {
             closeMobileMenu();
         }
     }, 100);
+}
+
+// Adjust trending carousel for mobile
+function adjustTrendingCarousel() {
+    const carousel = document.querySelector('.trending-carousel');
+    const items = document.querySelector('.trending-items');
+    const isMobile = window.innerWidth <= 768;
+
+    if (carousel && items) {
+        if (isMobile) {
+            // Convert to horizontal scroll on mobile
+            carousel.style.overflowX = 'auto';
+            carousel.style.padding = '0 20px';
+            items.style.display = 'flex';
+            items.style.gap = '20px';
+            items.style.paddingBottom = '20px';
+
+            // Set fixed width for trending cards
+            const trendingCards = items.querySelectorAll('.trending-card');
+            trendingCards.forEach(card => {
+                card.style.flex = window.innerWidth <= 480 ? '0 0 250px' : '0 0 280px';
+                card.style.minHeight = window.innerWidth <= 480 ? '360px' : '380px';
+            });
+        } else {
+            // Reset to grid layout on desktop
+            carousel.style.overflowX = '';
+            carousel.style.padding = '';
+            items.style.display = '';
+            items.style.gap = '';
+            items.style.paddingBottom = '';
+
+            const trendingCards = items.querySelectorAll('.trending-card');
+            trendingCards.forEach(card => {
+                card.style.flex = '';
+                card.style.minHeight = '';
+            });
+        }
+    }
+}
+
+// Adjust limited edition layout for mobile
+function adjustLimitedEditionLayout() {
+    const limitedContainer = document.querySelector('.limited-products');
+    const isMobile = window.innerWidth <= 768;
+
+    if (limitedContainer) {
+        if (isMobile) {
+            limitedContainer.style.flexDirection = 'column';
+            limitedContainer.style.gap = '20px';
+            limitedContainer.style.overflowX = 'visible';
+
+            const limitedCards = limitedContainer.querySelectorAll('.product-card');
+            limitedCards.forEach(card => {
+                card.style.flex = 'none';
+                card.style.minWidth = '100%';
+                card.style.maxWidth = '350px';
+                card.style.margin = '0 auto';
+            });
+        } else {
+            limitedContainer.style.flexDirection = '';
+            limitedContainer.style.gap = '';
+            limitedContainer.style.overflowX = '';
+
+            const limitedCards = limitedContainer.querySelectorAll('.product-card');
+            limitedCards.forEach(card => {
+                card.style.flex = '';
+                card.style.minWidth = '';
+                card.style.maxWidth = '';
+                card.style.margin = '';
+            });
+        }
+    }
+}
+
+// Optimize scroll performance on mobile
+function optimizeScrollPerformance() {
+    let ticking = false;
+
+    function updateScrollElements() {
+        // Add any scroll-based animations or lazy loading here
+        ticking = false;
+    }
+
+    function requestScrollUpdate() {
+        if (!ticking) {
+            requestAnimationFrame(updateScrollElements);
+            ticking = true;
+        }
+    }
+
+    window.addEventListener('scroll', requestScrollUpdate, { passive: true });
 }
 
 // Viewport height fix for mobile browsers
