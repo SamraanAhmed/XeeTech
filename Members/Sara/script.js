@@ -1039,7 +1039,7 @@ function createSearchResultsModal(query, results) {
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 10001;
+            z-index: 99999;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -4252,7 +4252,7 @@ function addStockIndicators() {
             let stockClass = '';
 
             if (product.stock <= 5) {
-                stockIndicator = `��️ Only ${product.stock} left!`;
+                stockIndicator = `⚠️ Only ${product.stock} left!`;
                 stockClass = 'stock-urgent';
             } else if (product.stock <= 15) {
                 stockIndicator = ``;
