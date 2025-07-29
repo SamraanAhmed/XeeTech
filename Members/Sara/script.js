@@ -682,11 +682,7 @@ function setupEventListeners() {
         });
     }
 
-    // Help functionality
-    const helpBtn = document.getElementById('helpBtn');
-    if (helpBtn) {
-        helpBtn.addEventListener('click', openHelpModal);
-    }
+
 
     // Cart functionality
     const cartBtn = document.getElementById('cartBtn');
@@ -707,12 +703,7 @@ function setupEventListeners() {
     const heroCta = document.getElementById('heroCta');
     if (heroCta) {
         heroCta.addEventListener('click', () => {
-            const categorySection = document.querySelector('.category-preview');
-            if (categorySection) {
-                categorySection.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
+            window.location.href = 'shop.html';
         });
     }
 
@@ -1249,7 +1240,6 @@ function loadLimitedProducts() {
 }
 
 function createProductCard(product) {
-    const isInWishlist = wishlist.includes(product.id);
     const discountPercent = product.originalPrice ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
     const stockStatus = getStockStatus(product.stock);
 
@@ -1257,12 +1247,6 @@ function createProductCard(product) {
         <div class="product-card" data-product-id="${product.id}">
             <div class="product-image-container">
                 ${product.badge ? `<div class="product-badge ${product.badge.toLowerCase()}">${product.badge}</div>` : ''}
-
-                <button class="wishlist-btn ${isInWishlist ? 'active' : ''}" data-product-id="${product.id}"
-                        title="${isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}"
-                        onclick="event.stopPropagation(); toggleWishlist(${product.id}); updateWishlistUI();">
-                    ${isInWishlist ? '♥' : '♡'}
-                </button>
 
                 ${product.image && product.image.trim() !== '' ? `
                     <img src="${product.image}"
@@ -1758,7 +1742,7 @@ function createCheckoutModal() {
                             </label>
                             <label class="payment-option">
                                 <input type="radio" name="payment" value="paypal">
-                                <span>💰 PayPal</span>
+                                <span>���� PayPal</span>
                             </label>
                             <label class="payment-option">
                                 <input type="radio" name="payment" value="apple">
@@ -2197,331 +2181,7 @@ function showOrderConfirmation(orderData) {
 // Initialize checkout when DOM is loaded
 document.addEventListener('DOMContentLoaded', initializeCheckout);
 
-// Help Modal functionality
-function openHelpModal() {
-    const modal = createHelpModal();
-    document.body.appendChild(modal);
 
-    // Setup event listeners
-    setupHelpModalEventListeners(modal);
-
-    // Show modal
-    setTimeout(() => {
-        modal.classList.add('active');
-    }, 10);
-}
-
-function createHelpModal() {
-    const modal = document.createElement('div');
-    modal.className = 'help-modal';
-
-    modal.innerHTML = `
-        <div class="help-overlay"></div>
-        <div class="help-content">
-            <div class="help-header">
-                <h2>🎀 Help & Support</h2>
-                <button class="help-close">&times;</button>
-            </div>
-
-            <div class="help-body">
-                <div class="help-sections">
-                    <div class="help-section">
-                        <h3>🛍️ Shopping Help</h3>
-                        <ul>
-                            <li><strong>How to order:</strong> Browse products, add to cart, and checkout securely</li>
-                            <li><strong>Payment methods:</strong> We accept all major credit cards, PayPal, and Apple Pay</li>
-                            <li><strong>Size guide:</strong> Check our size charts for the perfect fit</li>
-                            <li><strong>Stock updates:</strong> Follow us on social media for restock notifications</li>
-                        </ul>
-                    </div>
-
-                    <div class="help-section">
-                        <h3>📦 Shipping & Returns</h3>
-                        <ul>
-                            <li><strong>Shipping time:</strong> 3-7 business days for standard shipping</li>
-                            <li><strong>Express shipping:</strong> 1-3 business days available</li>
-                            <li><strong>Returns:</strong> 30-day return policy on unworn items</li>
-                            <li><strong>Exchanges:</strong> Free size exchanges within 14 days</li>
-                        </ul>
-                    </div>
-
-                    <div class="help-section">
-                        <h3>💜 Account & Orders</h3>
-                        <ul>
-                            <li><strong>Order tracking:</strong> Check your email for tracking information</li>
-                            <li><strong>Order changes:</strong> Contact us within 1 hour of placing order</li>
-                            <li><strong>Account issues:</strong> Email us at hello@kuromi-fashion.com</li>
-                            <li><strong>Newsletter:</strong> Join for 10% off and exclusive updates</li>
-                        </ul>
-                    </div>
-
-                    <div class="help-section">
-                        <h3>🌸 Product Care</h3>
-                        <ul>
-                            <li><strong>Washing:</strong> Machine wash cold, gentle cycle</li>
-                            <li><strong>Drying:</strong> Air dry recommended to preserve prints</li>
-                            <li><strong>Storage:</strong> Store in cool, dry place away from direct sunlight</li>
-                            <li><strong>Accessories:</strong> Wipe clean with damp cloth</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="help-contact">
-                    <h3>💌 Still Need Help?</h3>
-                    <p>Our mischievous support team is here to help!</p>
-                    <div class="contact-options">
-                        <a href="mailto:hello@kuromi-fashion.com" class="contact-btn">
-                            📧 Email Us
-                        </a>
-                        <a href="tel:1-800-MISCHIEF" class="contact-btn">
-                            📞 Call Us
-                        </a>
-                        <button class="contact-btn" onclick="openLiveChat()">
-                            💬 Live Chat
-                        </button>
-                    </div>
-                    <p class="help-hours">Support hours: Mon-Fri 9AM-6PM PST</p>
-                </div>
-            </div>
-        </div>
-    `;
-
-    // Add styles
-    const style = document.createElement('style');
-    style.textContent = `
-        .help-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 10001;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .help-modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .help-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-        }
-
-        .help-content {
-            position: relative;
-            background: white;
-            border-radius: 20px;
-            max-width: 800px;
-            width: 95%;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-        }
-
-        .help-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 24px 30px;
-            border-bottom: 1px solid #f0f0f0;
-            background: linear-gradient(45deg, var(--lavender-blush), var(--soft-white));
-            border-radius: 20px 20px 0 0;
-        }
-
-        .help-header h2 {
-            margin: 0;
-            color: var(--deep-orchid);
-            font-family: var(--font-gothic);
-        }
-
-        .help-close {
-            background: none;
-            border: none;
-            font-size: 28px;
-            cursor: pointer;
-            color: var(--deep-orchid);
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: all 0.2s ease;
-        }
-
-        .help-close:hover {
-            background: rgba(153, 50, 204, 0.1);
-            transform: scale(1.1);
-        }
-
-        .help-body {
-            padding: 30px;
-        }
-
-        .help-sections {
-            margin-bottom: 30px;
-        }
-
-        .help-section {
-            margin-bottom: 25px;
-            padding: 20px;
-            background: var(--lavender-blush);
-            border-radius: 12px;
-            border-left: 4px solid var(--deep-orchid);
-        }
-
-        .help-section h3 {
-            color: var(--deep-orchid);
-            margin-bottom: 15px;
-            font-size: 18px;
-        }
-
-        .help-section ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .help-section li {
-            margin-bottom: 10px;
-            padding-left: 0;
-            line-height: 1.6;
-            color: var(--midnight-black);
-        }
-
-        .help-section li strong {
-            color: var(--deep-orchid);
-        }
-
-        .help-contact {
-            text-align: center;
-            padding: 25px;
-            background: linear-gradient(45deg, var(--lavender-blush), var(--soft-white));
-            border-radius: 12px;
-            border: 2px solid var(--bubblegum-pink);
-        }
-
-        .help-contact h3 {
-            color: var(--deep-orchid);
-            margin-bottom: 10px;
-        }
-
-        .help-contact p {
-            color: var(--midnight-black);
-            margin-bottom: 20px;
-        }
-
-        .contact-options {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 15px;
-        }
-
-        .contact-btn {
-            background: linear-gradient(45deg, var(--deep-orchid), var(--bubblegum-pink));
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .contact-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(153, 50, 204, 0.3);
-        }
-
-        .help-hours {
-            font-size: 14px;
-            color: #666;
-            margin: 0;
-        }
-
-        @media (max-width: 768px) {
-            .help-content {
-                width: 95%;
-                margin: 20px;
-                max-height: 85vh;
-            }
-
-            .help-header {
-                padding: 20px;
-            }
-
-            .help-body {
-                padding: 20px;
-            }
-
-            .help-section {
-                padding: 15px;
-            }
-
-            .contact-options {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .contact-btn {
-                width: 100%;
-                max-width: 250px;
-                justify-content: center;
-            }
-        }
-    `;
-
-    modal.appendChild(style);
-    return modal;
-}
-
-function setupHelpModalEventListeners(modal) {
-    // Close modal
-    const closeBtn = modal.querySelector('.help-close');
-    const overlay = modal.querySelector('.help-overlay');
-
-    [closeBtn, overlay].forEach(element => {
-        element.addEventListener('click', () => closeHelpModal(modal));
-    });
-
-    // Escape key to close
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            closeHelpModal(modal);
-        }
-    });
-}
-
-function closeHelpModal(modal) {
-    modal.classList.remove('active');
-    setTimeout(() => {
-        if (document.body.contains(modal)) {
-            document.body.removeChild(modal);
-        }
-    }, 300);
-}
-
-function openLiveChat() {
-    showNotification('Live chat coming soon! For now, please email us at hello@kuromi-fashion.com 💜');
-}
 
 // Quick View Modal functionality
 function openQuickViewModal(productId) {
@@ -4184,79 +3844,11 @@ function closeWishlistModal(modal) {
 
 // Social Proof Elements
 function initializeSocialProof() {
-    showRecentlyPurchasedNotifications();
-    // updateVisitorCounter(); // Removed visitor counter
+    // Recent purchase notifications completely removed
     addStockIndicators();
 }
 
-function showRecentlyPurchasedNotifications() {
-    // Only show on homepage and shop page, not on checkout
-    if (window.location.pathname.includes('checkout.html')) {
-        return;
-    }
 
-    // Prevent multiple instances from running
-    if (window.notificationInterval) {
-        clearInterval(window.notificationInterval);
-    }
-
-    const recentPurchases = [
-        { name: 'Gothic Lolita Dress', location: 'Tokyo, Japan', time: '2 minutes ago' },
-        { name: 'Devil Horn Headband', location: 'Los Angeles, CA', time: '5 minutes ago' },
-        { name: 'Kuromi Gothic Hoodie', location: 'London, UK', time: '8 minutes ago' },
-        { name: 'Mischief Crop Top', location: 'Seoul, Korea', time: '12 minutes ago' },
-        { name: 'Gothic Choker Set', location: 'Paris, France', time: '15 minutes ago' }
-    ];
-
-    let currentIndex = 0;
-    let showCount = 0;
-    const maxShows = 3; // Only show 3 notifications total
-
-    function showNextNotification() {
-        // Remove any existing notifications first
-        const existingNotifications = document.querySelectorAll('.recent-purchase-notification');
-        existingNotifications.forEach(notification => {
-            closeRecentPurchaseNotification(notification);
-        });
-
-        // Stop after showing maximum number of notifications
-        if (showCount >= maxShows) {
-            if (window.notificationInterval) {
-                clearInterval(window.notificationInterval);
-                window.notificationInterval = null;
-            }
-            return;
-        }
-
-        if (currentIndex < recentPurchases.length) {
-            const purchase = recentPurchases[currentIndex];
-            showRecentPurchaseNotification(purchase);
-            currentIndex++;
-            showCount++;
-        } else {
-            // Stop when all notifications have been shown
-            if (window.notificationInterval) {
-                clearInterval(window.notificationInterval);
-                window.notificationInterval = null;
-            }
-            return;
-        }
-    }
-
-    // Show first notification after 5 seconds
-    setTimeout(showNextNotification, 5000);
-
-    // Show subsequent notifications every 30 seconds
-    window.notificationInterval = setInterval(showNextNotification, 30000);
-
-    // Clean up on page unload
-    window.addEventListener('beforeunload', () => {
-        if (window.notificationInterval) {
-            clearInterval(window.notificationInterval);
-            window.notificationInterval = null;
-        }
-    });
-}
 
 function showRecentPurchaseNotification(purchase) {
     const notification = document.createElement('div');
