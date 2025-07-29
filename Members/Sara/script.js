@@ -905,6 +905,9 @@ function closeSearch() {
 function performSearch(query) {
     if (!query.trim()) return;
 
+    // Always close search dropdown first
+    closeSearch();
+
     // Check if we're on the shop page by looking for the products grid
     const productsGrid = document.getElementById('productsGrid');
 
@@ -916,8 +919,6 @@ function performSearch(query) {
         const searchResults = searchProducts(query);
         showSearchResults(query, searchResults);
     }
-
-    closeSearch();
 }
 
 function performShopPageSearch(query) {
@@ -4251,7 +4252,7 @@ function addStockIndicators() {
             let stockClass = '';
 
             if (product.stock <= 5) {
-                stockIndicator = `⚠️ Only ${product.stock} left!`;
+                stockIndicator = `��️ Only ${product.stock} left!`;
                 stockClass = 'stock-urgent';
             } else if (product.stock <= 15) {
                 stockIndicator = ``;
