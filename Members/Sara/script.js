@@ -3,6 +3,13 @@ let cart = JSON.parse(localStorage.getItem('kuromiCart')) || [];
 let searchOpen = false;
 let cartOpen = false;
 
+// Search debouncing
+let searchTimeout;
+let isSearching = false;
+
+// Mobile navigation state
+let mobileMenuOpen = false;
+
 // Enhanced product database with full details
 const enhancedProducts = {
     1: {
@@ -82,6 +89,67 @@ const enhancedProducts = {
         stock: 18,
         rating: 4.8,
         reviews: 94
+    },
+    101: {
+        id: 101,
+        name: "Kuromi Backpack",
+        price: 59.99,
+        image: "",
+        images: [],
+        badge: "NEW",
+        category: "accessories",
+        description: "Spacious and stylish backpack with Kuromi's signature design. Perfect for school, work, or mischievous adventures.",
+        features: ["Multiple Compartments", "Padded Straps", "Water Resistant", "Laptop Sleeve"],
+        colors: ["Black", "Purple"],
+        stock: 12,
+        rating: 4.2,
+        reviews: 87
+    },
+    102: {
+        id: 102,
+        name: "Gothic Boots",
+        price: 89.99,
+        originalPrice: 119.99,
+        image: "",
+        images: [],
+        badge: "SALE",
+        category: "clothing",
+        description: "Edgy gothic boots with platform soles and buckle details. Step into your dark kawaii style with confidence.",
+        features: ["Platform Sole", "Buckle Details", "Durable Material", "Comfortable Fit"],
+        sizes: ["6", "7", "8", "9", "10", "11"],
+        colors: ["Black", "Dark Purple"],
+        stock: 7,
+        rating: 4.8,
+        reviews: 234
+    },
+    103: {
+        id: 103,
+        name: "Kawaii Keychain Set",
+        price: 12.99,
+        image: "",
+        images: [],
+        category: "accessories",
+        description: "Adorable keychain set featuring Kuromi and friends. Add some mischievous charm to your keys.",
+        features: ["3-Piece Set", "Soft Vinyl Material", "Keyring Included", "Collectible Design"],
+        colors: ["Mixed Colors"],
+        stock: 25,
+        rating: 4.5,
+        reviews: 156
+    },
+    104: {
+        id: 104,
+        name: "Mischief Bracelet",
+        price: 24.99,
+        image: "",
+        images: [],
+        badge: "NEW",
+        category: "accessories",
+        description: "Delicate bracelet with Kuromi charm details. A subtle way to show your rebellious kawaii spirit.",
+        features: ["Adjustable Size", "Charm Details", "Hypoallergenic", "Gift Box Included"],
+        colors: ["Silver", "Rose Gold", "Black"],
+        stock: 16,
+        rating: 4.7,
+        reviews: 198
     }
 };
 
@@ -591,6 +659,336 @@ function initializeWebsite() {
 
     // Initialize sparkle animations
     initializeSparkles();
+
+    // Initialize mobile functionality
+    initializeMobileNavigation();
+    initializeTouchInteractions();
+    initializeResponsiveImages();
+    optimizeForMobile();
+    fixMobileViewportHeight();
+    adjustProductCardsForScreen();
+    adjustTrendingCarousel();
+    adjustLimitedEditionLayout();
+    optimizeScrollPerformance();
+
+    // Handle window events
+    window.addEventListener('resize', handleOrientationChange);
+    window.addEventListener('orientationchange', handleOrientationChange);
+}
+
+// Mobile navigation functions
+function initializeMobileNavigation() {
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navMenu = document.getElementById('navMenu');
+    const navOverlay = document.createElement('div');
+
+    // Create mobile menu overlay
+    navOverlay.className = 'nav-overlay';
+    navOverlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    `;
+    document.body.appendChild(navOverlay);
+
+    if (mobileToggle && navMenu) {
+        mobileToggle.addEventListener('click', toggleMobileMenu);
+        navOverlay.addEventListener('click', closeMobileMenu);
+
+        // Close mobile menu when clicking nav links
+        navMenu.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+    }
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && mobileMenuOpen) {
+            closeMobileMenu();
+        }
+    });
+}
+
+function toggleMobileMenu() {
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navMenu = document.getElementById('navMenu');
+    const navOverlay = document.querySelector('.nav-overlay');
+
+    if (mobileMenuOpen) {
+        closeMobileMenu();
+    } else {
+        openMobileMenu();
+    }
+}
+
+function openMobileMenu() {
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navMenu = document.getElementById('navMenu');
+    const navOverlay = document.querySelector('.nav-overlay');
+
+    if (navMenu && navOverlay) {
+        navMenu.classList.add('active');
+        navOverlay.style.opacity = '1';
+        navOverlay.style.visibility = 'visible';
+        document.body.style.overflow = 'hidden';
+        mobileMenuOpen = true;
+
+        // Animate hamburger lines
+        if (mobileToggle) {
+            const lines = mobileToggle.querySelectorAll('.hamburger-line');
+            if (lines.length >= 3) {
+                lines[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                lines[1].style.opacity = '0';
+                lines[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
+            }
+        }
+    }
+}
+
+function closeMobileMenu() {
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navMenu = document.getElementById('navMenu');
+    const navOverlay = document.querySelector('.nav-overlay');
+
+    if (navMenu && navOverlay) {
+        navMenu.classList.remove('active');
+        navOverlay.style.opacity = '0';
+        navOverlay.style.visibility = 'hidden';
+        document.body.style.overflow = '';
+        mobileMenuOpen = false;
+
+        // Reset hamburger lines
+        if (mobileToggle) {
+            const lines = mobileToggle.querySelectorAll('.hamburger-line');
+            if (lines.length >= 3) {
+                lines[0].style.transform = '';
+                lines[1].style.opacity = '';
+                lines[2].style.transform = '';
+            }
+        }
+    }
+}
+
+// Touch-friendly interactions
+function initializeTouchInteractions() {
+    // Add touch feedback to buttons
+    const buttons = document.querySelectorAll('button, .btn, .add-to-cart-btn, .add-to-bag-btn');
+
+    buttons.forEach(button => {
+        button.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.98)';
+        });
+
+        button.addEventListener('touchend', function() {
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
+        });
+    });
+
+    // Improve scroll behavior on mobile
+    if ('scrollBehavior' in document.documentElement.style) {
+        document.documentElement.style.scrollBehavior = 'smooth';
+    }
+}
+
+// Responsive image loading
+function initializeResponsiveImages() {
+    const images = document.querySelectorAll('img[data-src]');
+
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.classList.remove('lazy');
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+
+        images.forEach(img => imageObserver.observe(img));
+    } else {
+        // Fallback for browsers without IntersectionObserver
+        images.forEach(img => {
+            img.src = img.dataset.src;
+        });
+    }
+}
+
+// Responsive product card adjustments
+function adjustProductCardsForScreen() {
+    const cards = document.querySelectorAll('.product-card, .bestseller-card, .trending-card');
+    const isMobile = window.innerWidth <= 768;
+    const isSmallMobile = window.innerWidth <= 480;
+
+    cards.forEach(card => {
+        const imageContainer = card.querySelector('.product-image-container, .bestseller-image-container, .trending-image-container');
+        const info = card.querySelector('.product-info, .bestseller-info, .trending-info');
+
+        if (imageContainer && info) {
+            if (isSmallMobile) {
+                imageContainer.style.height = '150px';
+                info.style.padding = '15px';
+                info.style.minHeight = '190px';
+            } else if (isMobile) {
+                imageContainer.style.height = '160px';
+                info.style.padding = '16px';
+                info.style.minHeight = '200px';
+            } else {
+                imageContainer.style.height = '200px';
+                info.style.padding = '20px';
+                info.style.minHeight = '200px';
+            }
+        }
+    });
+}
+
+// Handle orientation changes
+function handleOrientationChange() {
+    setTimeout(() => {
+        adjustProductCardsForScreen();
+        adjustTrendingCarousel();
+        adjustLimitedEditionLayout();
+        if (window.innerWidth > 768 && mobileMenuOpen) {
+            closeMobileMenu();
+        }
+    }, 100);
+}
+
+// Adjust trending carousel for mobile
+function adjustTrendingCarousel() {
+    const carousel = document.querySelector('.trending-carousel');
+    const items = document.querySelector('.trending-items');
+    const isMobile = window.innerWidth <= 768;
+
+    if (carousel && items) {
+        if (isMobile) {
+            // Convert to horizontal scroll on mobile
+            carousel.style.overflowX = 'auto';
+            carousel.style.padding = '0 20px';
+            items.style.display = 'flex';
+            items.style.gap = '20px';
+            items.style.paddingBottom = '20px';
+
+            // Set fixed width for trending cards
+            const trendingCards = items.querySelectorAll('.trending-card');
+            trendingCards.forEach(card => {
+                card.style.flex = window.innerWidth <= 480 ? '0 0 250px' : '0 0 280px';
+                card.style.minHeight = window.innerWidth <= 480 ? '360px' : '380px';
+            });
+        } else {
+            // Reset to grid layout on desktop
+            carousel.style.overflowX = '';
+            carousel.style.padding = '';
+            items.style.display = '';
+            items.style.gap = '';
+            items.style.paddingBottom = '';
+
+            const trendingCards = items.querySelectorAll('.trending-card');
+            trendingCards.forEach(card => {
+                card.style.flex = '';
+                card.style.minHeight = '';
+            });
+        }
+    }
+}
+
+// Adjust limited edition layout for mobile
+function adjustLimitedEditionLayout() {
+    const limitedContainer = document.querySelector('.limited-products');
+    const isMobile = window.innerWidth <= 768;
+
+    if (limitedContainer) {
+        if (isMobile) {
+            limitedContainer.style.flexDirection = 'column';
+            limitedContainer.style.gap = '20px';
+            limitedContainer.style.overflowX = 'visible';
+
+            const limitedCards = limitedContainer.querySelectorAll('.product-card');
+            limitedCards.forEach(card => {
+                card.style.flex = 'none';
+                card.style.minWidth = '100%';
+                card.style.maxWidth = '350px';
+                card.style.margin = '0 auto';
+            });
+        } else {
+            limitedContainer.style.flexDirection = '';
+            limitedContainer.style.gap = '';
+            limitedContainer.style.overflowX = '';
+
+            const limitedCards = limitedContainer.querySelectorAll('.product-card');
+            limitedCards.forEach(card => {
+                card.style.flex = '';
+                card.style.minWidth = '';
+                card.style.maxWidth = '';
+                card.style.margin = '';
+            });
+        }
+    }
+}
+
+// Optimize scroll performance on mobile
+function optimizeScrollPerformance() {
+    let ticking = false;
+
+    function updateScrollElements() {
+        // Add any scroll-based animations or lazy loading here
+        ticking = false;
+    }
+
+    function requestScrollUpdate() {
+        if (!ticking) {
+            requestAnimationFrame(updateScrollElements);
+            ticking = true;
+        }
+    }
+
+    window.addEventListener('scroll', requestScrollUpdate, { passive: true });
+}
+
+// Viewport height fix for mobile browsers
+function fixMobileViewportHeight() {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
+// Performance optimization for mobile
+function optimizeForMobile() {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    if (isMobile) {
+        // Disable hover effects on mobile
+        document.body.classList.add('mobile-device');
+
+        // Optimize animations for mobile
+        const style = document.createElement('style');
+        style.textContent = `
+            @media (max-width: 768px) {
+                * {
+                    animation-duration: 0.3s !important;
+                    transition-duration: 0.3s !important;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Prevent zoom on form inputs
+        const inputs = document.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            if (input.style.fontSize === '' || parseInt(input.style.fontSize) < 16) {
+                input.style.fontSize = '16px';
+            }
+        });
+    }
 }
 
 function setupEventListeners() {
@@ -624,14 +1022,24 @@ function setupEventListeners() {
     if (searchInput) {
         searchInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                performSearch(searchInput.value);
+                const query = searchInput.value.trim();
+                if (query === '') {
+                    clearShopSearch();
+                } else {
+                    performSearch(query);
+                }
             }
         });
     }
 
     if (searchSubmit) {
         searchSubmit.addEventListener('click', () => {
-            performSearch(searchInput.value);
+            const query = searchInput.value.trim();
+            if (query === '') {
+                clearShopSearch();
+            } else {
+                performSearch(query);
+            }
         });
     }
 
@@ -834,9 +1242,78 @@ function closeSearch() {
 function performSearch(query) {
     if (!query.trim()) return;
 
-    const searchResults = searchProducts(query);
-    showSearchResults(query, searchResults);
-    closeSearch();
+    // Prevent multiple simultaneous searches
+    if (isSearching) return;
+
+    // Clear any existing timeout
+    clearTimeout(searchTimeout);
+
+    // Debounce the search
+    searchTimeout = setTimeout(() => {
+        isSearching = true;
+
+        // Always close search dropdown first
+        closeSearch();
+
+        // Check if we're on the shop page by looking for the products grid
+        const productsGrid = document.getElementById('productsGrid');
+
+        if (productsGrid) {
+            // We're on shop page - filter products directly
+            performShopPageSearch(query);
+        } else {
+            // We're on other pages - show search results modal
+            const searchResults = searchProducts(query);
+            showSearchResults(query, searchResults);
+        }
+
+        // Reset search flag after a delay
+        setTimeout(() => {
+            isSearching = false;
+        }, 500);
+    }, 300);
+}
+
+function performShopPageSearch(query) {
+    const searchTerm = query.toLowerCase().trim();
+    const productCards = document.querySelectorAll('#productsGrid .product-card');
+    let visibleCount = 0;
+
+    productCards.forEach(card => {
+        const productName = card.querySelector('.product-name')?.textContent?.toLowerCase() || '';
+        const productCategory = card.dataset.category?.toLowerCase() || '';
+
+        // Check if the search term matches product name or category
+        const matches = productName.includes(searchTerm) ||
+                       productCategory.includes(searchTerm) ||
+                       searchTerm === '';
+
+        if (matches) {
+            card.style.display = 'block';
+            visibleCount++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    // Show notification based on results
+    if (visibleCount === 0) {
+        showNotification(`No products found for "${query}". Try different keywords!`, 'error');
+    } else {
+        showNotification(`Found ${visibleCount} product${visibleCount !== 1 ? 's' : ''} for "${query}"`);
+    }
+}
+
+function clearShopSearch() {
+    const productsGrid = document.getElementById('productsGrid');
+
+    if (productsGrid) {
+        const productCards = document.querySelectorAll('#productsGrid .product-card');
+        productCards.forEach(card => {
+            card.style.display = 'block';
+        });
+        showNotification('Showing all products');
+    }
 }
 
 function searchProducts(query) {
@@ -859,6 +1336,12 @@ function searchProducts(query) {
 }
 
 function showSearchResults(query, results) {
+    // Remove any existing search modal first
+    const existingModal = document.querySelector('.search-results-modal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+
     const modal = createSearchResultsModal(query, results);
     document.body.appendChild(modal);
 
@@ -909,7 +1392,7 @@ function createSearchResultsModal(query, results) {
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 10001;
+            z-index: 99999;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -929,8 +1412,8 @@ function createSearchResultsModal(query, results) {
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(2px);
         }
 
         .search-results-content {
@@ -1139,6 +1622,15 @@ function setupSearchResultsEventListeners(modal) {
         element.addEventListener('click', () => closeSearchResultsModal(modal));
     });
 
+    // Escape key to close modal
+    const escapeHandler = (e) => {
+        if (e.key === 'Escape') {
+            closeSearchResultsModal(modal);
+            document.removeEventListener('keydown', escapeHandler);
+        }
+    };
+    document.addEventListener('keydown', escapeHandler);
+
     // Add to cart buttons
     modal.querySelectorAll('.add-to-cart-search').forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -1181,7 +1673,9 @@ function setupSearchResultsEventListeners(modal) {
 function closeSearchResultsModal(modal) {
     modal.classList.remove('active');
     setTimeout(() => {
-        document.body.removeChild(modal);
+        if (modal && modal.parentNode) {
+            modal.parentNode.removeChild(modal);
+        }
     }, 300);
 }
 
@@ -3065,6 +3559,9 @@ function initializeShopPage() {
     initializeWebsite();
     setupEventListeners();
     updateCartUI();
+
+    // Initialize categories menu
+    initializeCategoriesMenu();
 
     // Add category filtering for shop page
     setupShopCategoryFiltering();
