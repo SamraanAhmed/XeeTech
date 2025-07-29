@@ -6221,7 +6221,7 @@ body {
         var(--lavender-blush) 100%);
     box-shadow: 8px 0 40px rgba(93, 42, 111, 0.4),
                 0 0 80px rgba(59, 25, 77, 0.3);
-    z-index: 1000;
+    z-index: 10001;
     transition: left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     overflow-y: auto;
     backdrop-filter: blur(20px);
