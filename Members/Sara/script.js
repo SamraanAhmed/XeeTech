@@ -1244,7 +1244,6 @@ function loadLimitedProducts() {
 }
 
 function createProductCard(product) {
-    const isInWishlist = wishlist.includes(product.id);
     const discountPercent = product.originalPrice ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
     const stockStatus = getStockStatus(product.stock);
 
@@ -2868,7 +2867,7 @@ function createQuickViewModal(product) {
         }
 
         .qv-features li:before {
-            content: '��';
+            content: '✓';
             position: absolute;
             left: 0;
             color: var(--deep-orchid);
