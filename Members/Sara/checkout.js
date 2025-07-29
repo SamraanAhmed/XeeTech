@@ -39,7 +39,7 @@ class SinglePageCheckout {
                     price: parseFloat(item.price) || 0,
                     quantity: parseInt(item.quantity) || 1,
                     image: this.getItemEmoji(item),
-                    category: item.category || 'misc'
+                    category: this.formatCategory(item.category || 'misc')
                 }));
                 console.log('Cart loaded successfully:', this.cart);
             } else {
@@ -52,12 +52,25 @@ class SinglePageCheckout {
         }
     }
     
+    formatCategory(category) {
+        const categoryMap = {
+            'misc': 'Fashion',
+            'clothing': 'Clothing',
+            'accessories': 'Accessories',
+            'home': 'Home Decor',
+            'stationery': 'Stationery',
+            'plushies': 'Plushies'
+        };
+
+        return categoryMap[category] || category.charAt(0).toUpperCase() + category.slice(1);
+    }
+
     getItemEmoji(item) {
         // If item already has emoji, use it
         if (item.emoji && !item.emoji.includes('.')) {
             return item.emoji;
         }
-        
+
         // Map file paths to emojis
         const imageToEmojiMap = {
             'hoodie.webp': '🖤',
@@ -359,8 +372,7 @@ class SinglePageCheckout {
         this.updateElement('shippingAmount', `$${shipping.toFixed(2)}`);
         this.updateElement('taxAmount', `$${tax.toFixed(2)}`);
         this.updateElement('totalAmount', `$${total.toFixed(2)}`);
-        this.updateElement('finalPrice', `$${total.toFixed(2)}`);
-        this.updateElement('bottomTotalAmount', `$${total.toFixed(2)}`); // Update bottom total
+        this.updateElement('finalTotalAmount', `$${total.toFixed(2)}`); // Update final total display
 
         // Show/hide discount
         const discountLine = document.getElementById('discountLine');
