@@ -225,7 +225,7 @@ function createProductModal(product) {
                             Add to Bag - $${product.price.toFixed(2)}
                         </button>
                         <button class="modal-wishlist-btn ${isInWishlist ? 'active' : ''}" data-product-id="${product.id}">
-                            ${isInWishlist ? '♥' : '♡'}
+                            ${isInWishlist ? '♥' : '��'}
                         </button>
                     </div>
                 </div>
@@ -3782,7 +3782,7 @@ function updateWishlistUI() {
             }
         } else {
             btn.classList.remove('active');
-            btn.innerHTML = '��'; // empty heart
+            btn.innerHTML = '����'; // empty heart
 
             // Remove counter badge
             const existingCounter = btn.querySelector('.wishlist-counter');
@@ -4195,10 +4195,17 @@ function showRecentlyPurchasedNotifications() {
         return;
     }
 
-    // Prevent multiple instances from running
+    // Prevent multiple instances from running and clear existing notifications
     if (window.notificationInterval) {
         clearInterval(window.notificationInterval);
+        window.notificationInterval = null;
     }
+
+    // Clear any existing notifications first
+    const existingNotifications = document.querySelectorAll('.recent-purchase-notification');
+    existingNotifications.forEach(notification => {
+        closeRecentPurchaseNotification(notification);
+    });
 
     const recentPurchases = [
         { name: 'Gothic Lolita Dress', location: 'Tokyo, Japan', time: '2 minutes ago' },
