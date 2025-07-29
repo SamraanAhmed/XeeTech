@@ -3732,12 +3732,8 @@ body {
 .checkout-title {
     font-family: var(--font-gothic);
     font-size: 2.5em;
-    color: var(--soft-white);
+    color: #FFFFFF !important;
     margin-bottom: 15px;
-    background: linear-gradient(45deg, var(--midnight-black), var(--deep-orchid));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
 }
 
 .checkout-subtitle {
