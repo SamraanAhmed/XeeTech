@@ -4184,8 +4184,7 @@ function closeWishlistModal(modal) {
 
 // Social Proof Elements
 function initializeSocialProof() {
-    showRecentlyPurchasedNotifications();
-    // updateVisitorCounter(); // Removed visitor counter
+    // Recent purchase notifications removed
     addStockIndicators();
 }
 
