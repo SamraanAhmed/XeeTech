@@ -707,12 +707,7 @@ function setupEventListeners() {
     const heroCta = document.getElementById('heroCta');
     if (heroCta) {
         heroCta.addEventListener('click', () => {
-            const categorySection = document.querySelector('.category-preview');
-            if (categorySection) {
-                categorySection.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
+            window.location.href = 'shop.html';
         });
     }
 
