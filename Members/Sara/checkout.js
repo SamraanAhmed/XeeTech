@@ -359,8 +359,7 @@ class SinglePageCheckout {
         this.updateElement('shippingAmount', `$${shipping.toFixed(2)}`);
         this.updateElement('taxAmount', `$${tax.toFixed(2)}`);
         this.updateElement('totalAmount', `$${total.toFixed(2)}`);
-        this.updateElement('finalPrice', `$${total.toFixed(2)}`);
-        this.updateElement('bottomTotalAmount', `$${total.toFixed(2)}`); // Update bottom total
+        this.updateElement('finalTotalAmount', `$${total.toFixed(2)}`); // Update final total display
 
         // Show/hide discount
         const discountLine = document.getElementById('discountLine');
