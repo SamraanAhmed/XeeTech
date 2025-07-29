@@ -7935,12 +7935,186 @@ body {
     .related-add-to-cart {
         min-height: 48px;
         font-size: 1em;
+        padding: 12px 20px;
     }
 
     .nav-icon,
     .mobile-menu-toggle {
         min-height: 48px;
         min-width: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Remove hover effects on touch devices */
+    .product-card,
+    .bestseller-card,
+    .trending-card,
+    .related-product-card {
+        transition: none;
+    }
+
+    .product-card:active,
+    .bestseller-card:active,
+    .trending-card:active {
+        transform: scale(0.98);
+    }
+}
+
+/* Additional mobile fixes */
+.mobile-device .product-card:hover,
+.mobile-device .bestseller-card:hover,
+.mobile-device .trending-card:hover {
+    transform: none !important;
+}
+
+/* Prevent text selection on interactive elements */
+.product-card,
+.add-to-cart-btn,
+.nav-icon,
+.mobile-menu-toggle {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Improve button accessibility on mobile */
+@media (max-width: 768px) {
+    .add-to-cart-btn,
+    .add-to-bag-btn,
+    .bestseller-btn,
+    .trending-btn,
+    .related-add-to-cart {
+        font-size: 1em;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        border-radius: 12px;
+        transition: all 0.2s ease;
+    }
+
+    .add-to-cart-btn:active,
+    .add-to-bag-btn:active,
+    .bestseller-btn:active,
+    .trending-btn:active,
+    .related-add-to-cart:active {
+        transform: scale(0.95);
+        background: linear-gradient(45deg, var(--bubblegum-pink), var(--deep-orchid));
+    }
+}
+
+/* Mobile navigation overlay */
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.nav-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Improve form inputs on mobile */
+@media (max-width: 768px) {
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"],
+    select,
+    textarea {
+        font-size: 16px !important; /* Prevent zoom on iOS */
+        padding: 12px 16px;
+        border-radius: 8px;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+        outline: none;
+        border-color: var(--deep-orchid);
+        box-shadow: 0 0 0 3px rgba(93, 42, 111, 0.2);
+    }
+}
+
+/* Prevent horizontal scroll on mobile */
+body {
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Fix viewport height for mobile browsers */
+.full-height {
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+}
+
+/* Loading states for mobile */
+@media (max-width: 768px) {
+    .loading-overlay {
+        padding: 20px;
+    }
+
+    .loading-content {
+        padding: 40px 30px;
+        border-radius: 20px;
+    }
+
+    .loading-spinner {
+        width: 40px;
+        height: 40px;
+        margin: 0 auto 20px;
+    }
+}
+
+/* Notification system mobile optimization */
+@media (max-width: 768px) {
+    .notification {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+        text-align: center;
+        font-size: 0.9em;
+        padding: 12px 16px;
+        border-radius: 12px;
+    }
+}
+
+/* Ensure consistent spacing on all mobile devices */
+@media (max-width: 480px) {
+    .section {
+        padding: 40px 0;
+    }
+
+    .section-title {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+        line-height: 1.2;
+    }
+
+    .section-subtitle {
+        font-size: 1em;
+        margin-bottom: 30px;
+        line-height: 1.4;
     }
 }
 
