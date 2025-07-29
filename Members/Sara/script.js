@@ -895,9 +895,49 @@ function closeSearch() {
 function performSearch(query) {
     if (!query.trim()) return;
 
-    const searchResults = searchProducts(query);
-    showSearchResults(query, searchResults);
+    // Check if we're on the shop page by looking for the products grid
+    const productsGrid = document.getElementById('productsGrid');
+
+    if (productsGrid) {
+        // We're on shop page - filter products directly
+        performShopPageSearch(query);
+    } else {
+        // We're on other pages - show search results modal
+        const searchResults = searchProducts(query);
+        showSearchResults(query, searchResults);
+    }
+
     closeSearch();
+}
+
+function performShopPageSearch(query) {
+    const searchTerm = query.toLowerCase().trim();
+    const productCards = document.querySelectorAll('#productsGrid .product-card');
+    let visibleCount = 0;
+
+    productCards.forEach(card => {
+        const productName = card.querySelector('.product-name')?.textContent?.toLowerCase() || '';
+        const productCategory = card.dataset.category?.toLowerCase() || '';
+
+        // Check if the search term matches product name or category
+        const matches = productName.includes(searchTerm) ||
+                       productCategory.includes(searchTerm) ||
+                       searchTerm === '';
+
+        if (matches) {
+            card.style.display = 'block';
+            visibleCount++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    // Show notification based on results
+    if (visibleCount === 0) {
+        showNotification(`No products found for "${query}". Try different keywords!`, 'error');
+    } else {
+        showNotification(`Found ${visibleCount} product${visibleCount !== 1 ? 's' : ''} for "${query}"`);
+    }
 }
 
 function searchProducts(query) {
