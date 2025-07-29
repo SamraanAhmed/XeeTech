@@ -3,6 +3,10 @@ let cart = JSON.parse(localStorage.getItem('kuromiCart')) || [];
 let searchOpen = false;
 let cartOpen = false;
 
+// Search debouncing
+let searchTimeout;
+let isSearching = false;
+
 // Enhanced product database with full details
 const enhancedProducts = {
     1: {
