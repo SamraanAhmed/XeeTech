@@ -667,6 +667,9 @@ function initializeWebsite() {
     optimizeForMobile();
     fixMobileViewportHeight();
     adjustProductCardsForScreen();
+    adjustTrendingCarousel();
+    adjustLimitedEditionLayout();
+    optimizeScrollPerformance();
 
     // Handle window events
     window.addEventListener('resize', handleOrientationChange);
