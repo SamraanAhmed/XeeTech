@@ -6302,7 +6302,7 @@ body {
     transition: var(--transition-bouncy);
     backdrop-filter: blur(15px);
     position: relative;
-    z-index: 10;
+    z-index: 10002;
     font-weight: 600;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     opacity: 1 !important;
