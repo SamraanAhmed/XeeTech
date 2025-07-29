@@ -682,18 +682,7 @@ function setupEventListeners() {
         });
     }
 
-    // Help functionality
-    const helpBtn = document.getElementById('helpBtn');
-    if (helpBtn) {
-        helpBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log('Help button clicked');
-            openHelpModal();
-        });
-    } else {
-        console.error('Help button not found');
-    }
+
 
     // Cart functionality
     const cartBtn = document.getElementById('cartBtn');
@@ -5369,7 +5358,7 @@ function populateModalContent(product) {
     const ratingElement = document.getElementById('modalRating') || document.querySelector('.modal-rating-stars');
     const reviewCountElement = document.getElementById('modalReviewCount') || document.querySelector('.modal-rating-count');
     if (product.rating && ratingElement) {
-        ratingElement.innerHTML = '���'.repeat(Math.floor(product.rating)) +
+        ratingElement.innerHTML = '★'.repeat(Math.floor(product.rating)) +
                                  (product.rating % 1 ? '☆' : '') +
                                  '☆'.repeat(5 - Math.ceil(product.rating));
         if (reviewCountElement) {
