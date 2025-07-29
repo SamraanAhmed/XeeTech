@@ -1310,7 +1310,9 @@ function setupSearchResultsEventListeners(modal) {
 function closeSearchResultsModal(modal) {
     modal.classList.remove('active');
     setTimeout(() => {
-        document.body.removeChild(modal);
+        if (modal && modal.parentNode) {
+            modal.parentNode.removeChild(modal);
+        }
     }, 300);
 }
 
