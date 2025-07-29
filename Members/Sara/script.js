@@ -685,7 +685,14 @@ function setupEventListeners() {
     // Help functionality
     const helpBtn = document.getElementById('helpBtn');
     if (helpBtn) {
-        helpBtn.addEventListener('click', openHelpModal);
+        helpBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Help button clicked');
+            openHelpModal();
+        });
+    } else {
+        console.error('Help button not found');
     }
 
     // Cart functionality
