@@ -3127,6 +3127,9 @@ function initializeShopPage() {
     setupEventListeners();
     updateCartUI();
 
+    // Initialize categories menu
+    initializeCategoriesMenu();
+
     // Add category filtering for shop page
     setupShopCategoryFiltering();
 
