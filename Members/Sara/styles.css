@@ -8253,6 +8253,44 @@ body {
         order: 4;
         margin-top: 10px;
     }
+
+    /* Mobile button styles - smaller and prettier */
+    .qty-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 0.9em;
+        border-width: 1.5px;
+    }
+
+    .apply-btn {
+        padding: 8px 12px;
+        font-size: 0.85em;
+        border-radius: 8px;
+    }
+
+    .place-order-btn {
+        font-size: 1em;
+        padding: 15px 25px;
+        border-radius: 12px;
+    }
+
+    .place-order-btn .btn-content {
+        gap: 8px;
+    }
+
+    .place-order-btn .btn-icon {
+        font-size: 1.1em;
+    }
+
+    .place-order-btn .btn-text {
+        font-size: 1em;
+        font-weight: 600;
+    }
+
+    .place-order-btn .btn-subtext {
+        font-size: 0.8em;
+        opacity: 0.8;
+    }
 }
 
 /* About page mobile */
