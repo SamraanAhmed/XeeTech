@@ -1052,8 +1052,8 @@ function createSearchResultsModal(query, results) {
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(2px);
         }
 
         .search-results-content {
@@ -3363,7 +3363,7 @@ function getEmojiForImage(image) {
     // Map file paths to emojis
     const imageToEmojiMap = {
         'hoodie.webp': '🖤',
-        'croptop.webp': '����',
+        'croptop.webp': '💜',
         'jacket.webp': '🦇',
         'dress.jpg': '👗',
         'goth dress.jpeg': '��',
