@@ -1268,6 +1268,15 @@ function setupSearchResultsEventListeners(modal) {
         element.addEventListener('click', () => closeSearchResultsModal(modal));
     });
 
+    // Escape key to close modal
+    const escapeHandler = (e) => {
+        if (e.key === 'Escape') {
+            closeSearchResultsModal(modal);
+            document.removeEventListener('keydown', escapeHandler);
+        }
+    };
+    document.addEventListener('keydown', escapeHandler);
+
     // Add to cart buttons
     modal.querySelectorAll('.add-to-cart-search').forEach(btn => {
         btn.addEventListener('click', (e) => {
