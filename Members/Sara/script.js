@@ -982,6 +982,12 @@ function searchProducts(query) {
 }
 
 function showSearchResults(query, results) {
+    // Remove any existing search modal first
+    const existingModal = document.querySelector('.search-results-modal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+
     const modal = createSearchResultsModal(query, results);
     document.body.appendChild(modal);
 
