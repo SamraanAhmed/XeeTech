@@ -82,6 +82,67 @@ const enhancedProducts = {
         stock: 18,
         rating: 4.8,
         reviews: 94
+    },
+    101: {
+        id: 101,
+        name: "Kuromi Backpack",
+        price: 59.99,
+        image: "",
+        images: [],
+        badge: "NEW",
+        category: "accessories",
+        description: "Spacious and stylish backpack with Kuromi's signature design. Perfect for school, work, or mischievous adventures.",
+        features: ["Multiple Compartments", "Padded Straps", "Water Resistant", "Laptop Sleeve"],
+        colors: ["Black", "Purple"],
+        stock: 12,
+        rating: 4.2,
+        reviews: 87
+    },
+    102: {
+        id: 102,
+        name: "Gothic Boots",
+        price: 89.99,
+        originalPrice: 119.99,
+        image: "",
+        images: [],
+        badge: "SALE",
+        category: "clothing",
+        description: "Edgy gothic boots with platform soles and buckle details. Step into your dark kawaii style with confidence.",
+        features: ["Platform Sole", "Buckle Details", "Durable Material", "Comfortable Fit"],
+        sizes: ["6", "7", "8", "9", "10", "11"],
+        colors: ["Black", "Dark Purple"],
+        stock: 7,
+        rating: 4.8,
+        reviews: 234
+    },
+    103: {
+        id: 103,
+        name: "Kawaii Keychain Set",
+        price: 12.99,
+        image: "",
+        images: [],
+        category: "accessories",
+        description: "Adorable keychain set featuring Kuromi and friends. Add some mischievous charm to your keys.",
+        features: ["3-Piece Set", "Soft Vinyl Material", "Keyring Included", "Collectible Design"],
+        colors: ["Mixed Colors"],
+        stock: 25,
+        rating: 4.5,
+        reviews: 156
+    },
+    104: {
+        id: 104,
+        name: "Mischief Bracelet",
+        price: 24.99,
+        image: "",
+        images: [],
+        badge: "NEW",
+        category: "accessories",
+        description: "Delicate bracelet with Kuromi charm details. A subtle way to show your rebellious kawaii spirit.",
+        features: ["Adjustable Size", "Charm Details", "Hypoallergenic", "Gift Box Included"],
+        colors: ["Silver", "Rose Gold", "Black"],
+        stock: 16,
+        rating: 4.7,
+        reviews: 198
     }
 };
 
