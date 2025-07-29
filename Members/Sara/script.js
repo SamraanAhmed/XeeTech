@@ -2194,16 +2194,21 @@ document.addEventListener('DOMContentLoaded', initializeCheckout);
 
 // Help Modal functionality
 function openHelpModal() {
-    const modal = createHelpModal();
-    document.body.appendChild(modal);
+    console.log('Opening help modal');
+    try {
+        const modal = createHelpModal();
+        document.body.appendChild(modal);
 
-    // Setup event listeners
-    setupHelpModalEventListeners(modal);
+        // Setup event listeners
+        setupHelpModalEventListeners(modal);
 
-    // Show modal
-    setTimeout(() => {
-        modal.classList.add('active');
-    }, 10);
+        // Show modal
+        setTimeout(() => {
+            modal.classList.add('active');
+        }, 10);
+    } catch (error) {
+        console.error('Error opening help modal:', error);
+    }
 }
 
 function createHelpModal() {
@@ -5364,7 +5369,7 @@ function populateModalContent(product) {
     const ratingElement = document.getElementById('modalRating') || document.querySelector('.modal-rating-stars');
     const reviewCountElement = document.getElementById('modalReviewCount') || document.querySelector('.modal-rating-count');
     if (product.rating && ratingElement) {
-        ratingElement.innerHTML = '★'.repeat(Math.floor(product.rating)) +
+        ratingElement.innerHTML = '���'.repeat(Math.floor(product.rating)) +
                                  (product.rating % 1 ? '☆' : '') +
                                  '☆'.repeat(5 - Math.ceil(product.rating));
         if (reviewCountElement) {
