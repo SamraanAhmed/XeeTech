@@ -659,6 +659,18 @@ function initializeWebsite() {
 
     // Initialize sparkle animations
     initializeSparkles();
+
+    // Initialize mobile functionality
+    initializeMobileNavigation();
+    initializeTouchInteractions();
+    initializeResponsiveImages();
+    optimizeForMobile();
+    fixMobileViewportHeight();
+    adjustProductCardsForScreen();
+
+    // Handle window events
+    window.addEventListener('resize', handleOrientationChange);
+    window.addEventListener('orientationchange', handleOrientationChange);
 }
 
 // Mobile navigation functions
