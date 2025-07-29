@@ -8232,7 +8232,7 @@ body {
         right: -100%;
     }
 
-    .cart-sidebar.open {
+    .cart-sidebar.active {
         right: 0;
     }
 }
