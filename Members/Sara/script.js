@@ -225,7 +225,7 @@ function createProductModal(product) {
                             Add to Bag - $${product.price.toFixed(2)}
                         </button>
                         <button class="modal-wishlist-btn ${isInWishlist ? 'active' : ''}" data-product-id="${product.id}">
-                            ${isInWishlist ? '♥' : '��'}
+                            ${isInWishlist ? '♥' : '♡'}
                         </button>
                     </div>
                 </div>
@@ -1758,7 +1758,7 @@ function createCheckoutModal() {
                             </label>
                             <label class="payment-option">
                                 <input type="radio" name="payment" value="paypal">
-                                <span>💰 PayPal</span>
+                                <span>���� PayPal</span>
                             </label>
                             <label class="payment-option">
                                 <input type="radio" name="payment" value="apple">
@@ -3782,7 +3782,7 @@ function updateWishlistUI() {
             }
         } else {
             btn.classList.remove('active');
-            btn.innerHTML = '����'; // empty heart
+            btn.innerHTML = '��'; // empty heart
 
             // Remove counter badge
             const existingCounter = btn.querySelector('.wishlist-counter');
@@ -4250,11 +4250,11 @@ function showRecentlyPurchasedNotifications() {
         }
     }
 
-    // Show first notification after 5 seconds
-    setTimeout(showNextNotification, 5000);
+    // Show first notification after 2 seconds for immediate testing
+    setTimeout(showNextNotification, 2000);
 
-    // Show subsequent notifications every 30 seconds
-    window.notificationInterval = setInterval(showNextNotification, 30000);
+    // Show subsequent notifications every 25 seconds
+    window.notificationInterval = setInterval(showNextNotification, 25000);
 
     // Clean up on page unload
     window.addEventListener('beforeunload', () => {
