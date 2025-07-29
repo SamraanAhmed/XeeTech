@@ -1253,12 +1253,6 @@ function createProductCard(product) {
             <div class="product-image-container">
                 ${product.badge ? `<div class="product-badge ${product.badge.toLowerCase()}">${product.badge}</div>` : ''}
 
-                <button class="wishlist-btn ${isInWishlist ? 'active' : ''}" data-product-id="${product.id}"
-                        title="${isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}"
-                        onclick="event.stopPropagation(); toggleWishlist(${product.id}); updateWishlistUI();">
-                    ${isInWishlist ? '♥' : '♡'}
-                </button>
-
                 ${product.image && product.image.trim() !== '' ? `
                     <img src="${product.image}"
                          alt="${product.name}"
@@ -2874,7 +2868,7 @@ function createQuickViewModal(product) {
         }
 
         .qv-features li:before {
-            content: '✓';
+            content: '��';
             position: absolute;
             left: 0;
             color: var(--deep-orchid);
