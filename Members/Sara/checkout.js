@@ -52,12 +52,25 @@ class SinglePageCheckout {
         }
     }
     
+    formatCategory(category) {
+        const categoryMap = {
+            'misc': 'Fashion',
+            'clothing': 'Clothing',
+            'accessories': 'Accessories',
+            'home': 'Home Decor',
+            'stationery': 'Stationery',
+            'plushies': 'Plushies'
+        };
+
+        return categoryMap[category] || category.charAt(0).toUpperCase() + category.slice(1);
+    }
+
     getItemEmoji(item) {
         // If item already has emoji, use it
         if (item.emoji && !item.emoji.includes('.')) {
             return item.emoji;
         }
-        
+
         // Map file paths to emojis
         const imageToEmojiMap = {
             'hoodie.webp': '🖤',
