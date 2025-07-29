@@ -7998,19 +7998,41 @@ body {
 
 .btn-content {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 4px;
+    position: relative;
+    z-index: 1;
 }
 
 .btn-icon {
-    font-size: 1.3em;
+    font-size: 1.6em;
+    margin-bottom: 4px;
+    display: inline-block;
+    animation: pulse 2s infinite;
+}
+
+.btn-text {
+    font-size: 1.1em;
+    font-weight: 700;
+    letter-spacing: 0.5px;
 }
 
 .btn-subtext {
-    font-size: 0.9em;
-    opacity: 0.8;
+    font-size: 0.85em;
+    opacity: 0.9;
     font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
 }
 
 .checkout-footer-note {
