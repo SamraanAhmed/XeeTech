@@ -950,6 +950,18 @@ function performShopPageSearch(query) {
     }
 }
 
+function clearShopSearch() {
+    const productsGrid = document.getElementById('productsGrid');
+
+    if (productsGrid) {
+        const productCards = document.querySelectorAll('#productsGrid .product-card');
+        productCards.forEach(card => {
+            card.style.display = 'block';
+        });
+        showNotification('Showing all products');
+    }
+}
+
 function searchProducts(query) {
     const searchTerm = query.toLowerCase();
     const allProducts = Object.values(enhancedProducts);
@@ -3351,7 +3363,7 @@ function getEmojiForImage(image) {
     // Map file paths to emojis
     const imageToEmojiMap = {
         'hoodie.webp': '🖤',
-        'croptop.webp': '💜',
+        'croptop.webp': '����',
         'jacket.webp': '🦇',
         'dress.jpg': '👗',
         'goth dress.jpeg': '��',
