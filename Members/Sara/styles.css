@@ -8203,6 +8203,56 @@ body {
         font-size: 1.1em;
         padding: 18px 30px;
     }
+
+    /* Order items mobile layout */
+    .order-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .order-item .item-image {
+        width: 60px;
+        height: 60px;
+        font-size: 2.5em;
+        align-self: center;
+    }
+
+    .order-item .item-details {
+        text-align: center;
+        order: 2;
+    }
+
+    .order-item .item-name {
+        font-size: 1.1em;
+        margin-bottom: 8px;
+    }
+
+    .order-item .item-category {
+        margin-bottom: 15px;
+    }
+
+    .order-item .item-quantity {
+        justify-content: center;
+    }
+
+    .order-item .item-price {
+        text-align: center;
+        order: 3;
+        padding-top: 10px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .remove-item {
+        position: relative;
+        top: auto;
+        right: auto;
+        align-self: center;
+        opacity: 1;
+        order: 4;
+        margin-top: 10px;
+    }
 }
 
 /* About page mobile */
