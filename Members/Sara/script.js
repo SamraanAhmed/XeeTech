@@ -1785,8 +1785,7 @@ function createProductCard(product) {
                     ` : ''}
                 </div>
 
-                <button class="add-to-cart-btn" data-product-id="${product.id}"
-                        onclick="event.stopPropagation(); addToCart(${product.id});">
+                <button class="add-to-cart-btn" data-product-id="${product.id}">
                     <span class="btn-text">Add to Bag</span>
                     <span class="btn-icon">✨</span>
                 </button>
