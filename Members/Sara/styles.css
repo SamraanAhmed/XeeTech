@@ -4869,12 +4869,12 @@ body {
 
 .related-quick-view,
 .related-wishlist {
-    background: rgba(255, 255, 255, 0.95);
+    background: transparent;
     border: none;
     border-radius: 50%;
     width: 36px;
     height: 36px;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     cursor: pointer;
