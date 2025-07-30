@@ -4922,6 +4922,7 @@ body {
 .related-product-rating {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
     margin-bottom: 12px;
 }
