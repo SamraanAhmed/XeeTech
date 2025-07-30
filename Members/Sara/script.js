@@ -308,7 +308,7 @@ function createModalImagePlaceholder(category) {
     return `
         <div class="modal-image-placeholder">
             <div class="placeholder-icon">🎀</div>
-            <div class="placeholder-text">Image Coming Soon</div>
+            <div class="placeholder-text">Image Loading...</div>
             <div class="placeholder-subtext">Premium ${category} item</div>
         </div>
     `;
