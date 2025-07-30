@@ -4922,6 +4922,7 @@ body {
 .related-product-rating {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
     margin-bottom: 12px;
 }
@@ -7572,7 +7573,7 @@ body {
 .trending-image-container,
 .related-product-image-container {
     position: relative;
-    height: 200px;
+    height: 300px;
     width: 100%;
     border-radius: 16px;
     overflow: hidden;
@@ -7695,7 +7696,7 @@ body {
     .product-image-container,
     .bestseller-image-container,
     .trending-image-container {
-        height: 180px;
+        height: 260px;
     }
 
     .product-info,
@@ -7779,7 +7780,7 @@ body {
     .bestseller-image-container,
     .trending-image-container,
     .related-product-image-container {
-        height: 160px;
+        height: 240px;
     }
 
     .product-info,
@@ -7862,7 +7863,7 @@ body {
     .bestseller-image-container,
     .trending-image-container,
     .related-product-image-container {
-        height: 150px;
+        height: 220px;
     }
 
     .product-info,

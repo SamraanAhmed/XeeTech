@@ -836,15 +836,15 @@ function adjustProductCardsForScreen() {
 
         if (imageContainer && info) {
             if (isSmallMobile) {
-                imageContainer.style.height = '150px';
+                imageContainer.style.height = '220px';
                 info.style.padding = '15px';
                 info.style.minHeight = '190px';
             } else if (isMobile) {
-                imageContainer.style.height = '160px';
+                imageContainer.style.height = '240px';
                 info.style.padding = '16px';
                 info.style.minHeight = '200px';
             } else {
-                imageContainer.style.height = '200px';
+                imageContainer.style.height = '300px';
                 info.style.padding = '20px';
                 info.style.minHeight = '200px';
             }
@@ -1727,6 +1727,7 @@ function loadLimitedProducts() {
     // Add event listeners to product buttons
     limitedProductsContainer.querySelectorAll('.add-to-cart-btn').forEach(button => {
         button.addEventListener('click', (e) => {
+            e.stopPropagation();
             const productId = parseInt(e.target.dataset.productId || e.target.closest('.add-to-cart-btn').dataset.productId);
             addToCart(productId);
         });
@@ -1785,8 +1786,7 @@ function createProductCard(product) {
                     ` : ''}
                 </div>
 
-                <button class="add-to-cart-btn" data-product-id="${product.id}"
-                        onclick="event.stopPropagation(); addToCart(${product.id});">
+                <button class="add-to-cart-btn" data-product-id="${product.id}">
                     <span class="btn-text">Add to Bag</span>
                     <span class="btn-icon">✨</span>
                 </button>
