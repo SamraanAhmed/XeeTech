@@ -1727,6 +1727,7 @@ function loadLimitedProducts() {
     // Add event listeners to product buttons
     limitedProductsContainer.querySelectorAll('.add-to-cart-btn').forEach(button => {
         button.addEventListener('click', (e) => {
+            e.stopPropagation();
             const productId = parseInt(e.target.dataset.productId || e.target.closest('.add-to-cart-btn').dataset.productId);
             addToCart(productId);
         });
