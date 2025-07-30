@@ -17,8 +17,8 @@ const enhancedProducts = {
         name: "Kuromi Gothic Hoodie",
         price: 39.99,
         originalPrice: 55.99,
-        image: "",
-        images: [],
+        image: "hoodie.jpeg",
+        images: ["hoodie.jpeg"],
         badge: "SALE",
         category: "clothing",
         description: "Embrace your mischievous side with this premium gothic hoodie featuring Kuromi's signature style. Made from ultra-soft cotton blend with a cozy fleece interior.",
@@ -33,8 +33,8 @@ const enhancedProducts = {
         id: 2,
         name: "Gothic Lolita Dress",
         price: 129.99,
-        image: "",
-        images: [],
+        image: "lolita.png",
+        images: ["lolita.png"],
         badge: "NEW",
         category: "clothing",
         description: "Stunning gothic lolita dress with intricate lace details and a rebellious kawaii aesthetic. Perfect for special occasions or daily mischief.",
@@ -49,8 +49,8 @@ const enhancedProducts = {
         id: 3,
         name: "Mischief Crop Top",
         price: 24.99,
-        image: "",
-        images: [],
+        image: "crop.jpg",
+        images: ["crop.jpg"],
         category: "clothing",
         description: "Show off your rebellious style with this cute yet edgy crop top featuring Kuromi's devil horn motif.",
         features: ["Soft Cotton Blend", "Stretch Fabric", "Machine Washable", "Graphic Print"],
@@ -65,8 +65,8 @@ const enhancedProducts = {
         name: "Devil Horn Headband",
         price: 19.99,
         originalPrice: 29.99,
-        image: "",
-        images: [],
+        image: "https://images.unsplash.com/photo-1596462502378-9140edbc8b37?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        images: ["https://images.unsplash.com/photo-1596462502378-9140edbc8b37?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"],
         badge: "SALE",
         category: "accessories",
         description: "Complete your mischievous look with this adorable devil horn headband. Comfortable and adjustable for all-day wear.",
@@ -80,8 +80,8 @@ const enhancedProducts = {
         id: 5,
         name: "Gothic Choker Set",
         price: 35.99,
-        image: "",
-        images: [],
+        image: "https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        images: ["https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"],
         category: "accessories",
         description: "Elegant gothic choker set with multiple pieces to mix and match. Perfect for creating your unique dark kawaii style.",
         features: ["3-Piece Set", "Adjustable Length", "Hypoallergenic Materials", "Gothic Charms"],
@@ -94,8 +94,8 @@ const enhancedProducts = {
         id: 101,
         name: "Kuromi Backpack",
         price: 59.99,
-        image: "",
-        images: [],
+        image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        images: ["https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"],
         badge: "NEW",
         category: "accessories",
         description: "Spacious and stylish backpack with Kuromi's signature design. Perfect for school, work, or mischievous adventures.",
@@ -110,8 +110,8 @@ const enhancedProducts = {
         name: "Gothic Boots",
         price: 89.99,
         originalPrice: 119.99,
-        image: "",
-        images: [],
+        image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        images: ["https://images.unsplash.com/photo-1543163521-1bf539c55dd2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"],
         badge: "SALE",
         category: "clothing",
         description: "Edgy gothic boots with platform soles and buckle details. Step into your dark kawaii style with confidence.",
@@ -126,8 +126,8 @@ const enhancedProducts = {
         id: 103,
         name: "Kawaii Keychain Set",
         price: 12.99,
-        image: "",
-        images: [],
+        image: "https://images.unsplash.com/photo-1611652022419-a9419f74343d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        images: ["https://images.unsplash.com/photo-1611652022419-a9419f74343d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"],
         category: "accessories",
         description: "Adorable keychain set featuring Kuromi and friends. Add some mischievous charm to your keys.",
         features: ["3-Piece Set", "Soft Vinyl Material", "Keyring Included", "Collectible Design"],
@@ -140,8 +140,8 @@ const enhancedProducts = {
         id: 104,
         name: "Mischief Bracelet",
         price: 24.99,
-        image: "",
-        images: [],
+        image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        images: ["https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"],
         badge: "NEW",
         category: "accessories",
         description: "Delicate bracelet with Kuromi charm details. A subtle way to show your rebellious kawaii spirit.",
@@ -201,14 +201,13 @@ function createProductModal(product) {
             </div>
             <div class="product-modal-body">
                 <div class="product-image-zoom">
-                    ${product.image && product.image.trim() !== '' ? `
-                        <div class="zoom-container" data-zoom="false">
-                            <img src="${product.image}"
-                                 alt="${product.name}"
-                                 class="product-main-image"
-                                 onerror="this.parentElement.parentElement.innerHTML = createModalImagePlaceholder('${product.category || 'Kawaii'}');">
-                        </div>
-                    ` : createModalImagePlaceholder(product.category || 'Kawaii')}
+                    <div class="zoom-container" data-zoom="false">
+                        <img src="${product.image}"
+                             alt="${product.name}"
+                             class="product-main-image"
+                             loading="lazy"
+                             style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+                    </div>
                 </div>
 
                 <div class="product-details">
@@ -308,7 +307,7 @@ function createModalImagePlaceholder(category) {
     return `
         <div class="modal-image-placeholder">
             <div class="placeholder-icon">🎀</div>
-            <div class="placeholder-text">Image Coming Soon</div>
+            <div class="placeholder-text">Image Loading...</div>
             <div class="placeholder-subtext">Premium ${category} item</div>
         </div>
     `;
@@ -1724,6 +1723,24 @@ function loadLimitedProducts() {
         card.style.transition = 'all 0.3s ease';
     });
 
+    // Add event listeners to product cards
+    limitedProductsContainer.querySelectorAll('.product-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+            // Don't trigger modal if clicking on add to cart button
+            if (e.target.closest('.add-to-cart-btn')) {
+                return;
+            }
+
+            const productId = parseInt(card.dataset.productId);
+            if (productId) {
+                openProductModal(productId);
+            }
+        });
+
+        // Add hover cursor to indicate clickable
+        card.style.cursor = 'pointer';
+    });
+
     // Add event listeners to product buttons
     limitedProductsContainer.querySelectorAll('.add-to-cart-btn').forEach(button => {
         button.addEventListener('click', (e) => {
@@ -1743,23 +1760,13 @@ function createProductCard(product) {
             <div class="product-image-container">
                 ${product.badge ? `<div class="product-badge ${product.badge.toLowerCase()}">${product.badge}</div>` : ''}
 
-                ${product.image && product.image.trim() !== '' ? `
-                    <img src="${product.image}"
-                         alt="${product.name}"
-                         class="product-image"
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="product-image-placeholder" style="display: none;">
-                        <div class="placeholder-icon">🎀</div>
-                        <div class="placeholder-text">Image Coming Soon</div>
-                        <div class="placeholder-subtext">Premium ${product.category || 'Kawaii'} item</div>
-                    </div>
-                ` : `
-                    <div class="product-image-placeholder">
-                        <div class="placeholder-icon">🎀</div>
-                        <div class="placeholder-text">Image Coming Soon</div>
-                        <div class="placeholder-subtext">Premium ${product.category || 'Kawaii'} item</div>
-                    </div>
-                `}
+                <img src="${product.image}"
+                     alt="${product.name}"
+                     class="product-image"
+                     loading="lazy"
+                     onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #2a2a2a, #3a3a3a)';"
+                     onload="this.style.opacity='1';"
+                     style="opacity: 0; transition: opacity 0.3s ease;">
 
 
             </div>
