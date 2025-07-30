@@ -5163,7 +5163,15 @@ body {
 
 @media (max-width: 480px) {
     .shop-title {
-        font-size: 2em;
+        font-size: 1.8em;
+        line-height: 1.2;
+    }
+
+    .shop-subtitle {
+        font-size: 1em;
+        line-height: 1.4;
+        padding: 0 15px;
+        word-break: break-word;
     }
 
     .categories-grid {
