@@ -2156,6 +2156,20 @@ body {
     transform: scale(1.05);
 }
 
+.product-card {
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.02);
+}
+
 /* Enhanced Image Placeholder */
 .product-image-placeholder {
     display: flex;
