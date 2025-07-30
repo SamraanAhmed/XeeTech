@@ -65,8 +65,8 @@ const enhancedProducts = {
         name: "Devil Horn Headband",
         price: 19.99,
         originalPrice: 29.99,
-        image: "",
-        images: [],
+        image: "https://images.unsplash.com/photo-1596462502378-9140edbc8b37?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        images: ["https://images.unsplash.com/photo-1596462502378-9140edbc8b37?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"],
         badge: "SALE",
         category: "accessories",
         description: "Complete your mischievous look with this adorable devil horn headband. Comfortable and adjustable for all-day wear.",
@@ -80,8 +80,8 @@ const enhancedProducts = {
         id: 5,
         name: "Gothic Choker Set",
         price: 35.99,
-        image: "",
-        images: [],
+        image: "https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        images: ["https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"],
         category: "accessories",
         description: "Elegant gothic choker set with multiple pieces to mix and match. Perfect for creating your unique dark kawaii style.",
         features: ["3-Piece Set", "Adjustable Length", "Hypoallergenic Materials", "Gothic Charms"],
@@ -4741,7 +4741,7 @@ function setupRelatedProductsEventListeners(grid) {
             const wasAdded = toggleWishlist(productId);
             const product = enhancedProducts[productId];
             if (product) {
-                btn.innerHTML = wishlist.includes(productId) ? '♥' : '��';
+                btn.innerHTML = wishlist.includes(productId) ? '♥' : '♡';
                 showNotification(
                     wasAdded
                         ? `${product.name} added to wishlist!`
