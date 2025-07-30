@@ -836,15 +836,15 @@ function adjustProductCardsForScreen() {
 
         if (imageContainer && info) {
             if (isSmallMobile) {
-                imageContainer.style.height = '180px';
+                imageContainer.style.height = '220px';
                 info.style.padding = '15px';
                 info.style.minHeight = '190px';
             } else if (isMobile) {
-                imageContainer.style.height = '200px';
+                imageContainer.style.height = '240px';
                 info.style.padding = '16px';
                 info.style.minHeight = '200px';
             } else {
-                imageContainer.style.height = '250px';
+                imageContainer.style.height = '300px';
                 info.style.padding = '20px';
                 info.style.minHeight = '200px';
             }
