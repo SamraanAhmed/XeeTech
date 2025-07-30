@@ -17,8 +17,8 @@ const enhancedProducts = {
         name: "Kuromi Gothic Hoodie",
         price: 39.99,
         originalPrice: 55.99,
-        image: "",
-        images: [],
+        image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        images: ["https://images.unsplash.com/photo-1556821840-3a63f95609a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"],
         badge: "SALE",
         category: "clothing",
         description: "Embrace your mischievous side with this premium gothic hoodie featuring Kuromi's signature style. Made from ultra-soft cotton blend with a cozy fleece interior.",
@@ -33,8 +33,8 @@ const enhancedProducts = {
         id: 2,
         name: "Gothic Lolita Dress",
         price: 129.99,
-        image: "",
-        images: [],
+        image: "https://images.unsplash.com/photo-1594223274512-ad4803739b7c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        images: ["https://images.unsplash.com/photo-1594223274512-ad4803739b7c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"],
         badge: "NEW",
         category: "clothing",
         description: "Stunning gothic lolita dress with intricate lace details and a rebellious kawaii aesthetic. Perfect for special occasions or daily mischief.",
@@ -49,8 +49,8 @@ const enhancedProducts = {
         id: 3,
         name: "Mischief Crop Top",
         price: 24.99,
-        image: "",
-        images: [],
+        image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+        images: ["https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"],
         category: "clothing",
         description: "Show off your rebellious style with this cute yet edgy crop top featuring Kuromi's devil horn motif.",
         features: ["Soft Cotton Blend", "Stretch Fabric", "Machine Washable", "Graphic Print"],
@@ -4741,7 +4741,7 @@ function setupRelatedProductsEventListeners(grid) {
             const wasAdded = toggleWishlist(productId);
             const product = enhancedProducts[productId];
             if (product) {
-                btn.innerHTML = wishlist.includes(productId) ? '♥' : '♡';
+                btn.innerHTML = wishlist.includes(productId) ? '♥' : '��';
                 showNotification(
                     wasAdded
                         ? `${product.name} added to wishlist!`
