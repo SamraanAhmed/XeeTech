@@ -3258,21 +3258,22 @@ body {
 }
 
 .modal-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(1);
-    background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) scale(1) !important;
+    background: linear-gradient(145deg, #1a1a1a, #2a2a2a) !important;
     border-radius: var(--radius-large);
     max-width: 1000px;
     width: 90vw;
     max-height: 90vh;
-    z-index: 10002;
-    color: #ffffff;
+    z-index: 100001 !important;
+    color: #ffffff !important;
     overflow-y: auto;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-    overflow: hidden;
-    box-shadow: var(--shadow-strong);
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
     transition: var(--transition-smooth);
 }
 
