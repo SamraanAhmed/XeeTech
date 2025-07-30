@@ -201,14 +201,13 @@ function createProductModal(product) {
             </div>
             <div class="product-modal-body">
                 <div class="product-image-zoom">
-                    ${product.image && product.image.trim() !== '' ? `
-                        <div class="zoom-container" data-zoom="false">
-                            <img src="${product.image}"
-                                 alt="${product.name}"
-                                 class="product-main-image"
-                                 onerror="this.parentElement.parentElement.innerHTML = createModalImagePlaceholder('${product.category || 'Kawaii'}');">
-                        </div>
-                    ` : createModalImagePlaceholder(product.category || 'Kawaii')}
+                    <div class="zoom-container" data-zoom="false">
+                        <img src="${product.image}"
+                             alt="${product.name}"
+                             class="product-main-image"
+                             loading="lazy"
+                             style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+                    </div>
                 </div>
 
                 <div class="product-details">
