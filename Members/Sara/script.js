@@ -1743,23 +1743,13 @@ function createProductCard(product) {
             <div class="product-image-container">
                 ${product.badge ? `<div class="product-badge ${product.badge.toLowerCase()}">${product.badge}</div>` : ''}
 
-                ${product.image && product.image.trim() !== '' ? `
-                    <img src="${product.image}"
-                         alt="${product.name}"
-                         class="product-image"
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="product-image-placeholder" style="display: none;">
-                        <div class="placeholder-icon">🎀</div>
-                        <div class="placeholder-text">Image Coming Soon</div>
-                        <div class="placeholder-subtext">Premium ${product.category || 'Kawaii'} item</div>
-                    </div>
-                ` : `
-                    <div class="product-image-placeholder">
-                        <div class="placeholder-icon">🎀</div>
-                        <div class="placeholder-text">Image Coming Soon</div>
-                        <div class="placeholder-subtext">Premium ${product.category || 'Kawaii'} item</div>
-                    </div>
-                `}
+                <img src="${product.image}"
+                     alt="${product.name}"
+                     class="product-image"
+                     loading="lazy"
+                     onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #2a2a2a, #3a3a3a)';"
+                     onload="this.style.opacity='1';"
+                     style="opacity: 0; transition: opacity 0.3s ease;">
 
 
             </div>
