@@ -2708,8 +2708,9 @@ body {
 }
 
 .product-modal.active {
-    opacity: 1;
-    visibility: visible;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: flex !important;
 }
 
 .product-modal-content {
@@ -3241,8 +3242,9 @@ body {
 }
 
 .product-modal.active {
-    opacity: 1;
-    visibility: visible;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: flex !important;
 }
 
 .modal-overlay {
