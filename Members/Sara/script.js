@@ -1723,6 +1723,24 @@ function loadLimitedProducts() {
         card.style.transition = 'all 0.3s ease';
     });
 
+    // Add event listeners to product cards
+    limitedProductsContainer.querySelectorAll('.product-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+            // Don't trigger modal if clicking on add to cart button
+            if (e.target.closest('.add-to-cart-btn')) {
+                return;
+            }
+
+            const productId = parseInt(card.dataset.productId);
+            if (productId) {
+                openProductModal(productId);
+            }
+        });
+
+        // Add hover cursor to indicate clickable
+        card.style.cursor = 'pointer';
+    });
+
     // Add event listeners to product buttons
     limitedProductsContainer.querySelectorAll('.add-to-cart-btn').forEach(button => {
         button.addEventListener('click', (e) => {
