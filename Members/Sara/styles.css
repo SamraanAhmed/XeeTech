@@ -8168,6 +8168,14 @@ body {
         font-size: 2.5em;
     }
 
+    .shop-subtitle {
+        font-size: 1.1em;
+        line-height: 1.5;
+        word-wrap: break-word;
+        hyphens: auto;
+        padding: 0 10px;
+    }
+
     .filter-controls {
         flex-direction: column;
         gap: 15px;
