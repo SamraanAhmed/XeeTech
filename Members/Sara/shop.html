@@ -18,7 +18,7 @@
             <div class="nav-logo">
                 <a href="index.html" class="logo-link">
                     <img class="kuromi-icon" src="1289-kuromiwink.png" alt="Kuromi">
-                    <span class="brand-name">Kuro.co</span>
+                    <span class="brand-name">kuro.co</span>
                 </a>
             </div>
 
@@ -34,33 +34,13 @@
                 <div class="nav-links">
                     <a href="index.html" class="nav-link">Home</a>
                     <a href="shop.html" class="nav-link active">Shop</a>
-                    <a href="about.html" class="nav-link">About</a>
-                    <a href="#contact" class="nav-link">Contact</a>
-                    <a href="#" class="nav-link" id="orderTrackingNav">Orders</a>
+                    <button class="nav-link categories-btn" id="categoriesBtn">Categories</button>
                 </div>
 
                 <div class="nav-actions">
                     <!-- Search Icon -->
                     <button class="nav-icon search-btn" id="searchBtn" title="Search">
                         🔍
-                    </button>
-
-                    <!-- Language Selector -->
-                    <div class="language-selector">
-                        <button class="nav-icon lang-btn" id="langBtn" title="Language">
-                            🌐
-                        </button>
-                        <div class="lang-dropdown" id="langDropdown">
-                            <a href="#" class="lang-option active" data-lang="en">English</a>
-                            <a href="#" class="lang-option" data-lang="ja">日本語</a>
-                            <a href="#" class="lang-option" data-lang="ko">한국어</a>
-                        </div>
-                    </div>
-
-                    <!-- Wishlist Icon -->
-                    <button class="nav-icon wishlist-nav-btn" id="wishlistNavBtn" title="Wishlist">
-                        ♡
-                        <span class="wishlist-count" id="wishlistNavCount">0</span>
                     </button>
 
                     <!-- Cart Icon -->
@@ -103,42 +83,7 @@
         </div>
     </section>
 
-    <!-- Categories Section -->
-    <section class="categories-section">
-        <div class="container">
-            <h2 class="section-title">Shop by Category</h2>
-            
-            <div class="categories-grid">
-                <div class="category-card" data-category="clothing">
-                    <div class="category-icon">👗</div>
-                    <h3 class="category-name">Clothing</h3>
-                    <p class="category-desc">Gothic kawaii fashion</p>
-                    <div class="category-overlay"></div>
-                </div>
-                
-                <div class="category-card" data-category="accessories">
-                    <div class="category-icon">💎</div>
-                    <h3 class="category-name">Accessories</h3>
-                    <p class="category-desc">Perfect finishing touches</p>
-                    <div class="category-overlay"></div>
-                </div>
-                
-                <div class="category-card" data-category="stationery">
-                    <div class="category-icon">📝</div>
-                    <h3 class="category-name">Stationery</h3>
-                    <p class="category-desc">Cute creative supplies</p>
-                    <div class="category-overlay"></div>
-                </div>
-                
-                <div class="category-card" data-category="room-decor">
-                    <div class="category-icon">🏠</div>
-                    <h3 class="category-name">Room Decor</h3>
-                    <p class="category-desc">Transform your space</p>
-                    <div class="category-overlay"></div>
-                </div>
-            </div>
-        </div>
-    </section>
+
 
     <!-- Products Section -->
     <section class="products-section">
@@ -157,466 +102,735 @@
 
             <div class="products-grid" id="productsGrid">
                 <!-- Clothing Products -->
-                <div class="product-card" data-category="clothing">
-                    <div class="product-badges">
-                        <span class="badge sale-badge">SALE</span>
-                    </div>
+                <div class="product-card" data-product-id="1" data-category="clothing">
                     <div class="product-image-container">
-                        <img src="hoodie.webp" alt="Kuromi Gothic Hoodie" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <button class="quick-view-btn" title="Quick View">👁️</button>
-                        <button class="wishlist-btn" title="Add to Wishlist" data-product-id="1">♡</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Kuromi Gothic Hoodie</h3>
-                        <div class="product-price">
-                            <span class="current-price">$39.99</span>
-                            <span class="original-price">$55.99</span>
+                        <div class="product-badge sale">SALE</div>
+
+                        <img src="hoodie.jpeg" alt="Kuromi Gothic Hoodie" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Clothing item</div>
                         </div>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                ★★★★★
+                            </div>
+                            <span class="rating-count">(127)</span>
+                        </div>
+                        <h3 class="product-name">Kuromi Gothic Hoodie</h3>
+
+                        <div class="product-price-container">
+                            <span class="product-price">$39.99</span>
+                            <span class="product-original-price">$55.99</span>
+                            <span class="price-discount">-29%</span>
+                        </div>
+
                         <button class="add-to-cart-btn" data-product-id="1">
-                            <span class="btn-text">Add to Cart</span>
-                            <span class="btn-sparkle">✨</span>
+                            <span class="btn-text">Add to Bag</span>
+                            <span class="btn-icon">✨</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="clothing">
-                    <div class="product-badges">
-                        <span class="badge new-badge">NEW</span>
-                    </div>
+                <div class="product-card" data-product-id="2" data-category="clothing">
                     <div class="product-image-container">
-                        <img src="goth dress.jpeg" alt="Gothic Lolita Dress" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <button class="quick-view-btn" title="Quick View">👁️</button>
-                        <button class="wishlist-btn" title="Add to Wishlist" data-product-id="2">♡</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Gothic Lolita Dress</h3>
-                        <div class="product-price">
-                            <span class="current-price">$129.99</span>
+                        <div class="product-badge new">NEW</div>
+
+                        <img src="lolita.png" alt="Gothic Lolita Dress" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Clothing item</div>
                         </div>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                ★★★★☆
+                            </div>
+                            <span class="rating-count">(89)</span>
+                        </div>
+                        <h3 class="product-name">Gothic Lolita Dress</h3>
+
+                        <div class="product-price-container">
+                            <span class="product-price">$129.99</span>
+                        </div>
+
                         <button class="add-to-cart-btn" data-product-id="2">
-                            <span class="btn-text">Add to Cart</span>
-                            <span class="btn-sparkle">✨</span>
+                            <span class="btn-text">Add to Bag</span>
+                            <span class="btn-icon">✨</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="clothing">
+                <div class="product-card" data-product-id="3" data-category="clothing">
                     <div class="product-image-container">
-                        <img src="croptop.webp" alt="Mischief Crop Top" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <button class="quick-view-btn" title="Quick View">👁️</button>
-                        <button class="wishlist-btn" title="Add to Wishlist" data-product-id="3">♡</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Mischief Crop Top</h3>
-                        <div class="product-price">
-                            <span class="current-price">$24.99</span>
+                        <img src="crop.jpg" alt="Mischief Crop Top" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Clothing item</div>
                         </div>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                ★★★★★
+                            </div>
+                            <span class="rating-count">(203)</span>
+                        </div>
+                        <h3 class="product-name">Mischief Crop Top</h3>
+
+                        <div class="product-price-container">
+                            <span class="product-price">$24.99</span>
+                        </div>
+
                         <button class="add-to-cart-btn" data-product-id="3">
-                            <span class="btn-text">Add to Cart</span>
-                            <span class="btn-sparkle">✨</span>
+                            <span class="btn-text">Add to Bag</span>
+                            <span class="btn-icon">✨</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="clothing">
-                    <div class="product-badges">
-                        <span class="badge sale-badge">SALE</span>
-                    </div>
+                <div class="product-card" data-product-id="12" data-category="clothing">
                     <div class="product-image-container">
-                        <img src="dress.jpg" alt="Gothic Skirt Set" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        
-                        <button class="quick-view-btn" title="Quick View">👁️</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Gothic Skirt Set</h3>
-                        <div class="product-price">
-                            <span class="current-price">$45.99</span>
-                            <span class="original-price">$65.99</span>
+                        <div class="product-badge sale">SALE</div>
+
+                        <img src="skirt.jpg" alt="Gothic Skirt Set" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Clothing item</div>
                         </div>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                ★★★★☆
+                            </div>
+                            <span class="rating-count">(156)</span>
+                        </div>
+                        <h3 class="product-name">Gothic Skirt Set</h3>
+
+                        <div class="product-price-container">
+                            <span class="product-price">$45.99</span>
+                            <span class="product-original-price">$65.99</span>
+                            <span class="price-discount">-30%</span>
+                        </div>
+
                         <button class="add-to-cart-btn" data-product-id="12">
-                            <span class="btn-text">Add to Cart</span>
-                            <span class="btn-sparkle">✨</span>
+                            <span class="btn-text">Add to Bag</span>
+                            <span class="btn-icon">✨</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="clothing">
+                <div class="product-card" data-product-id="13" data-category="clothing">
                     <div class="product-image-container">
-                        <img src="jacket.webp" alt="Kawaii Jacket" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                       
-                        <button class="quick-view-btn" title="Quick View">👁️</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Kawaii Jacket</h3>
-                        <div class="product-price">
-                            <span class="current-price">$79.99</span>
+                        <img src="jacket.jpg" alt="Kawaii Jacket" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Clothing item</div>
                         </div>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                ★★★★★
+                            </div>
+                            <span class="rating-count">(74)</span>
+                        </div>
+                        <h3 class="product-name">Kawaii Jacket</h3>
+
+                        <div class="product-price-container">
+                            <span class="product-price">$79.99</span>
+                        </div>
+
                         <button class="add-to-cart-btn" data-product-id="13">
-                            <span class="btn-text">Add to Cart</span>
-                            <span class="btn-sparkle">✨</span>
+                            <span class="btn-text">Add to Bag</span>
+                            <span class="btn-icon">✨</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="clothing">
-                    <div class="product-badges">
-                        <span class="badge new-badge">NEW</span>
-                    </div>
+                <div class="product-card" data-product-id="14" data-category="clothing">
                     <div class="product-image-container">
-                        <img src="pants.jpeg" alt="Mischief Pants" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                       
-                        <button class="quick-view-btn" title="Quick View">👁️</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Mischief Pants</h3>
-                        <div class="product-price">
-                            <span class="current-price">$35.99</span>
+                        <div class="product-badge new">NEW</div>
+
+                        <img src="pants.jpg" alt="Mischief Pants" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Clothing item</div>
                         </div>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                ★★★★☆
+                            </div>
+                            <span class="rating-count">(91)</span>
+                        </div>
+                        <h3 class="product-name">Mischief Pants</h3>
+
+                        <div class="product-price-container">
+                            <span class="product-price">$35.99</span>
+                        </div>
+
                         <button class="add-to-cart-btn" data-product-id="14">
-                            <span class="btn-text">Add to Cart</span>
-                            <span class="btn-sparkle">✨</span>
+                            <span class="btn-text">Add to Bag</span>
+                            <span class="btn-icon">✨</span>
                         </button>
                     </div>
                 </div>
 
                 <!-- Accessories Products -->
-                <div class="product-card" data-category="accessories">
-                    <div class="product-badges">
-                        <span class="badge sale-badge">SALE</span>
-                    </div>
+                <div class="product-card" data-product-id="4" data-category="accessories">
                     <div class="product-image-container">
-                        <img src="headband.webp" alt="Devil Horn Headband" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <button class="quick-view-btn" title="Quick View">👁️</button>
-                        <button class="wishlist-btn" title="Add to Wishlist" data-product-id="4">♡</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Devil Horn Headband</h3>
-                        <div class="product-price">
-                            <span class="current-price">$19.99</span>
-                            <span class="original-price">$29.99</span>
+                        <div class="product-badge sale">SALE</div>
+
+                        <img src="headband.jpg" alt="Devil Horn Headband" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Accessories item</div>
                         </div>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                ★★★★★
+                            </div>
+                            <span class="rating-count">(342)</span>
+                        </div>
+                        <h3 class="product-name">Devil Horn Headband</h3>
+
+                        <div class="product-price-container">
+                            <span class="product-price">$19.99</span>
+                            <span class="product-original-price">$29.99</span>
+                            <span class="price-discount">-33%</span>
+                        </div>
+
                         <button class="add-to-cart-btn" data-product-id="4">
-                            <span class="btn-text">Add to Cart</span>
-                            <span class="btn-sparkle">✨</span>
+                            <span class="btn-text">Add to Bag</span>
+                            <span class="btn-icon">✨</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="accessories">
+                <div class="product-card" data-product-id="5" data-category="accessories">
                     <div class="product-image-container">
-                        <img src="choker.jpeg" alt="Gothic Choker Set" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <button class="quick-view-btn" title="Quick View">👁️</button>
-                        <button class="wishlist-btn" title="Add to Wishlist" data-product-id="5">♡</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Gothic Choker Set</h3>
-                        <div class="product-price">
-                            <span class="current-price">$35.99</span>
+                        <img src="choker.jpg" alt="Gothic Choker Set" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Accessories item</div>
                         </div>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                ★★★★☆
+                            </div>
+                            <span class="rating-count">(188)</span>
+                        </div>
+                        <h3 class="product-name">Gothic Choker Set</h3>
+
+                        <div class="product-price-container">
+                            <span class="product-price">$35.99</span>
+                        </div>
+
                         <button class="add-to-cart-btn" data-product-id="5">
-                            <span class="btn-text">Add to Cart</span>
-                            <span class="btn-sparkle">✨</span>
+                            <span class="btn-text">Add to Bag</span>
+                            <span class="btn-icon">✨</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="accessories">
-                    <div class="product-badges">
-                        <span class="badge new-badge">NEW</span>
-                    </div>
+                <div class="product-card" data-product-id="6" data-category="accessories">
                     <div class="product-image-container">
-                        <img src="phone cae.webp" alt="Mischief Phone Case" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                       
-                        <button class="quick-view-btn" title="Quick View">👁️</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Mischief Phone Case</h3>
-                        <div class="product-price">
-                            <span class="current-price">$22.99</span>
+                        <div class="product-badge new">NEW</div>
+
+                        <img src="phone.jpg" alt="Mischief Phone Case" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Accessories item</div>
                         </div>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                ★★★★★
+                            </div>
+                            <span class="rating-count">(267)</span>
+                        </div>
+                        <h3 class="product-name">Mischief Phone Case</h3>
+
+                        <div class="product-price-container">
+                            <span class="product-price">$22.99</span>
+                        </div>
+
                         <button class="add-to-cart-btn" data-product-id="6">
-                            <span class="btn-text">Add to Cart</span>
-                            <span class="btn-sparkle">✨</span>
+                            <span class="btn-text">Add to Bag</span>
+                            <span class="btn-icon">✨</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="accessories">
+                <div class="product-card" data-product-id="15" data-category="accessories">
                     <div class="product-image-container">
-                        <img src="clip.jpeg" alt="Kawaii Hair Clips" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        
-                        <button class="quick-view-btn" title="Quick View">👁️</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Kawaii Hair Clips</h3>
-                        <div class="product-price">
-                            <span class="current-price">$18.99</span>
+                        <img src="clip.jpg" alt="Kawaii Hair Clips" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Accessories item</div>
                         </div>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                ★★★★☆
+                            </div>
+                            <span class="rating-count">(134)</span>
+                        </div>
+                        <h3 class="product-name">Kawaii Hair Clips</h3>
+
+                        <div class="product-price-container">
+                            <span class="product-price">$18.99</span>
+                        </div>
+
                         <button class="add-to-cart-btn" data-product-id="15">
-                            <span class="btn-text">Add to Cart</span>
-                            <span class="btn-sparkle">✨</span>
+                            <span class="btn-text">Add to Bag</span>
+                            <span class="btn-icon">✨</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="accessories">
-                    <div class="product-badges">
-                        <span class="badge sale-badge">SALE</span>
-                    </div>
+                <div class="product-card" data-product-id="16" data-category="accessories">
                     <div class="product-image-container">
-                        <img src="sara.webp" alt="Gothic Ring Set" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                       
-                        <button class="quick-view-btn" title="Quick View">👁️</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Gothic Ring Set</h3>
-                        <div class="product-price">
-                            <span class="current-price">$29.99</span>
-                            <span class="original-price">$45.99</span>
+                        <div class="product-badge sale">SALE</div>
+
+                        <img src="ring.jpg" alt="Gothic Ring Set" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Accessories item</div>
                         </div>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                ★★★★★
+                            </div>
+                            <span class="rating-count">(298)</span>
+                        </div>
+                        <h3 class="product-name">Gothic Ring Set</h3>
+
+                        <div class="product-price-container">
+                            <span class="product-price">$29.99</span>
+                            <span class="product-original-price">$45.99</span>
+                            <span class="price-discount">-35%</span>
+                        </div>
+
                         <button class="add-to-cart-btn" data-product-id="16">
-                            <span class="btn-text">Add to Cart</span>
-                            <span class="btn-sparkle">✨</span>
+                            <span class="btn-text">Add to Bag</span>
+                            <span class="btn-icon">✨</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="accessories">
+                <div class="product-card" data-product-id="17" data-category="accessories">
                     <div class="product-image-container">
-                        <img src="bag charm.webp" alt="Mischief Bag Charm" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        
-                      
-                        <button class="quick-view-btn" title="Quick View">👁️</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Mischief Bag Charm</h3>
-                        <div class="product-price">
-                            <span class="current-price">$14.99</span>
+                        <img src="bag charm.jpg" alt="Mischief Bag Charm" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Accessories item</div>
                         </div>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                ★★★★☆
+                            </div>
+                            <span class="rating-count">(145)</span>
+                        </div>
+                        <h3 class="product-name">Mischief Bag Charm</h3>
+
+                        <div class="product-price-container">
+                            <span class="product-price">$14.99</span>
+                        </div>
+
                         <button class="add-to-cart-btn" data-product-id="17">
-                            <span class="btn-text">Add to Cart</span>
-                            <span class="btn-sparkle">✨</span>
+                            <span class="btn-text">Add to Bag</span>
+                            <span class="btn-icon">✨</span>
                         </button>
                     </div>
                 </div>
 
                 <!-- Stationery Products -->
-                <div class="product-card" data-category="stationery">
+                <div class="product-card" data-product-id="7" data-category="stationery">
                     <div class="product-image-container">
-                        <img src="notebook.webp" alt="Kuromi Notebook Set" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        
-                        <button class="quick-view-btn" title="Quick View">👁️</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Kuromi Notebook Set</h3>
-                        <div class="product-price">
-                            <span class="current-price">$18.99</span>
+                        <img src="register.jpg" alt="Kuromi Notebook Set" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Stationery item</div>
                         </div>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                ★★★★★
+                            </div>
+                            <span class="rating-count">(176)</span>
+                        </div>
+                        <h3 class="product-name">Kuromi Notebook Set</h3>
+
+                        <div class="product-price-container">
+                            <span class="product-price">$18.99</span>
+                        </div>
+
                         <button class="add-to-cart-btn" data-product-id="7">
-                            <span class="btn-text">Add to Cart</span>
-                            <span class="btn-sparkle">✨</span>
+                            <span class="btn-text">Add to Bag</span>
+                            <span class="btn-icon">✨</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="stationery">
-                    <div class="product-badges">
-                        <span class="badge sale-badge">SALE</span>
-                    </div>
+                <div class="product-card" data-product-id="8" data-category="stationery">
                     <div class="product-image-container">
-                        <img src="pen.webp" alt="Gothic Pen Collection" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                       
-                        <button class="quick-view-btn" title="Quick View">👁️</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Gothic Pen Collection</h3>
-                        <div class="product-price">
-                            <span class="current-price">$12.99</span>
-                            <span class="original-price">$19.99</span>
+                        <div class="product-badge sale">SALE</div>
+
+                        <img src="pen.jpg" alt="Gothic Pen Collection" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Stationery item</div>
                         </div>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                ★★★★☆
+                            </div>
+                            <span class="rating-count">(98)</span>
+                        </div>
+                        <h3 class="product-name">Gothic Pen Collection</h3>
+
+                        <div class="product-price-container">
+                            <span class="product-price">$12.99</span>
+                            <span class="product-original-price">$19.99</span>
+                            <span class="price-discount">-35%</span>
+                        </div>
+
                         <button class="add-to-cart-btn" data-product-id="8">
-                            <span class="btn-text">Add to Cart</span>
-                            <span class="btn-sparkle">✨</span>
+                            <span class="btn-text">Add to Bag</span>
+                            <span class="btn-icon">✨</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="stationery">
-                    <div class="product-badges">
-                        <span class="badge new-badge">NEW</span>
-                    </div>
+                <div class="product-card" data-product-id="18" data-category="stationery">
                     <div class="product-image-container">
-                        <img src="sticker.webp" alt="Kawaii Sticker Pack" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                      
-                        <button class="quick-view-btn" title="Quick View">👁️</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Kawaii Sticker Pack</h3>
-                        <div class="product-price">
-                            <span class="current-price">$8.99</span>
+                        <div class="product-badge new">NEW</div>
+
+                        <img src="stickers.jpg" alt="Kawaii Sticker Pack" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Stationery item</div>
                         </div>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                ★★★★★
+                            </div>
+                            <span class="rating-count">(412)</span>
+                        </div>
+                        <h3 class="product-name">Kawaii Sticker Pack</h3>
+
+                        <div class="product-price-container">
+                            <span class="product-price">$8.99</span>
+                        </div>
+
                         <button class="add-to-cart-btn" data-product-id="18">
-                            <span class="btn-text">Add to Cart</span>
-                            <span class="btn-sparkle">✨</span>
+                            <span class="btn-text">Add to Bag</span>
+                            <span class="btn-icon">✨</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="stationery">
+                <div class="product-card" data-product-id="19" data-category="stationery">
                     <div class="product-image-container">
-                        <img src="planner.webp" alt="Mischief Planner" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                       
-                        <button class="quick-view-btn" title="Quick View">👁️</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Mischief Planner</h3>
-                        <div class="product-price">
-                            <span class="current-price">$25.99</span>
+                        <img src="planner.jpg" alt="Mischief Planner" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Stationery item</div>
                         </div>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                ★★★★☆
+                            </div>
+                            <span class="rating-count">(83)</span>
+                        </div>
+                        <h3 class="product-name">Mischief Planner</h3>
+
+                        <div class="product-price-container">
+                            <span class="product-price">$25.99</span>
+                        </div>
+
                         <button class="add-to-cart-btn" data-product-id="19">
-                            <span class="btn-text">Add to Cart</span>
-                            <span class="btn-sparkle">✨</span>
+                            <span class="btn-text">Add to Bag</span>
+                            <span class="btn-icon">✨</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="stationery">
+                <div class="product-card" data-product-id="20" data-category="stationery">
                     <div class="product-image-container">
-                        <img src="markers.webp" alt="Gothic Markers Set" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-
-                        <button class="quick-view-btn" title="Quick View">👁️</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Gothic Markers Set</h3>
-                        <div class="product-price">
-                            <span class="current-price">$16.99</span>
+                        <img src="pen.jpg" alt="Gothic Markers Set" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">
+                            <div class="placeholder-icon">📱</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Stationery item</div>
                         </div>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                ★★★★☆
+                            </div>
+                            <span class="rating-count">(126)</span>
+                        </div>
+                        <h3 class="product-name">Gothic Markers Set</h3>
+
+                        <div class="product-price-container">
+                            <span class="product-price">$16.99</span>
+                        </div>
+
                         <button class="add-to-cart-btn" data-product-id="20">
-                            <span class="btn-text">Add to Cart</span>
-                            <span class="btn-sparkle">✨</span>
+                            <span class="btn-text">Add to Bag</span>
+                            <span class="btn-icon">✨</span>
                         </button>
                     </div>
                 </div>
 
                 <!-- Room Decor Products -->
-                <div class="product-card" data-category="room-decor">
-                    <div class="product-badges">
-                        <span class="badge new-badge">NEW</span>
-                    </div>
+                <div class="product-card" data-product-id="9" data-category="room-decor">
                     <div class="product-image-container">
-                        <img src="wall art.webp" alt="Kuromi Wall Art Set" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                      
-                        <button class="quick-view-btn" title="Quick View">👁️</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Kuromi Wall Art Set</h3>
-                        <div class="product-price">
-                            <span class="current-price">$45.99</span>
+                        <div class="product-badge new">NEW</div>
+
+                        <img src="wall art.jpg" alt="Kuromi Wall Art Set" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Home Decor item</div>
                         </div>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                ★★★★★
+                            </div>
+                            <span class="rating-count">(154)</span>
+                        </div>
+                        <h3 class="product-name">Kuromi Wall Art Set</h3>
+
+                        <div class="product-price-container">
+                            <span class="product-price">$45.99</span>
+                        </div>
+
                         <button class="add-to-cart-btn" data-product-id="9">
-                            <span class="btn-text">Add to Cart</span>
-                            <span class="btn-sparkle">✨</span>
+                            <span class="btn-text">Add to Bag</span>
+                            <span class="btn-icon">✨</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="room-decor">
+                <div class="product-card" data-product-id="10" data-category="room-decor">
                     <div class="product-image-container">
-                        <img src="fairy lights.webp" alt="Gothic Fairy Lights" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                       
-                        <button class="quick-view-btn" title="Quick View">👁️</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">kawaii Lamps</h3>
-                        <div class="product-price">
-                            <span class="current-price">$32.99</span>
+                        <img src="lamp.jpg" alt="Gothic Fairy Lights" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Home Decor item</div>
                         </div>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                ★★★★☆
+                            </div>
+                            <span class="rating-count">(92)</span>
+                        </div>
+                        <h3 class="product-name">kawaii Lamps</h3>
+
+                        <div class="product-price-container">
+                            <span class="product-price">$32.99</span>
+                        </div>
+
                         <button class="add-to-cart-btn" data-product-id="10">
-                            <span class="btn-text">Add to Cart</span>
-                            <span class="btn-sparkle">✨</span>
+                            <span class="btn-text">Add to Bag</span>
+                            <span class="btn-icon">✨</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="room-decor">
-                    <div class="product-badges">
-                        <span class="badge sale-badge">SALE</span>
-                    </div>
+                <div class="product-card" data-product-id="11" data-category="room-decor">
                     <div class="product-image-container">
-                        <img src="pillow.webp" alt="Mischief Throw Pillow" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        
-                        <button class="quick-view-btn" title="Quick View">👁️</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Mischief Throw Pillow</h3>
-                        <div class="product-price">
-                            <span class="current-price">$26.99</span>
-                            <span class="original-price">$39.99</span>
+                        <div class="product-badge sale">SALE</div>
+
+                        <img src="plushi.jpg" alt="Mischief Throw Pillow" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Home Decor item</div>
                         </div>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                ★★★★★
+                            </div>
+                            <span class="rating-count">(218)</span>
+                        </div>
+                        <h3 class="product-name">Mischief Throw Pillow</h3>
+
+                        <div class="product-price-container">
+                            <span class="product-price">$26.99</span>
+                            <span class="product-original-price">$39.99</span>
+                            <span class="price-discount">-33%</span>
+                        </div>
+
                         <button class="add-to-cart-btn" data-product-id="11">
-                            <span class="btn-text">Add to Cart</span>
-                            <span class="btn-sparkle">✨</span>
+                            <span class="btn-text">Add to Bag</span>
+                            <span class="btn-icon">✨</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="room-decor">
-                    <div class="product-badges">
-                        <span class="badge new-badge">NEW</span>
-                    </div>
+                <div class="product-card" data-product-id="21" data-category="room-decor">
                     <div class="product-image-container">
-                        <img src="candle.webp" alt="Gothic Candle Set" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                       
-                        <button class="quick-view-btn" title="Quick View">👁️</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Gothic Candle Set</h3>
-                        <div class="product-price">
-                            <span class="current-price">$38.99</span>
+                        <div class="product-badge new">NEW</div>
+
+                        <img src="candle.jpg" alt="Gothic Candle Set" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Home Decor item</div>
                         </div>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                ★★★★☆
+                            </div>
+                            <span class="rating-count">(167)</span>
+                        </div>
+                        <h3 class="product-name">Gothic Candle Set</h3>
+
+                        <div class="product-price-container">
+                            <span class="product-price">$38.99</span>
+                        </div>
+
                         <button class="add-to-cart-btn" data-product-id="21">
-                            <span class="btn-text">Add to Cart</span>
-                            <span class="btn-sparkle">✨</span>
+                            <span class="btn-text">Add to Bag</span>
+                            <span class="btn-icon">✨</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="room-decor">
+                <div class="product-card" data-product-id="22" data-category="room-decor">
                     <div class="product-image-container">
-                        <img src="mirrors.webp" alt="Kawaii Mirror" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        
-                        <button class="quick-view-btn" title="Quick View">👁️</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Kawaii Mirror</h3>
-                        <div class="product-price">
-                            <span class="current-price">$42.99</span>
+                        <img src="mirror.jpg" alt="Kawaii Mirror" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Home Decor item</div>
                         </div>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                ★★★★★
+                            </div>
+                            <span class="rating-count">(189)</span>
+                        </div>
+                        <h3 class="product-name">Kawaii Mirror</h3>
+
+                        <div class="product-price-container">
+                            <span class="product-price">$42.99</span>
+                        </div>
+
                         <button class="add-to-cart-btn" data-product-id="22">
-                            <span class="btn-text">Add to Cart</span>
-                            <span class="btn-sparkle">✨</span>
+                            <span class="btn-text">Add to Bag</span>
+                            <span class="btn-icon">✨</span>
                         </button>
                     </div>
                 </div>
 
-                <div class="product-card" data-category="room-decor">
-                    <div class="product-badges">
-                        <span class="badge sale-badge">SALE</span>
-                    </div>
+                <div class="product-card" data-product-id="23" data-category="room-decor">
                     <div class="product-image-container">
-                        <img src="cur tins.webp" alt="Mischief Curtains" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                       
-                        <button class="quick-view-btn" title="Quick View">👁️</button>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">Mischief Curtains</h3>
-                        <div class="product-price">
-                            <span class="current-price">$55.99</span>
-                            <span class="original-price">$79.99</span>
+                        <div class="product-badge sale">SALE</div>
+
+                        <img src="curtin.jpg" alt="Mischief Curtains" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: none;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Home Decor item</div>
                         </div>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-rating">
+                            <div class="rating-stars">
+                                ★★★★☆
+                            </div>
+                            <span class="rating-count">(76)</span>
+                        </div>
+                        <h3 class="product-name">Mischief Curtains</h3>
+
+                        <div class="product-price-container">
+                            <span class="product-price">$55.99</span>
+                            <span class="product-original-price">$79.99</span>
+                            <span class="price-discount">-30%</span>
+                        </div>
+
                         <button class="add-to-cart-btn" data-product-id="23">
-                            <span class="btn-text">Add to Cart</span>
-                            <span class="btn-sparkle">✨</span>
+                            <span class="btn-text">Add to Bag</span>
+                            <span class="btn-icon">✨</span>
                         </button>
                     </div>
                 </div>
@@ -629,7 +843,126 @@
         <div class="container">
             <h2 class="section-title">You Might Also Like</h2>
             <div class="related-products-grid" id="relatedProductsGrid">
-                <!-- Related products will be loaded dynamically -->
+                <!-- Related Products -->
+                <div class="related-product-card" data-product-id="101">
+                    <div class="related-product-image-container">
+                        <div class="related-product-badge new">NEW</div>
+                        <img src="bag.jpg" alt="Kuromi Backpack" class="related-product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: flex;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Accessories item</div>
+                        </div>
+                        <div class="related-product-overlay">
+                            <button class="related-quick-view" data-product-id="101" title="Quick View">👁️</button>
+                            <button class="related-wishlist" data-product-id="101" title="Add to Wishlist">♡</button>
+                        </div>
+                    </div>
+                    <div class="related-product-info">
+                        <h3 class="related-product-name">Kuromi Backpack</h3>
+                        <div class="related-product-rating">
+                            <div class="stars">★★★★☆</div>
+                            <span class="rating-count">(87)</span>
+                        </div>
+                        <div class="related-product-price">
+                            <span class="current-price">$59.99</span>
+                        </div>
+                        <button class="related-add-to-cart" data-product-id="101">
+                            <span>Add to Bag</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="related-product-card" data-product-id="102">
+                    <div class="related-product-image-container">
+                        <div class="related-product-badge sale">SALE</div>
+                        <img src="boots.jpg" alt="Gothic Boots" class="related-product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: flex;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Clothing item</div>
+                        </div>
+                        <div class="related-product-overlay">
+                            <button class="related-quick-view" data-product-id="102" title="Quick View">👁��</button>
+                            <button class="related-wishlist" data-product-id="102" title="Add to Wishlist">♡</button>
+                        </div>
+                    </div>
+                    <div class="related-product-info">
+                        <h3 class="related-product-name">Gothic Boots</h3>
+                        <div class="related-product-rating">
+                            <div class="stars">★★★★★</div>
+                            <span class="rating-count">(234)</span>
+                        </div>
+                        <div class="related-product-price">
+                            <span class="current-price">$89.99</span>
+                            <span class="original-price">$119.99</span>
+                        </div>
+                        <button class="related-add-to-cart" data-product-id="102">
+                            <span>Add to Bag</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="related-product-card" data-product-id="103">
+                    <div class="related-product-image-container">
+                        <img src="keychain.jpg" alt="Kawaii Keychain Set" class="related-product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: flex;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Accessories item</div>
+                        </div>
+                        <div class="related-product-overlay">
+                            <button class="related-quick-view" data-product-id="103" title="Quick View">👁️</button>
+                            <button class="related-wishlist" data-product-id="103" title="Add to Wishlist">♡</button>
+                        </div>
+                    </div>
+                    <div class="related-product-info">
+                        <h3 class="related-product-name">Kawaii Keychain Set</h3>
+                        <div class="related-product-rating">
+                            <div class="stars">★★★★☆</div>
+                            <span class="rating-count">(156)</span>
+                        </div>
+                        <div class="related-product-price">
+                            <span class="current-price">$12.99</span>
+                        </div>
+                        <button class="related-add-to-cart" data-product-id="103">
+                            <span>Add to Bag</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="related-product-card" data-product-id="104">
+                    <div class="related-product-image-container">
+                        <div class="related-product-badge new">NEW</div>
+                        <img src="breclet.jpg" alt="Mischief Bracelet" class="related-product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-image-placeholder" style="display: flex;">
+                            <div class="placeholder-icon">🎀</div>
+                            <div class="placeholder-text">Image Coming Soon</div>
+                            <div class="placeholder-subtext">Premium Accessories item</div>
+                        </div>
+                        <div class="related-product-overlay">
+                            <button class="related-quick-view" data-product-id="104" title="Quick View">👁️</button>
+                            <button class="related-wishlist" data-product-id="104" title="Add to Wishlist">♡</button>
+                        </div>
+                    </div>
+                    <div class="related-product-info">
+                        <h3 class="related-product-name">Mischief Bracelet</h3>
+                        <div class="related-product-rating">
+                            <div class="stars">★★★★★</div>
+                            <span class="rating-count">(198)</span>
+                        </div>
+                        <div class="related-product-price">
+                            <span class="current-price">$24.99</span>
+                        </div>
+                        <button class="related-add-to-cart" data-product-id="104">
+                            <span>Add to Bag</span>
+                            <span class="btn-sparkle">✨</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -679,7 +1012,7 @@
                     <h3 class="footer-title">Contact Info</h3>
                     <div class="contact-info">
                         <p>📧 hello@kuromi-fashion.com</p>
-                        <p>���� 1-800-MISCHIEF</p>
+                        <p>📞 1-800-MISCHIEF</p>
                         <p>📍 Kawaii District, Fashion City</p>
                     </div>
                 </div>
@@ -718,6 +1051,47 @@
 
     <!-- Cart Overlay -->
     <div class="cart-overlay" id="cartOverlay"></div>
+
+    <!-- Categories Slide Menu -->
+    <div class="categories-menu" id="categoriesMenu">
+        <div class="categories-menu-header">
+            <h3 class="categories-title">Shop by Category</h3>
+            <button class="categories-close" id="categoriesClose">×</button>
+        </div>
+        <div class="categories-menu-content">
+            <div class="category-item" data-category="clothing">
+                <div class="category-icon">👗</div>
+                <div class="category-info">
+                    <h4 class="category-name">Clothing</h4>
+                    <p class="category-desc">Gothic kawaii fashion</p>
+                </div>
+            </div>
+            <div class="category-item" data-category="accessories">
+                <div class="category-icon">💎</div>
+                <div class="category-info">
+                    <h4 class="category-name">Accessories</h4>
+                    <p class="category-desc">Perfect finishing touches</p>
+                </div>
+            </div>
+            <div class="category-item" data-category="stationery">
+                <div class="category-icon">📝</div>
+                <div class="category-info">
+                    <h4 class="category-name">Stationery</h4>
+                    <p class="category-desc">Cute creative supplies</p>
+                </div>
+            </div>
+            <div class="category-item" data-category="room-decor">
+                <div class="category-icon">🏠</div>
+                <div class="category-info">
+                    <h4 class="category-name">Room Decor</h4>
+                    <p class="category-desc">Transform your space</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Menu Overlay -->
+    <div class="categories-overlay" id="categoriesOverlay"></div>
 
     <script src="script.js"></script>
     <script>

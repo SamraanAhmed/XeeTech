@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Kuromi's Fashion Empire</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Quicksand:wght@300;400;500;600;700&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="Complete your order - Secure checkout for Kuromi's Fashion Empire">
+</head>
+<body>
+    <!-- Sticky Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html" class="logo-link">
+                    <img class="kuromi-icon" src="1289-kuromiwink.png" alt="Kuromi">
+                    <span class="brand-name">kuro.co</span>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" id="mobileToggle">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+
+            <!-- Navigation Menu -->
+            <div class="nav-menu" id="navMenu">
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="shop.html" class="nav-link">Shop</a>
+                    <button class="nav-link categories-btn" id="categoriesBtn">Categories</button>
+                </div>
+
+                <div class="nav-actions">
+                    <!-- Search Icon -->
+                    <button class="nav-icon search-btn" id="searchBtn" title="Search">
+                        🔍
+                    </button>
+
+                    <!-- Cart Icon -->
+                    <button class="nav-icon cart-btn" id="cartBtn" title="Cart">
+                        🛍️
+                        <span class="cart-count" id="cartCount">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Dropdown -->
+        <div class="search-dropdown" id="searchDropdown">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search for mischievous fashion..." id="searchInput">
+                <button class="search-submit" id="searchSubmit">Search</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Single Descriptive Checkout Container -->
+    <div class="checkout-container">
+        <div class="container">
+            <!-- Checkout Header -->
+            <div class="checkout-header">
+                <div class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span>›</span>
+                    <a href="shop.html">Shop</a>
+                    <span>›</span>
+                    <span class="current">Checkout</span>
+                </div>
+                <h1 class="checkout-title">✨ Complete Your Mischievous Order</h1>
+                <p class="checkout-subtitle">A seamless journey to getting your kawaii fashion delivered to your door</p>
+                <div class="checkout-progress">
+                    <div class="progress-step active">
+                        <span class="step-number">1</span>
+                        <span class="step-label">Review & Order</span>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <span class="step-number">2</span>
+                        <span class="step-label">Delivery</span>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step">
+                        <span class="step-number">3</span>
+                        <span class="step-label">Enjoy!</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Single Page Descriptive Layout -->
+            <div class="single-descriptive-layout">
+                
+                <!-- Order Overview Section -->
+                <div class="checkout-section order-overview">
+                    <div class="section-header">
+                        <div class="section-icon">🛍️</div>
+                        <div class="section-info">
+                            <h2 class="section-title">Your Kawaii Collection</h2>
+                            <p class="section-description">Review the mischievous items you've selected for your wardrobe</p>
+                        </div>
+                    </div>
+                    
+                    <div class="order-review-detailed" id="orderReview">
+                        <!-- Order items will be populated here -->
+                        <div class="empty-cart-message" style="text-align: center; padding: 40px; color: #666;">
+                            <div style="font-size: 3em; margin-bottom: 15px;">🛒</div>
+                            <h3>Your bag is empty</h3>
+                            <p>Add some mischievous fashion items to continue</p>
+                            <a href="shop.html" class="btn btn-primary" style="margin-top: 20px;">Start Shopping</a>
+                        </div>
+                    </div>
+
+                    <!-- Order Summary Inline -->
+                    <div class="order-summary-inline">
+                        <div class="summary-totals">
+                            <div class="total-row">
+                                <span class="total-label">Subtotal</span>
+                                <span class="total-value" id="subtotalAmount">$0.00</span>
+                            </div>
+                            <div class="total-row">
+                                <span class="total-label">Shipping</span>
+                                <span class="total-value" id="shippingAmount">$5.99</span>
+                            </div>
+                            <div class="total-row discount-row" id="discountLine" style="display: none;">
+                                <span class="total-label">Discount</span>
+                                <span class="total-value discount" id="discountAmount">-$0.00</span>
+                            </div>
+                            <div class="total-row">
+                                <span class="total-label">Tax</span>
+                                <span class="total-value" id="taxAmount">$0.00</span>
+                            </div>
+                            <div class="total-row final-total">
+                                <span class="total-label">Total</span>
+                                <span class="total-value" id="totalAmount">$5.99</span>
+                            </div>
+                        </div>
+
+                        <!-- Promo Code Section -->
+                        <div class="promo-section">
+                            <div class="promo-toggle" id="promoToggle">
+                                <span class="promo-text">🎁 Have a promo code?</span>
+                                <span class="toggle-icon">+</span>
+                            </div>
+                            <div class="promo-input" id="promoInput" style="display: none;">
+                                <div class="input-group">
+                                    <input type="text" id="promoCode" placeholder="Enter your promo code">
+                                    <button type="button" id="applyPromo" class="apply-btn">Apply</button>
+                                </div>
+                                <div class="promo-message" id="promoMessage"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customer Information Section -->
+                <div class="checkout-section customer-info">
+                    <div class="section-header">
+                        <div class="section-icon">👤</div>
+                        <div class="section-info">
+                            <h2 class="section-title">Contact Information</h2>
+                            <p class="section-description">Let us know how to reach you for order updates and delivery notifications</p>
+                        </div>
+                    </div>
+                    
+                    <form class="checkout-form">
+                        <div class="form-section">
+                            <div class="form-group full-width">
+                                <label for="email" class="form-label">
+                                    <span class="label-text">Email Address</span>
+                                    <span class="label-required">*</span>
+                                    <span class="label-help">We'll send your receipt and tracking info here</span>
+                                </label>
+                                <input type="email" id="email" name="email" required placeholder="your@email.com" class="form-input">
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName" class="form-label">
+                                        <span class="label-text">First Name</span>
+                                        <span class="label-required">*</span>
+                                    </label>
+                                    <input type="text" id="firstName" name="firstName" required placeholder="First name" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName" class="form-label">
+                                        <span class="label-text">Last Name</span>
+                                        <span class="label-required">*</span>
+                                    </label>
+                                    <input type="text" id="lastName" name="lastName" required placeholder="Last name" class="form-input">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone" class="form-label">
+                                    <span class="label-text">Phone Number</span>
+                                    <span class="label-optional">(Optional)</span>
+                                    <span class="label-help">For important delivery updates</span>
+                                </label>
+                                <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567" class="form-input">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Shipping Information Section -->
+                <div class="checkout-section shipping-info">
+                    <div class="section-header">
+                        <div class="section-icon">🚚</div>
+                        <div class="section-info">
+                            <h2 class="section-title">Delivery Address</h2>
+                            <p class="section-description">Where should we send your kawaii fashion treasures?</p>
+                        </div>
+                    </div>
+                    
+                    <form class="checkout-form">
+                        <div class="form-section">
+                            <div class="form-group full-width">
+                                <label for="address" class="form-label">
+                                    <span class="label-text">Street Address</span>
+                                    <span class="label-required">*</span>
+                                </label>
+                                <input type="text" id="address" name="address" required placeholder="123 Mischief Lane" class="form-input">
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="city" class="form-label">
+                                        <span class="label-text">City</span>
+                                        <span class="label-required">*</span>
+                                    </label>
+                                    <input type="text" id="city" name="city" required placeholder="City" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label for="state" class="form-label">
+                                        <span class="label-text">State</span>
+                                        <span class="label-required">*</span>
+                                    </label>
+                                    <select id="state" name="state" required class="form-select">
+                                        <option value="">Select State</option>
+                                        <option value="CA">California</option>
+                                        <option value="NY">New York</option>
+                                        <option value="TX">Texas</option>
+                                        <option value="FL">Florida</option>
+                                        <option value="IL">Illinois</option>
+                                        <option value="PA">Pennsylvania</option>
+                                        <option value="OH">Ohio</option>
+                                        <option value="GA">Georgia</option>
+                                        <option value="NC">North Carolina</option>
+                                        <option value="MI">Michigan</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="zip" class="form-label">
+                                        <span class="label-text">ZIP Code</span>
+                                        <span class="label-required">*</span>
+                                    </label>
+                                    <input type="text" id="zip" name="zip" required placeholder="12345" class="form-input">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="country" class="form-label">
+                                    <span class="label-text">Country</span>
+                                    <span class="label-required">*</span>
+                                </label>
+                                <select id="country" name="country" required class="form-select">
+                                    <option value="US" selected>United States</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="UK">United Kingdom</option>
+                                    <option value="AU">Australia</option>
+                                    <option value="DE">Germany</option>
+                                    <option value="FR">France</option>
+                                    <option value="JP">Japan</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Trust & Security Section -->
+                <div class="checkout-section trust-section">
+                    <div class="section-header">
+                        <div class="section-icon">🛡️</div>
+                        <div class="section-info">
+                            <h2 class="section-title">Your Security & Satisfaction</h2>
+                            <p class="section-description">Shop with confidence knowing your information is protected</p>
+                        </div>
+                    </div>
+
+                    <div class="trust-content">
+                        <div class="security-features">
+                            <div class="security-feature">
+                                <div class="feature-icon">🔒</div>
+                                <div class="feature-content">
+                                    <h4>SSL Encrypted Checkout</h4>
+                                    <p>Your personal and payment information is fully encrypted and secure</p>
+                                </div>
+                            </div>
+                            <div class="security-feature">
+                                <div class="feature-icon">💳</div>
+                                <div class="feature-content">
+                                    <h4>Secure Payment Processing</h4>
+                                    <p>We use industry-standard payment security measures</p>
+                                </div>
+                            </div>
+                            <div class="security-feature">
+                                <div class="feature-icon">🚚</div>
+                                <div class="feature-content">
+                                    <h4>Free Shipping on Orders $75+</h4>
+                                    <p>Plus tracking included on all orders</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="kuromi-promise">
+                            <h3>��� The Kuromi Promise</h3>
+                            <div class="promise-list">
+                                <div class="promise-item">
+                                    <span class="promise-icon">✨</span>
+                                    <span class="promise-text">30-day hassle-free returns</span>
+                                </div>
+                                <div class="promise-item">
+                                    <span class="promise-icon">🦇</span>
+                                    <span class="promise-text">Quality mischief guaranteed</span>
+                                </div>
+                                <div class="promise-item">
+                                    <span class="promise-icon">💝</span>
+                                    <span class="promise-text">Customer satisfaction is our priority</span>
+                                </div>
+                                <div class="promise-item">
+                                    <span class="promise-icon">🌟</span>
+                                    <span class="promise-text">Authentic kawaii fashion only</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Final Order Completion -->
+                <div class="checkout-section complete-order">
+                    <div class="section-header">
+                        <div class="section-icon">✨</div>
+                        <div class="section-info">
+                            <h2 class="section-title">Complete Your Order</h2>
+                            <p class="section-description">Ready to add some mischief to your wardrobe?</p>
+                        </div>
+                    </div>
+
+                    <div class="order-completion">
+                        <div class="final-total-display">
+                            <div class="total-breakdown">
+                                <span class="total-description">Total for your kawaii collection</span>
+                                <span class="total-amount" id="finalTotalAmount">$5.99</span>
+                            </div>
+                        </div>
+
+                        <button class="place-order-btn" id="placeOrderBtn">
+                            <div class="btn-content">
+                                <span class="btn-icon">🛍️</span>
+                                <span class="btn-text">Complete My Order</span>
+                                <span class="btn-subtext">Secure Checkout</span>
+                            </div>
+                            <div class="btn-loading" style="display: none;">
+                                <div class="spinner"></div>
+                                <span>Processing your mischievous order...</span>
+                            </div>
+                        </button>
+
+                        <div class="checkout-footer-note">
+                            <p>By completing your order, you agree to our Terms of Service and Privacy Policy. 
+                            We'll send you email updates about your order and delivery.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h3>Processing Your Mischievous Order</h3>
+            <p>Adding magic to your purchase... Please don't close this window!</p>
+            <div class="loading-details">
+                <div class="loading-step">✨ Validating your information</div>
+                <div class="loading-step">🛍️ Preparing your items</div>
+                <div class="loading-step">🚚 Arranging delivery</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal" style="display: none;">
+        <div class="modal-content">
+            <div class="success-animation">
+                <div class="checkmark">✓</div>
+            </div>
+            <h2>🦇 Order Confirmed!</h2>
+            <p class="order-id">Order #<span id="orderNumber"></span></p>
+            <p class="success-message">Your mischievous fashion is on its way! We'll send a confirmation email with tracking details shortly.</p>
+            <div class="success-details">
+                <div class="detail-item">
+                    <span class="detail-icon">📧</span>
+                    <span>Confirmation email sent</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-icon">🚚</span>
+                    <span>Processing within 24 hours</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-icon">📦</span>
+                    <span>Delivery in 3-7 business days</span>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="window.location.href='index.html'">Continue Shopping</button>
+                <button class="btn-secondary" onclick="window.location.href='shop.html'">Explore More</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="checkout.js"></script>
+</body>
+</html>
